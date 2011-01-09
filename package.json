@@ -1,0 +1,10 @@
+{ "name": "express-on-railway"
+, "version": "0.0.1"
+, "author": "Anatoliy Chakkaev"
+, "description": "Railway features for express framework"
+, "homepage": "http://github.com/1602/express-on-rails"
+, "engines": ["node >= 0.2.2"]
+, "main": "lib/onrailway"
+, "bin": {"railway": "bin/railway"}
+, "dependencies": { "node-redis-mapper": "*"}
+}
