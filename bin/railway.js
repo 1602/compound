@@ -138,13 +138,16 @@ case 'init':
     create_file('config/routes.js', 'exports.routes = function (map) {\n};');
     create_file('config/requirements.json', fs.readFileSync(__dirname + '/../templates/requirements.json'));
     create_file('Jakefile', fs.readFileSync(__dirname + '/../templates/tasks.js'));
+    create_file('app/views/application_layout.ejs', fs.readFileSync(__dirname + '/../templates/layout.ejs'));
 
     // patch app.js
     var filename = process.cwd() + '/app.js';
     if (path.existsSync(filename)) {
         var app = fs.readFileSync(filename).toString();
         if (!app.match('express-on-railway')) {
-            app = app.replace(/(\/\/ Only listen on \$ node app\.js)/, 'require("express-on-railway").init(__dirname, app);\n\n$1');
+            app = app
+                .replace(/(\/\/ Only listen on \$ node app\.js)/, 'require("express-on-railway").init(__dirname, app);\n\n$1')
+                .replace("app.set('views', __dirname + '/views');", "app.set('views', __dirname + '/app/views');\n  app.set('view engine', 'ejs');");
             fs.writeFileSync(filename, app);
             sys.puts($('patch').bold.green + '   app.js');
         } else {
