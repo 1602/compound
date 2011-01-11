@@ -147,7 +147,7 @@ case 'init':
         if (!app.match('express-on-railway')) {
             app = app
                 .replace(/(\/\/ Only listen on \$ node app\.js)/, 'require("express-on-railway").init(__dirname, app);\n\n$1')
-                .replace("app.set('views', __dirname + '/views');", "app.set('views', __dirname + '/app/views');\n  app.set('view engine', 'ejs');");
+                .replace("app.set('views', __dirname + '/views');", "app.set('views', __dirname + '/app/views');");
             fs.writeFileSync(filename, app);
             sys.puts($('patch').bold.green + '   app.js');
         } else {
