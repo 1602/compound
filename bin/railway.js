@@ -133,7 +133,8 @@ case 'init':
       'app/controllers/',
       'app/helpers/',
       'app/views/',
-      'config/'
+      'config/',
+      'config/initializers/'
     ].forEach(create_dir);
     create_file('config/routes.js', 'exports.routes = function (map) {\n};');
     create_file('config/requirements.json', fs.readFileSync(__dirname + '/../templates/requirements.json'));
