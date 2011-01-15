@@ -48,6 +48,10 @@ function create_file (filename, contents) {
     }
 }
 
+function create_file_by_template (filename, template) {
+    create_file(filename, fs.readFileSync(__dirname + '/../templates/' + template));
+}
+
 function create_parents(ns, d) {
     ns.forEach(function (dir) {
         d += dir + '/';
@@ -134,12 +138,17 @@ case 'init':
       'app/helpers/',
       'app/views/',
       'config/',
-      'config/initializers/'
+      'config/initializers/',
+      'public/',
+      'public/stylesheets/',
+      'public/javascripts/'
     ].forEach(create_dir);
     create_file('config/routes.js', 'exports.routes = function (map) {\n};');
-    create_file('config/requirements.json', fs.readFileSync(__dirname + '/../templates/requirements.json'));
-    create_file('Jakefile', fs.readFileSync(__dirname + '/../templates/tasks.js'));
-    create_file('app/views/application_layout.ejs', fs.readFileSync(__dirname + '/../templates/layout.ejs'));
+    create_file_by_template('config/requirements.json', 'requirements.json');
+    create_file_by_template('Jakefile', 'tasks.js');
+    create_file_by_template('app/views/application_layout.ejs', 'layout.ejs');
+    create_file_by_template('public/stylesheets/reset.css', 'reset.css');
+    create_file_by_template('public/javascripts/rails.js', 'rails.js');
 
     // patch app.js
     var filename = process.cwd() + '/app.js';
