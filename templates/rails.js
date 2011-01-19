@@ -27,6 +27,10 @@ jQuery(function ($) {
                 url     = el.attr('action') || el.attr('href'),
                 dataType  = el.attr('data-type')  || 'script';
 
+            if (el.attr('data-jsonp')) {
+                dataType = 'text';
+            }
+
             if (url === undefined) {
               throw "No URL specified for remote call (action or href must be present).";
             } else {
@@ -41,6 +45,9 @@ jQuery(function ($) {
                             el.trigger('ajax:loading', xhr);
                         },
                         success: function (data, status, xhr) {
+                            if (el.attr('data-jsonp')) {
+                                eval(el.attr('data-jsonp') + '(' + data + ')');
+                            }
                             el.trigger('ajax:success', [data, status, xhr]);
                         },
                         complete: function (xhr) {
