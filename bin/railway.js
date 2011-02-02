@@ -28,7 +28,7 @@ var $ = function (str) {
     return str;
 };
 
-function create_dir (dir) {
+function createDir (dir) {
     var root = process.cwd();
     if (path.existsSync(root + '/' + dir)) {
         sys.puts($('exists').bold.grey + '  ' + dir);
@@ -38,7 +38,7 @@ function create_dir (dir) {
     }
 }
 
-function create_file (filename, contents) {
+function createFile (filename, contents) {
     var root = process.cwd();
     if (path.existsSync(root + '/' + filename)) {
         sys.puts($('exists').bold.grey + '  ' + filename);
@@ -48,11 +48,30 @@ function create_file (filename, contents) {
     }
 }
 
-function create_parents(ns, d) {
+function createParents(ns, d) {
     ns.forEach(function (dir) {
         d += dir + '/';
-        create_dir(d);
+        createDir(d);
     });
+}
+
+function formatType (name) {
+    name = (name || 'string').toLowerCase();
+    switch (name) {
+    case 'string':   return 'String';
+
+    case 'date':     return 'Date';
+
+    case 'bool':
+    case 'boolean':  return 'Boolean';
+
+    case 'int':
+    case 'real':
+    case 'float':
+    case 'decimal':
+    case 'number':   return 'Number';
+    }
+    return '"' + name + '"';
 }
 
 var fs = require('fs');
@@ -68,12 +87,12 @@ var generators = {
         var Model = model[0].toUpperCase() + model.slice(1);
         var attrs = [];
         args.forEach(function (arg) {
-            attrs.push('    "' + arg.split(':')[0] + '": "' + arg.split(':')[1] + '"\n');
+            attrs.push('    property("' + arg.split(':')[0] + '", ' + formatType(arg.split(':')[1]) + ');');
         });
-        create_dir('app/');
-        create_dir('app/models/');
-        create_file('app/models/' + model + '.js', 'function ' + Model + ' () {\n}\n\n' +
-            Model + '.attributes = {\n' + attrs.join('') + '};'
+        createDir('app/');
+        createDir('app/models/');
+        createFile('app/models/' + model + '.js', 'var ' + Model + ' = describe("' + Model + '", function () {\n' +
+           attrs.join('\n') + '\n});'
         );
     },
     controller: function (args) {
@@ -91,27 +110,27 @@ var generators = {
             actions.push('    ' + action + ': function (req, next) {\n    }');
         });
 
-        create_dir('app/');
-        create_dir('app/controllers/');
-        create_parents(ns, 'app/controllers/');
+        createDir('app/');
+        createDir('app/controllers/');
+        createParents(ns, 'app/controllers/');
 
         // controller
         var filename = 'app/controllers/' + controller + '_controller.js';
-        create_file(filename, 'module.exports = {\n' + actions.join(',\n') + '\n};');
+        createFile(filename, 'module.exports = {\n' + actions.join(',\n') + '\n};');
 
-        create_dir('app/helpers/');
-        create_parents(ns, 'app/helpers/');
+        createDir('app/helpers/');
+        createParents(ns, 'app/helpers/');
 
         // helper
         filename = 'app/helpers/' + controller + '_helper.js';
-        create_file(filename, 'module.exports = {\n};');
+        createFile(filename, 'module.exports = {\n};');
 
         // views
-        create_dir('app/views/');
-        create_parents(ns, 'app/views/');
-        create_dir('app/views/' + controller + '/');
+        createDir('app/views/');
+        createParents(ns, 'app/views/');
+        createDir('app/views/' + controller + '/');
         args.forEach(function (action) {
-            create_file('app/views/' + controller + '/' + action + '.ejs', '');
+            createFile('app/views/' + controller + '/' + action + '.ejs', '');
         });
     }
 };
@@ -135,11 +154,15 @@ case 'init':
       'app/views/',
       'config/',
       'config/initializers/'
-    ].forEach(create_dir);
-    create_file('config/routes.js', 'exports.routes = function (map) {\n};');
-    create_file('config/requirements.json', fs.readFileSync(__dirname + '/../templates/requirements.json'));
-    create_file('Jakefile', fs.readFileSync(__dirname + '/../templates/tasks.js'));
-    create_file('app/views/application_layout.ejs', fs.readFileSync(__dirname + '/../templates/layout.ejs'));
+    ].forEach(createDir);
+    createFile('config/routes.js',
+        'exports.routes = function (map) {\n};');
+    createFile('config/requirements.json',
+        fs.readFileSync(__dirname + '/../templates/requirements.json'));
+    createFile('Jakefile', 
+        fs.readFileSync(__dirname + '/../templates/tasks.js'));
+    createFile('app/views/application_layout.ejs',
+        fs.readFileSync(__dirname + '/../templates/layout.ejs'));
 
     // patch app.js
     var filename = process.cwd() + '/app.js';
