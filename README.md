@@ -19,7 +19,7 @@ Usage
 =====
 
     $ mkdir blog && cd blog
-    $ express && railway init
+    $ express -t ejs && railway init
 
 Short functionality review
 ==========================

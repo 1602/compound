@@ -1,7 +1,7 @@
 require('./spec_helper').init(exports);
 
-[ 'redis~'
-, 'mysql'
+[ 'redis'
+, 'mysql~'
 , 'mongodb~'
 , 'postgres~'
 ].forEach(function (driver) {
@@ -26,16 +26,17 @@ function testCasesFor (driver) {
         properties['comment'] = {
             content:   { type: String, validate: /./  },
             date:      { type: Date    },
-            author:    { type: String  }
+            author:    { type: String  },
+            approved:  { type: Boolean }
         };
 
         var associations = {};
         associations['post'] = {
-            comments: {className: 'Comment', relationType: 'n'}
+            comments: {className: 'Comment', relationType: 'n', tableName: 'comment'}
         };
 
         associations['comment'] = {
-            post:     {className: 'Post', relationType: '<'}
+            post:     {className: 'Post', relationType: '<', tableName: 'post'}
         };
 
         try {
@@ -51,8 +52,22 @@ function testCasesFor (driver) {
             return;
         }
         // orm.debugMode = true;
-        orm.mixPersistMethods(Post,    'Post',    properties['post'],    associations['post']);
-        orm.mixPersistMethods(Comment, 'Comment', properties['comment'], associations['comment']);
+        orm.mixPersistMethods(Post, {
+            className:    'Post',
+            tableName:    'post',
+            properties:   properties['post'],
+            associations: associations['post']
+        });
+        orm.mixPersistMethods(Comment, {
+            className:    'Comment',
+            tableName:    'comment',
+            properties:   properties['comment'],
+            associations: associations['comment'],
+            scopes: {
+                approved: { conditions: { approved: true } },
+                author: { block: function (author) { return {conditions: {author: author}}; } }
+            }
+        });
 
         it('should initialize object properly', function (test) {
             var hw = 'Hello world', post = new Post({title: hw});
@@ -150,7 +165,7 @@ function testCasesFor (driver) {
         it('should update single attribute', function (test) {
             Post.create({title: 'title', content: 'content'}, function () {
                 this.content = 'New content';
-                this.update_attribute('title', 'New title', function () {
+                this.updateAttribute('title', 'New title', function () {
                     test.equal(this.title, 'New title');
                     test.ok(!this.propertyChanged('title'));
                     test.equal(this.content, 'New content');
@@ -196,6 +211,20 @@ function testCasesFor (driver) {
             Post.last(function (post) {
                 test.strictEqual(post.constructor, Post);
                 done();
+            });
+        });
+
+        it('should load associated collection', function () {
+            Post.last(function (post) {
+                post.comments.approved.where('author = ?', 'me').load();
+            });
+        });
+
+        it('should find record and associated association', function (test) {
+            test.done(); return;
+            Post.last(function (post) {
+                Post.find(post.id, {include: 'comments'}, function () {
+                });
             });
         });
 

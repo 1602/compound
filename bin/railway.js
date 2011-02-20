@@ -48,15 +48,11 @@ function createFile (filename, contents) {
     }
 }
 
-<<<<<<< HEAD
-function createParents(ns, d) {
-=======
-function create_file_by_template (filename, template) {
-    create_file(filename, fs.readFileSync(__dirname + '/../templates/' + template));
+function createFileByTemplate (filename, template) {
+    createFile(filename, fs.readFileSync(__dirname + '/../templates/' + template));
 }
 
-function create_parents(ns, d) {
->>>>>>> master
+function createParents(ns, d) {
     ns.forEach(function (dir) {
         d += dir + '/';
         createDir(d);
@@ -165,13 +161,13 @@ case 'init':
       'public/',
       'public/stylesheets/',
       'public/javascripts/'
-    ].forEach(create_dir);
+    ].forEach(createDir);
     createFile('config/routes.js', 'exports.routes = function (map) {\n};');
-    create_file_by_template('config/requirements.json', 'requirements.json');
-    create_file_by_template('Jakefile', 'tasks.js');
-    create_file_by_template('app/views/application_layout.ejs', 'layout.ejs');
-    create_file_by_template('public/stylesheets/reset.css', 'reset.css');
-    create_file_by_template('public/javascripts/rails.js', 'rails.js');
+    createFileByTemplate('config/requirements.json', 'requirements.json');
+    createFileByTemplate('Jakefile', 'tasks.js');
+    createFileByTemplate('app/views/application_layout.ejs', 'layout.ejs');
+    createFileByTemplate('public/stylesheets/reset.css', 'reset.css');
+    createFileByTemplate('public/javascripts/rails.js', 'rails.js');
 
     // patch app.js
     var filename = process.cwd() + '/app.js';
