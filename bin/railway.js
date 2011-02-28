@@ -141,6 +141,31 @@ var generators = {
 
 var args = process.argv.slice(2);
 switch (args.shift()) {
+case 'c':
+case 'console':
+    var filename = process.cwd() + '/app.js';
+    if (path.existsSync(filename)) {
+        app = require(filename);
+    }
+    var ctx = require('repl').start('railway> ').context;
+    for (var m in models) {
+        ctx[m] = models[m];
+    }
+    ctx.c = function () {
+        for (var i = 0; i < 10; i++) {
+            if (i < arguments.length) {
+                ctx['_' + i] = arguments[i];
+            } else {
+                if (ctx.hasOwnProperty('_' + i)) {
+                    delete ctx['_' + i];
+                }
+            }
+        }
+    };
+    ctx.exit = function () {
+        process.exit(0);
+    };
+    break;
 case 'h':
 case 'help':
     sys.puts('\nUsage: railway command [argument(s)]\n\n' +
@@ -185,13 +210,14 @@ case 'init':
     } else {
         sys.puts($('missing').bold.red + ' app.js');
     }
+    process.exit(0);
     break;
 case 'generate':
     var what = args.shift();
     if (generators[what]) {
         generators[what](args);
     }
+    process.exit(0);
     break;
 }
 
-process.exit(0);

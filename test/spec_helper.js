@@ -9,6 +9,7 @@ function it(should, test_case) {
 }
 
 global.it = it;
+global.sinon = require('sinon');
 
 function context(name, tests) {
     check_external_exports();

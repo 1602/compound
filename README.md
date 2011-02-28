@@ -140,52 +140,49 @@ Controllers
 
 The controller is a module containing the declaration of actions such as this:
 
-    module.exports = {
-        _render: {
-            layout: 'admin'
-        },
-        index: function (req, next) {
-            Record.all_instances({order: 'created_at'}, function (records) {
-                next('render', { records: records });
-            });
-        },
-        create: function (req, next) {
-            Record.create_localized(req.locale, req.body, function () {
-                next('redirect', path_to.admin_posts);
-            });
-        },
-        new: function (req, next) {
-            next('render', { post: new Record });
-        },
-        edit: function (req, next) {
-            Record.find(req.params.id, function () {
-                this.localize(req.locale);
-                next('render', { post: this });
-            });
-        },
-        update: function (req, next) {
-            Record.find(req.params.id, function () {
-                this.save_localized(req.locale, req.body, function () {
-                    next('redirect', path_to.admin_posts);
-                });
-            });
-        }
-    };
+    beforeFilter(loadPost, {only: ['edit', 'update', 'destroy']});
 
-Each controller method takes two parameters. First param is object that represents request, second param is a callback function that takes a first parameter the desired effect (`render`, `redirect` or `send`)or a callback function that can work directly with the response object:
-
-    next(function (res) {
-        res.header('Key', 'Value');
-        res.send('OK');
+    action('index', function () {
+        Post.allInstances({order: 'created_at'}, function (collection) {
+            render({ posts: collection });
+        });
     });
+
+    action('create', function () {
+        Post.create(req.body, function () {
+            redirect(path_to.admin_posts);
+        });
+    });
+
+    action('new', function () {
+        render({ post: new Post });
+    });
+
+    action('edit', function () {
+        render({ post: request.post });
+    });
+
+    action('update', function () {
+        request.post.save(req.locale, req.body, function () {
+            redirect(path_to.admin_posts);
+        });
+    });
+
+    function loadPost () {
+        Post.find(req.params.id, function () {
+            request.post = this;
+            next();
+        });
+    }
 
 ## Generators ##
 
-Railway offers several built-in generators: for a model, controller and for initialization. Can be invoked as follows:
+Railway offers several built-in generators: for a model, controller and for 
+initialization. Can be invoked as follows:
 
     railway generate [what] [params]
 
-`what` can be `model` or `controller`. Example of controller generation:
+`what` can be `model`, `controller` or `scaffold`. Example of controller generation:
 
     $ railway generate controller admin/posts index new edit update
     exists  app/
@@ -203,12 +200,14 @@ Railway offers several built-in generators: for a model, controller and for init
     create  app/views/admin/posts/edit.ejs
     create  app/views/admin/posts/update.ejs
 
-Currently it generates only *.ejs views, because there are few bugs in the jade templating engine.
+Currently it generates only *.ejs views
 
 Models
 ------
 
-At the moment I store objects in redis data store. For that purpose I have written simple driver, that adds persistence-related methods to models described in app/models/*.js. I can work with models the following way:
+At the moment I store objects in redis data store. For that purpose I have
+written simple driver, that adds persistence-related methods to models described
+in app/models/*.js. I can work with models the following way:
 
 File `app/models/post.js`:
 
@@ -247,7 +246,4 @@ In controller:
         });
     });
 
-For other examples please check out [tests for node-redis-mapper][2].
-
   [1]: http://node-js.ru
-  [2]: https://github.com/1602/orm/blob/master/test/orm.js
