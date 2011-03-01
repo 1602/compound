@@ -144,28 +144,45 @@ switch (args.shift()) {
 case 'c':
 case 'console':
     var filename = process.cwd() + '/app.js';
-    if (path.existsSync(filename)) {
-        app = require(filename);
-    }
     var ctx = require('repl').start('railway> ').context;
-    for (var m in models) {
-        ctx[m] = models[m];
-    }
+
+    ctx.reload = function () {
+        global.models = {};
+        if (path.existsSync(filename)) {
+            app = require(filename, true);
+        }
+        for (var m in models) {
+            ctx[m] = models[m];
+        }
+    };
+
     ctx.c = function () {
+        var l = arguments.length,
+            message = 'Callback called with ' + l +
+                ' argument' + (l === 1 ? '' : 's') + (l > 0 ? ':\n' : '');
+
         for (var i = 0; i < 10; i++) {
             if (i < arguments.length) {
                 ctx['_' + i] = arguments[i];
+                message += '_' + i + ' = ' + arguments[i] + '\n ';
             } else {
                 if (ctx.hasOwnProperty('_' + i)) {
                     delete ctx['_' + i];
                 }
             }
         }
+        console.log(message);
     };
+
     ctx.exit = function () {
         process.exit(0);
     };
+
+    ctx.reload();
+
     break;
+
+default:
 case 'h':
 case 'help':
     sys.puts('\nUsage: railway command [argument(s)]\n\n' +
@@ -175,6 +192,7 @@ case 'help':
     '    generate [smth]  -- generate smth (model, controller)\n\n');
     process.exit(0);
     break;
+
 case 'init':
     [ 'app/',
       'app/models/',
