@@ -246,6 +246,43 @@ In controller:
         });
     });
 
+REPL console
+------------
+
+To run REPL console use command
+
+    railway console
+
+or it's shortcut
+
+    railway c
+
+It just simple node-js console with some Railway bingings, e.g. models. Just one note
+about working with console. Node.js is asunchronous by his nature, and it's great
+but it made console debugging much more complicated, because you should use callback
+to fetch result from database, for example. I have added one useful method to
+simplify async debugging using railway console. It's name `c`, you can pass it
+as parameter to any function requires callback, and it will store parameters passed
+to callback to variables `_0, _1, ..., _N` where N is index in `arguments`.
+
+Example:
+
+    railway c
+    railway> User.find(53, c)
+    Callback called with 2 arguments:
+    _0 = null
+    _1 = [object Object]
+    railway> _1
+    { email: [Getter/Setter],
+      password: [Getter/Setter],
+      activationCode: [Getter/Setter],
+      activated: [Getter/Setter],
+      forcePassChange: [Getter/Setter],
+      routesCount: [Getter/Setter],
+      isAdmin: [Getter/Setter],
+      id: [Getter/Setter] }
+
+
 MIT License
 ===========
 
