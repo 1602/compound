@@ -1,3 +1,7 @@
+var utils = require('../lib/railway_utils'),
+    pluralize = utils.pluralize,
+    camelize  = utils.camelize;
+
 // Stylize a string
 function stylize(str, style) {
     var styles = {
@@ -111,7 +115,7 @@ var generators = {
 
         var actions = [];
         args.forEach(function (action) {
-            actions.push('    ' + action + ': function (req, next) {\n    }');
+            actions.push('action("' + action + '", function () {\n});');
         });
 
         createDir('app/');
@@ -120,7 +124,7 @@ var generators = {
 
         // controller
         var filename = 'app/controllers/' + controller + '_controller.js';
-        createFile(filename, 'module.exports = {\n' + actions.join(',\n') + '\n};');
+        createFile(filename, actions.join('\n\n'));
 
         createDir('app/helpers/');
         createParents(ns, 'app/helpers/');
@@ -136,6 +140,27 @@ var generators = {
         args.forEach(function (action) {
             createFile('app/views/' + controller + '/' + action + '.ejs', '');
         });
+    },
+    crud: function (args) {
+        var model = args[0];
+        if (!model) {
+            console.log('Usage example: railway g crud post title:string content:string published:boolean');
+            return;
+        }
+        this.model.apply(this, Array.prototype.slice.call(arguments));
+        createDir('app/');
+        createDir('app/controllers/');
+        createFile('app/controllers/' + pluralize(model).toLowerCase() + '_controller.js', controllerCode(model));
+
+        function controllerCode(model) {
+            var code = fs.readFileSync(__dirname + '/../templates/crud_controller.js')
+                .toString()
+                .replace(/models/g, pluralize(model).toLowerCase())
+                .replace(/model/g, model.toLowerCase())
+                .replace(/Model/g, camelize(model, true));
+            return code;
+        }
+
     }
 };
 
@@ -151,6 +176,8 @@ case 'console':
         if (path.existsSync(filename)) {
             app = require(filename, true);
         }
+        ctx.app = app;
+
         for (var m in models) {
             ctx[m] = models[m];
         }
