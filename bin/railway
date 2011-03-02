@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 var utils = require('../lib/railway_utils'),
     pluralize = utils.pluralize,
     camelize  = utils.camelize;
