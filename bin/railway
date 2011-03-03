@@ -2,37 +2,8 @@
 
 var utils = require('../lib/railway_utils'),
     pluralize = utils.pluralize,
-    camelize  = utils.camelize;
-
-// Stylize a string
-function stylize(str, style) {
-    var styles = {
-        'bold'      : [1,  22],
-        'italic'    : [3,  23],
-        'underline' : [4,  24],
-        'cyan'      : [96, 39],
-        'yellow'    : [33, 39],
-        'green'     : [32, 39],
-        'red'       : [31, 39],
-        'grey'      : [90, 39],
-        'green-hi'  : [92, 32],
-    };
-    return '\033[' + styles[style][0] + 'm' + str +
-           '\033[' + styles[style][1] + 'm';
-};
-
-var $ = function (str) {
-    str = new(String)(str);
-
-    ['bold', 'grey', 'yellow', 'red', 'green', 'white', 'cyan', 'italic', 'underline'].forEach(function (style) {
-        Object.defineProperty(str, style, {
-            get: function () {
-                return $(stylize(this, style));
-            }
-        });
-    });
-    return str;
-};
+    camelize  = utils.camelize,
+    $         = utils.stylize.$;
 
 function createDir (dir) {
     var root = process.cwd();
@@ -228,6 +199,7 @@ case 'init':
       'app/controllers/',
       'app/helpers/',
       'app/views/',
+      'app/views/layouts/',
       'config/',
       'config/initializers/',
       'public/',
@@ -237,7 +209,7 @@ case 'init':
     createFile('config/routes.js', 'exports.routes = function (map) {\n};');
     createFileByTemplate('config/requirements.json', 'requirements.json');
     createFileByTemplate('Jakefile', 'tasks.js');
-    createFileByTemplate('app/views/application_layout.ejs', 'layout.ejs');
+    createFileByTemplate('app/views/layouts/application_layout.ejs', 'layout.ejs');
     createFileByTemplate('public/stylesheets/reset.css', 'reset.css');
     createFileByTemplate('public/javascripts/rails.js', 'rails.js');
 
@@ -267,4 +239,4 @@ case 'generate':
     process.exit(0);
     break;
 }
-
+/*vim ft:javascript*/
