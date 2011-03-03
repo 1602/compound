@@ -211,14 +211,12 @@ in app/models/*.js. I can work with models the following way:
 
 File `app/models/post.js`:
 
-    function Post () {};
-
-    Post.attributes = {
-        title: 'string',
-        preview: 'string',
-        content: 'string',
-        tags: 'json'
-    };
+    var Post = describe('Post', function () {
+        property('title',   String);
+        property('preview', String);
+        property('content', String);
+        property('tags',    Array);
+    });
 
 In controller:
 
@@ -240,7 +238,7 @@ In controller:
     });
 
     // collection
-    Post.all_instances(function (posts) {
+    Post.allInstances(function (posts) {
         posts.forEach(function (post) {
             console.log(post.title);
         });
