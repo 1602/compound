@@ -120,6 +120,11 @@ var generators = {
         createFileByTemplate('features/step_definitions/web_steps.js', 'features/step_definitions/web_steps.js');
         createFileByTemplate('features/step_definitions/email_steps.js', 'features/step_definitions/email_steps.js');
         createFileByTemplate('features/step_definitions/jquery.js', 'features/step_definitions/jquery.js');
+        try {
+            require('cucumis');
+        } catch (e) {
+            sys.puts($('Cucumis is not installed').red + ' please run ' + $('npm install cucumis').yellow);
+        }
     },
     crud: function (args) {
         var model = args[0];
