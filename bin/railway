@@ -114,6 +114,13 @@ var generators = {
             createFile('app/views/' + controller + '/' + action + '.ejs', '');
         });
     },
+    features: function () {
+        createDir('features/');
+        createDir('features/step_definitions/');
+        createFileByTemplate('features/step_definitions/web_steps.js', 'features/step_definitions/web_steps.js');
+        createFileByTemplate('features/step_definitions/email_steps.js', 'features/step_definitions/email_steps.js');
+        createFileByTemplate('features/step_definitions/jquery.js', 'features/step_definitions/jquery.js');
+    },
     crud: function (args) {
         var model = args[0];
         if (!model) {
@@ -189,7 +196,7 @@ case 'help':
     '  command is:\n' + 
     '    h or help        -- prints this message\n' +
     '    init             -- initialize railway directory structure\n' +
-    '    generate [smth]  -- generate smth (model, controller)\n\n');
+    '    generate [smth]  -- generate smth (model, controller, crud, features)\n\n');
     process.exit(0);
     break;
 
