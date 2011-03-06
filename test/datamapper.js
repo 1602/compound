@@ -1,8 +1,8 @@
 require('./spec_helper').init(exports);
 
-[ 'redis'
+[ 'redis~'
 , 'mysql~'
-, 'mongodb~'
+, 'mongodb'
 , 'postgres~'
 ].forEach(function (driver) {
     context(driver, testCasesFor(driver));

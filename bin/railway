@@ -60,7 +60,8 @@ var sys = require('sys');
 var path = require('path');
 var generators = {
     model: function (args) {
-        var model = args.shift();
+        var config = JSON.parse(fs.readFileSync(process.cwd() + '/config/database.json', 'utf-8'))[process.env.NODE_ENV || 'development'];
+        var model = args.shift(), code = '';
         if (!model) { 
             sys.puts($('Model name required').red.bold);
             return;
@@ -68,13 +69,26 @@ var generators = {
         var Model = model[0].toUpperCase() + model.slice(1);
         var attrs = [];
         args.forEach(function (arg) {
-            attrs.push('    property("' + arg.split(':')[0] + '", ' + formatType(arg.split(':')[1]) + ');');
+            var property = arg.split(':')[0],
+                type = formatType(arg.split(':')[1]);
+
+            if (config.driver == 'mongodb') {
+                attrs.push(property + ': { type: ' + type + ' }');
+            } else {
+                attrs.push('    property("' + property + '", ' + type + ');');
+            }
         });
         createDir('app/');
         createDir('app/models/');
-        createFile('app/models/' + model + '.js', 'var ' + Model + ' = describe("' + Model + '", function () {\n' +
-           attrs.join('\n') + '\n});'
-        );
+        if (config.driver == 'mongodb') {
+            code = 'var ' + Model + 'Schema = new Schema({\n    ' + attrs.join(',\n    ') + '\n});\n';
+            code += 'var ' + Model + ' = mongoose.model("' + Model + '", ' + Model + 'Schema);\n';
+            code += 'export(' + Model + ');';
+        } else {
+            code = 'var ' + Model + ' = describe("' + Model + '", function () {\n' +
+                attrs.join('\n') + '\n});';
+        }
+        createFile('app/models/' + model + '.js', code);
     },
     controller: function (args) {
         var controller = args.shift();
@@ -124,7 +138,20 @@ var generators = {
             require('cucumis');
         } catch (e) {
             sys.puts($('Cucumis is not installed').red + ' please run ' + $('npm install cucumis').yellow);
-        }
+        }        Object.keys(models).forEach(function (name) {
+            cname = name;
+            var classDefinition = models[name];
+            classDefinition.implementation();
+            orm.mixPersistMethods(ctx[cname], {
+                className:    classDefinition.className,
+                tableName:    classDefinition.tableName,
+                primaryKey:   classDefinition.primaryKey,
+                properties:   classDefinition.properties,
+                associations: classDefinition.associations,
+                scopes:       classDefinition.scopes
+            });
+        });
+
     },
     crud: function (args) {
         var model = args[0];
