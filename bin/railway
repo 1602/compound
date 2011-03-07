@@ -82,8 +82,9 @@ var generators = {
         createDir('app/models/');
         if (config.driver == 'mongodb') {
             code = 'var ' + Model + 'Schema = new Schema({\n    ' + attrs.join(',\n    ') + '\n});\n';
-            code += 'var ' + Model + ' = mongoose.model("' + Model + '", ' + Model + 'Schema);\n';
-            code += 'export(' + Model + ');';
+            code += 'mongoose.model("' + Model + '", ' + Model + 'Schema);\n';
+            code += 'var ' + Model + ' = mongoose.model("' + Model + '");\n';
+            code += 'export("' + Model + '", ' + Model + ');';
         } else {
             code = 'var ' + Model + ' = describe("' + Model + '", function () {\n' +
                 attrs.join('\n') + '\n});';
