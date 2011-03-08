@@ -81,10 +81,11 @@ var generators = {
         createDir('app/');
         createDir('app/models/');
         if (config.driver == 'mongodb') {
-            code = 'var ' + Model + 'Schema = new Schema({\n    ' + attrs.join(',\n    ') + '\n});\n';
-            code += 'mongoose.model("' + Model + '", ' + Model + 'Schema);\n';
-            code += 'var ' + Model + ' = mongoose.model("' + Model + '");\n';
-            code += 'export("' + Model + '", ' + Model + ');';
+            // code = 'var ModelSchema = new Schema({\n    ' + attrs.join(',\n    ') + '\n});\n';
+            // code += 'mongoose.model("Model", ModelSchema);\n';
+            // code += 'var Model = mongoose.model("Model");\n';
+            // code += 'export("' + Model + '", ' + Model + ');';
+            code = '';
         } else {
             code = 'var ' + Model + ' = describe("' + Model + '", function () {\n' +
                 attrs.join('\n') + '\n});';
@@ -204,7 +205,7 @@ case 'console':
         for (var i = 0; i < 10; i++) {
             if (i < arguments.length) {
                 ctx['_' + i] = arguments[i];
-                message += '_' + i + ' = ' + arguments[i] + '\n ';
+                message += '_' + i + ' = ' + arguments[i] + '\n';
             } else {
                 if (ctx.hasOwnProperty('_' + i)) {
                     delete ctx['_' + i];
