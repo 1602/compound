@@ -72,7 +72,7 @@ var generators = {
             var property = arg.split(':')[0],
                 type = formatType(arg.split(':')[1]);
 
-            if (config.driver == 'mongodb') {
+            if (config.driver == 'mongoose') {
                 attrs.push(property + ': { type: ' + type + ' }');
             } else {
                 attrs.push('    property("' + property + '", ' + type + ');');
@@ -80,7 +80,7 @@ var generators = {
         });
         createDir('app/');
         createDir('app/models/');
-        if (config.driver == 'mongodb') {
+        if (config.driver == 'mongoose') {
             // code = 'var ModelSchema = new Schema({\n    ' + attrs.join(',\n    ') + '\n});\n';
             // code += 'mongoose.model("Model", ModelSchema);\n';
             // code += 'var Model = mongoose.model("Model");\n';
@@ -243,6 +243,7 @@ case 'init':
       'app/views/layouts/',
       'config/',
       'config/initializers/',
+      'db/',
       'public/',
       'public/stylesheets/',
       'public/javascripts/'
@@ -253,6 +254,7 @@ case 'init':
     createFileByTemplate('app/views/layouts/application_layout.ejs', 'layout.ejs');
     createFileByTemplate('public/stylesheets/reset.css', 'reset.css');
     createFileByTemplate('public/javascripts/rails.js', 'rails.js');
+    createFileByTemplate('db/schema.js', 'schema.js');
 
     // patch app.js
     var filename = process.cwd() + '/app.js';
