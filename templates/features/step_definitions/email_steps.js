@@ -7,11 +7,18 @@ require('mailer').send = function (email, cb) {
     process.nextTick(cb);
 };
 
+require('nodemailer').send_mail = function (email, cb) {
+    mailBox.push(email);
+    process.nextTick(cb);
+};
+
 Steps.Then(/^I should receive new email with subject "([^"]*?)"$/, function (ctx, subject) {
-    var lastEmail = mailBox[mailBox.length - 1];
-    assert.ok(lastEmail);
-    assert.equal(lastEmail.subject, subject, "Email subject not matched, expected: \"" + subject + "\", got: \"" + lastEmail.subject + "\"");
-    ctx.done();
+    setTimeout(function () {
+        var lastEmail = mailBox[mailBox.length - 1];
+        assert.ok(lastEmail, 'No email in mailbox, it seems that mailer.send() did not called');
+        assert.equal(lastEmail.subject, subject, "Email subject not matched, expected: \"" + subject + "\", got: \"" + lastEmail.subject + "\"");
+        ctx.done();
+    }, 500);
 });
 
 Steps.When(/^I open email$/, function (ctx) {

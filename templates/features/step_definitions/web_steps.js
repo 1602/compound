@@ -6,6 +6,7 @@ var server  = require('../../app'),
     jsdom   = require('jsdom'),
     jquery  = require('./jquery');
 
+server.settings.quiet = true;
 Steps.browser = browser;
 
 assert.statusCode = function (code) {
@@ -17,6 +18,13 @@ assert.statusCode = function (code) {
 assert.flash = function (class, message) {
     var actual = browser.$('.' + class).text();
     assert.equal(actual, message, "Response should contain \"" + message + "\" but it doesn't, actual: '" + actual + "'");
+}
+
+assert.dontFlash = function (class, message) {
+    var actual = browser.$('.' + class).text();
+    if (actual == message) {
+        assert.fail("Response should not contain \"" + message + "\" but it is contain");
+    }
 }
 
 assert.contain = function (text) {
@@ -38,19 +46,12 @@ Steps.When(/^I go to path "([^"]*?)"$/, function (ctx, path) {
 
 Steps.Then(/^I should be redirected to "([^"]*?)"$/, function (ctx, path) {
     assert.statusCode(302);
-    assert.equal(browser.response.headers.location, path);
+    assert.equal(browser.response.headers.location, path, 'Expected header "location": ' + path + ', but headers are: ' + JSON.stringify(browser.response.headers));
     browser.get(path, ctx.done);
 });
 
 Steps.When(/^I?\s?click button "([^"]*?)"$/, function (ctx, text) {
-    var $button = browser.$('input[type=submit][value=' + text + ']');
-    if ($button[0]) {
-        browser.submitForm($button.parent('form'), ctx.done);
-    } else {
-        console.log(browser.response.body);
-        assert.fail("Can not find button");
-        ctx.done();
-    }
+    browser.clickButton(text, ctx.done);
 });
 
 Steps.When(/^I?\s?fill in "([^"]*?)" with "([^"]*?)"$/, function (ctx, name, value) {
@@ -64,6 +65,12 @@ Steps.Then(/^I?\s?should see flash ([^\s]+) message "([^"]*?)"$/, function (ctx,
     ctx.done();
 });
 
+Steps.Then(/^I?\s?should not see flash ([^\s]+) message "([^"]*?)"$/, function (ctx, class, message) {
+    assert.statusCode(200);
+    assert.dontFlash(class, message);
+    ctx.done();
+});
+
 Steps.Then(/^I?\s?should see "([^"]*?)"$/, function (ctx, text) {
     assert.statusCode(200);
     assert.contain(text);
@@ -71,6 +78,11 @@ Steps.Then(/^I?\s?should see "([^"]*?)"$/, function (ctx, text) {
 });
 
 Steps.Given(/^clear cookies in browser$/, function (ctx) {
+    browser.cookie = '';
+    ctx.done();
+});
+
+Steps.Then(/^clear cookies in browser$/, function (ctx) {
     browser.cookie = '';
     ctx.done();
 });
@@ -92,7 +104,7 @@ Browser.prototype.get = function (path, callback) {
 };
 
 Browser.prototype.submitForm = function ($form, callback) {
-    var action = $form.attr('action'),
+    var action = $form.attr('action') || this.url,
         method = $form.attr('method') || 'GET',
         params = $form.serialize();
 
@@ -109,6 +121,7 @@ Browser.prototype.request = function (method, path, data, callback) {
     if (this.cookie) {
         headers.Cookie = this.cookie;
     }
+    this.url = path;
     var request = client.request(method, path, headers);
 
     request.addListener('response', function (response) {
@@ -136,6 +149,21 @@ Browser.prototype.request = function (method, path, data, callback) {
         console.log(data);
     }
     request.end();
+};
+
+Browser.prototype.fillIn = function (name, value) {
+    this.$('input[name=' + name + ']').val(value.replace('(at)', '@'));
+};
+
+Browser.prototype.clickButton = function (text, done) {
+    var $button = browser.$('input[type=submit][value=' + text + ']');
+    if ($button[0]) {
+        browser.submitForm($button.parent('form'), done);
+    } else {
+        console.log(browser.response.body);
+        assert.fail("Can not find button");
+        done();
+    }
 };
 
 function normalize(html) {
