@@ -19,7 +19,11 @@ Usage
 =====
 
     $ mkdir blog && cd blog
-    $ express -t ejs && railway init
+    $ railway init
+
+or, slightly simplier, but with the same result
+
+    $ railway init blog
 
 Short functionality review
 ==========================
@@ -48,17 +52,19 @@ On initialization rails-like directories tree generated, like that:
     |   |   |       |-- edit.ejs
     |   |   |       |-- index.ejs
     |   |   |       |-- new.ejs
-    |   |   |-- admin_layout.ejs
-    |   |   |-- application_layout.ejs
+    |   |   |-- layouts
+    |   |   |   `-- application_layout.ejs
+    |   |   |-- partials
     |   |   `-- posts
     |   |       |-- index.ejs
-    |   |        `-- show.ejs
+    |   |       `-- show.ejs
     |   `-- helpers
     |       |-- admin
     |       |   |-- posts_helper.js
     |       |   `-- tags_helper.js
     |       `-- posts_helper.js
     `-- config
+        |-- database.json
         `-- routes.js
 
 Routing

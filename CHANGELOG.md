@@ -1,3 +1,13 @@
+0.0.8
+
+Now you can run `railway init blog` and railway will create directory structure
+within `blog` root folder
+
+By default will created file `config/database.json` that will force you to use
+mongoose driver, feel free to modify it and use redis or mysql (both supported)
+
+Also, running `express -t ejs` no longer required
+
 0.0.7
 =====
 

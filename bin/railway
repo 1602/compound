@@ -7,6 +7,13 @@ var utils = require('../lib/railway_utils'),
 
 function createDir (dir) {
     var root = process.cwd();
+    if (options.appname && !createDir.rootCreated) {
+        createDir.rootCreated = true;
+        createDir('');
+    }
+    if (options.appname) {
+        dir = options.appname + '/' + dir;
+    }
     if (path.existsSync(root + '/' + dir)) {
         sys.puts($('exists').bold.grey + '  ' + dir);
     } else {
@@ -17,6 +24,9 @@ function createDir (dir) {
 
 function createFile (filename, contents) {
     var root = process.cwd();
+    if (options.appname) {
+        filename = options.appname + '/' + filename;
+    }
     if (path.existsSync(root + '/' + filename)) {
         sys.puts($('exists').bold.grey + '  ' + filename);
     } else {
@@ -25,8 +35,12 @@ function createFile (filename, contents) {
     }
 }
 
-function createFileByTemplate (filename, template) {
-    createFile(filename, fs.readFileSync(__dirname + '/../templates/' + template));
+function createFileByTemplate (filename, template, prepare) {
+    var text = fs.readFileSync(__dirname + '/../templates/' + template);
+    if (prepare) {
+        text = prepare(text.toString('utf8'));
+    }
+    createFile(filename, text);
 }
 
 function createParents(ns, d) {
@@ -178,6 +192,21 @@ var generators = {
     }
 };
 
+var options;
+function parseOptions (defaultKeyName) {
+    options = {};
+    var key = defaultKeyName || 'operand';
+    args.forEach(function (arg) {
+        if (arg.slice(0, 2) == '--') {
+            key = arg.slice(2);
+        } else if (arg[0] == '-') {
+            key = arg.slice(2);
+        } else {
+            options[key] = arg;
+        }
+    });
+}
+
 var args = process.argv.slice(2);
 switch (args.shift()) {
 case 'c':
@@ -235,6 +264,7 @@ case 'help':
     break;
 
 case 'init':
+    parseOptions('appname');
     [ 'app/',
       'app/models/',
       'app/controllers/',
@@ -250,28 +280,14 @@ case 'init':
     ].forEach(createDir);
     createFile('config/routes.js', 'exports.routes = function (map) {\n};');
     createFileByTemplate('config/requirements.json', 'requirements.json');
+    createFileByTemplate('server.js', 'server_mongo.js');
+    createFileByTemplate('config/database.json', 'database.json', replaceAppname);
     createFileByTemplate('Jakefile', 'tasks.js');
     createFileByTemplate('app/views/layouts/application_layout.ejs', 'layout.ejs');
     createFileByTemplate('public/stylesheets/reset.css', 'reset.css');
     createFileByTemplate('public/javascripts/rails.js', 'rails.js');
     createFileByTemplate('db/schema.js', 'schema.js');
 
-    // patch app.js
-    var filename = process.cwd() + '/app.js';
-    if (path.existsSync(filename)) {
-        var app = fs.readFileSync(filename).toString();
-        if (!app.match('express-on-railway')) {
-            app = app
-                .replace(/(\/\/ Only listen on \$ node app\.js)/, 'require("express-on-railway").init(__dirname, app);\n\n$1')
-                .replace("app.set('views', __dirname + '/views');", "app.set('views', __dirname + '/app/views');");
-            fs.writeFileSync(filename, app);
-            sys.puts($('patch').bold.green + '   app.js');
-        } else {
-            sys.puts($('patched').bold.grey + ' app.js');
-        }
-    } else {
-        sys.puts($('missing').bold.red + ' app.js');
-    }
     process.exit(0);
     break;
 case 'generate':
@@ -283,3 +299,7 @@ case 'generate':
     break;
 }
 /*vim ft:javascript*/
+
+function replaceAppname (template) {
+    return template.replace(/APPNAME/g, options.appname || 'default');
+}
