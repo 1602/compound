@@ -192,7 +192,7 @@ var generators = {
     }
 };
 
-var options;
+var options = {};
 function parseOptions (defaultKeyName) {
     options = {};
     var key = defaultKeyName || 'operand';
