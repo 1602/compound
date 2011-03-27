@@ -22,6 +22,13 @@ function createDir (dir) {
     }
 }
 
+function appendToFile (filename, contents) {
+    var root = process.cwd() + '/',
+        fd = fs.openSync(root + filename, 'a');
+    fs.writeSync(fd, contents);
+    fs.closeSync(fd);
+}
+
 function createFile (filename, contents) {
     var root = process.cwd();
     if (options.appname) {
@@ -74,20 +81,19 @@ var sys = require('sys');
 var path = require('path');
 var generators = {
     model: function (args) {
-        var config = JSON.parse(fs.readFileSync(process.cwd() + '/config/database.json', 'utf-8'))[process.env.NODE_ENV || 'development'];
         var model = args.shift(), code = '';
         if (!model) { 
             sys.puts($('Model name required').red.bold);
             return;
         }
         var Model = model[0].toUpperCase() + model.slice(1);
-        var attrs = [], result = [];
+        var attrs = [], result = [], driver = ormDriver();
         args.forEach(function (arg) {
             var property = arg.split(':')[0],
                 plainType = arg.split(':')[1],
                 type = formatType(plainType);
 
-            if (config.driver == 'mongoose') {
+            if (driver == 'mongoose') {
                 attrs.push(property + ': { type: ' + type + ' }');
             } else {
                 attrs.push('    property("' + property + '", ' + type + ');');
@@ -96,11 +102,13 @@ var generators = {
         });
         createDir('app/');
         createDir('app/models/');
-        if (config.driver == 'mongoose') {
-            // code = 'var ModelSchema = new Schema({\n    ' + attrs.join(',\n    ') + '\n});\n';
-            // code += 'mongoose.model("Model", ModelSchema);\n';
-            // code += 'var Model = mongoose.model("Model");\n';
-            // code += 'export("' + Model + '", ' + Model + ');';
+        if (driver == 'mongoose') {
+            var schema = '\n\n/**\n * ' + Model + '\n */\nvar ' + Model + 'Schema = new Schema;\n';
+            schema += Model + 'Schema.add({\n    ' + attrs.join(',\n    ') + '\n});\n';
+            schema += 'mongoose.model("' + Model + '", ' + Model + 'Schema);\n';
+            schema += 'module.exports["' + Model + '"] = mongoose.model("' + Model + '");';
+            appendToFile('db/schema.js', schema);
+
             code = '';
         } else {
             code = 'var ' + Model + ' = describe("' + Model + '", function () {\n' +
@@ -192,8 +200,7 @@ var generators = {
         function controllerCode(model) {
             var code, _model = model.toLowerCase();
             try {
-                var config = JSON.parse(require('fs').readFileSync(process.cwd() + '/config/database.json', 'utf8'))['development'];
-                code = fs.readFileSync(__dirname + '/../templates/crud_controller_' + config.driver + '.js');
+                code = fs.readFileSync(__dirname + '/../templates/crud_controller_' + ormDriver() + '.js');
             } catch (e) {
                 code = fs.readFileSync(__dirname + '/../templates/crud_controller_redis.js');
             }
@@ -361,4 +368,11 @@ case 'generate':
 
 function replaceAppname (template) {
     return template.replace(/APPNAME/g, options.appname || 'default');
+}
+
+function ormDriver () {
+    if (!ormDriver.config) {
+        ormDriver.config = JSON.parse(require('fs').readFileSync(process.cwd() + '/config/database.json', 'utf8')).development;
+    }
+    return ormDriver.config.driver;
 }

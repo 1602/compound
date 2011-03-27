@@ -1,3 +1,8 @@
+0.0.9
+
+Scaffold generator `railway generate scaffold ModelName field1:type1 field2:type2`
+It generates model, crud controller and appropriated views
+
 0.0.8
 
 Now you can run `railway init blog` and railway will create directory structure
