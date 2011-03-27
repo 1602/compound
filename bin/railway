@@ -81,16 +81,18 @@ var generators = {
             return;
         }
         var Model = model[0].toUpperCase() + model.slice(1);
-        var attrs = [];
+        var attrs = [], result = [];
         args.forEach(function (arg) {
             var property = arg.split(':')[0],
-                type = formatType(arg.split(':')[1]);
+                plainType = arg.split(':')[1],
+                type = formatType(plainType);
 
             if (config.driver == 'mongoose') {
                 attrs.push(property + ': { type: ' + type + ' }');
             } else {
                 attrs.push('    property("' + property + '", ' + type + ');');
             }
+            result.push({name: property, type: type, plainType: plainType});
         });
         createDir('app/');
         createDir('app/models/');
@@ -105,6 +107,7 @@ var generators = {
                 attrs.join('\n') + '\n});';
         }
         createFile('app/models/' + model + '.js', code);
+        return result;
     },
     controller: function (args) {
         var controller = args.shift();
@@ -170,27 +173,82 @@ var generators = {
 
     },
     crud: function (args) {
-        var model = args[0];
+        var model = args[0],
+            models = pluralize(model).toLowerCase();
+
         if (!model) {
             console.log('Usage example: railway g crud post title:string content:string published:boolean');
             return;
         }
-        this.model.apply(this, Array.prototype.slice.call(arguments));
+        var ns = models.split('/');
+        ns.pop();
+
+        var result = this.model.apply(this, Array.prototype.slice.call(arguments));
         createDir('app/');
         createDir('app/controllers/');
-        createFile('app/controllers/' + pluralize(model).toLowerCase() + '_controller.js', controllerCode(model));
+        createParents(ns, 'app/controllers/');
+        createFile('app/controllers/' + models + '_controller.js', controllerCode(model));
 
         function controllerCode(model) {
-            var code = fs.readFileSync(__dirname + '/../templates/crud_controller.js')
-                .toString()
+            var code, _model = model.toLowerCase();
+            try {
+                var config = JSON.parse(require('fs').readFileSync(process.cwd() + '/config/database.json', 'utf8'))['development'];
+                code = fs.readFileSync(__dirname + '/../templates/crud_controller_' + config.driver + '.js');
+            } catch (e) {
+                code = fs.readFileSync(__dirname + '/../templates/crud_controller_redis.js');
+            }
+            code = code
+                .toString('utf8')
                 .replace(/models/g, pluralize(model).toLowerCase())
                 .replace(/model/g, model.toLowerCase())
-                .replace(/Model/g, camelize(model, true));
+                .replace(/Model/g, camelize(model, true))
+                .replace(/FILTER_PROPERTIES/g, result.map(function (p) {
+                    return 'req.' + _model + '["' + p.name + '"] = req.body["' + p.name+ '"];';
+                }).join('\n    '));
             return code;
+        }
+
+        createDir('app/helpers/');
+        createParents(ns, 'app/helpers/');
+
+        // helper
+        filename = 'app/helpers/' + models + '_helper.js';
+        createFile(filename, 'module.exports = {\n};');
+
+        // views
+        // _form partial
+        var form = '';
+        result.forEach(function (property) {
+            form += [
+                '<p>',
+                '  <%- form.label("' + property.name + '") %><br />',
+                '  <%- form.input("' + property.name + '") %>',
+                '</p>'
+            ].join('\n') + '\n';
+        });
+        createDir('app/views/');
+        createDir('app/views/partials/');
+        createDir('app/views/partials/' + models + '/');
+        createFile('app/views/partials/' + models + '/form.ejs', form);
+        createDir('app/views/' + models + '/');
+        // new
+        createFileByTemplate('app/views/' + models + '/new.ejs', 'views/new.ejs', replaceModel);
+        // edit
+        createFileByTemplate('app/views/' + models + '/edit.ejs', 'views/edit.ejs', replaceModel);
+        // index
+        createFileByTemplate('app/views/' + models + '/index.ejs', 'views/index.ejs', replaceModel);
+        // show
+        createFileByTemplate('app/views/' + models + '/show.ejs', 'views/show.ejs', replaceModel);
+
+        function replaceModel (code) {
+            return code
+                .replace(/models/g, models)
+                .replace(/model/g, model.toLowerCase());
         }
 
     }
 };
+generators.scaffold = generators.crud;
 
 var options = {};
 function parseOptions (defaultKeyName) {
@@ -290,6 +348,7 @@ case 'init':
 
     process.exit(0);
     break;
+case 'g':
 case 'generate':
     var what = args.shift();
     if (generators[what]) {
