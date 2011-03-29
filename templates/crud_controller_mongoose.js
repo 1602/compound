@@ -65,13 +65,13 @@ action('update', function () {
 });
 
 action('destroy', function () {
-    req.model.destroy(function (error) {
-        if (err || error) {
+    req.model.remove(function (error) {
+        if (error) {
             flash('error', 'Can not destroy model');
         } else {
             flash('info', 'Model successfully removed');
         }
-        send("'" + path_to.model + "'");
+        send("'" + path_to.models + "'");
     });
 });
 

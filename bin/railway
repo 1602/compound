@@ -197,7 +197,7 @@ var generators = {
         createParents(ns, 'app/controllers/');
         createFile('app/controllers/' + models + '_controller.js', controllerCode(model));
 
-        function controllerCode(model) {
+        function controllerCode (model) {
             var code, _model = model.toLowerCase();
             try {
                 code = fs.readFileSync(__dirname + '/../templates/crud_controller_' + ormDriver() + '.js');
@@ -221,6 +221,11 @@ var generators = {
         // helper
         filename = 'app/helpers/' + models + '_helper.js';
         createFile(filename, 'module.exports = {\n};');
+
+        // layout
+        createFileByTemplate('app/views/layouts/' + models + '_layout.ejs', 'views/scaffold_layout.ejs', replaceModel);
+        // style
+        createFileByTemplate('public/stylesheets/scaffold.css', 'scaffold.css');
 
         // views
         // _form partial
