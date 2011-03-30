@@ -258,6 +258,21 @@ var generators = {
                 .replace(/model/g, model.toLowerCase());
         }
 
+        // route
+        var routesConfig = process.cwd() + '/config/routes.js',
+            routes = fs.readFileSync(routesConfig, 'utf8')
+                .toString()
+                .replace(/\s+$/g, '')
+                .split('\n'),
+            lastLine = routes.pop();
+
+        if (lastLine.match(/^\s*\};\s*$/)) {
+            routes.push('    map.resources(\'' + models + '\');');
+            routes.push(lastLine);
+            fs.writeFileSync(routesConfig, routes.join('\n'));
+            sys.puts($('patch').bold.blue + '  ' + routesConfig);
+        }
+
     }
 };
 generators.scaffold = generators.crud;
