@@ -266,13 +266,17 @@ var generators = {
                 .split('\n'),
             lastLine = routes.pop();
 
-        if (lastLine.match(/^\s*\};\s*$/)) {
+        if (lastLine.match(/^\s*\};\s*$/) && !routes.some(containRoute)) {
             routes.push('    map.resources(\'' + models + '\');');
             routes.push(lastLine);
             fs.writeFileSync(routesConfig, routes.join('\n'));
             sys.puts($('patch').bold.blue + '  ' + routesConfig);
         }
 
+        function containRoute (line) {
+            var m = line.match(/^\s*map\.resources\('([^']+)'/);
+            return m && m[1] == models;
+        }
     }
 };
 generators.scaffold = generators.crud;
