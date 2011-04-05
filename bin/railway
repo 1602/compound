@@ -281,13 +281,16 @@ var args = process.argv.slice(2);
 switch (args.shift()) {
 case 'c':
 case 'console':
-    var filename = process.cwd() + '/app.js';
-    var ctx = require('repl').start('railway> ').context;
+    var filename = process.cwd() + '/server.js',
+        filename2 = process.cwd() + '/app.js',
+        ctx = require('repl').start('railway> ').context;
 
     ctx.reload = function () {
         global.models = {};
         if (path.existsSync(filename)) {
-            app = require(filename, true);
+            app = require(filename);
+        } else if (path.existsSync(filename2)) {
+            app = require(filename2);
         }
         ctx.app = app;
 
