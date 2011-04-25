@@ -6,6 +6,14 @@
     <%- javascript_include_tag('https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js', 'rails', 'application') %>
   </head>
   <body>
+    <% var flash = request.flash('info').pop(); if (flash) { %>
+    <div class="flash info"><%- flash %></div>
+    <% } %>
+
+    <% flash = request.flash('error').pop(); if (flash) { %>
+    <div class="flash error"><%- flash %></div>
+    <% }; %>
+
     <div class="wrap">
       <%- body %>
     </div>

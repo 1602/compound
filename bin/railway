@@ -239,10 +239,8 @@ var generators = {
             ].join('\n') + '\n';
         });
         createDir('app/views/');
-        createDir('app/views/partials/');
-        createDir('app/views/partials/' + models + '/');
-        createFile('app/views/partials/' + models + '/form.ejs', form);
         createDir('app/views/' + models + '/');
+        createFile('app/views/' + models + '/_form.ejs', form);
         // new
         createFileByTemplate('app/views/' + models + '/new.ejs', 'views/new.ejs', replaceModel);
         // edit
