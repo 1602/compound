@@ -18,12 +18,12 @@ var mongoSessionStore = mongoStore({
 }, function () {});
 
 app.configure(function(){
-    app.use(express.staticProvider(__dirname + '/public'));
+    app.use(express.static(__dirname + '/public'));
     app.set('views', __dirname + '/app/views');
     app.set('view engine', 'ejs');
-    app.use(express.bodyDecoder());
-    app.use(express.cookieDecoder());
-    app.use(express.session({store: mongoSessionStore}));
+    app.use(express.bodyParser());
+    app.use(express.cookieParser());
+    app.use(express.session({secret: 'secret', store: mongoSessionStore}));
     app.use(express.methodOverride());
     app.use(app.router);
 });
