@@ -1,3 +1,8 @@
+0.1.1
+
+ * Localization
+ * Coffeescript support
+
 0.0.9
 
 Scaffold generator `railway generate scaffold ModelName field1:type1 field2:type2`
