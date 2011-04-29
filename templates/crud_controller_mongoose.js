@@ -10,7 +10,11 @@ action('new', function () {
 
 action('create', function () {
     req.model = new Model;
-    FILTER_PROPERTIES
+    FILTER_PROPERTIES.forEach(function (field) {
+        if (typeof req.body[field] !== 'undefined') {
+            req.model[field] = req.body[field];
+        }
+    });
     req.model.save(function (errors) {
         if (errors) {
             flash('error', 'Model can not be created');
@@ -49,7 +53,12 @@ action('edit', function () {
 });
 
 action('update', function () {
-    FILTER_PROPERTIES
+    FILTER_PROPERTIES.forEach(function (field) {
+        if (typeof req.body[field] !== 'undefined') {
+            req.model[field] = req.body[field];
+        }
+    });
+
     req.model.save(function (err) {
         if (!err) {
             flash('info', 'Model updated');
