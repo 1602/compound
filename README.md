@@ -70,7 +70,7 @@ On initialization rails-like directories tree generated, like that:
 Routing
 -------
 
-Now we do not have to tediously describe REST rotes for each resource, enough to write in `config / routes.js` code like this:
+Now we do not have to tediously describe REST rotes for each resource, enough to write in `config/routes.js` code like this:
 
     exports.routes = function (map) {
         map.resources('posts', function (post) {
@@ -282,7 +282,6 @@ Example:
       activationCode: [Getter/Setter],
       activated: [Getter/Setter],
       forcePassChange: [Getter/Setter],
-      routesCount: [Getter/Setter],
       isAdmin: [Getter/Setter],
       id: [Getter/Setter] }
 
