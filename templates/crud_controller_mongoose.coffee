@@ -5,7 +5,7 @@ before ->
         else
             @model = model
             next()
-    , only: ['show', 'edit', 'update', 'destroy']
+, only: ['show', 'edit', 'update', 'destroy']
 
 # GET /models/new
 action 'new', ->
