@@ -3,7 +3,22 @@
 var utils = require('../lib/railway_utils'),
     pluralize = utils.pluralize,
     camelize  = utils.camelize,
-    $         = utils.stylize.$;
+    $         = utils.stylize.$,
+    options   = {};
+
+function parseOptions (defaultKeyName) {
+    options = {};
+    var key = defaultKeyName || 'operand';
+    args.forEach(function (arg) {
+        if (arg.slice(0, 2) == '--') {
+            key = arg.slice(2);
+        } else if (arg[0] == '-') {
+            key = arg.slice(2);
+        } else {
+            options[key] = arg;
+        }
+    });
+}
 
 function createDir (dir) {
     var root = process.cwd();
@@ -89,6 +104,10 @@ var generators = {
         var Model = model[0].toUpperCase() + model.slice(1);
         var attrs = [], result = [], driver = ormDriver();
         args.forEach(function (arg) {
+            if (arg.slice(0,2) == '--') {
+                options[arg.slice(2)] = true;
+                return;
+            }
             var property = arg.split(':')[0],
                 plainType = arg.split(':')[1],
                 type = formatType(plainType);
@@ -186,32 +205,35 @@ var generators = {
 
         if (!model) {
             console.log('Usage example: railway g crud post title:string content:string published:boolean');
+            console.log('               railway g crud post title:string content:string published:boolean --coffee');
             return;
         }
         var ns = models.split('/');
         ns.pop();
 
         var result = this.model.apply(this, Array.prototype.slice.call(arguments));
+        var extenstion = options.coffee ? '.coffee' : '.js';
+
         createDir('app/');
         createDir('app/controllers/');
         createParents(ns, 'app/controllers/');
-        createFile('app/controllers/' + models + '_controller.js', controllerCode(model));
+        createFile('app/controllers/' + models + '_controller' + extenstion, controllerCode(model));
 
         function controllerCode (model) {
             var code, _model = model.toLowerCase();
             try {
-                code = fs.readFileSync(__dirname + '/../templates/crud_controller_' + ormDriver() + '.js');
+                code = fs.readFileSync(__dirname + '/../templates/crud_controller_' + ormDriver() + extenstion);
             } catch (e) {
-                code = fs.readFileSync(__dirname + '/../templates/crud_controller_redis.js');
+                code = fs.readFileSync(__dirname + '/../templates/crud_controller_redis' + extenstion);
             }
             code = code
                 .toString('utf8')
                 .replace(/models/g, pluralize(model).toLowerCase())
                 .replace(/model/g, model.toLowerCase())
                 .replace(/Model/g, camelize(model, true))
-                .replace(/FILTER_PROPERTIES/g, result.map(function (p) {
-                    return 'req.' + _model + '["' + p.name + '"] = req.body["' + p.name+ '"];';
-                }).join('\n    '));
+                .replace(/FILTER_PROPERTIES/g, '[' + result.map(function (p) {
+                    return "'" + p.name + "'";
+                }).join(', ') + ']');
             return code;
         }
 
@@ -278,21 +300,6 @@ var generators = {
     }
 };
 generators.scaffold = generators.crud;
-
-var options = {};
-function parseOptions (defaultKeyName) {
-    options = {};
-    var key = defaultKeyName || 'operand';
-    args.forEach(function (arg) {
-        if (arg.slice(0, 2) == '--') {
-            key = arg.slice(2);
-        } else if (arg[0] == '-') {
-            key = arg.slice(2);
-        } else {
-            options[key] = arg;
-        }
-    });
-}
 
 var args = process.argv.slice(2);
 switch (args.shift()) {
