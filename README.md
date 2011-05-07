@@ -285,6 +285,18 @@ Example:
       isAdmin: [Getter/Setter],
       id: [Getter/Setter] }
 
+Localization
+------------
+
+To add another language to app just create yml file in `config/locales`,
+for example `config/locales/jp.yml`, copy contents of `config/locales/en.yml` to new
+file and rename root node (`en` to `jp` in that case), also in `lang` section rename
+`name` to Japaneese (for example).
+
+Next step - rename email files in `app/views/emails`, copy all files `*.en.html` 
+and `*.en.text` to `*.jp.html` and `*.jp.text` and translate new files.
+
+NOTE: translation can contain `%` symbol(s), that means variable substitution
 
 MIT License
 ===========

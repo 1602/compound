@@ -1,7 +1,8 @@
 0.1.1
 
- * Localization
- * Coffeescript support
+ * Localization in `config/locales/*.yml`
+ * Coffeescript support for models, controllers and initializers
+ * Disable caching settings: `app.disable('model cache');` and `app.disable('eval cache');`
 
 0.0.9
 

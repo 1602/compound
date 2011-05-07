@@ -12,8 +12,10 @@ function parseOptions (defaultKeyName) {
     args.forEach(function (arg) {
         if (arg.slice(0, 2) == '--') {
             key = arg.slice(2);
+            options[key] = true;
         } else if (arg[0] == '-') {
-            key = arg.slice(2);
+            key = arg.slice(1);
+            options[key] = true;
         } else {
             options[key] = arg;
         }
@@ -49,20 +51,27 @@ function createFile (filename, contents) {
     if (options.appname) {
         filename = options.appname + '/' + filename;
     }
-    if (path.existsSync(root + '/' + filename)) {
+    var fullPath = root + '/' + filename;
+    if (path.existsSync(fullPath)) {
         sys.puts($('exists').bold.grey + '  ' + filename);
     } else {
-        fs.writeFileSync(root + '/' + filename, contents);
+        fs.writeFileSync(fullPath, contents);
         sys.puts($('create').bold.green + '  ' + filename);
     }
+    return fullPath;
 }
 
 function createFileByTemplate (filename, template, prepare) {
+    if (!template.match(/\..+$/)) {
+        var ext = options.coffee ? '.coffee' : '.js';
+        template += ext;
+        filename += ext;
+    }
     var text = fs.readFileSync(__dirname + '/../templates/' + template);
     if (prepare) {
         text = prepare(text.toString('utf8'));
     }
-    createFile(filename, text);
+    return createFile(filename, text);
 }
 
 function createParents(ns, d) {
@@ -303,6 +312,13 @@ generators.scaffold = generators.crud;
 
 var args = process.argv.slice(2);
 switch (args.shift()) {
+case 's':
+case 'server':
+    var app = module.exports = require('express').createServer();
+    require('express-on-railway').init(app);
+    app.listen(args.shift() || 3000);
+    console.log("Express server listening on port %d", app.address().port)
+break;
 case 'c':
 case 'console':
     var filename = process.cwd() + '/server.js',
@@ -317,6 +333,7 @@ case 'console':
             app = require(filename2);
         }
         ctx.app = app;
+        app.reloadModels();
 
         for (var m in models) {
             ctx[m] = models[m];
@@ -369,7 +386,9 @@ case 'init':
       'app/views/',
       'app/views/layouts/',
       'config/',
+      'config/locales/',
       'config/initializers/',
+      'config/environments/',
       'db/',
       'public/',
       'public/stylesheets/',
@@ -377,13 +396,19 @@ case 'init':
     ].forEach(createDir);
     createFile('config/routes.js', 'exports.routes = function (map) {\n};');
     createFileByTemplate('config/requirements.json', 'requirements.json');
-    createFileByTemplate('server.js', 'server_mongo.js');
+    var srv = createFileByTemplate('server', 'server');
+    createFileByTemplate('config/environment', 'mongo/config/environment');
+    createFileByTemplate('config/environments/test', 'mongo/config/environments/test');
+    createFileByTemplate('config/environments/development', 'mongo/config/environments/development');
+    createFileByTemplate('config/environments/production', 'mongo/config/environments/production');
     createFileByTemplate('config/database.json', 'database.json', replaceAppname);
     createFileByTemplate('Jakefile', 'tasks.js');
+    createFileByTemplate('db/schema.js', 'schema.js');
     createFileByTemplate('app/views/layouts/application_layout.ejs', 'layout.ejs');
     createFileByTemplate('public/stylesheets/reset.css', 'reset.css');
     createFileByTemplate('public/javascripts/rails.js', 'rails.js');
-    createFileByTemplate('db/schema.js', 'schema.js');
+
+    fs.chmodSync(srv, 0755);
 
     process.exit(0);
     break;
