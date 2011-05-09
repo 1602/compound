@@ -323,7 +323,8 @@ case 'c':
 case 'console':
     var filename = process.cwd() + '/server.js',
         filename2 = process.cwd() + '/app.js',
-        ctx = require('repl').start('railway> ').context;
+        ctx = require('repl').start('railway> ').context,
+        app;
 
     ctx.reload = function () {
         global.models = {};
@@ -331,6 +332,9 @@ case 'console':
             app = require(filename);
         } else if (path.existsSync(filename2)) {
             app = require(filename2);
+        } else {
+            app = module.exports = require('express').createServer();
+            require('express-on-railway').init(app);
         }
         ctx.app = app;
         app.reloadModels();
