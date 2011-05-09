@@ -1,7 +1,10 @@
 require('./spec_helper').init(exports);
-global.app = {root: __dirname + '/..'};
 
-var c = require('../lib/controller').load('test_controller.js');
+var app = require('express').createServer();
+require('express-on-railway').init(app);
+app.listen(args.shift() || 3000);
+
+var c = require('../lib/controller').load('test', 'test');
 
 it('should load controller', function (test) {
     test.ok(c.respondTo('test'));

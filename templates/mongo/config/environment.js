@@ -12,8 +12,9 @@ var mongoSessionStore = mongoStore({
 }, function () {});
 
 app.configure(function(){
-    app.use(express.static(__dirname + '/public'));
-    app.set('views', __dirname + '/app/views');
+    var cwd = process.cwd();
+    app.use(express.static(cwd + '/public'));
+    app.set('views', cwd + '/app/views');
     app.set('view engine', 'ejs');
     app.use(express.bodyParser());
     app.use(express.cookieParser());

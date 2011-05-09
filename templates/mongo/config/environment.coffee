@@ -20,3 +20,4 @@ app.configure ->
     app.use express.session secret: 'secret', store: mongoSessionStore
     app.use express.methodOverride()
     app.use app.router
+
