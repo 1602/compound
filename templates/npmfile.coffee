@@ -1,1 +1,1 @@
-require 'ext-js'
+require 'ejs-ext'
