@@ -396,7 +396,9 @@ case 'init':
       'db/',
       'public/',
       'public/stylesheets/',
-      'public/javascripts/'
+      'public/javascripts/',
+      'node_modules/',
+      'node_modules/'
     ].forEach(createDir);
     createFile('config/routes.js', 'exports.routes = function (map) {\n};');
     createFileByTemplate('config/requirements.json', 'requirements.json');
@@ -411,6 +413,8 @@ case 'init':
     createFileByTemplate('app/views/layouts/application_layout.ejs', 'layout.ejs');
     createFileByTemplate('public/stylesheets/reset.css', 'reset.css');
     createFileByTemplate('public/javascripts/rails.js', 'rails.js');
+    createFileByTemplate('node_modules/ejs-ext.js', 'ejs-ext.js');
+    createFileByTemplate('npmfile', 'npmfile');
 
     fs.chmodSync(srv, 0755);
 
@@ -437,3 +441,4 @@ function ormDriver () {
     }
     return ormDriver.config.driver;
 }
+
