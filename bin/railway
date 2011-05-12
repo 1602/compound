@@ -373,11 +373,15 @@ case 'console':
 default:
 case 'h':
 case 'help':
-    sys.puts('\nUsage: railway command [argument(s)]\n\n' +
-    '  command is:\n' + 
-    '    h or help        -- prints this message\n' +
-    '    init             -- initialize railway directory structure\n' +
-    '    generate [smth]  -- generate smth (model, controller, crud, features)\n\n');
+    sys.puts([
+        '\nUsage: railway command [argument(s)]\n',
+        '  command is:',
+        '    h or help        -- prints this message',
+        '    init             -- initialize railway directory structure',
+        '    generate [smth]  -- generate smth (model, controller, crud, features)',
+        '    server [port]    -- run railway server',
+        '    routes           -- display application routes'
+    ].join('\n'));
     process.exit(0);
     break;
 
@@ -426,6 +430,44 @@ case 'generate':
     if (generators[what]) {
         generators[what](args);
     }
+    process.exit(0);
+    break;
+
+case 'routes':
+
+    function add_spaces (str, len, to_start) {
+        var str_len = str.length;
+        for (var i = str_len; i < len; i += 1) {
+            if (!to_start) {
+                str += ' ';
+            } else {
+                str = ' ' + str;
+            }
+        }
+        return str;
+    }
+
+    var app = require('express').createServer();
+    var mapper = require('../lib/onrailway').init(app).routes;
+    var dump = mapper.dump();
+
+    var max_len = 0, helper_max_len = 0;
+    dump.forEach(function (data) {
+        if (data.path.length > max_len) {
+            max_len = data.path.length;
+        }
+        if (data.helper.length > helper_max_len) {
+            helper_max_len = data.helper.length;
+        }
+    });
+    dump.forEach(function (data) {
+        console.log(
+            add_spaces(data.helper, helper_max_len + 1, true) + ' ' +
+            data.method.toUpperCase() + "\t" +
+            add_spaces(data.path, max_len + 1) +
+            data.file + "#" + data.action
+        );
+    });
     process.exit(0);
     break;
 }
