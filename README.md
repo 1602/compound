@@ -5,13 +5,13 @@ It is fine to pull from github (less bugs, I hope)
 
     $ git clone git://github.com/1602/express-on-railway.git
     $ cd express-on-railway
-    $ npm install
+    $ sudo npm install
     $ cd -
     $ rm -rf express-on-railway
 
 Or install from npm registry:
 
-    $ npm install express-on-railway
+    $ sudo npm install railway
 
 This package depends on express, ejs and node-redis-mapper
 
@@ -23,7 +23,7 @@ Usage
 
 or, slightly simplier, but with the same result
 
-    $ railway init blog
+    $ railway init blog && cd blog
 
 Short functionality review
 ==========================
@@ -113,9 +113,9 @@ and you can more finely tune the resources to specify certain actions, middlewar
         });
     };
 
-for debugging routes described in `config/routes.js` I have written jake-task that generates the following output:
+for debugging routes described in `config/routes.js` you can use `railway routes` command:
 
-    $ jake routes
+    $ railway routes
                      GET    /                               posts#index
                      GET    /:id                            posts#show
          sitemap.txt GET    /sitemap.txt                    posts#map
