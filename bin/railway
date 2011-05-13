@@ -393,16 +393,16 @@ case 'init':
       'app/helpers/',
       'app/views/',
       'app/views/layouts/',
-      'config/',
-      'config/locales/',
-      'config/initializers/',
-      'config/environments/',
       'db/',
       'public/',
       'public/stylesheets/',
       'public/javascripts/',
       'node_modules/',
-      'node_modules/'
+      'node_modules/',
+      'config/',
+      'config/locales/',
+      'config/initializers/',
+      'config/environments/'
     ].forEach(createDir);
     createFile('config/routes.js', 'exports.routes = function (map) {\n};');
     createFileByTemplate('config/requirements.json', 'requirements.json');
@@ -415,6 +415,7 @@ case 'init':
     createFileByTemplate('Jakefile', 'tasks.js');
     createFileByTemplate('db/schema.js', 'schema.js');
     createFileByTemplate('app/views/layouts/application_layout.ejs', 'layout.ejs');
+    createFileByTemplate('public/index.html', 'index.html');
     createFileByTemplate('public/stylesheets/reset.css', 'reset.css');
     createFileByTemplate('public/javascripts/rails.js', 'rails.js');
     createFileByTemplate('node_modules/ejs-ext.js', 'ejs-ext.js');
