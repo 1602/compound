@@ -1,4 +1,4 @@
-{ "name": "express-on-railway"
+{ "name": "railway"
 , "version": "0.1.2"
 , "author": "Anatoliy Chakkaev"
 , "description": "Railway features for Express.js framework"
