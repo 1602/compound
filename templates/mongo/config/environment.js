@@ -3,7 +3,7 @@ var express = require('express');
 
 app.settings.db = JSON.parse(require('fs').readFileSync(__dirname + '/database.json', 'utf-8'))[app.settings.env];
 
-var mongoSessionStore = mongoStore({
+var mongoSessionStore = new mongoStore({
     // maxAge:   60000,
     dbname:   app.settings.db.database,
     host:     app.settings.db.host,

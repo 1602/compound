@@ -2,7 +2,7 @@ app.settings.db = JSON.parse(require('fs').readFileSync(__dirname + '/database.j
 
 mongoStore = require 'connect-mongodb'
 express = require 'express'
-mongoSessionStore = mongoStore
+mongoSessionStore = new mongoStore
     # maxAge:   60000
     dbname:   app.settings.db.database
     host:     app.settings.db.host
