@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Welcome to Railway</title>
+    <link media="screen" rel="stylesheet" type="text/css" href="/stylesheets/reset.css" /> 
+    <meta name="viewport" content="width=500, initial-scale=0.5">
+    <style>
+      body {
+        padding: 0px;
+        background: #f3f3f3;
+      }
+      body, table, input, select {
+        font-family: DejaVu Sans Mono, verdana, fixed;
+        font-size: 12pt;
+        line-height: 150%;
+        color: #444;
+      }
+
+      h1 {
+        line-height: 3em;
+        font-size: 1.3em;
+        padding: 20px;
+      }
+
+      .helper, .helper * {
+        font-size: 12px;
+      }
+
+      a, a:link, a:visited, a:active, a:hover {
+        color: #479;
+      }
+
+      .wrap {
+        width: 700px;
+        margin: 0 auto;
+        background: #fff;
+        border: 5px solid #ddd;
+      }
+
+      label.error {
+        color: #900;
+      }
+
+      .content {
+        clear: both;
+        padding: 20px;
+      }
+
+      a.small {
+        font-size: 12px;
+      }
+
+      pre {
+        margin: 1em 0px;
+        background: #e8e8e8;
+        padding: 10px;
+        line-height: 100%;
+        border-radius: 2px;
+        overflow: auto;
+      }
+
+      pre code {
+        color: #222;
+        font-size: 14px;
+        line-height: 19px;
+        margin: 0;
+        padding: 0;
+      }
+
+      code {
+        font-family: Monospace;
+        color: #222;
+        font-weight: 600;
+      }
+
+      .content ul {
+        list-style-type: circle;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <h1>Welcome to Railway</h1>
+      <div class="content">
+        <p>
+          1. Start with <a href="http://railwayjs.com/generators">generators</a>, this is a fastest way to create application:
+        </p>
+
+        <pre><code>railway g scaffold post title content date:date publushed:boolean</code></pre>
+
+        <p>
+          2. Then create routes in <code>config/routes.js</code> and remove this file (public/index.html)
+        </p>
+
+        <pre><code>exports.routes = function (map) {
+    map.get('/', 'posts#index');
+};</code></pre>
+
+        <p>
+          3. Design your database in <code>db/schema.js</code> and describe models in <code>app/models</code>
+        </p>
+
+        <p>
+          4. Keep you controllers thin, write tests, and good luck. If you have any questions feel free to ask at
+          <a href="http://groups.google.com/group/railwayjs">RailwayJS Google Group</a>
+        </p>
+
+        <p>
+          5. Links to other useful stuff:
+          <ul style="padding-left: 50px;">
+            <li><a href="http://railwayjs.com">RailwayJS project homepage</a></li>
+            <li><a href="http://expressjs.com">ExpressJS project homepage</a></li>
+            <li><a href="http://mongoosejs.com">MongooseJS ORM project homepage</a></li>
+            <li><a href="http://node-js.ru">RailwayJS author's blog</a></li>
+          </ul>
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,8 +1,14 @@
+0.1.2
+
+ - npmfile
+ - Extenstions
+ - Support (partially) security tokens generation
+
 0.1.1
 
- * Localization in `config/locales/*.yml`
- * Coffeescript support for models, controllers and initializers
- * Disable caching settings: `app.disable('model cache');` and `app.disable('eval cache');`
+ - Localization in `config/locales/*.yml`
+ - Coffeescript support for models, controllers and initializers
+ - Disable caching settings: `app.disable('model cache');` and `app.disable('eval cache');`
 
 0.0.9
 
