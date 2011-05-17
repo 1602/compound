@@ -1,8 +1,6 @@
 #!/usr/bin/env node
 
-var app = module.exports = require('express').createServer();
-
-require('express-on-railway').init(app);
+var app = module.exports = require('railway').createServer();
 
 if (!module.parent) {
     app.listen(3000);

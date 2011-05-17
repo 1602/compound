@@ -1,8 +1,6 @@
 #!/usr/bin/env coffee
 
-app = module.exports = require('express').createServer()
-
-require('express-on-railway').init(app)
+app = module.exports = require('railway').createServer()
 
 if not module.parent
     app.listen 3000

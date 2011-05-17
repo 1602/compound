@@ -1,3 +1,14 @@
+0.1.3
+
+HTTPS Support
+-------------
+
+Just place your key and cert into config directory, railway will use it.
+Default names for keys are `tsl.key` and `tsl.cert`, but you can store in in another place, in that case just pass filenames to createServer function:
+`server.js`
+
+    require('railway').createServer({key: '/tmp/key.pem', cert: '/tmp/cert.pem'});
+
 0.1.2
 
  - npmfile

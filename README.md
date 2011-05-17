@@ -65,7 +65,25 @@ On initialization rails-like directories tree generated, like that:
     |       `-- posts_helper.js
     `-- config
         |-- database.json
-        `-- routes.js
+        |-- routes.js
+        |-- tsl.cert
+        `-- tsl.key
+
+HTTPS Support
+-------------
+
+Just place your key and cert into config directory, railway will use it.
+Default names for keys are `tsl.key` and `tsl.cert`, but you can store in in another place, in that case just pass filenames to createServer function:
+`server.js`
+
+    require('railway').createServer({key: '/tmp/key.pem', cert: '/tmp/cert.pem'});
+
+Few helpful commands:
+
+    # generate private key
+    openssl genrsa -out config/tsl.key
+    # generate cert
+    openssl req -new -x509 -key config/tsl.key  -out config/tsl.cert -days 1095 -batch
 
 Routing
 -------
