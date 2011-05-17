@@ -193,7 +193,8 @@ var generators = {
             require('cucumis');
         } catch (e) {
             sys.puts($('Cucumis is not installed').red + ' please run ' + $('npm install cucumis').yellow);
-        }        Object.keys(models).forEach(function (name) {
+        }
+        Object.keys(global.models || []).forEach(function (name) {
             cname = name;
             var classDefinition = models[name];
             classDefinition.implementation();

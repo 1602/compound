@@ -1,4 +1,4 @@
-var server  = require('../../app'),
+var server  = require('../../server'),
     browser = new Browser(server),
     http    = require('http'),
     assert  = require('assert'),
