@@ -5,13 +5,13 @@ It is fine to pull from github (less bugs, I hope)
 
     $ git clone git://github.com/1602/express-on-railway.git
     $ cd express-on-railway
-    $ sudo npm install
+    $ sudo npm install -g
     $ cd -
     $ rm -rf express-on-railway
 
 Or install from npm registry:
 
-    $ sudo npm install railway
+    $ sudo npm install railway -g
 
 This package depends on express, ejs and node-redis-mapper
 
