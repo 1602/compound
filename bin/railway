@@ -315,7 +315,7 @@ var args = process.argv.slice(2);
 switch (args.shift()) {
 case 's':
 case 'server':
-    var railway = require('railway').createServer();
+    var app = require('railway').createServer();
     app.listen(args.shift() || 3000);
     console.log("Railway server listening on port %d", app.address().port)
 break;
