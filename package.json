@@ -1,5 +1,5 @@
 { "name": "railway"
-, "version": "0.1.3"
+, "version": "0.1.4"
 , "author": "Anatoliy Chakkaev"
 , "description": "Railway features for Express.js framework"
 , "homepage": "http://github.com/1602/express-on-railway"

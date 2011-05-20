@@ -315,10 +315,9 @@ var args = process.argv.slice(2);
 switch (args.shift()) {
 case 's':
 case 'server':
-    var app = module.exports = require('express').createServer();
-    require('express-on-railway').init(app);
+    var app = require('railway').createServer();
     app.listen(args.shift() || 3000);
-    console.log("Express server listening on port %d", app.address().port)
+    console.log("Railway server listening on port %d", app.address().port)
 break;
 case 'c':
 case 'console':
@@ -335,7 +334,7 @@ case 'console':
             app = require(filename2);
         } else {
             app = module.exports = require('express').createServer();
-            require('express-on-railway').init(app);
+            require('railway').init(app);
         }
         ctx.app = app;
         app.reloadModels();
@@ -471,6 +470,16 @@ case 'routes':
         );
     });
     process.exit(0);
+    break;
+    case 'install':
+        var what = args.shift();
+        if (!what) {
+            console.log('what do you want to install?');
+        }
+        require('child_process').exec('git clone ' + what, function () {
+            console.log(arguments);
+        });
+        process.exit(0);
     break;
 }
 /*vim ft:javascript*/
