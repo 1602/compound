@@ -145,6 +145,23 @@ for debugging routes described in `config/routes.js` you can use `railway routes
           admin_post PUT    /admin/posts/:id.:format?       admin/posts#update
     likes_admin_post PUT    /admin/posts/:id/likes.:format? admin/posts#likes
 
+Filter by method:
+
+    $ railway routes GET
+                     GET    /                               posts#index
+                     GET    /:id                            posts#show
+         sitemap.txt GET    /sitemap.txt                    posts#map
+         admin_posts GET    /admin/posts.:format?           admin/posts#index
+      new_admin_post GET    /admin/posts/new.:format?       admin/posts#new
+     edit_admin_post GET    /admin/posts/:id/edit.:format?  admin/posts#edit
+
+Filter by helper name:
+
+    $ railway routes _admin
+      new_admin_post GET    /admin/posts/new.:format?       admin/posts#new
+     edit_admin_post GET    /admin/posts/:id/edit.:format?  admin/posts#edit
+    likes_admin_post PUT    /admin/posts/:id/likes.:format? admin/posts#likes
+
 
 Helpers
 -------
@@ -224,14 +241,14 @@ initialization. Can be invoked as follows:
     create  app/views/admin/posts/edit.ejs
     create  app/views/admin/posts/update.ejs
 
-Currently it generates only *.ejs views
+Currently it generates only `*.ejs` views
 
 Models
 ------
 
 At the moment I store objects in redis data store. For that purpose I have
 written simple driver, that adds persistence-related methods to models described
-in app/models/*.js. I can work with models the following way:
+in `app/models/*.js`. I can work with models the following way:
 
 File `app/models/post.js`:
 
@@ -315,6 +332,12 @@ Next step - rename email files in `app/views/emails`, copy all files `*.en.html`
 and `*.en.text` to `*.jp.html` and `*.jp.text` and translate new files.
 
 NOTE: translation can contain `%` symbol(s), that means variable substitution
+
+Logger
+-----
+
+    app.set('quiet', true); // force logger to log into `log/#{app.settings.env}.log`
+    railway.logger.write(msg); // to log message
 
 MIT License
 ===========

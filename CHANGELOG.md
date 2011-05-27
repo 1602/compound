@@ -1,3 +1,18 @@
+0.1.5
+
+- Extension API
+- Logger support (app.set('quiet', true) now forces logger to log in `log/ENV.log`
+- Railway common API (almost all existing modules)
+- Observers support
+
+Observer is a kind of controller, that listen for some event in 
+the system, for example: paypal, twitter or facebook observers 
+listens for callback from foreign service. Email observer may 
+listen some events related to emails.
+
+If you need app.on('someEvent') you should place this code in
+`APPROOT/app/observers/NAME_observer.js`
+
 0.1.3
 
 HTTPS Support
