@@ -70,8 +70,6 @@ case 'generate':
     } else {
     }
     break;
-case 'install':
-break;
 }
 
 if (exitAfterAction) {
