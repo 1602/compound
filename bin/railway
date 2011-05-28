@@ -68,7 +68,7 @@ case 'generate':
     if (generators[what]) {
         generators[what](args);
     } else {
-        console.log('Generator ' + what + ' not found, available generators: ', Object.keys(generators));
+        console.log('Generator "' + what + '" not found, available generators: ', Object.keys(generators).join(' '));
     }
     break;
 }
