@@ -20,10 +20,12 @@ Usage
 
     $ mkdir blog && cd blog
     $ railway init
+    $ sudo npm link
 
 or, slightly simplier, but with the same result
 
     $ railway init blog && cd blog
+    $ sudo npm link
 
 Short functionality review
 ==========================
