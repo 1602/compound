@@ -54,21 +54,21 @@ case 'help':
         help.push('  ' + addSpaces(cmd[0] + ',', 4) + addSpaces(cmd[1], maxLen + 1) + cmd[2]);
     });
     help.push('\nAvailable generators:\n');
-    help.push('  ' + Object.keys(railway.generators).join(', '));
+    help.push('  ' + railway.generators.list());
     sys.puts(help.join('\n'));
     break;
 
 case 'i':
 case 'init':
-    generators.init();
+    generators.perform('init');
     break;
 case 'g':
 case 'generate':
     var what = args.shift();
-    if (generators[what]) {
-        generators[what](args);
+    if (generators.exists(what)) {
+        generators.perform(what, args);
     } else {
-        console.log('Generator "' + what + '" not found, available generators: ', Object.keys(generators).join(' '));
+        console.log('Generator "' + what + '" not found, available generators: ', generators.list());
     }
     break;
 }
