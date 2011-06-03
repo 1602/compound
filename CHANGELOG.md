@@ -1,3 +1,15 @@
+0.1.6
+
+- Merge javascripts and stylesheets option
+- NPM 1.0.6 support (requires `sudo npm link` after `railway init`)
+- *Filter parameter logging*
+- *CSRF protection*
+- *Faster server startup (two-stage loading)*
+
+Small improvements:
+- By default static cache max age is one day
+- Merge js and css option turned on in production
+
 0.1.5
 
 - Extension API
