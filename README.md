@@ -341,6 +341,55 @@ Logger
     app.set('quiet', true); // force logger to log into `log/#{app.settings.env}.log`
     railway.logger.write(msg); // to log message
 
+Configuring
+===========
+
+Railway has some configuration options allows to customize app behavior
+
+eval cache
+----------
+
+Enable controllers caching, should be turned on in prd. In development mode
+disabling cache allows to avoid server restarting after each model/controller change
+
+    app.disable('eval cache'); // in config/environments/development.js
+    app.enable('eval cache'); // in config/environments/production.js
+
+model cache
+-----------
+
+Same option for models. When disabled model files evaluated per each request.
+
+    app.disable('model cache'); // in config/environments/development.js
+
+view cache
+----------
+
+Express.js option, enables view caching.
+
+    app.disable('view cache'); // in config/environments/development.js
+
+quiet
+-----
+
+Write logs to `log/NODE_ENV.log`
+
+    app.set('quiet', true); // in config/environments/test.js
+
+merge javascripts
+-----------------
+
+Join all javascript files listed in `javascript_include_tag` into one
+
+    app.enable('merge javascripts'); // in config/environments/production.js
+
+merge stylesheets
+-----------------
+
+Join all stylesheet files listed in `stylesheets_include_tag` into one
+
+    app.enable('merge stylesheets'); // in config/environments/production.js
+
 MIT License
 ===========
 
