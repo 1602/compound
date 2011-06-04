@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 var sys = require('sys');
-var app = require('railway').createServer();
+var app = require('../lib/onrailway').createServer();
 var generators = railway.generators;
 var tools = railway.tools;
 var addSpaces = railway.utils.addSpaces;

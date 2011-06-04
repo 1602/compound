@@ -1,3 +1,5 @@
+load 'application'
+
 before ->
     Model.findById req.params.id, (err, model) =>
         if err or not model
