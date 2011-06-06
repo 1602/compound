@@ -1,8 +1,7 @@
 require('./spec_helper').init(exports);
 
-var app = require('express').createServer();
-require('express-on-railway').init(app);
-app.listen(args.shift() || 3000);
+var app = require('../lib/onrailway').createServer();
+app.listen(3000);
 
 var c = require('../lib/controller').load('test', 'test');
 

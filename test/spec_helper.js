@@ -9,7 +9,11 @@ function it(should, test_case) {
 }
 
 global.it = it;
-global.sinon = require('sinon');
+try {
+    global.sinon = require('sinon');
+} catch (e) {
+    // ignore
+}
 
 function context(name, tests) {
     check_external_exports();
