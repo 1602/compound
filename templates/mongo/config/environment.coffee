@@ -17,6 +17,7 @@ else
 mongoSessionStore = new mongoStore
     dbname:   app.settings.db.database
     host:     app.settings.db.host
+    port:     app.settings.db.port
     username: app.settings.db.user
     password: app.settings.db.password
 

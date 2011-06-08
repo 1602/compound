@@ -22,6 +22,7 @@ if (process.env.MONGOHQ_URL) {
 var mongoSessionStore = new mongoStore({
     dbname:   app.settings.db.database,
     host:     app.settings.db.host,
+    port:     app.settings.db.port,
     username: app.settings.db.user,
     password: app.settings.db.password
 }, function () {});
