@@ -1,22 +1,25 @@
+var express    = require('express');
 var mongoStore = require('connect-mongodb');
-var express = require('express');
 
 if (process.env.MONGOHQ_URL) {
+    // save to app settings
+    app.settings.mongoUrl = process.env.MONGOHQ_URL;
+    // save to db settings
     var m = require('url').parse(process.env.MONGOHQ_URL);
     app.settings.db = {
-        driver: 'mongoose',
+        driver:   'mongoose',
         database: m.pathname.replace(/^\//, ''),
-        port: m.port,
-        host: m.hostname,
-        user: m.auth.split(':')[0],
+        port:     m.port,
+        host:     m.hostname,
+        user:     m.auth.split(':')[0],
         password: m.auth.split(':')[1]
     };
 } else {
     app.settings.db = JSON.parse(require('fs').readFileSync(__dirname + '/database.json', 'utf-8'))[app.settings.env];
 }
 
+// connect with db for session store
 var mongoSessionStore = new mongoStore({
-    // maxAge:   60000,
     dbname:   app.settings.db.database,
     host:     app.settings.db.host,
     username: app.settings.db.user,
