@@ -3,7 +3,7 @@ express    = require 'express'
 
 if process.env.MONGOHQ_URL
     app.settings.mongoUrl = process.env.MONGOHQ_URL
-    var m = require('url').parse process.env.MONGOHQ_URL
+    m = require('url').parse process.env.MONGOHQ_URL
     app.settings.db =
         driver:   'mongoose'
         database: m.pathname.replace(/^\//, '')
