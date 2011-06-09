@@ -3,8 +3,8 @@
 , "engines": ["node >= 0.4.0"]
 , "main": "server.js"
 , "dependencies":
-  { "VIEWENGINE":              ">= 0"
-  , "VIEWENGINE-ext":          ">= 0.0.2"
+  { "VIEWENGINE":       ">= 0"
+  , "VIEWENGINE-ext":   ">= 0"
   , "express":          ">= 2.2.2"
   , "connect":          ">= 1.4.2"
   , "railway":          ">= 0.1.6"
