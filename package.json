@@ -1,5 +1,5 @@
 { "name": "railway"
-, "version": "0.1.7pre"
+, "version": "0.1.7pre3"
 , "author": "Anatoliy Chakkaev"
 , "description": "RailwayJS - Ruby-on-Rails inspired MVC web framework"
 , "homepage": "http://github.com/1602/express-on-railway"
