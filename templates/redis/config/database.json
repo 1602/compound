@@ -1,0 +1,21 @@
+{ "development":
+  { "driver":   "redis"
+  , "host":     "localhost"
+  , "database": 3
+  }
+, "test":
+  { "driver":   "redis"
+  , "host":     "localhost"
+  , "database": 2
+  }
+, "staging":
+  { "driver":   "redis"
+  , "host":     "localhost"
+  , "database": 1
+  }
+, "production":
+  { "driver":   "redis"
+  , "host":     "localhost"
+  , "database": 0
+  }
+}

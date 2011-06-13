@@ -31,6 +31,7 @@ action('create', function () {
 });
 
 action('index', function () {
+    console.log('index');
     Model.find(function (err, models) {
         render({
             models: models,

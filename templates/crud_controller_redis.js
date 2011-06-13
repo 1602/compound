@@ -1,16 +1,14 @@
 before(loadModel, {only: ['show', 'edit', 'update', 'destroy']});
 
 action('new', function () {
-    var model = new Model;
-    render({
-        model: model,
-        title: 'New model'
-    });
+    this.title = 'New model';
+    this.model = new Model;
+    render();
 });
 
 action('create', function () {
-    Model.create(req.body, function (errors) {
-        if (errors) {
+    Model.create(req.body, function (id) {
+        if (!id) {
             flash('error', 'Model can not be created');
             render('new', {
                 model: this,
@@ -24,61 +22,55 @@ action('create', function () {
 });
 
 action('index', function () {
+    this.title = 'Models index';
     Model.allInstances(function (models) {
         render({
             models: models,
-            title: 'Models index'
         });
     });
 });
 
 action('show', function () {
-    render({
-        model: req.model,
-        title: 'Model show'
-    });
+    this.title = 'Model show';
+    render();
 });
 
 action('edit', function () {
-    render({
-        model: req.model,
-        title: 'Model edit'
-    });
+    this.title = 'Model edit';
+    render();
 });
 
 action('update', function () {
-    req.model.update(req.body, function (err) {
+    this.model.save(req.body, function (err) {
         if (!err) {
             flash('info', 'Model updated');
-            redirect(path_to.models);
+            redirect(path_to.model(this.model));
         } else {
             flash('error', 'Model can not be updated');
-            render('edit', {
-                model: model,
-                title: 'Edit model details'
-            });
+            this.title = 'Edit model details';
+            render('edit');
         }
-    });
+    }.bind(this));
 });
 
 action('destroy', function () {
-    req.model.destroy(function (error) {
-        if (err || error) {
+    this.model.destroy(function (error) {
+        if (error) {
             flash('error', 'Can not destroy model');
         } else {
             flash('info', 'Model successfully removed');
         }
-        send("'" + path_to.model + "'");
+        send("'" + path_to.models + "'");
     });
 });
 
-function loadModel (id) {
-    Model.find(id, function (err) {
+function loadModel () {
+    Model.find(req.params['id'], function (err, model) {
         if (err) {
             redirect(path_to.models);
         } else {
-            req.model = this;
+            this.model = model;
             next();
         }
-    });
+    }.bind(this));
 }
