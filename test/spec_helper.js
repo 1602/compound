@@ -34,6 +34,9 @@ global.context = context;
 
 exports.init = function (external_exports) {
     EXT_EXP = external_exports;
+    if (external_exports.done) {
+        external_exports.done();
+    }
 };
 
 function check_external_exports() {

@@ -4,8 +4,10 @@ PORT = 3000
 
 fs   = require 'fs'
 path = require 'path'
+sys  = require 'sys'
 http = require 'http'
 exec = require('child_process').exec
+nodeunit = require 'nodeunit'
 
 testAppPath = path.resolve __dirname, '../tmp'
 binRailway  = 'cd ' + testAppPath + ' && ' + path.resolve(__dirname, '../bin/railway') + ' '
@@ -13,81 +15,50 @@ binRailway  = 'cd ' + testAppPath + ' && ' + path.resolve(__dirname, '../bin/rai
 exists = (test, aPath) ->
     test.ok path.existsSync(path.join(testAppPath, aPath)), 'Not exists: ' + aPath
 
-visit = (path, cb) ->
-    cli  = http.createClient PORT
-    req  = cli.request 'GET', path, host: '127.0.0.1'
-    body = ''
-    req.addListener 'response', (res) ->
-        res.addListener 'data', (chunk) -> body += chunk
-        res.addListener 'end', () ->
-            res.body = body
-            cb(res)
-    req.end()
-
-post = (path, data, cb) ->
-    cli  = http.createClient PORT
-    headers =
-        'Host':           '127.0.0.1'
-        'Content-Type':   'application/x-www-form-urlencoded'
-        'Content-Length': data.length
-
-    req  = cli.request 'POST', path, headers
-    body = ''
-    req.addListener 'response', (res) ->
-        res.addListener 'data', (chunk) -> body += chunk
-        res.addListener 'end', () ->
-            res.body = body
-            cb(res)
-    req.write(data)
-    req.end()
-
 checkApp = (test, appPath) ->
-    wait = 7
-    done = ->
-        if --wait == 0
-            app.close()
-            test.done()
-
     appPath = appPath || ''
     process.cwd = () -> path.join(testAppPath, appPath)
     exec 'cd ' + process.cwd() + ' && ' + path.resolve(__dirname, '../bin/railway') + ' ' + 'g crud post title content date:date published:boolean', (err, out) ->
         module = require('module')
         module._cache = {}
         module._pathCache = {}
-        require path.join(testAppPath, appPath, 'server')
-        # app.settings.quiet = true
-        app.listen PORT
-        app.on 'listening', ->
-            visit '/posts/new', (res) ->
-                test.ok res.body.search('New post') != -1
-                test.status200 res
-                done()
-            post '/posts', 'title=hello&content=world', (res) ->
-                test.redirect res, '/posts', 'POST create'
-                done()
-
-                visit '/posts', (res) ->
-                    test.ok res.body.search('Index of post') != -1
-                    m = res.body.match /post #([\da-z]*)/
-                    id = m[1]
-                    test.status200 res, 'GET index'
-                    done()
-
-                    visit "/posts/#{id}", (res) ->
-                        done()
-                        test.status200 res, 'GET show'
-
-                    visit "/posts/#{id}/edit", (res) ->
-                        done()
-                        test.status200 res, 'GET edit'
-
-                    post "/posts/#{id}", '_method=PUT&title=42', (res) ->
-                        test.redirect res, "/posts/#{id}"
-                        done()
-
-                        post "/posts/#{id}", '_method=DELETE', (res) ->
-                            test.equal res.body, "'/posts'"
-                            done()
+        start = new Date
+        require('nodeunit').runFiles(
+            [path.join(testAppPath, appPath, 'test/controllers/posts_controller_test.js')],
+            testDone: (name, assertions) ->
+                if !assertions.failures()
+                    sys.puts '✔ ' + name
+                    test.ok(true)
+                else
+                    test.ok(false, name)
+                    sys.puts '✖ ' + name + '\n'
+                    assertions.forEach (a) ->
+                        if a.failed()
+                            a = nodeunit.utils.betterErrors(a)
+                            if a.error instanceof AssertionError && a.message
+                                sys.puts(
+                                    'Assertion Message: ' +
+                                    assertion_message(a.message)
+                                )
+                            sys.puts(a.error.stack + '\n')
+            done: (assertions) ->
+                end = new Date().getTime()
+                duration = end - start
+                if assertions.failures()
+                    test.ok(false, 'Some assertions fails while controller testing')
+                    sys.puts(
+                        '\nFAILURES: ' + assertions.failures() +
+                        '/' + assertions.length + ' assertions failed (' +
+                        assertions.duration + 'ms)'
+                    )
+                    test.done()
+                else
+                    sys.puts(
+                        '\nOK: ' + assertions.length +
+                        ' assertions (' + assertions.duration + 'ms)'
+                    )
+                    test.done()
+        )
 
 # prepare tmp dir
 cleanup = (done) ->
@@ -109,7 +80,5 @@ cases.forEach (testCase) ->
         cleanup ->
             console.log binRailway + testCase.cmd
             exec binRailway + testCase.cmd, (err, out, stderr) ->
-                console.log out
-                console.log stderr
                 test.ok not err, 'Should be successful'
                 checkApp test, testCase.path
