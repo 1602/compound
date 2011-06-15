@@ -1,0 +1,122 @@
+require('../test_helper.js').controller('models', module.exports);
+
+var sinon  = require('sinon');
+
+function ValidAttributes () {
+    return {
+        VALID_ATTRIBUTES
+    };
+}
+
+exports['models controller'] = {
+    // trick
+    'skip': function (test) { process.nextTick(function () { test.done(); }); },
+
+    'GET new': function (test) {
+        test.get('/models/new', function () {
+            test.success();
+            test.render('new');
+            test.render('form.ejs');
+            test.done();
+        });
+    },
+
+    'GET index': function (test) {
+        test.get('/models', function () {
+            test.success();
+            test.render('index');
+            test.done();
+        });
+    },
+
+    'GET edit': function (test) {
+        var find = Model.find;
+        Model.find = sinon.spy(function (id, callback) {
+            callback(null, new Model);
+        });
+        test.get('/models/42/edit', function () {
+            test.ok(Model.find.calledWith('42'));
+            Model.find = find;
+            test.success();
+            test.render('edit');
+            test.done();
+        });
+    },
+
+    'GET show': function (test) {
+        var find = Model.find;
+        Model.find = sinon.spy(function (id, callback) {
+            callback(null, new Model);
+        });
+        test.get('/models/42', function (req, res) {
+            test.ok(Model.find.calledWith('42'));
+            Model.find = find;
+            test.success();
+            test.render('show');
+            test.done();
+        });
+    },
+
+    'POST create': function (test) {
+        var model = new ValidAttributes;
+        var create = Model.create;
+        Model.create = sinon.spy(function (data, callback) {
+            test.strictEqual(data, model);
+            callback(1);
+        });
+        test.post('/models', model, function () {
+            test.redirect('/models');
+            test.flash('info');
+            test.done();
+        });
+    },
+
+    'POST create fail': function (test) {
+        var model = new ValidAttributes;
+        var create = Model.create;
+        Model.create = sinon.spy(function (data, callback) {
+            test.strictEqual(data, model);
+            callback(null);
+        });
+        test.post('/models', model, function () {
+            test.success();
+            test.render('new');
+            test.flash('error');
+            test.done();
+        });
+    },
+
+    'PUT update': function (test) {
+        Model.find = sinon.spy(function (id, callback) {
+            test.equal(id, 1);
+            callback(null, {id: 1, save: function (data, cb) { cb(null); }});
+        });
+        test.put('/models/1', new ValidAttributes, function () {
+            test.redirect('/models/1');
+            test.flash('info');
+            test.done();
+        });
+    },
+
+    'PUT update fail': function (test) {
+        Model.find = sinon.spy(function (id, callback) {
+            test.equal(id, 1);
+            callback(null, {id: 1, save: function (data, cb) { cb(new Error); }});
+        });
+        test.put('/models/1', new ValidAttributes, function () {
+            test.success();
+            test.render('edit');
+            test.flash('error');
+            test.done();
+        });
+    },
+
+    'DELETE destroy': function (test) {
+        test.done();
+    },
+
+    'DELETE destroy fail': function (test) {
+        test.done();
+    }
+};
+
