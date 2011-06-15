@@ -13,7 +13,7 @@ action 'new', ->
     render()
 
 action 'create', ->
-    Model.create req.body, (id) ->
+    Model.create req.body, (id) =>
         if !id
             flash 'error', 'Model can not be created'
             @model = this

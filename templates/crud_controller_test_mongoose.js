@@ -28,13 +28,13 @@ exports['models controller'] = {
     },
 
     'GET edit': function (test) {
-        var find = Model.find;
-        Model.find = sinon.spy(function (id, callback) {
+        var find = Model.findById;
+        Model.findById = sinon.spy(function (id, callback) {
             callback(null, new Model);
         });
         test.get('/models/42/edit', function () {
-            test.ok(Model.find.calledWith('42'));
-            Model.find = find;
+            test.ok(Model.findById.calledWith('42'));
+            Model.findById = find;
             test.success();
             test.render('edit');
             test.done();
@@ -42,13 +42,13 @@ exports['models controller'] = {
     },
 
     'GET show': function (test) {
-        var find = Model.find;
-        Model.find = sinon.spy(function (id, callback) {
+        var find = Model.findById;
+        Model.findById = sinon.spy(function (id, callback) {
             callback(null, new Model);
         });
         test.get('/models/42', function (req, res) {
-            test.ok(Model.find.calledWith('42'));
-            Model.find = find;
+            test.ok(Model.findById.calledWith('42'));
+            Model.findById = find;
             test.success();
             test.render('show');
             test.done();
@@ -57,12 +57,12 @@ exports['models controller'] = {
 
     'POST create': function (test) {
         var model = new ValidAttributes;
-        var create = Model.create;
-        Model.create = sinon.spy(function (data, callback) {
-            test.strictEqual(data, model);
-            callback(1);
-        });
+        var oldSave = Model.prototype.save;
+        Model.prototype.save = function (callback) {
+            callback(null);
+        };
         test.post('/models', model, function () {
+            Model.prototype.save = oldSave;
             test.redirect('/models');
             test.flash('info');
             test.done();
@@ -71,12 +71,12 @@ exports['models controller'] = {
 
     'POST create fail': function (test) {
         var model = new ValidAttributes;
-        var create = Model.create;
-        Model.create = sinon.spy(function (data, callback) {
-            test.strictEqual(data, model);
-            callback(null);
-        });
+        var oldSave = Model.prototype.save;
+        Model.prototype.save = function (callback) {
+            callback(new Error);
+        };
         test.post('/models', model, function () {
+            Model.prototype.save = oldSave;
             test.success();
             test.render('new');
             test.flash('error');
@@ -85,11 +85,13 @@ exports['models controller'] = {
     },
 
     'PUT update': function (test) {
-        Model.find = sinon.spy(function (id, callback) {
+        var find = Model.findById;
+        Model.findById = sinon.spy(function (id, callback) {
             test.equal(id, 1);
-            callback(null, {id: 1, save: function (data, cb) { cb(null); }});
+            callback(null, {id: 1, save: function (cb) { cb(null); }});
         });
         test.put('/models/1', new ValidAttributes, function () {
+            Model.findById = find;
             test.redirect('/models/1');
             test.flash('info');
             test.done();
@@ -97,11 +99,13 @@ exports['models controller'] = {
     },
 
     'PUT update fail': function (test) {
-        Model.find = sinon.spy(function (id, callback) {
+        var find = Model.findById;
+        Model.findById = sinon.spy(function (id, callback) {
             test.equal(id, 1);
-            callback(null, {id: 1, save: function (data, cb) { cb(new Error); }});
+            callback(null, {id: 1, save: function (cb) { cb(new Error); }});
         });
         test.put('/models/1', new ValidAttributes, function () {
+            Model.findById = find;
             test.success();
             test.render('edit');
             test.flash('error');
