@@ -5,5 +5,5 @@ app.configure 'production', ->
     app.enable 'merge javascripts'
     app.enable 'merge stylesheets'
     app.use require('express').errorHandler()
-    app.settings.quiet = true
+    app.enable 'quiet'
 
