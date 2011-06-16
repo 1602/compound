@@ -1,5 +1,11 @@
+try {
+    global.sinon = require('sinon');
+} catch (e) {
+    // ignore
+}
+
 var group_name = false, EXT_EXP;
-function it(should, test_case) {
+function it (should, test_case) {
     check_external_exports();
     if (group_name) {
         EXT_EXP[group_name][should] = test_case;
@@ -9,11 +15,6 @@ function it(should, test_case) {
 }
 
 global.it = it;
-try {
-    global.sinon = require('sinon');
-} catch (e) {
-    // ignore
-}
 
 function context(name, tests) {
     check_external_exports();
