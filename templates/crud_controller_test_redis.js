@@ -28,13 +28,13 @@ exports['models controller'] = {
     },
 
     'GET edit': function (test) {
-        var find = Model.find;
-        Model.find = sinon.spy(function (id, callback) {
+        var find = Model.findById;
+        Model.findById = sinon.spy(function (id, callback) {
             callback(null, new Model);
         });
         test.get('/models/42/edit', function () {
-            test.ok(Model.find.calledWith('42'));
-            Model.find = find;
+            test.ok(Model.findById.calledWith('42'));
+            Model.findById = find;
             test.success();
             test.render('edit');
             test.done();
@@ -42,13 +42,13 @@ exports['models controller'] = {
     },
 
     'GET show': function (test) {
-        var find = Model.find;
-        Model.find = sinon.spy(function (id, callback) {
+        var find = Model.findById;
+        Model.findById = sinon.spy(function (id, callback) {
             callback(null, new Model);
         });
         test.get('/models/42', function (req, res) {
-            test.ok(Model.find.calledWith('42'));
-            Model.find = find;
+            test.ok(Model.findById.calledWith('42'));
+            Model.findById = find;
             test.success();
             test.render('show');
             test.done();
@@ -85,7 +85,7 @@ exports['models controller'] = {
     },
 
     'PUT update': function (test) {
-        Model.find = sinon.spy(function (id, callback) {
+        Model.findById = sinon.spy(function (id, callback) {
             test.equal(id, 1);
             callback(null, {id: 1, save: function (data, cb) { cb(null); }});
         });
@@ -97,7 +97,7 @@ exports['models controller'] = {
     },
 
     'PUT update fail': function (test) {
-        Model.find = sinon.spy(function (id, callback) {
+        Model.findById = sinon.spy(function (id, callback) {
             test.equal(id, 1);
             callback(null, {id: 1, save: function (data, cb) { cb(new Error); }});
         });

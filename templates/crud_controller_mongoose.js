@@ -2,80 +2,69 @@ load('application');
 before(loadModel, {only: ['show', 'edit', 'update', 'destroy']});
 
 action('new', function () {
-    var model = new Model;
-    render({
-        model: model,
-        title: 'New model'
-    });
+    this.model = new Model;
+    this.title = 'New model';
+    render();
 });
 
 action('create', function () {
-    req.model = new Model;
+    this.model = new Model;
     FILTER_PROPERTIES.forEach(function (field) {
         if (typeof req.body[field] !== 'undefined') {
-            req.model[field] = req.body[field];
+            this.model[field] = req.body[field];
         }
-    });
-    req.model.save(function (errors) {
+    }.bind(this));
+    this.model.save(function (errors) {
         if (errors) {
+            this.title = 'New model';
             flash('error', 'Model can not be created');
-            render('new', {
-                model: req.model,
-                title: 'New model'
-            });
+            render('new');
         } else {
             flash('info', 'Model created');
             redirect(path_to.models);
         }
-    });
+    }.bind(this));
 });
 
 action('index', function () {
     Model.find(function (err, models) {
-        render({
-            models: models,
-            title: 'Models index'
-        });
-    });
+        this.models = models;
+        this.title = 'Models index';
+        render();
+    }.bind(this));
 });
 
 action('show', function () {
-    render({
-        model: req.model,
-        title: 'Model show'
-    });
+    this.title = 'Model show';
+    render();
 });
 
 action('edit', function () {
-    render({
-        model: req.model,
-        title: 'Model edit'
-    });
+    this.title = 'Model edit';
+    render();
 });
 
 action('update', function () {
     FILTER_PROPERTIES.forEach(function (field) {
         if (typeof req.body[field] !== 'undefined') {
-            req.model[field] = req.body[field];
+            this.model[field] = req.body[field];
         }
-    });
+    }.bind(this));
 
-    req.model.save(function (err) {
+    this.model.save(function (err) {
         if (!err) {
             flash('info', 'Model updated');
-            redirect(path_to.model(req.model));
+            redirect(path_to.model(this.model));
         } else {
+            this.title = 'Edit model details';
             flash('error', 'Model can not be updated');
-            render('edit', {
-                model: req.model,
-                title: 'Edit model details'
-            });
+            render('edit');
         }
-    });
+    }.bind(this));
 });
 
 action('destroy', function () {
-    req.model.remove(function (error) {
+    this.model.remove(function (error) {
         if (error) {
             flash('error', 'Can not destroy model');
         } else {
@@ -90,8 +79,8 @@ function loadModel () {
         if (err || !model) {
             redirect(path_to.models);
         } else {
-            req.model = model;
+            this.model = model;
             next();
         }
-    });
+    }.bind(this));
 }

@@ -12,8 +12,8 @@ before ->
 # GET /models/new
 action 'new', ->
     @model = new Model
-    render
-        title: 'New model'
+    @title = 'New model'
+    render()
 
 # POST /models
 action 'create', ->
@@ -39,13 +39,13 @@ action 'index', ->
 
 # GET /models/:id
 action 'show', ->
-    render
-        title: 'Model show'
+    @title = 'Show model'
+    render()
 
 # GET /models/:id/edit
 action 'edit', ->
-    render
-        title: 'Model edit'
+    @title = 'Edit model details'
+    render()
 
 # PUT /models/:id
 action 'update', ->

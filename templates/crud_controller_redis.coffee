@@ -1,5 +1,5 @@
 before ->
-    Model.find req.params['id'], (err, model) =>
+    Model.findById req.params['id'], (err, model) =>
         if err
             redirect path_to.models
         else

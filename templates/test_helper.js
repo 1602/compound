@@ -46,6 +46,20 @@ exports.controller = function (controllerName, exp) {
         }
     };
 
+    assert.assign = function (name, value) {
+        if (!this.req.sandbox.hasOwnProperty(name)) {
+            assert.fail(name, this.req.sandbox, 'Not assigned', 'in', assert.assign);
+        } else if (typeof value !== 'undefined') {
+            if (typeof value == 'function') {
+                if (!value(this.req.sandbox[name])) {
+                    assert.fail(this.req.sandbox[name], '[user check]', 'Assigned value doesn\'t matched', '[user check]', assert.assign);
+                }
+            } else if (value !== this.req.sandbox[name]) {
+                assert.fail(this.req.sandbox[name], value, 'Assigned value doesn\'t matched', '===', assert.assign);
+            }
+        }
+    };
+
     assert.get = stubRequest('GET');
     assert.post = stubRequest('POST');
     assert.put = stubRequest('POST', 'PUT');
