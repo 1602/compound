@@ -1,22 +1,31 @@
-{ "name": "railway"
-, "version": "0.1.7pre3"
-, "author": "Anatoliy Chakkaev"
-, "description": "RailwayJS - Ruby-on-Rails inspired MVC web framework"
-, "homepage": "http://github.com/1602/express-on-railway"
-, "engines": ["node >= 0.3.0"]
-, "main": "lib/onrailway"
-, "bin": {"railway": "bin/railway"}
-, "dependencies":
-  { "ejs":              ">= 0.2.1"
-  , "ejs-ext":          ">= 0.0.2"
-  , "jade-ext":         ">= 0.0.1"
-  , "express":          ">= 2.2.2"
-  , "nodeunit":         ">= 0.5.0"
-  , "yaml":             ">= 0.1.2"
-  , "coffee-script":    ">= 1.1.1"
-  }
-, "repository":
-  { "type": "git"
-  , "url": "git://github.com/1602/express-on-railway.git"
+{
+  "name": "railway",
+  "version": "0.1.7",
+  "author": "Anatoliy Chakkaev",
+  "description": "RailwayJS - Ruby-on-Rails inspired MVC web framework",
+  "homepage": "http://railwayjs.com",
+  "engines": [
+    "node >= 0.4.0"
+  ],
+  "main": "lib/onrailway",
+  "bin": {
+    "railway": "bin/railway"
+  },
+  "dependencies": {
+    "ejs": ">= 0.2.1",
+    "ejs-ext": ">= 0.0.2",
+    "jade-ext": ">= 0.0.1",
+    "express": ">= 2.2.2",
+    "nodeunit": ">= 0.5.0",
+    "yaml": ">= 0.1.2",
+    "coffee-script": ">= 1.1.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/1602/express-on-railway.git"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "nodeunit test"
   }
 }
