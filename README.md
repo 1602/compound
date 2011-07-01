@@ -13,19 +13,17 @@ Or install from npm registry:
 
     $ sudo npm install railway -g
 
-This package depends on express, ejs and node-redis-mapper
-
 Usage
 =====
 
     $ mkdir blog && cd blog
     $ railway init
-    $ sudo npm link
+    $ npm install -l
 
 or, slightly simplier, but with the same result
 
     $ railway init blog && cd blog
-    $ sudo npm link
+    $ npm install -l
 
 Short functionality review
 ==========================
