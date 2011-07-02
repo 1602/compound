@@ -68,6 +68,8 @@ case 'generate':
     var what = args.shift();
     if (generators.exists(what)) {
         generators.perform(what, args);
+    } else if( what == undefined ){
+        console.log('Generator not specified, available generators: ', generators.list());
     } else {
         console.log('Generator "' + what + '" not found, available generators: ', generators.list());
     }
