@@ -26,8 +26,10 @@ checkApp = (test, appPath) ->
         testFile = path.join testAppPath, appPath, 'test/controllers/posts_controller_test'
         if path.existsSync testFile + '.js'
             testFile += '.js'
-        else
+        else if path.existsSync testFile + '.coffee'
             testFile += '.coffee'
+        else
+            console.log(err, out)
         require('nodeunit').runFiles(
             [testFile],
             testDone: (name, assertions) ->
@@ -73,11 +75,11 @@ cleanup = (done) ->
 # collect test cases
 cases = []
 cases.push cmd: 'init test-app',   name: 'application with given name', path: 'test-app'
-cases.push cmd: 'init --tpl jade', name: 'app using jade templating engine'
-cases.push cmd: 'init',            name: 'application in current directory'
-cases.push cmd: 'init --coffee',   name: 'coffee-script app'
-cases.push cmd: 'init --db redis', name: 'app with redis datastore'
-cases.push cmd: 'init --db redis --coffee', name: 'application in current directory'
+# cases.push cmd: 'init --tpl jade', name: 'app using jade templating engine'
+# cases.push cmd: 'init',            name: 'application in current directory'
+# cases.push cmd: 'init --coffee',   name: 'coffee-script app'
+# cases.push cmd: 'init --db redis', name: 'app with redis datastore'
+# cases.push cmd: 'init --db redis --coffee', name: 'application in current directory'
 
 # run test cases
 cases.forEach (testCase) ->
@@ -86,4 +88,5 @@ cases.forEach (testCase) ->
             console.log binRailway + testCase.cmd
             exec binRailway + testCase.cmd, (err, out, stderr) ->
                 test.ok not err, 'Should be successful'
+                console.log err if err
                 checkApp test, testCase.path
