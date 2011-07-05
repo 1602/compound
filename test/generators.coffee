@@ -8,6 +8,7 @@ sys  = require 'sys'
 http = require 'http'
 exec = require('child_process').exec
 nodeunit = require 'nodeunit'
+realCWD = process.cwd()
 
 testAppPath = path.resolve __dirname, '../tmp'
 binRailway  = 'cd ' + testAppPath + ' && ' + path.resolve(__dirname, '../bin/railway') + ' '
@@ -72,14 +73,18 @@ cleanup = (done) ->
     exec 'rm -rf ' + testAppPath, ->
         fs.mkdir testAppPath, 0755, done
 
+symlinkModules = (subPath, cb) ->
+    exec 'ln -s ' + path.join(realCWD, 'node_modules') + ' ' + path.join(testAppPath, subPath, 'node_modules'), ->
+        exec 'ln -s ' + realCWD + ' ' + path.join(testAppPath, subPath, 'node_modules/railway'), cb
+
 # collect test cases
 cases = []
-cases.push cmd: 'init test-app',   name: 'application with given name', path: 'test-app'
-# cases.push cmd: 'init --tpl jade', name: 'app using jade templating engine'
-# cases.push cmd: 'init',            name: 'application in current directory'
-# cases.push cmd: 'init --coffee',   name: 'coffee-script app'
 # cases.push cmd: 'init --db redis', name: 'app with redis datastore'
 # cases.push cmd: 'init --db redis --coffee', name: 'application in current directory'
+cases.push cmd: 'init test-app',   name: 'application with given name', path: 'test-app'
+cases.push cmd: 'init --tpl jade', name: 'app using jade templating engine'
+cases.push cmd: 'init',            name: 'application in current directory'
+cases.push cmd: 'init --coffee',   name: 'coffee-script app'
 
 # run test cases
 cases.forEach (testCase) ->
@@ -89,4 +94,5 @@ cases.forEach (testCase) ->
             exec binRailway + testCase.cmd, (err, out, stderr) ->
                 test.ok not err, 'Should be successful'
                 console.log err if err
-                checkApp test, testCase.path
+                symlinkModules testCase.path, ->
+                    checkApp test, testCase.path
