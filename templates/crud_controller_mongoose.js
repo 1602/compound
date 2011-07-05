@@ -1,4 +1,5 @@
 load('application');
+
 before(loadModel, {only: ['show', 'edit', 'update', 'destroy']});
 
 action('new', function () {
