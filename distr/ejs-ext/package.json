@@ -1,0 +1,17 @@
+{
+  "name": "ejs-ext",
+  "version": "0.0.3",
+  "author": "Anatoliy C.",
+  "description": "RailwayJS adaptor for ejs templating engine",
+  "main": "index.js",
+  "engines": {
+    "node": ">= 0.4.0"
+  },
+  "dependencies": {
+    "ejs": ">= 0"
+  },
+  "devDependencies": {},
+  "repository": {
+    "url": ""
+  }
+}

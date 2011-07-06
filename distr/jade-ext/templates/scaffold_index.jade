@@ -1,0 +1,10 @@
+h1 Index of models
+
+- models.forEach(function (model) {
+  p= 'model ' + model.id
+  != link_to('Edit', path_to.edit_model(model)) + ' '
+  != link_to('Delete', path_to.model(model), {method: 'delete', remote: true, jsonp: '(function (u) {location.href = u;})'})
+  br
+- });
+
+!= link_to('New model', path_to.new_model)

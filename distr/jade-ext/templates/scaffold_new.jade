@@ -1,0 +1,8 @@
+h1 New model
+
+- form_for(model, {action: path_to.models, method: 'POST', id: "model_form"}, function (form) {
+  != partial('models/form.jade', {locals: {form: form, model: model}})
+  != form.submit('Create model')
+  span= ' or '
+  != link_to('Cancel', path_to.models)
+- });

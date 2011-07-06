@@ -1,0 +1,6 @@
+[submodule "distr/ejs"]
+	path = distr/ejs
+	url = git://github.com/visionmedia/ejs.git
+[submodule "distr/jade"]
+	path = distr/jade
+	url = git://github.com/visionmedia/jade.git

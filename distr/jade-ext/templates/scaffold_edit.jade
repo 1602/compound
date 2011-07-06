@@ -1,0 +1,8 @@
+h1 Edit model
+
+- form_for(model, {action: path_to.model(model), method: 'PUT', id: "model_form"}, function (form) {
+  != partial('models/form.jade', {locals: {form: form, model: model}})
+  != form.submit('Update model')
+  span= ' or '
+  != link_to('Cancel', path_to.model(model))
+- });

@@ -1,0 +1,17 @@
+{
+  "name": "jade-ext",
+  "version": "0.0.1",
+  "author": "Anatoliy C.",
+  "description": "RailwayJS adaptor for jade templating engine",
+  "main": "index.js",
+  "engines": {
+    "node": ">= 0.4.0"
+  },
+  "dependencies": {
+    "jade": ">= 0"
+  },
+  "devDependencies": {},
+  "repository": {
+    "url": ""
+  }
+}
