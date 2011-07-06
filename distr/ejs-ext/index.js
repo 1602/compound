@@ -1,6 +1,4 @@
-console.log('hello from ejs-ext');
 // monkey patch ejs
-console.log(require.resolve('ejs'));
 var ejs = require('ejs'), old_parse = ejs.parse;
 ejs.parse = function () {
     var str = old_parse.apply(this, Array.prototype.slice.call(arguments));
