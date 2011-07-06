@@ -64,6 +64,7 @@ case 'help':
 
 case 'i':
 case 'init':
+    exitAfterAction = false;
     generators.perform('init');
     break;
 case 'g':

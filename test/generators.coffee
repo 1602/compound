@@ -73,10 +73,6 @@ cleanup = (done) ->
     exec 'rm -rf ' + testAppPath, ->
         fs.mkdir testAppPath, 0755, done
 
-symlinkModules = (subPath, cb) ->
-    exec 'ln -s ' + path.join(realCWD, 'node_modules') + ' ' + path.join(testAppPath, subPath, 'node_modules'), ->
-        exec 'ln -s ' + realCWD + ' ' + path.join(testAppPath, subPath, 'node_modules/railway'), cb
-
 # collect test cases
 cases = []
 # cases.push cmd: 'init --db redis', name: 'app with redis datastore'
@@ -94,5 +90,4 @@ cases.forEach (testCase) ->
             exec binRailway + testCase.cmd, (err, out, stderr) ->
                 test.ok not err, 'Should be successful'
                 console.log err if err
-                symlinkModules testCase.path, ->
-                    checkApp test, testCase.path
+                checkApp test, testCase.path
