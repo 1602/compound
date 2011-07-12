@@ -16,4 +16,7 @@
   , "mongoose":         ">= 1.3.6"
   , "connect-mongodb":  ">= 0.3.0"
   }
+, "scripts":
+  { "test": "nodeunit test/*/*"
+  }
 }

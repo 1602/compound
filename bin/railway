@@ -40,7 +40,7 @@ case 'help':
     var commands = [
         ['h', 'help',            'Display usage information'],
         ['i', 'init',            'Initialize railway app'],
-        ['g', 'generate [smth]', 'Generate smth using one of available generators (model, controller, crud, features, ...)']
+        ['g', 'generate [smth]', 'Generate something awesome']
     ];
     Object.keys(railway.tools).forEach(function (cmd) {
         var h = railway.tools[cmd].help;
