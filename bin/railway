@@ -70,10 +70,14 @@ case 'init':
 case 'g':
 case 'generate':
     var what = args.shift();
-    if (generators.exists(what)) {
-        generators.perform(what, args);
+    if (typeof what == "undefined" || what == null) {
+        console.log('Generator not specified, available generators: ', generators.list());
     } else {
-        console.log('Generator "' + what + '" not found, available generators: ', generators.list());
+        if (generators.exists(what)) {
+            generators.perform(what, args);
+        } else {
+            console.log('Generator "' + what + '" not found, available generators: ', generators.list());
+        }
     }
     break;
 }
