@@ -4,8 +4,8 @@ Installation
 It is fine to pull from github (less bugs, I hope)
 
     $ git clone git://github.com/1602/express-on-railway.git
-    $ git submodule update --init
     $ cd express-on-railway
+    $ git submodule update --init
     $ sudo npm install -g
     $ cd -
     $ rm -rf express-on-railway
