@@ -13,9 +13,13 @@
     "railway": "bin/railway"
   },
   "dependencies": {
+    "connect": ">= 0",
+    "socket.io": ">= 0",
     "express": ">= 2.2.2",
     "yaml": ">= 0.1.2",
-    "coffee-script": ">= 1.1.1"
+    "coffee-script": ">= 1.1.1",
+    "qs": ">= 0",
+    "mime": ">= 0"
   },
   "repository": {
     "type": "git",
