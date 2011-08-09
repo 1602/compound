@@ -1,6 +1,6 @@
 before ->
     Model.findById req.params['id'], (error, model) =>
-        if error
+        if error or not model
             redirect path_to.models
         else
             @model = model

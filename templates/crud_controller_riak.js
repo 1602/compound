@@ -66,7 +66,7 @@ action('destroy', function () {
 
 function loadModel () {
     Model.findById(req.params['id'], function (error, model) {
-        if (error) {
+        if (error || !model) {
             redirect(path_to.models);
         } else {
             this.model = model;
