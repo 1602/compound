@@ -11,7 +11,9 @@ function ValidAttributes () {
 exports['models controller'] = {
 
     'GET new': function (test) {
-        test.get('/models/new', function () {
+        test.get('/models/new', function(req, res) {
+            test.assign('title', 'New model');
+            test.assign('model');
             test.success();
             test.render('new');
             test.render('form.' + app.set('view engine'));
@@ -20,7 +22,7 @@ exports['models controller'] = {
     },
 
     'GET index': function (test) {
-        test.get('/models', function () {
+        test.get('/models', function(req, res) {
             test.success();
             test.render('index');
             test.done();
@@ -28,13 +30,14 @@ exports['models controller'] = {
     },
 
     'GET edit': function (test) {
-        var find = Model.findById;
-        Model.findById = sinon.spy(function (id, callback) {
-            callback(null, new Model);
+        Model.findById = sinon.spy(function(key, callback) {
+            test.strictEqual(key, '42');
+            var model = new Model(ValidAttributes);
+            model.id = '42';
+            callback(null, model);
         });
-        test.get('/models/42/edit', function () {
-            test.ok(Model.findById.calledWith('42'));
-            Model.findById = find;
+
+        test.get('/models/42/edit', function(req, res) {
             test.success();
             test.render('edit');
             test.done();
@@ -42,13 +45,14 @@ exports['models controller'] = {
     },
 
     'GET show': function (test) {
-        var find = Model.findById;
-        Model.findById = sinon.spy(function (id, callback) {
-            callback(null, new Model);
+        Model.findById = sinon.spy(function(key, callback) {
+            test.strictEqual(key, '42');
+            var model = new Model(ValidAttributes);
+            model.id = '42';
+            callback(null, model);
         });
-        test.get('/models/42', function (req, res) {
-            test.ok(Model.findById.calledWith('42'));
-            Model.findById = find;
+
+        test.get('/models/42', function(req, res) {
             test.success();
             test.render('show');
             test.done();
@@ -56,14 +60,13 @@ exports['models controller'] = {
     },
 
     'POST create': function (test) {
-        var model = new ValidAttributes;
-        var create = Model.create;
-        Model.create = sinon.spy(function (data, callback) {
-            test.strictEqual(data, model);
-            callback(1);
+        Model.create = sinon.spy(function(data, callback) {
+            test.deepEqual(data, new ValidAttributes);
+            var model = new Model(data);
+            callback(null, model);
         });
-        test.post('/models', model, function () {
-            Model.create = create;
+
+        test.post('/models', model, function(req, res) {
             test.redirect('/models');
             test.flash('info');
             test.done();
@@ -71,14 +74,13 @@ exports['models controller'] = {
     },
 
     'POST create fail': function (test) {
-        var model = new ValidAttributes;
-        var create = Model.create;
-        Model.create = sinon.spy(function (data, callback) {
-            test.strictEqual(data, model);
-            callback(null);
+        Model.create = sinon.spy(function(data, callback) {
+            test.deepEqual(data, new ValidAttributes);
+            var model = new Model(data);
+            callback(true, model);
         });
-        test.post('/models', model, function () {
-            Model.create = create;
+
+        test.post('/models', model, function(req, res) {
             test.success();
             test.render('new');
             test.flash('error');
@@ -87,27 +89,37 @@ exports['models controller'] = {
     },
 
     'PUT update': function (test) {
-        var find = Model.findById;
-        Model.findById = sinon.spy(function (id, callback) {
-            test.equal(id, 1);
-            callback(null, {id: 1, save: function (cb) { cb(null); }});
+        Model.findById = sinon.spy(function(key, callback){
+            test.strictEqual(key, '42');
+            var model = new Model(ValidAttributes);
+            model.id = '42';
+            model.save = sinon.spy(function(data, callback){
+                test.notStrictEqual(model.Id, '42');
+                callback(null, model);
+            });
+            callback(null, model);
         });
-        test.put('/models/1', new ValidAttributes, function () {
-            Model.findById = find;
-            test.redirect('/models/1');
+
+        test.put('/models/42', new ValidAttributes, function(req, res) {
+            test.redirect('/models/42');
             test.flash('info');
             test.done();
         });
     },
 
     'PUT update fail': function (test) {
-        var find = Model.findById;
-        Model.findById = sinon.spy(function (id, callback) {
-            test.equal(id, 1);
-            callback(null, {id: 1, save: function (cb) { cb(new Error); }});
+        Model.findById = sinon.spy(function(key, callback){
+            test.strictEqual(key, '42');
+            var model = new Model(ValidAttributes);
+            model.id = '42';
+            model.save = sinon.spy(function(data, callback){
+                test.notStrictEqual(model.Id, '42');
+                callback(true, model);
+            });
+            callback(null, model);
         });
-        test.put('/models/1', new ValidAttributes, function () {
-            Model.findById = find;
+
+        test.put('/models/42', new ValidAttributes, function(req, res) {
             test.success();
             test.render('edit');
             test.flash('error');
@@ -116,11 +128,39 @@ exports['models controller'] = {
     },
 
     'DELETE destroy': function (test) {
-        test.done();
+        Model.findById = sinon.spy(function(key, callback) {
+            test.strictEqual(key, '42');
+            var model = new Model(ValidAttributes);
+            model.id = '42';
+            model.destroy = sinon.spy(function(callback) {
+                callback(null, true);
+            });
+            callback(null, model);
+        });
+
+        test.del('/models/42', {}, function(req, res) {
+            test.send('/models');
+            test.flash('info');
+            test.done();
+        });
     },
 
     'DELETE destroy fail': function (test) {
-        test.done();
+        Model.findById = sinon.spy(function(key, callback) {
+            test.strictEqual(key, '42');
+            var model = new Model(ValidAttributes);
+            model.id = '42';
+            model.destroy = sinon.spy(function(callback) {
+                callback(true, false);
+            });
+            callback(null, model);
+        });
+
+        test.del('/models/42', {}, function(req, res) {
+            test.send('/models');
+            test.flash('error');
+            test.done();
+        });
     }
 };
 

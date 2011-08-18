@@ -9,7 +9,7 @@ ValidAttributes = ->
 
 module.exports['models controller'] = {
     'GET new': (test) ->
-        test.get '/models/new', ->
+        test.get '/models/new', (req, res) ->
             test.assign 'title', 'New model'
             test.assign 'model'
             test.success()
@@ -18,94 +18,113 @@ module.exports['models controller'] = {
             test.done()
 
     'GET index': (test) ->
-        test.get '/models', ->
+        test.get '/models', (req, res) ->
             test.success()
             test.render 'index'
             test.done()
 
     'GET edit': (test) ->
-        find = Model.findById
-        Model.findById = sinon.spy (id, cb) -> cb null, new Model
+        Model.findById = sinon.spy (key, callback) =>
+            test.strictEqual key, '42'
+            model = new Model ValidAttributes
+            model.id = '42'
+            callback null, model
 
-        test.get '/models/42/edit', ->
-            test.ok Model.findById.calledWith('42')
-            Model.findById = find
+        test.get '/models/42/edit', (req, res) ->
             test.success()
             test.render 'edit'
             test.done()
 
     'GET show': (test) ->
-        find = Model.findById
-        Model.findById = sinon.spy (id, cb) -> cb null, new Model
+        Model.findById = sinon.spy (key, callback) =>
+            test.strictEqual key, '42'
+            model = new Model ValidAttributes
+            model.id = '42'
+            callback null, model
 
         test.get '/models/42', (req, res) ->
-            test.ok Model.findById.calledWith('42')
-            Model.findById = find
             test.success()
             test.render('show')
             test.done()
 
     'POST create': (test) ->
-        model = new ValidAttributes
-        create = Model.create
         Model.create = sinon.spy (data, callback) ->
-            test.strictEqual data, model
-            callback 1
+            test.deepEqual data, new ValidAttributes
+            model = new Model data
+            callback null, model
 
-        test.post '/models', model, () ->
-            Model.create = create
+        test.post '/models', new ValidAttributes, (req, res) ->
             test.redirect '/models'
             test.flash 'info'
             test.done()
 
     'POST create fail': (test) ->
-        model = new ValidAttributes
-        create = Model.create
         Model.create = sinon.spy (data, callback) ->
-            test.strictEqual data, model
-            callback null
+            test.deepEqual data, new ValidAttributes
+            model = new Model data
+            callback true, model
 
-        test.post '/models', model, () ->
-            Model.create = create
+        test.post '/models', new ValidAttributes, (req, res) ->
             test.success()
             test.render('new')
             test.flash('error')
             test.done()
 
     'PUT update': (test) ->
-        find = Model.findById
-        Model.findById = sinon.spy (id, callback) ->
-            test.equal id, 1
-            callback null,
-                id: 1
-                save: (cb) -> cb(null)
+        Model.findById = sinon.spy (key, callback) =>
+            test.strictEqual key, '42'
+            model = new Model ValidAttributes
+            model.id = '42'
+            model.save = sinon.spy (data, callback) ->
+                test.notStrictEqual model.Id, '42'
+                callback null, model
+            callback null, model
 
-        test.put '/models/1', new ValidAttributes, () ->
-            Model.findById = find
-            test.redirect '/models/1'
+        test.put '/models/42', new ValidAttributes, (req, res) ->
+            test.redirect '/models/42'
             test.flash 'info'
             test.done()
 
     'PUT update fail': (test) ->
-        find = Model.findById
-        Model.findById = sinon.spy (id, callback) ->
-            test.equal id, 1
-            callback null,
-                id: 1
-                save: (cb) -> cb new Error
+        Model.findById = sinon.spy (key, callback) ->
+            test.strictEqual key, '42'
+            model = new Model ValidAttributes
+            model.id = '42'
+            model.save = sinon.spy (data, callback) ->
+                callback true, model
+            callback null, model
 
-        test.put '/models/1', new ValidAttributes, () ->
-            Model.findById = find
+        test.put '/models/42', new ValidAttributes, (req, res) ->
             test.success()
             test.render 'edit'
             test.flash 'error'
             test.done()
 
     'DELETE destroy': (test) ->
-        test.done()
+        Model.findById = sinon.spy (key, callback) ->
+            test.strictEqual key, '42'
+            model = new Model ValidAttributes
+            model.id = '42'
+            model.destroy = sinon.spy (callback) ->
+                callback null, true
+            callback null, model
+
+        test.del '/models/42', {}, (req, res) ->
+            test.send('/models')
+            test.flash 'info'
+            test.done()
 
     'DELETE destroy fail': (test) ->
-        test.done()
+        Model.findById = sinon.spy (key, callback) ->
+            test.strictEqual key, '42'
+            model = new Model ValidAttributes
+            model.id = '42'
+            model.destroy = sinon.spy (callback) ->
+                callback true, false
+            callback null, model
 
+        test.del '/models/42', {}, (req, res) ->
+            test.send('/models')
+            test.flash 'error'
+            test.done()
 }
-
