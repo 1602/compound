@@ -66,7 +66,7 @@ exports['models controller'] = {
             callback(null, model);
         });
 
-        test.post('/models', model, function(req, res) {
+        test.post('/models', new ValidAttributes, function(req, res) {
             test.redirect('/models');
             test.flash('info');
             test.done();
@@ -80,7 +80,7 @@ exports['models controller'] = {
             callback(true, model);
         });
 
-        test.post('/models', model, function(req, res) {
+        test.post('/models', new ValidAttributes, function(req, res) {
             test.success();
             test.render('new');
             test.flash('error');
