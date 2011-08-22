@@ -25,7 +25,7 @@ action('index', function () {
     this.title = 'Models index';
     Model.allInstances(function (error, models) {
         render({
-            models: models,
+            models: models || [],
         });
     });
 });
