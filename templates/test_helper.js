@@ -30,7 +30,14 @@ exports.controller = function (controllerName, exp) {
         if (realPath !== path) {
             assert.fail(realPath, path, message || 'Wrong location', '===', assert.redirect);
         }
-    }
+    };
+
+    assert.send = function (path, message) {
+        if (this.res.statusCode !== 200) {
+            assert.fail(this.res.statusCode, 200, 'Status code is not 200', '===', assert.redirect);
+        }
+        this.res.send.calledWithExactly(path);
+    };
 
     assert.success = function (template, message) {
         if (this.res.statusCode !== 200) {
@@ -84,8 +91,6 @@ exports.controller = function (controllerName, exp) {
         return test;
     };
 
-
-
     app.enable('quiet');
     app.enable('models cache');
 
@@ -110,10 +115,18 @@ exports.controller = function (controllerName, exp) {
             req.connection = {};
             req.url      = url;
             req.method   = method;
-            if (method === 'POST' && typeof callback === 'object') {
-                req.body = callback;
-                if (_method) req.body._method = _method;
-                callback = arguments[2];
+
+            if (method === 'POST') {
+                if (typeof callback === 'object')
+                {
+                    req.body = callback;
+                    callback = arguments[2];
+                }
+
+                if (_method)
+                {
+                    req.body._method = _method;
+                }
             }
 
             res.end = function () {
