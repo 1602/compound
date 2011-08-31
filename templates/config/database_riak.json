@@ -1,0 +1,25 @@
+{ "development":
+  { "driver":   "riak"
+  , "host":     "localhost"
+  , "port":     "8098"
+  , "database": "APPNAME-dev"
+  }
+, "test":
+  { "driver":   "riak"
+  , "host":     "localhost"
+  , "port":     "8098"
+  , "database": "APPNAME-test"
+  }
+, "staging":
+  { "driver":   "riak"
+  , "host":     "localhost"
+  , "port":     "8098"
+  , "database": "APPNAME-staging"
+  }
+, "production":
+  { "driver":   "riak"
+  , "host":     "localhost"
+  , "port":     "8098"
+  , "database": "APPNAME-production"
+  }
+}

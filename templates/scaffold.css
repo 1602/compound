@@ -2,7 +2,7 @@ body {
   padding: 0px;
 }
 body, table, input, select {
-  font-family: DejaVu Sans Mono, fixed;
+  font-family: Helvetica, Verdana, Arial, Sans-Serif;
   font-size: 14pt;
   line-height: 150%;
   color: #444;

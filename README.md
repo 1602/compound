@@ -297,8 +297,8 @@ or it's shortcut
 
     railway c
 
-It just simple node-js console with some Railway bingings, e.g. models. Just one note
-about working with console. Node.js is asunchronous by his nature, and it's great
+It just simple node-js console with some Railway bindings, e.g. models. Just one note
+about working with console. Node.js is asynchronous by its nature, and it's great
 but it made console debugging much more complicated, because you should use callback
 to fetch result from database, for example. I have added one useful method to
 simplify async debugging using railway console. It's name `c`, you can pass it
@@ -327,7 +327,7 @@ Localization
 To add another language to app just create yml file in `config/locales`,
 for example `config/locales/jp.yml`, copy contents of `config/locales/en.yml` to new
 file and rename root node (`en` to `jp` in that case), also in `lang` section rename
-`name` to Japaneese (for example).
+`name` to Japanese (for example).
 
 Next step - rename email files in `app/views/emails`, copy all files `*.en.html` 
 and `*.en.text` to `*.jp.html` and `*.jp.text` and translate new files.
