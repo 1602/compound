@@ -1,3 +1,11 @@
+0.1.8
+=====
+
+- RIAK datamapper *beta*, thanks Taliesin Sisson (https://github.com/taliesins)
+- routes tuning (map.all, map.root)
+- some bugfixes
+- minor changes
+
 0.1.7
 =====
 
