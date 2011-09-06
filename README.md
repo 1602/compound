@@ -30,7 +30,7 @@ Usage
     # visit appp
     $ open http://localhost:3000/posts
 
-    **NOTE:** Make sure mongodb server runs
+    _NOTE:_ Make sure mongodb server runs
 
 Short functionality review
 ==========================
