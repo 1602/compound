@@ -1,7 +1,7 @@
 Installation
 ============
 
-It is fine to pull from github (less bugs, I hope)
+Option 1: GitHub
 
     $ git clone git://github.com/1602/express-on-railway.git
     $ cd express-on-railway
@@ -10,24 +10,69 @@ It is fine to pull from github (less bugs, I hope)
     $ cd -
     $ rm -rf express-on-railway
 
-Or install from npm registry:
+Option 2: npm
 
     $ sudo npm install railway -g
 
 Usage
 =====
 
-    $ mkdir blog && cd blog
-    $ railway init
-    $ npm install -l
-
-or, slightly simplier, but with the same result
-
+    # initialize
     $ railway init blog && cd blog
     $ npm install -l
 
+    # generate scaffold
+    $ railway generate crud post title content published:boolean
+
+    # run server on port 3000
+    $ railway s 3000
+
+    # visit appp
+    $ open http://localhost:3000/posts
+
+    **NOTE:** Make sure mongodb server runs
+
 Short functionality review
 ==========================
+
+CLI tool
+--------
+
+    Usage: railway command [argument(s)]
+
+    Commands:
+      h,  help                     Display usage information
+      i,  init                     Initialize railway app
+      g,  generate [smth]          Generate something awesome
+      r,  routes [filter]          Display application routes
+      c,  console                  Debug console
+      s,  server [port]            Run railway server
+      x,  install gitUrl [extName] Install railway eXtension
+
+*railway init [appname][ key(s)]*
+    keys:
+    --coffee                 # Default: no coffee by default
+    --tpl jade|ejs           # Default: ejs
+    --db redis|mongoose|riak # Default: mongoose
+
+*railway generate smth* - smth = generator name (controller, model, scaffold, ...can be extended via plugins)
+
+builtin generator: model
+`railway g model user email password approved:boolean` # generate User model with fields user, password: String, approved: Boolean
+`railway g post title content --coffee` # generate Post model in coffee script syntax
+
+builtin generator: scaffold (crud)
+`railway g scaffold todo title done:boolean --coffee` # generate scaffold for Todo model (title: String, done: Boolean)
+
+builtin generator: controller
+`railway g controller sessions new create destroy` # generate sessions controller with actions and views
+
+*railway server 8000* or *PORT=8000 node server* - run server on port `8000`
+
+*railway c* - run debugging console (see details below)
+
+*railway r* - print routes map (see details below)
+
 
 Directory structure
 -------------------
