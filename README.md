@@ -30,7 +30,7 @@ Usage
     # visit appp
     $ open http://localhost:3000/posts
 
-    _NOTE:_ Make sure mongodb server runs
+**NOTE:** Make sure mongodb server runs
 
 Short functionality review
 ==========================
@@ -49,13 +49,13 @@ CLI tool
       s,  server [port]            Run railway server
       x,  install gitUrl [extName] Install railway eXtension
 
-*railway init [appname][ key(s)]*
+**railway init [appname][ key(s)]**
     keys:
     --coffee                 # Default: no coffee by default
     --tpl jade|ejs           # Default: ejs
     --db redis|mongoose|riak # Default: mongoose
 
-*railway generate smth* - smth = generator name (controller, model, scaffold, ...can be extended via plugins)
+**railway generate smth** - smth = generator name (controller, model, scaffold, ...can be extended via plugins)
 
 builtin generator: model
 `railway g model user email password approved:boolean` # generate User model with fields user, password: String, approved: Boolean
@@ -67,11 +67,11 @@ builtin generator: scaffold (crud)
 builtin generator: controller
 `railway g controller sessions new create destroy` # generate sessions controller with actions and views
 
-*railway server 8000* or *PORT=8000 node server* - run server on port `8000`
+**railway server 8000** or **PORT=8000 node server** - run server on port `8000`
 
-*railway c* - run debugging console (see details below)
+**railway c** - run debugging console (see details below)
 
-*railway r* - print routes map (see details below)
+**railway r** - print routes map (see details below)
 
 
 Directory structure
