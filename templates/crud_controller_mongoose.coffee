@@ -1,7 +1,7 @@
 load 'application'
 
 before ->
-    Model.findById req.params.id, (err, model) =>
+    Model.findById params.id, (err, model) =>
         if err or not model
             redirect path_to.models
         else
@@ -19,7 +19,7 @@ action 'new', ->
 action 'create', ->
     @model = new Model
     FILTER_PROPERTIES.forEach (field) =>
-        @model[field] = req.body[field] if req.body[field]?
+        @model[field] = body[field] if body[field]?
 
     @model.save (errors) ->
         if errors
@@ -50,7 +50,7 @@ action 'edit', ->
 # PUT /models/:id
 action 'update', ->
     FILTER_PROPERTIES.forEach (field) =>
-        @model[field] = req.body[field] if req.body[field]?
+        @model[field] = body[field] if body[field]?
 
     @model.save (err) =>
         if not err

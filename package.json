@@ -10,7 +10,8 @@
   ],
   "main": "lib/onrailway",
   "bin": {
-    "railway": "bin/railway"
+    "railway": "bin/railway",
+    "rw": "bin/railway"
   },
   "dependencies": {
     "connect": ">= 0",

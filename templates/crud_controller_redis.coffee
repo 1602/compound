@@ -1,5 +1,5 @@
 before ->
-    Model.findById req.params['id'], (err, model) =>
+    Model.findById params.id, (err, model) =>
         if err
             redirect path_to.models
         else
@@ -13,7 +13,7 @@ action 'new', ->
     render()
 
 action 'create', ->
-    Model.create req.body, (id) =>
+    Model.create body, (id) =>
         if !id
             flash 'error', 'Model can not be created'
             @model = this
@@ -38,7 +38,7 @@ action 'edit', ->
     render()
 
 action 'update', ->
-    @model.save req.body, (err) =>
+    @model.save body, (err) =>
         if !err
             flash 'info', 'Model updated'
             redirect path_to.model(@model)

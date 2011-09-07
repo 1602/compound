@@ -11,8 +11,8 @@ action('new', function () {
 action('create', function () {
     this.model = new Model;
     FILTER_PROPERTIES.forEach(function (field) {
-        if (typeof req.body[field] !== 'undefined') {
-            this.model[field] = req.body[field];
+        if (typeof body[field] !== 'undefined') {
+            this.model[field] = body[field];
         }
     }.bind(this));
     this.model.save(function (errors) {
@@ -47,8 +47,8 @@ action('edit', function () {
 
 action('update', function () {
     FILTER_PROPERTIES.forEach(function (field) {
-        if (typeof req.body[field] !== 'undefined') {
-            this.model[field] = req.body[field];
+        if (typeof body[field] !== 'undefined') {
+            this.model[field] = body[field];
         }
     }.bind(this));
 
@@ -76,7 +76,7 @@ action('destroy', function () {
 });
 
 function loadModel () {
-    Model.findById(req.params.id, function (err, model) {
+    Model.findById(params.id, function (err, model) {
         if (err || !model) {
             redirect(path_to.models);
         } else {

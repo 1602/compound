@@ -7,7 +7,7 @@ action('new', function () {
 });
 
 action('create', function () {
-    Model.create(req.body, function (id) {
+    Model.create(body, function (id) {
         if (!id) {
             flash('error', 'Model can not be created');
             render('new', {
@@ -41,7 +41,7 @@ action('edit', function () {
 });
 
 action('update', function () {
-    this.model.save(req.body, function (err) {
+    this.model.save(body, function (err) {
         if (!err) {
             flash('info', 'Model updated');
             redirect(path_to.model(this.model));
@@ -65,7 +65,7 @@ action('destroy', function () {
 });
 
 function loadModel () {
-    Model.findById(req.params['id'], function (err, model) {
+    Model.findById(params.id, function (err, model) {
         if (err) {
             redirect(path_to.models);
         } else {
