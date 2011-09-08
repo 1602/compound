@@ -1,8 +1,10 @@
-0.1.8
+0.1.8.1
 =====
 
 - RIAK datamapper *beta*, thanks Taliesin Sisson (https://github.com/taliesins)
 - routes tuning (map.all, map.root)
+- controller changes: params, body, session objects published in controller context
+- skipBeforeFilter, skipAfterFilter support
 - some bugfixes
 - minor changes
 
