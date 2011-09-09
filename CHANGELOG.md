@@ -2,7 +2,7 @@
 =====
 
 - RIAK datamapper *beta*, thanks Taliesin Sisson (https://github.com/taliesins)
-- routes tuning (map.all, map.root)
+- routes tuning (map.all, map.root, path alias, helpers alias)
 - controller changes: params, body, session objects published in controller context
 - skipBeforeFilter, skipAfterFilter support
 - some bugfixes
