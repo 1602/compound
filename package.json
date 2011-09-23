@@ -21,8 +21,8 @@
     "coffee-script": ">= 1.1.1",
     "qs": ">= 0",
     "mime": ">= 0",
-    "ejs-ext": ">= 0",
-    "jade-ext": ">= 0"
+    "ejs-ext": ">= 0.0.4",
+    "jade-ext": ">= 0.0.2"
   },
   "repository": {
     "type": "git",
