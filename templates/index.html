@@ -2,120 +2,50 @@
 <html>
   <head>
     <title>Welcome to Railway</title>
-    <link media="screen" rel="stylesheet" type="text/css" href="/stylesheets/reset.css" /> 
+    <link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.3.0/bootstrap.min.css">
     <meta name="viewport" content="width=500, initial-scale=0.5">
-    <style>
-      body {
-        padding: 0px;
-        background: #f3f3f3;
-      }
-      body, table, input, select {
-        font-family: DejaVu Sans Mono, verdana, fixed;
-        font-size: 12pt;
-        line-height: 150%;
-        color: #444;
-      }
-
-      h1 {
-        line-height: 3em;
-        font-size: 1.3em;
-        padding: 20px;
-      }
-
-      .helper, .helper * {
-        font-size: 12px;
-      }
-
-      a, a:link, a:visited, a:active, a:hover {
-        color: #479;
-      }
-
-      .wrap {
-        width: 700px;
-        margin: 0 auto;
-        background: #fff;
-        border: 5px solid #ddd;
-      }
-
-      label.error {
-        color: #900;
-      }
-
-      .content {
-        clear: both;
-        padding: 20px;
-      }
-
-      a.small {
-        font-size: 12px;
-      }
-
-      pre {
-        margin: 1em 0px;
-        background: #e8e8e8;
-        padding: 10px;
-        line-height: 100%;
-        border-radius: 2px;
-        overflow: auto;
-      }
-
-      pre code {
-        color: #222;
-        font-size: 14px;
-        line-height: 19px;
-        margin: 0;
-        padding: 0;
-      }
-
-      code {
-        font-family: Monospace;
-        color: #222;
-        font-weight: 600;
-      }
-
-      .content ul {
-        list-style-type: circle;
-      }
-    </style>
   </head>
   <body>
-    <div class="wrap">
-      <a href="http://github.com/1602/express-on-railway"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://d3nwyuy0nl342s.cloudfront.net/img/e6bef7a091f5f3138b8cd40bc3e114258dd68ddf/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub"></a>
-      <h1>Welcome to Railway</h1>
-      <div class="content">
-        <p>
-          1. Start with <a href="http://railwayjs.com/generators">generators</a>, this is a fastest way to create application:
-        </p>
-
-        <pre><code>railway g scaffold post title content date:date published:boolean</code></pre>
-
-        <p>
-          2. Then create routes in <code>config/routes.js</code> and remove this file (public/index.html)
-        </p>
-
-        <pre><code>exports.routes = function (map) {
-    map.get('/', 'posts#index');
-};</code></pre>
-
-        <p>
-          3. Design your database in <code>db/schema.js</code> and describe models in <code>app/models</code>
-        </p>
-
-        <p>
-          4. Keep you controllers thin, write tests, and good luck. If you have any questions feel free to ask at
-          <a href="http://groups.google.com/group/railwayjs">RailwayJS Google Group</a>
-        </p>
-
-        <p>
-          5. Links to other useful stuff:
-          <ul style="padding-left: 50px;">
-            <li><a href="http://railwayjs.com">RailwayJS project homepage</a></li>
-            <li><a href="http://expressjs.com">ExpressJS project homepage</a></li>
-            <li><a href="http://mongoosejs.com">MongooseJS ORM project homepage</a></li>
-            <li><a href="http://node-js.ru">RailwayJS author's blog</a></li>
-          </ul>
-        </p>
+    <div class="container">
+      <div class="page-header">
+        <h1 style="text-align: center; padding: 35px;">Welcome to Railway</h1>
       </div>
+      <div class="row">
+        <div class="span8 offset4">
+          <a href="http://github.com/1602/express-on-railway"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://d3nwyuy0nl342s.cloudfront.net/img/e6bef7a091f5f3138b8cd40bc3e114258dd68ddf/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub"></a>
+          <div class="content">
+            <h6>1. Start with <a href="http://railwayjs.com/#generators">generators</a></h6>
+            <p> this is a fastest way to create application:</p>
+            <pre>rw g crud post title content date:date published:boolean</pre>
+            <h6>2. Then create <a href="http://railwayjs.com/#routing">routes</a></h6>
+            <p>in <code>config/routes.js</code> and remove this file (<code>public/index.html</code>)</p>
+            <pre>exports.routes = function (map) {
+        map.get('/', 'posts#index');
+    };</pre>
+            <h6>3. Design your database</h6>
+            <p>in <code>db/schema.js</code> and describe models in <code>app/models</code></p>
+            <h6>4. Keep you <a href="http://railwayjs.com/#controllers">controllers</a> thin</h6>
+            <p>write tests, and good luck.<br> If you have any questions feel free to ask at <a href="http://groups.google.com/group/railwayjs">RailwayJS Google Group</a></p>
+          </div>
+        </div>
+
+        <div class="span4">
+          <p>
+            <h6>5. Links in sidebar</h6>
+            <ul style="padding-left: 0px;">
+              <li><a href="http://railwayjs.com">RailwayJS project homepage</a></li>
+              <li><a href="http://modules.node-js.ru">NodeJS modules rating</a></li>
+              <li><a href="http://expressjs.com">ExpressJS project homepage</a></li>
+              <li><a href="http://mongoosejs.com">MongooseJS ORM project homepage</a></li>
+              <li><a href="http://node-js.ru">RailwayJS author's blog</a></li>
+            </ul>
+          </p>
+        </div>
+
+      </div>
+      <footer>
+        
+      </footer>
     </div>
   </body>
 </html>
