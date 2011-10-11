@@ -7,8 +7,8 @@ action('new', function () {
 });
 
 action('create', function () {
-    Model.create(body, function (err, user) {
-        if (!id) {
+    Model.create(req.body, function (err, user) {
+        if (err) {
             flash('error', 'Model can not be created');
             render('new', {
                 model: user,
