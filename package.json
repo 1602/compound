@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "connect": ">= 0",
-    "socket.io": ">= 0",
+    "jugglingdb": ">= 0",
     "express": ">= 2.2.2",
     "yaml": ">= 0.1.2",
     "coffee-script": ">= 1.1.1",

@@ -7,11 +7,11 @@ action('new', function () {
 });
 
 action('create', function () {
-    Model.create(body, function (id) {
+    Model.create(body, function (err, user) {
         if (!id) {
             flash('error', 'Model can not be created');
             render('new', {
-                model: this,
+                model: user,
                 title: 'New model'
             });
         } else {
@@ -23,9 +23,9 @@ action('create', function () {
 
 action('index', function () {
     this.title = 'Models index';
-    Model.allInstances(function (models) {
+    Model.all(function (err, models) {
         render({
-            models: models,
+            models: models
         });
     });
 });
@@ -41,7 +41,7 @@ action('edit', function () {
 });
 
 action('update', function () {
-    this.model.save(body, function (err) {
+    this.model.updateAttributes(body, function (err) {
         if (!err) {
             flash('info', 'Model updated');
             redirect(path_to.model(this.model));
@@ -65,7 +65,7 @@ action('destroy', function () {
 });
 
 function loadModel () {
-    Model.findById(params.id, function (err, model) {
+    Model.find(params.id, function (err, model) {
         if (err) {
             redirect(path_to.models);
         } else {

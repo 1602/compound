@@ -1,5 +1,5 @@
 before ->
-    Model.findById params.id, (err, model) =>
+    Model.find params.id, (err, model) =>
         if err
             redirect path_to.models
         else
@@ -13,10 +13,10 @@ action 'new', ->
     render()
 
 action 'create', ->
-    Model.create body, (id) =>
-        if !id
+    Model.create body, (err, model) =>
+        if err
             flash 'error', 'Model can not be created'
-            @model = this
+            @model = model
             @title = 'New model'
             render 'new'
         else
@@ -24,7 +24,7 @@ action 'create', ->
             redirect path_to.models
 
 action 'index', ->
-    Model.allInstances (models) =>
+    Model.all(err, models) =>
         @models = models
         @title = 'Models index'
         render()
@@ -38,7 +38,7 @@ action 'edit', ->
     render()
 
 action 'update', ->
-    @model.save body, (err) =>
+    @model.updateAttributes body, (err) =>
         if !err
             flash 'info', 'Model updated'
             redirect path_to.model(@model)
