@@ -1,3 +1,4 @@
+process.env.NODE_ENV = 'test';
 try {
     global.sinon = require('sinon');
 } catch (e) {
