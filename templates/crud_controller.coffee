@@ -24,7 +24,7 @@ action 'create', ->
             redirect path_to.models
 
 action 'index', ->
-    Model.all(err, models) =>
+    Model.all (err, models) =>
         @models = models
         @title = 'Models index'
         render()
