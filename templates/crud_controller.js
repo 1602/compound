@@ -1,3 +1,5 @@
+load('application');
+
 before(loadModel, {only: ['show', 'edit', 'update', 'destroy']});
 
 action('new', function () {
@@ -6,7 +8,7 @@ action('new', function () {
     render();
 });
 
-action('create', function () {
+action(function create() {
     Model.create(req.body, function (err, user) {
         if (err) {
             flash('error', 'Model can not be created');
@@ -21,7 +23,7 @@ action('create', function () {
     });
 });
 
-action('index', function () {
+action(function index() {
     this.title = 'Models index';
     Model.all(function (err, models) {
         render({
@@ -30,17 +32,17 @@ action('index', function () {
     });
 });
 
-action('show', function () {
+action(function show() {
     this.title = 'Model show';
     render();
 });
 
-action('edit', function () {
+action(function edit() {
     this.title = 'Model edit';
     render();
 });
 
-action('update', function () {
+action(function update() {
     this.model.updateAttributes(body, function (err) {
         if (!err) {
             flash('info', 'Model updated');
@@ -53,7 +55,7 @@ action('update', function () {
     }.bind(this));
 });
 
-action('destroy', function () {
+action(function destroy() {
     this.model.destroy(function (error) {
         if (error) {
             flash('error', 'Can not destroy model');
@@ -64,7 +66,7 @@ action('destroy', function () {
     });
 });
 
-function loadModel () {
+function loadModel() {
     Model.find(params.id, function (err, model) {
         if (err) {
             redirect(path_to.models);

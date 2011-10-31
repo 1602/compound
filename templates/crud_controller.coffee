@@ -1,4 +1,6 @@
-before ->
+load 'application'
+
+before 'load model', ->
     Model.find params.id, (err, model) =>
         if err
             redirect path_to.models
