@@ -1,8 +1,27 @@
+## 0.2.0 For node 0.6.0, jugglingdb 0.0.6
+
+A lot of changes in core, fully rewritten controllers flow, node 0.6.0 compatible
+
+Migration notes:
+
+- Model.allInstances deprecated, use Model.all
+- No more class definition in model files, do it in db/schema.js
+- If you want to define non-persistence class in model file, publish it using `publish` method, not `export` (not allowed in node 0.6.0).
+- Mongoose driver not available out of box for direct using (only within jugglingdb logic layer)
+- db/schema not reloaded every time in dev mode, you should reload server after changing `db/schema` [issue #63]
+
+New features:
+
+- logging actions, app.enable('log actions') to turn on
+- logging jugglingdb queries
+- generic routes: app.get(':controller/:action');
+- incredibly fast controllers (2.5x faster) (controllers pool)
+- sexy bootstrap scaffolding
+
 ## 0.1.9 Experimental release
 
 - removed mongoose and datamapper, switched to jugglingdb
 - cleaning up all generators stuff, related to different ORMs
-
 
 ## 0.1.8.1
 
