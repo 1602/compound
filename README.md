@@ -177,6 +177,19 @@ and you can more finely tune the resources to specify certain actions, middlewar
         });
     };
 
+since version 0.2.0 it is possible to use generic routes:
+
+    exports.routes = function (map) {
+        map.get(':controller/:action/:id');
+        map.all(':controller/:action');
+    };
+
+if you have `custom_controller` with `test` action inside it you can now do:
+
+    GET /custom/test
+    POST /custom/test
+    GET /custom/test/1 // also sets params.id to 1
+
 for debugging routes described in `config/routes.js` you can use `railway routes` command:
 
     $ railway routes
