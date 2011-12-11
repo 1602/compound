@@ -80,6 +80,9 @@ case 'generate':
         }
     }
     break;
+case '--version':
+    console.log(JSON.parse(require('fs').readFileSync(__dirname + '/../package.json')).version);
+    break;
 }
 
 if (exitAfterAction) {
