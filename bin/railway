@@ -1,5 +1,6 @@
 #!/usr/bin/env node
-var sys = require('sys');
+
+var sys = require('util');
 try {
     require(process.cwd() + '/server');
 } catch (e) {
