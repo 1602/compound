@@ -10,8 +10,8 @@ exec = require('child_process').exec
 nodeunit = require 'nodeunit'
 realCWD = process.cwd()
 
-testAppPath = path.resolve __dirname, '../tmp'
-binRailway  = 'cd ' + testAppPath + ' && ' + path.resolve(__dirname, '../bin/railway') + ' '
+testAppPath = path.resolve __dirname, '/tmp'
+binRailway  = ' cd ' + testAppPath + ' && ' + path.resolve(__dirname, '../bin/railway') + ' '
 
 exists = (test, aPath) ->
     test.ok path.existsSync(path.join(testAppPath, aPath)), 'Not exists: ' + aPath
