@@ -22,7 +22,7 @@
     "qs": ">= 0",
     "mime": ">= 0",
     "ejs-ext": ">= 0",
-    "jade-ext": ">= 0
+    "jade-ext": ">= 0"
   },
   "repository": {
     "type": "git",
