@@ -1,17 +1,8 @@
 { "development":
-  { "driver":   "redis"
-  , "host":     "localhost"
-  , "database": 3
+  { "driver":   "memory"
   }
 , "test":
-  { "driver":   "redis"
-  , "host":     "localhost"
-  , "database": 2
-  }
-, "staging":
-  { "driver":   "redis"
-  , "host":     "localhost"
-  , "database": 1
+  { "driver":   "memory"
   }
 , "production":
   { "driver":   "redis"
