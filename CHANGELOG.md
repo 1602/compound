@@ -1,11 +1,13 @@
 ## 0.2.6 Fri, 13 Jan 2012
 
 Major amends:
+
 - routing moved to separate project
 - default database engine is `memory`
 - node 0.4 compatible
 
 Minor improvements:
+
 - scaffold/show populated with properties
 - cleanup init generator
 - remove unnecesary dependencies
@@ -13,6 +15,7 @@ Minor improvements:
 - improve locale.yaml loading [by VladimirTechMan]
 
 Bugfixes:
+
 - incorrect behavior for coffee-script server.coffee when running `rw s`
 - body entries in server log for GET requests
 - jade-ext, ejs-ext dependencies with bundled ejs and jade (bad monkey-patching)
