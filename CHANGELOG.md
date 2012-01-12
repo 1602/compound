@@ -1,3 +1,23 @@
+## 0.2.6 Fri, 13 Jan 2012
+
+Major amends:
+- routing moved to separate project
+- default database engine is `memory`
+- node 0.4 compatible
+
+Minor improvements:
+- scaffold/show populated with properties
+- cleanup init generator
+- remove unnecesary dependencies
+- cleanup css [by Eric Chan]
+- improve locale.yaml loading [by VladimirTechMan]
+
+Bugfixes:
+- incorrect behavior for coffee-script server.coffee when running `rw s`
+- body entries in server log for GET requests
+- jade-ext, ejs-ext dependencies with bundled ejs and jade (bad monkey-patching)
+- relative paths in require inside models and controllers
+
 ## 0.2.0 For node 0.6.0, jugglingdb 0.0.6
 
 A lot of changes in core, fully rewritten controllers flow, node 0.6.0 compatible
