@@ -1,9 +1,11 @@
 #!/usr/bin/env node
 
 var sys = require('util');
+require('coffee-script');
 try {
     require(process.cwd() + '/server');
 } catch (e) {
+    // TODO: remove this fallback
     require('../lib/onrailway').createServer();
 }
 var generators = railway.generators;

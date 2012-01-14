@@ -30,7 +30,11 @@ Usage
     # visit appp
     $ open http://localhost:3000/posts
 
-**NOTE:** Make sure mongodb server runs
+## Participation
+
+Check status of project on trello board: https://trello.com/board/railwayjs/4f0a0d49128365065e008a1d
+Feel free to vote and comment on cards (tickets/issues), if you want to join team -- send me a message with your email.
+
 
 Short functionality review
 ==========================
