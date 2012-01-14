@@ -4,12 +4,18 @@
     <title>Welcome to Railway</title>
     <link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.3.0/bootstrap.min.css">
     <meta name="viewport" content="width=500, initial-scale=0.5">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+    <script type="text/javascript" src="/javascripts/rails.js"></script>
   </head>
   <body>
     <div class="container">
       <div class="page-header">
         <h1 style="text-align: center; padding: 35px;">Welcome to Railway</h1>
+        <h6 style="text-align: center;">
+          <a href="/railway/environment.json" id="show-env-info-link" data-remote="true" data-jsonp="load">Information about application environment</a>
+        </h6>
       </div>
+      <div id="env-info"></div>
       <div class="row">
         <div class="span8 offset4">
           <a href="http://github.com/1602/express-on-railway"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://d3nwyuy0nl342s.cloudfront.net/img/e6bef7a091f5f3138b8cd40bc3e114258dd68ddf/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub"></a>
@@ -44,8 +50,45 @@
 
       </div>
       <footer>
-        
       </footer>
+      <script>
+        function load(data) {
+          $('#show-env-info-link').hide();
+          if (data.forbidden) {
+            return '';
+          }
+          var html = '<table class=".zebra-striped">';
+          html += makeList('Versions', data.versions);
+          html += makeList('Settings', data.settings);
+          html += makeList('Application', data.application);
+          html += makeList('ENV', data.env);
+          html += '</table>';
+
+          $('#env-info').html(html);
+        }
+
+        function makeList(title, obj) {
+          var res = '<tr><td colspan="2"><h6>' + title + '</h6></td></tr>';
+          for (var i in obj) {
+            res += '<tr><td>' + i + '</td><td>' + toS(obj[i]) + '</td></tr>';
+          }
+          return res;
+        }
+
+        function toS(obj) {
+          if (obj instanceof Array) {
+            return obj.join('<br />');
+          } else if (typeof obj === 'object') {
+            var s = [];
+            for (var i in obj) {
+              s.push(i + ': ' + obj[i]);
+            }
+            return s.join(', ');
+          } else {
+            return obj;
+          }
+        }
+      </script>
     </div>
   </body>
 </html>
