@@ -6,11 +6,13 @@ exports.controller = function (controllerName, exp) {
 
     // trick
     it('init', function (test) { process.nextTick(function () { test.done(); }); });
+    var nu = process.env.NODEUNIT_PATH || 'nodeunit';
+    console.log(nu);
 
     var http = require('http');
     var sinon  = require('sinon');
-    var assert = require(require.resolve('nodeunit').replace(/index\.js$/, 'lib/assert'));
-    var nodeunit = require('nodeunit');
+    var assert = require(require.resolve(nu).replace(/index\.js$/, 'lib/assert'));
+    var nodeunit = require(nu);
 
     assert.render = function (template, message) {
         if (!this.res.render.calledWith(template) && !this.res.render.calledWith(controllerName + '/' + template)) {

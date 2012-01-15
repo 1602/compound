@@ -11,6 +11,8 @@
   , "coffee-script":    ">= 1.1.1"
   , "mime":             ">= 1.2.2"
   , "qs":               ">= 0.1.0"
+  , "nodeunit":         ">= 0"
+  , "sinon":            ">= 0"
   }
 , "scripts":
   { "test": "nodeunit test/*/*"

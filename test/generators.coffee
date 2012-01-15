@@ -7,10 +7,10 @@ path = require 'path'
 sys  = require 'sys'
 http = require 'http'
 exec = require('child_process').exec
-nodeunit = require 'nodeunit'
+nodeunit = require '../support/nodeunit'
 realCWD = process.cwd()
 
-testAppPath = path.resolve __dirname, '/tmp'
+testAppPath = path.resolve __dirname, '../support/tmp'
 binRailway  = ' cd ' + testAppPath + ' && ' + path.resolve(__dirname, '../bin/railway') + ' '
 
 exists = (test, aPath) ->
@@ -19,7 +19,7 @@ exists = (test, aPath) ->
 checkApp = (test, appPath) ->
     appPath = appPath || ''
     process.cwd = () -> path.join(testAppPath, appPath)
-    exec 'cd ' + process.cwd() + ' && ' + path.resolve(__dirname, '../bin/railway') + ' ' + 'g crud post title content date:date published:boolean', (err, out) ->
+    exec 'cd ' + process.cwd() + ' && npm install -l && ' + path.resolve(__dirname, '../bin/railway') + ' ' + 'g crud post title content date:date published:boolean', (err, out) ->
         module = require('module')
         module._cache = {}
         module._pathCache = {}
@@ -31,7 +31,7 @@ checkApp = (test, appPath) ->
             testFile += '.coffee'
         else
             console.log(err, out)
-        require('nodeunit').runFiles(
+        require(process.cwd() + '/node_modules/nodeunit').runFiles(
             [testFile],
             testDone: (name, assertions) ->
                 if !assertions.failures()
@@ -78,9 +78,9 @@ cases = []
 # cases.push cmd: 'init --db redis', name: 'app with redis datastore'
 # cases.push cmd: 'init --db redis --coffee', name: 'application in current directory'
 cases.push cmd: 'init test-app',   name: 'application with given name', path: 'test-app'
-cases.push cmd: 'init --tpl jade', name: 'app using jade templating engine'
-cases.push cmd: 'init',            name: 'application in current directory'
-cases.push cmd: 'init --coffee',   name: 'coffee-script app'
+# cases.push cmd: 'init --tpl jade', name: 'app using jade templating engine'
+# cases.push cmd: 'init',            name: 'application in current directory'
+# cases.push cmd: 'init --coffee',   name: 'coffee-script app'
 
 # run test cases
 cases.forEach (testCase) ->
@@ -91,3 +91,4 @@ cases.forEach (testCase) ->
                 test.ok not err, 'Should be successful'
                 console.log err if err
                 checkApp test, testCase.path
+

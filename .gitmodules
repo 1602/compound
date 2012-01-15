@@ -4,3 +4,6 @@
 [submodule "distr/jade"]
 	path = distr/jade
 	url = git://github.com/visionmedia/jade.git
+[submodule "support/nodeunit"]
+	path = support/nodeunit
+	url = git://github.com/caolan/nodeunit.git
