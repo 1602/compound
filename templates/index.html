@@ -16,6 +16,7 @@
         <a href="/railway/environment.json" id="show-env-info-link" data-remote="true" data-jsonp="load">Information about application environment</a>
       </h6>
       <div id="env-info"></div>
+      <hr />
       <div class="row">
         <div class="span8 offset4">
           <a href="http://github.com/1602/express-on-railway"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://d3nwyuy0nl342s.cloudfront.net/img/e6bef7a091f5f3138b8cd40bc3e114258dd68ddf/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub"></a>
@@ -26,10 +27,10 @@
             <h6>2. Then create <a href="http://railwayjs.com/#routing">routes</a></h6>
             <p>in <code>config/routes.js</code> and remove this file (<code>public/index.html</code>)</p>
             <pre>exports.routes = function (map) {
-        map.get('/', 'posts#index');
-    };</pre>
+    map.get('/', 'posts#index');
+};</pre>
             <h6>3. Design your database</h6>
-            <p>in <code>db/schema.js</code> and describe models in <code>app/models</code></p>
+            <p>in <code>db/schema.js</code> and describe models in <code>app/models/*</code></p>
             <h6>4. Keep you <a href="http://railwayjs.com/#controllers">controllers</a> thin</h6>
             <p>write tests, and good luck.<br> If you have any questions feel free to ask at <a href="http://groups.google.com/group/railwayjs">RailwayJS Google Group</a></p>
           </div>
