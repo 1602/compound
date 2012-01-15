@@ -19,7 +19,8 @@
     "coffee-script": ">= 1.1.1",
     "ejs-ext": ">= 0.0.8",
     "jade-ext": ">= 0.0.5",
-    "railway-routes": ">= 0.0.2"
+    "railway-routes": ">= 0.0.2",
+    "express": ">= 2.2.2"
   },
   "repository": {
     "type": "git",
