@@ -75,12 +75,12 @@ cleanup = (done) ->
 
 # collect test cases
 cases = []
-# cases.push cmd: 'init --db redis', name: 'app with redis datastore'
-# cases.push cmd: 'init --db redis --coffee', name: 'application in current directory'
+cases.push cmd: 'init --db redis', name: 'app with redis datastore'
+cases.push cmd: 'init --db redis --coffee', name: 'application in current directory'
 cases.push cmd: 'init test-app',   name: 'application with given name', path: 'test-app'
-# cases.push cmd: 'init --tpl jade', name: 'app using jade templating engine'
-# cases.push cmd: 'init',            name: 'application in current directory'
-# cases.push cmd: 'init --coffee',   name: 'coffee-script app'
+cases.push cmd: 'init --tpl jade', name: 'app using jade templating engine'
+cases.push cmd: 'init',            name: 'application in current directory'
+cases.push cmd: 'init --coffee',   name: 'coffee-script app'
 
 # run test cases
 cases.forEach (testCase) ->
