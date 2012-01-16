@@ -19,7 +19,7 @@ exists = (test, aPath) ->
 checkApp = (test, appPath) ->
     appPath = appPath || ''
     process.cwd = () -> path.join(testAppPath, appPath)
-    exec 'cd ' + process.cwd() + ' && npm install -l && ' + path.resolve(__dirname, '../bin/railway') + ' ' + 'g crud post title content date:date published:boolean', (err, out) ->
+    exec 'cd ' + process.cwd() + ' && cp -R ' + realCWD + '/node_modules ./ && npm install -l && ' + path.resolve(__dirname, '../bin/railway') + ' ' + 'g crud post title content date:date published:boolean', (err, out) ->
         module = require('module')
         module._cache = {}
         module._pathCache = {}
@@ -75,8 +75,8 @@ cleanup = (done) ->
 
 # collect test cases
 cases = []
-cases.push cmd: 'init --db redis', name: 'app with redis datastore'
-cases.push cmd: 'init --db redis --coffee', name: 'application in current directory'
+# cases.push cmd: 'init --db redis', name: 'app with redis datastore'
+# cases.push cmd: 'init --db redis --coffee', name: 'application in current directory'
 cases.push cmd: 'init test-app',   name: 'application with given name', path: 'test-app'
 cases.push cmd: 'init --tpl jade', name: 'app using jade templating engine'
 cases.push cmd: 'init',            name: 'application in current directory'
