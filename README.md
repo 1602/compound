@@ -1,23 +1,28 @@
+About
+=====
+
+RailwayJS - MVC framework based on Exress. Ruby-on-Rails inspired. It allows you to build web application in minutes.
+
+<img src="https://secure.travis-ci.org/1602/express-on-railway.png" />
+
 Installation
 ============
 
-Option 1: GitHub
+Option 1: npm
+
+    $ sudo npm install railway -g
+
+Option 2: GitHub
 
     $ git clone git://github.com/1602/express-on-railway.git
     $ cd express-on-railway
     $ git submodule update --init
-    $ sudo npm install -g
-    $ cd -
-    $ rm -rf express-on-railway
-
-Option 2: npm
-
-    $ sudo npm install railway -g
+    $ npm link
 
 Usage
 =====
 
-    # initialize
+    # initialize app
     $ railway init blog && cd blog
     $ npm install -l
 
@@ -34,7 +39,6 @@ Usage
 
 Check status of project on trello board: https://trello.com/board/railwayjs/4f0a0d49128365065e008a1d
 Feel free to vote and comment on cards (tickets/issues), if you want to join team -- send me a message with your email.
-
 
 Short functionality review
 ==========================
@@ -309,44 +313,7 @@ Currently it generates only `*.ejs` views
 Models
 ------
 
-At the moment I store objects in redis data store. For that purpose I have
-written simple driver, that adds persistence-related methods to models described
-in `app/models/*.js`. I can work with models the following way:
-
-File `app/models/post.js`:
-
-    var Post = describe('Post', function () {
-        property('title',   String);
-        property('preview', String);
-        property('content', String);
-        property('tags',    Array);
-    });
-
-In controller:
-
-    // create new object
-    Post.create(params, function () {
-        console.log(post.id);
-        console.log(post.created_at);
-    });
-
-    // find by primary key
-    Post.find(params.id, function (err) {
-        if (!err) {
-            this.update_attributes({
-                title: 'Hello world',
-                preview: 'asda',
-                tags: 'world,hello,example,redis-mapper,find'.split(',')
-            });
-        }
-    });
-
-    // collection
-    Post.allInstances(function (posts) {
-        posts.forEach(function (post) {
-            console.log(post.title);
-        });
-    });
+Checkout [JugglingDB][2] docs to see how to work with models.
 
 REPL console
 ------------
@@ -476,3 +443,4 @@ MIT License
 
 
   [1]: http://node-js.ru
+  [2]: https://github.com/1602/jugglingdb
