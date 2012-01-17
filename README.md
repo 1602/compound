@@ -8,23 +8,21 @@ RailwayJS - MVC framework based on Exress. Ruby-on-Rails inspired. It allows you
 Installation
 ============
 
-Option 1: GitHub
+Option 1: npm
+
+    $ sudo npm install railway -g
+
+Option 2: GitHub
 
     $ git clone git://github.com/1602/express-on-railway.git
     $ cd express-on-railway
     $ git submodule update --init
-    $ sudo npm install -g
-    $ cd -
-    $ rm -rf express-on-railway
-
-Option 2: npm
-
-    $ sudo npm install railway -g
+    $ npm link
 
 Usage
 =====
 
-    # initialize
+    # initialize app
     $ railway init blog && cd blog
     $ npm install -l
 
@@ -41,7 +39,6 @@ Usage
 
 Check status of project on trello board: https://trello.com/board/railwayjs/4f0a0d49128365065e008a1d
 Feel free to vote and comment on cards (tickets/issues), if you want to join team -- send me a message with your email.
-
 
 Short functionality review
 ==========================
