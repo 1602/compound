@@ -15,7 +15,7 @@ action 'new', ->
     render()
 
 action 'create', ->
-    Model.create body, (err, model) =>
+    Model.create body.Model, (err, model) =>
         if err
             flash 'error', 'Model can not be created'
             @model = model
@@ -40,7 +40,7 @@ action 'edit', ->
     render()
 
 action 'update', ->
-    @model.updateAttributes body, (err) =>
+    @model.updateAttributes body.Model, (err) =>
         if !err
             flash 'info', 'Model updated'
             redirect path_to.model(@model)

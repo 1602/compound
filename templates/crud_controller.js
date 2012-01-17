@@ -9,7 +9,7 @@ action('new', function () {
 });
 
 action(function create() {
-    Model.create(req.body, function (err, user) {
+    Model.create(req.body.Model, function (err, user) {
         if (err) {
             flash('error', 'Model can not be created');
             render('new', {
@@ -43,7 +43,7 @@ action(function edit() {
 });
 
 action(function update() {
-    this.model.updateAttributes(body, function (err) {
+    this.model.updateAttributes(body.Model, function (err) {
         if (!err) {
             flash('info', 'Model updated');
             redirect(path_to.model(this.model));
