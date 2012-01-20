@@ -1,9 +1,7 @@
-About
+About [<img src="https://secure.travis-ci.org/1602/express-on-railway.png" />](http://travis-ci.org/#!/1602/express-on-railway)
 =====
 
-RailwayJS - MVC framework based on Exress. Ruby-on-Rails inspired. It allows you to build web application in minutes.
-
-<img src="https://secure.travis-ci.org/1602/express-on-railway.png" />
+RailwayJS - MVC framework based on Exress. Ruby-on-Rails inspired. It allows you to build web application in minutes.  
 
 Installation
 ============
