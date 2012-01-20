@@ -62,7 +62,7 @@ exports['models controller'] = {
             test.strictEqual(data, model);
             callback(null, model);
         });
-        test.post('/models', model, function () {
+        test.post('/models', {Model: model}, function () {
             test.redirect('/models');
             test.flash('info');
             test.done();
@@ -76,7 +76,7 @@ exports['models controller'] = {
             test.strictEqual(data, model);
             callback(new Error, null);
         });
-        test.post('/models', model, function () {
+        test.post('/models', {Model: model}, function () {
             test.success();
             test.render('new');
             test.flash('error');

@@ -26,7 +26,9 @@
     "type": "git",
     "url": "git://github.com/1602/express-on-railway.git"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "nodeunit": "*"
+  },
   "scripts": {
     "test": "./support/nodeunit/bin/nodeunit test"
   }
