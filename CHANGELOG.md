@@ -1,3 +1,27 @@
+## 0.2.7 Fri, 20 Jan 2012
+
+- complex names in forms (see details below)
+- view option to disable layout `app.set 'view options', layout : false`
+- display env info in index.html
+- tests/fixes [rolling on travis-ci now](http://travis-ci.org/#!/1602/express-on-railway)
+
+### Complex names in forms
+
+**Important change!** Now resourceful form helpers generates input names within csope:
+
+    form_for(post, function (f)
+        f.input('title')
+    });
+
+Will generate `<input name="Post[title]" />` instead of `<input name="title" />`
+For all existing code this behavior **is not turned on** to not break anything,
+but for newly generated apps it turned on in `config/environment` file
+
+    app.set 'view options', complexNames: true
+
+CRUD generator also rewritten to match new structure
+
+
 ## 0.2.6 Fri, 13 Jan 2012
 
 Major amends:
