@@ -2,6 +2,7 @@ express = require 'express'
 
 app.configure ->
     cwd = process.cwd()
+    PREPEND_MIDDLEWARE
     app.set 'views', cwd + '/app/views'
     app.set 'view engine', 'VIEWENGINE'
     app.set 'view options', complexNames: true
