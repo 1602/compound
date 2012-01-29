@@ -1,3 +1,23 @@
+## 0.2.8 Sun, 29 Jan 2012
+
+### Helpers extenstion API
+
+Extend helpers API prototype object:
+
+    railway.helpers.HelperSet.prototype.myCoolHelper = function () {
+        return '<p>Application-wide helper</p>'; // use this in your plugins
+    };
+
+to get `<%- myCoolHelper %>` availabe in every view
+
+### Stylus support
+
+Generate your application with `--stylus` option to work with stylus out-of-box:
+
+- store your assets in `/app/assets/styles/*.styl`
+- access styles at `GET /styles/*.css`
+
+
 ## 0.2.7 Fri, 20 Jan 2012
 
 - complex names in forms (see details below)
