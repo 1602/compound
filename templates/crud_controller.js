@@ -9,11 +9,11 @@ action('new', function () {
 });
 
 action(function create() {
-    Model.create(req.body.Model, function (err, user) {
+    Model.create(req.body.Model, function (err, model) {
         if (err) {
             flash('error', 'Model can not be created');
             render('new', {
-                model: user,
+                model: model,
                 title: 'New model'
             });
         } else {
