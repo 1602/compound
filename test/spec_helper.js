@@ -49,7 +49,9 @@ function check_external_exports() {
 
 // add assertions
 
-var assert = require(require('module')._resolveFilename('../support/nodeunit')[0].replace(/index\.js$/, 'lib/assert'));
+var nuPath = require('module')._resolveFilename('../support/nodeunit');
+if (typeof nuPath === 'string') nuPath = [nuPath];
+var assert = require(nuPath[0].replace(/index\.js$/, 'lib/assert'));
 
 // Check response status code 200 OK
 assert.status200 = function (response, message) {
