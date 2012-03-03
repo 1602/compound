@@ -1,3 +1,21 @@
+## 0.2.10
+
+### Monitoring API
+
+Allow to collect information about response handling, db queries, etc..
+Now we can build our own newrelic, with blackjack and hookers!
+
+### Bootstrap 2.0
+
+Updated generators, helpers and ejs-ext module.
+Many thanks to [Garret Johnson](https://github.com/garrettrayj)
+
+### Various fixes:
+
+- allowing nested namespaces within routes, thanks Ross Grayton
+- spec helper adjustments (for new node verion)
+- express 3.0 server startup, thanks @keichii
+
 ## 0.2.8 Sun, 29 Jan 2012
 
 ### Helpers extenstion API
