@@ -15,6 +15,7 @@
   "devDependencies":
   { "nodeunit":         ">= 0"
   , "sinon":            ">= 0"
+  , "formidable":       ">= 0"
   }
 , "scripts":
   { "test": "nodeunit test/*/*"
