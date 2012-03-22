@@ -15,7 +15,6 @@
     "rw": "bin/railway"
   },
   "dependencies": {
-    "jugglingdb": ">= 0.1.3",
     "yaml": ">= 0.1.2",
     "coffee-script": ">= 1.1.1",
     "ejs-ext": ">= 0.0.8",
@@ -28,6 +27,7 @@
     "url": "https://github.com/1602/express-on-railway.git"
   },
   "devDependencies": {
+    "jugglingdb": ">= 0.1.3",
     "nodeunit": "*"
   },
   "scripts": {

@@ -8,6 +8,7 @@
   , "express":          ">= 2.2.2"
   , "connect":          ">= 1.4.2"
   , "railway":          ">= 0.1.6"
+  , "jugglingdb":       ">= 0.1.0"
   , "coffee-script":    ">= 1.1.1"
   , "mime":             ">= 1.2.2"
   , "qs":               ">= 0.1.0"
