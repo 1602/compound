@@ -4,6 +4,7 @@
 - Removing validations before loading models
 - Models not running in sandbox, just a regular `require`, `publish` method deprecated, use `module.exports` instead
 - Removed `import` and `export` methods from controller scope
+- **IMPORTANT** jugglingdb dependency removed from railway, add it to your project when it's necessary
 - Added filter names uniquenes checking, issue #136
 - Added support for coffeescript format for locales, thanks to [David Butler](https://github.com/dwbutler)
 - Add support for file uploads to form helper, via [David Butler](https://github.com/dwbutler)
