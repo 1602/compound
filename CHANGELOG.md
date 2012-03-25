@@ -1,3 +1,15 @@
+## 0.2.13 Sun, 25 Mar 2012
+
+- Added db-tools and seedjs
+- Removing validations before loading models
+- Models not running in sandbox, just a regular `require`, `publish` method deprecated, use `module.exports` instead
+- Removed `import` and `export` methods from controller scope
+- Added filter names uniquenes checking, issue #136
+- Added support for coffeescript format for locales, thanks to [David Butler](https://github.com/dwbutler)
+- Add support for file uploads to form helper, via [David Butler](https://github.com/dwbutler)
+- New helper `csrf_tag` to create the hidden input tag, thabks to [fsateler](https://github.com/fsateler)
+- Changes to routing (fixed behavior of `as` option), now it affects helper names too, via [fsateler](https://github.com/fsateler)
+
 ## 0.2.10
 
 ### Monitoring API
