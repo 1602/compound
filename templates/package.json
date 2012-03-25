@@ -3,20 +3,16 @@
 , "engines": ["node >= 0.4.0"]
 , "main": "server.js"
 , "dependencies":
-  { "VIEWENGINE":       ">= 0"
-  , "VIEWENGINE-ext":   ">= 0"
-  , "express":          ">= 2.2.2"
-  , "connect":          ">= 1.4.2"
+  { "VIEWENGINE":              "*"
+  , "VIEWENGINE-ext":          "*"
+  , "express":          ">= 2.5.8"
   , "railway":          ">= 0.1.6"
   , "jugglingdb":       ">= 0.1.0"
   , "coffee-script":    ">= 1.1.1"
-  , "mime":             ">= 1.2.2"
-  , "qs":               ">= 0.1.0"
   },
   "devDependencies":
-  { "nodeunit":         ">= 0"
-  , "sinon":            ">= 0"
-  , "formidable":       ">= 0"
+  { "nodeunit":         "*"
+  , "sinon":            "*"
   }
 , "scripts":
   { "test": "nodeunit test/*/*"

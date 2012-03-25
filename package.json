@@ -1,6 +1,6 @@
 {
   "name": "railway",
-  "version": "0.2.11",
+  "version": "0.2.12",
   "author": "Anatoliy Chakkaev",
   "description": "RailwayJS - Ruby-on-Rails inspired MVC web framework, fully ExpressJS compatible",
   "keywords": ["mvc", "web-framework", "rails", "ruby-on-rails", "express", "railway"],
@@ -20,6 +20,7 @@
     "ejs-ext": ">= 0.0.8",
     "jade-ext": ">= 0.0.5",
     "railway-routes": ">= 0.0.4",
+    "seedjs": "*",
     "express": ">= 2.2.2"
   },
   "repository": {
