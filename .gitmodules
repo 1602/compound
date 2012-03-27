@@ -7,3 +7,27 @@
 [submodule "support/nodeunit"]
 	path = support/nodeunit
 	url = git://github.com/caolan/nodeunit.git
+[submodule "node_modules/coffee-script"]
+	path = node_modules/coffee-script
+	url = git@github.com:keichii/coffee-script.git
+[submodule "node_modules/ejs-ext"]
+	path = node_modules/ejs-ext
+	url = git@github.com:keichii/ejs-ext.git
+[submodule "node_modules/express"]
+	path = node_modules/express
+	url = git@github.com:keichii/express.git
+[submodule "node_modules/jade-ext"]
+	path = node_modules/jade-ext
+	url = git@github.com:keichii/jade-ext.git
+[submodule "node_modules/jugglingdb"]
+	path = node_modules/jugglingdb
+	url = git@github.com:keichii/jugglingdb.git
+[submodule "node_modules/railway-routes"]
+	path = node_modules/railway-routes
+	url = git@github.com:keichii/railway-routes.git
+[submodule "node_modules/nodeunit"]
+	path = node_modules/nodeunit
+	url = git@github.com:keichii/nodeunit.git
+[submodule "node_modules/yaml"]
+	path = node_modules/yaml
+	url = git@github.com:keichii/js-yaml.git
