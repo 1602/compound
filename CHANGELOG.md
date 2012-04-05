@@ -8,7 +8,7 @@
 - Added filter names uniquenes checking, issue #136
 - Added support for coffeescript format for locales, thanks to [David Butler](https://github.com/dwbutler)
 - Add support for file uploads to form helper, via [David Butler](https://github.com/dwbutler)
-- New helper `csrf_tag` to create the hidden input tag, thabks to [fsateler](https://github.com/fsateler)
+- New helper `csrf_tag` to create the hidden input tag, thanks to [fsateler](https://github.com/fsateler)
 - Changes to routing (fixed behavior of `as` option), now it affects helper names too, via [fsateler](https://github.com/fsateler)
 
 ## 0.2.10
