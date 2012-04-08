@@ -1,6 +1,6 @@
 {
   "name": "railway",
-  "version": "0.2.14",
+  "version": "0.2.15",
   "author": "Anatoliy Chakkaev",
   "description": "RailwayJS - Ruby-on-Rails inspired MVC web framework, fully ExpressJS compatible",
   "keywords": ["mvc", "web-framework", "rails", "ruby-on-rails", "express", "railway"],
