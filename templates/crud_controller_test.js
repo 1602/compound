@@ -74,7 +74,7 @@ exports['models controller'] = {
         var create = Model.create;
         Model.create = sinon.spy(function (data, callback) {
             test.strictEqual(data, model);
-            callback(new Error, null);
+            callback(new Error, model);
         });
         test.post('/models', {Model: model}, function () {
             test.success();
