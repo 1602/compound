@@ -71,7 +71,7 @@ checkApp = (test, appPath) ->
 # prepare tmp dir
 cleanup = (done) ->
     exec 'rm -rf ' + testAppPath, ->
-        fs.mkdir testAppPath, 0755, done
+        fs.mkdir testAppPath, 0o0755, done
 
 # collect test cases
 cases = []
