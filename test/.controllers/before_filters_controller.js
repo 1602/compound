@@ -1,3 +1,6 @@
+before(function controllerForSkipping() {
+});
+
 before(function runBeforeAll() {
     event('runBeforeAll');
     next();
@@ -22,6 +25,9 @@ before(function exceptFewActions() {
     event('exceptFewActions');
     next();
 }, { except: ['action3', 'action4'] });
+
+skipBeforeFilter('controllerForSkipping');
+skipBeforeFilter('runBeforeAll', { only: ['action1'] });
 
 action(function action1() {
     event('action1');

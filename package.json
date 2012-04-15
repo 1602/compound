@@ -29,7 +29,8 @@
   },
   "devDependencies": {
     "jugglingdb": ">= 0.1.3",
-    "nodeunit": "*"
+    "nodeunit": "*",
+    "semicov": "*"
   },
   "scripts": {
     "test": "./support/nodeunit/bin/nodeunit test"

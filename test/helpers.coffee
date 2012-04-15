@@ -3,8 +3,6 @@ require('./spec_helper').init exports
 context = global.context
 it = global.it
 
-require('../lib/onrailway').createServer()
-
 context 'stylesheet_link_tag', ->
 
     it 'should generate single tag', (test) ->

@@ -1,3 +1,11 @@
+require('semicov').init('lib');
+
+process.on('exit', function () {
+    require('semicov').report();
+});
+
+require('../lib/onrailway').createServer()
+
 process.env.NODE_ENV = 'test';
 try {
     global.sinon = require('sinon');
