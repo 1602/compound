@@ -5,8 +5,8 @@
 , "dependencies":
   { "VIEWENGINE":              "*"
   , "VIEWENGINE-ext":          "*"
-  , "express":          ">= 2.5.8"
-  , "railway":          ">= 0.1.6"
+  , "express":          "~2.x"
+  , "railway":          ">= 0.2.6"
   , "jugglingdb":       ">= 0.1.0"
   , "coffee-script":    ">= 1.1.1"
   },

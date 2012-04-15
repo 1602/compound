@@ -3,3 +3,4 @@ tmp
 .DS_Store
 dump.rdb
 doc
+coverage.html
