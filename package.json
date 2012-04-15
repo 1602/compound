@@ -21,7 +21,7 @@
     "jade-ext": ">= 0.0.5",
     "railway-routes": ">= 0.0.6",
     "seedjs": "*",
-    "express": ">= 2.2.2"
+    "express": "~ 2.x"
   },
   "repository": {
     "type": "git",
