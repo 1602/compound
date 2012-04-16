@@ -69,3 +69,41 @@ context 'javascript_include_tag', (test) ->
         test.ok reLinkNoTs
         test.done()
 
+context 'formTag', (test) ->
+    railway.helpers.controller =
+        request:
+            csrfParam: 'param_name'
+            csrfToken: 'token_value'
+
+    it 'should generate form', (test) ->
+        buf = arguments.callee.buf = []
+        railway.helpers.formTag()
+        test.equal(buf[1], '<input type="hidden" name="param_name" value="token_value" />')
+        test.done()
+
+    it 'should generate form with custom method', (test) ->
+        buf = arguments.callee.buf = []
+        railway.helpers.formTag({method: 'PUT'})
+        test.equal(buf[0], '<form method="POST">')
+        test.equal(buf[2], '<input type="hidden" name="_method" value="PUT" />')
+        test.done()
+
+    it 'should accept passed block', (test) ->
+        buf = arguments.callee.buf = []
+        railway.helpers.formTag ->
+            buf.push 'BLOCK CONTENTS'
+        test.equal(buf[0], '<form method="POST">')
+        test.equal(buf[2], 'BLOCK CONTENTS')
+        test.done()
+
+    it 'should generate update form for resource with PUT method', (test) ->
+        buf = arguments.callee.buf = []
+        res = {modelName: 'Resource', id: 7}
+        railway.routeMapper.pathTo.resource = (res) ->
+             "/resources/#{res.id}"
+
+        railway.helpers.formFor res
+        test.equal(buf[0], '<form method="POST" action="/resources/7">')
+        test.equal(buf[2], '<input type="hidden" name="_method" value="PUT" />')
+        test.done()
+

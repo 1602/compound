@@ -1,4 +1,4 @@
-var express    = require('express');
+var express = require('express');
 
 app.configure(function(){
     var cwd = process.cwd();
@@ -15,3 +15,4 @@ app.configure(function(){
     app.use(express.methodOverride());
     app.use(app.router);
 });
+
