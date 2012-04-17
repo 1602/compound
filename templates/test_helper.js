@@ -96,7 +96,10 @@ exports.controller = function (controllerName, exp) {
     app.enable('quiet');
     app.enable('models cache');
 
-    function stubRequest (method, _method) {
+    var cookies = {};
+    var csrfToken = '';
+
+    function stubRequest(method, _method) {
         return function (url, callback) {
             var req = new http.IncomingMessage;
             var res = new http.ServerResponse({method: 'NOTHEAD'});
@@ -105,7 +108,7 @@ exports.controller = function (controllerName, exp) {
             res.send     = sinon.spy(res.send);
             res.redirect = sinon.spy(res.redirect);
             res.headers  = {};
-            res.header   = function (header, value) {
+            res.setHeader = res.header = function (header, value) {
                 res.headers[header.toLowerCase()] = value;
             };
 
@@ -117,6 +120,7 @@ exports.controller = function (controllerName, exp) {
             req.connection = {};
             req.url      = url;
             req.method   = method;
+            req.cookies  = cookies;
 
             if (method === 'POST') {
                 if (typeof callback === 'object')
@@ -129,11 +133,17 @@ exports.controller = function (controllerName, exp) {
                 {
                     req.body._method = _method;
                 }
+
+                req.body.authencity_token = csrfToken;
+
             }
 
             res.end = function () {
                 this.req = req;
                 this.res = res;
+                var cook = res.headers['set-cookie'].split(';').shift().split('=');
+                cookies[cook[0]] = cook[1];
+                csrfToken = req.csrfToken;
                 callback.call(this);
             }.bind(this);
 
