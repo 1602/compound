@@ -7,12 +7,12 @@ context 'stylesheet_link_tag', ->
 
     it 'should generate single tag', (test) ->
 
-        app.set 'env', 'test'
+        app.enable 'assets timestamps'
         tag = railway.helpers.stylesheet_link_tag 'style'
         reLinkTs = /\<link media="screen" rel="stylesheet" type="text\/css" href="\/stylesheets\/style\.css\?\d+" \/\>/
         test.ok tag.match reLinkTs, 'Link with timestamp param in development'
 
-        app.set 'env', 'production'
+        app.disable 'assets timestamps'
         reLinkNoTs = /\<link media="screen" rel="stylesheet" type="text\/css" href="\/stylesheets\/style\.css" \/\>/
         tag = railway.helpers.stylesheet_link_tag 'style'
         test.ok tag.match reLinkNoTs, 'Link without timestamp in production'
@@ -40,12 +40,12 @@ context 'javascript_include_tag', (test) ->
 
     it 'should generate single tag', (test) ->
 
-        app.set 'env', 'test'
+        app.enable 'assets timestamps'
         tag = railway.helpers.javascript_include_tag 'app'
         reLinkTs = /<script type="text\/javascript" src="\/javascripts\/app\.js\?\d+">/
         test.ok tag.match reLinkTs, 'Link with timestamp param in development'
 
-        app.set 'env', 'production'
+        app.disable 'assets timestamps'
         reLinkNoTs = /<script type="text\/javascript" src="\/javascripts\/app\.js">/
         tag = railway.helpers.javascript_include_tag 'app'
         test.ok tag.match reLinkNoTs, 'Link without timestamp in production'
