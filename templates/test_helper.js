@@ -37,11 +37,12 @@ exports.controller = function (controllerName, exp) {
         }
     };
 
-    assert.send = function (path, message) {
+   assert.send = function (args, message) {
         if (this.res.statusCode !== 200) {
-            assert.fail(this.res.statusCode, 200, 'Status code is not 200', '===', assert.redirect);
+            assert.fail(this.res.statusCode, 200, 'Status code is not 200', '===', assert.status200);
+        } else if (!this.res.send.calledWithExactly(args)) {
+            assert.fail(this.res.send.args[0][0], args, message || 'send() does not called with expected args', '===', assert.send);
         }
-        this.res.send.calledWithExactly(path);
     };
 
     assert.success = function (template, message) {
