@@ -68,7 +68,7 @@ action(function destroy() {
 
 function loadModel() {
     Model.find(params.id, function (err, model) {
-        if (err) {
+        if (err || !model) {
             redirect(path_to.models);
         } else {
             this.model = model;
