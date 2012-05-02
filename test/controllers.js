@@ -1,10 +1,8 @@
 var path = require('path');
-var express = require('express');
-var app = express.createServer();
-app.disable('quiet');
-app.enable('log actions');
 
 require('./spec_helper').init(exports);
+app.disable('quiet');
+app.enable('log actions');
 
 var listener;
 railway.controller.addBasePath(path.join(__dirname, '.controllers'), null, {
@@ -13,7 +11,7 @@ railway.controller.addBasePath(path.join(__dirname, '.controllers'), null, {
             listener.apply(this, [].slice.call(arguments));
         }
     }
-});
+}, app.root);
 
 it('should allow to change default layout', function (test) {
     var ctl = getController('layout_test');
@@ -113,7 +111,7 @@ function req(method) {
 }
 
 function getController(name) {
-    return railway.ControllerBridge.loadController(name);
+    return railway.controllerBridge.loadController(name);
 }
 
 function fakeRequest(method, path) {

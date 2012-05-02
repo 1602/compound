@@ -1,6 +1,6 @@
 {
   "name": "railway",
-  "version": "0.2.17-pre",
+  "version": "0.2.17-pre2",
   "author": "Anatoliy Chakkaev",
   "description": "RailwayJS - Ruby-on-Rails inspired MVC web framework, fully ExpressJS compatible",
   "keywords": ["mvc", "web-framework", "rails", "ruby-on-rails", "express", "railway"],

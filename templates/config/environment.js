@@ -4,7 +4,6 @@ app.configure(function(){
     var cwd = process.cwd();
     PREPEND_MIDDLEWARE
     app.use(express.static(cwd + '/public', {maxAge: 86400000}));
-    app.set('views', cwd + '/app/views');
     app.set('view engine', 'VIEWENGINE');
     app.set('view options', {complexNames: true});
     app.set('jsDirectory', '/javascripts/');
