@@ -15,7 +15,7 @@
     "rw": "bin/railway"
   },
   "dependencies": {
-    "yaml": ">= 0.1.2",
+    "yaml-js": ">= 0.0.2",
     "coffee-script": ">= 1.1.1",
     "ejs-ext": ">= 0.0.8",
     "jade-ext": ">= 0.0.5",
