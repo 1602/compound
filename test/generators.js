@@ -19,7 +19,7 @@ fs.writeFileSync = function (name, content) {
 fs.readFileSync = function (name) {
     return memfs[name] || readFileSync(name);
 };
-path.existsSync = function (path) {
+fs.existsSync = function (path) {
     return !!memfs[path];
 };
 railway.utils.appendToFile = function (name, content) {
