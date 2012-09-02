@@ -4,4 +4,7 @@
 , "test":
   { "driver":   "memory"
   }
+, "production":
+  { "driver":   "memory"
+  }
 }
