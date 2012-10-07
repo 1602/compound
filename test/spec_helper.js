@@ -1,8 +1,10 @@
-require('semicov').init('lib');
+if (!process.env.TRAVIS) {
+    require('semicov').init('lib');
 
-process.on('exit', function () {
-    require('semicov').report();
-});
+    process.on('exit', function () {
+        require('semicov').report();
+    });
+}
 
 require('../lib/onrailway').createServer()
 
