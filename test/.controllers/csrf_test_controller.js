@@ -1,6 +1,6 @@
 load('application');
 
-action('test', function (test) {
+action('test', function () {
     event();
 });
 

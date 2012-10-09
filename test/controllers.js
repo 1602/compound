@@ -4,22 +4,22 @@ require('./spec_helper').init(exports);
 app.disable('quiet');
 app.enable('log actions');
 
+railway.controllerBridge.root = __dirname + '/.controllers';
+
 var listener;
-railway.controller.addBasePath(path.join(__dirname, '.controllers'), null, {
-    event: function () {
-        if (listener) {
-            listener.apply(this, [].slice.call(arguments));
-        }
+railway.controller.extensions.event = function () {
+    console.log(arguments);
+    if (listener) {
+        listener.apply(this, [].slice.call(arguments));
     }
-}, app.root);
+};
 
 it('should allow to change default layout', function (test) {
     var ctl = getController('layout_test');
     var req = fakeRequest('POST', '/test');
-    var layout = ctl.layout;
     ctl.perform('test', req, {render: function (viewName, params) {
         test.equal(params.layout, 'layouts/test_layout');
-        layout(false);
+        ctl.layout(false);
         ctl.perform('test', req, {render: function (viewName, params) {
             test.equal(params.layout, false);
             test.done();
@@ -40,18 +40,6 @@ it('should allow to skip flow via passing Error to next', function (test) {
 });
 
 it('should handle before filters', function (test) {
-    var ctl = getController('before_filters');
-    asyncLoop(['action1', 'action2', 'action3', 'action4'], function (a, n) {
-        var stack = [];
-        listener = function (kind) {
-            stack.push(kind);
-            if (kind.match(/action\d/)) {
-                check(kind, stack);
-                n();
-            }
-        };
-        ctl.perform(a, req(), {});
-    }, test.done);
 
     var templateStacks = {
         action1: 'onlyOneAction|onlyFewActions|exceptOneAction|exceptFewActions|action1',
@@ -59,19 +47,28 @@ it('should handle before filters', function (test) {
         action3: 'runBeforeAll|action3',
         action4: 'runBeforeAll|exceptOneAction|action4'
     };
+
+    var ctl = getController('before_filters');
+    asyncLoop(['action1', 'action2', 'action3', 'action4'], function (a, n) {
+        var stack = [];
+        listener = function (kind) {
+            console.log(arguments);
+            stack.push(kind);
+            if (kind.match(/action\d/)) {
+                check(kind, stack);
+                process.nextTick(n);
+            }
+        };
+        ctl.perform(a, req(), {});
+    }, test.done);
+
     function check(action, stack) {
         test.equal(stack.join('|'), templateStacks[action]);
     }
 });
 
-it('should be able to load all controllers', function (test) {
-    railway.controller.loadAll();
-    test.done();
-});
-
 it('should allow to load functions declared in another ctl', function (test) {
     var ctl = getController('inclusion_test');
-    ctl.perform('test', req(), {});
     listener = function (exported) {
         test.ok(typeof exported.user === 'function');
         test.ok(typeof exported.admin === 'function');
@@ -79,6 +76,7 @@ it('should allow to load functions declared in another ctl', function (test) {
         test.ok(exported.admin.name == '');
         test.done();
     };
+    ctl.perform('test', req(), {});
 });
 
 it('should protect POST requests from forgery', function (test) {
@@ -86,24 +84,24 @@ it('should protect POST requests from forgery', function (test) {
     var r = req('POST');
     r.session = { };
     // call without csrf token in session and body
-    ctl.perform('test', r, {});
     listener = function () {
         test.ok(ctl.protectedFromForgery());
         test.ok(r.session.csrfToken);
         test.ok(r.csrfToken);
         r.req = '?';
         r.body = { authenticity_token: r.csrfToken, password: '123' };
-        ctl.perform('test', r, {});
         listener = function () {
             r.body = {};
             ctl.perform('test', r, {send: function (code, message) {
                 test.equal(code, 403);
                 r.originalMethod = 'GET';
-                ctl.perform('test', r, {});
                 listener = test.done;
+                ctl.perform('test', r, {});
             }});
         };
+        ctl.perform('test', r, {});
     };
+    ctl.perform('test', r, {});
 });
 
 function req(method) {
