@@ -1,10 +1,22 @@
 var path = require('path');
+var fs = require('fs');
 
 require('./spec_helper').init(exports);
 app.disable('quiet');
 app.enable('log actions');
 
 railway.controllerBridge.root = __dirname + '/.controllers';
+railway.structure = {
+    controllers: (function () {
+        var r = {};
+        var dir = __dirname + '/.controllers';
+        fs.readdirSync(dir).forEach(function (f) {
+            r[f.replace('.js', '')] = fs.readFileSync(dir + '/' + f).toString();
+        });
+        return r;
+    })(),
+    helpers: {}
+};
 
 var listener;
 railway.controller.extensions.event = function () {
@@ -99,9 +111,9 @@ it('should protect POST requests from forgery', function (test) {
                 ctl.perform('test', r, {});
             }});
         };
-        ctl.perform('test', r, {});
+        ctl.perform('test', r, {}, function () {});
     };
-    ctl.perform('test', r, {});
+    ctl.perform('test', r, {}, function () {});
 });
 
 function req(method) {
