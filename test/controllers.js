@@ -20,10 +20,10 @@ railway.structure = {
 
 var listener;
 railway.controller.extensions.event = function () {
-    console.log(arguments);
     if (listener) {
         listener.apply(this, [].slice.call(arguments));
     }
+    this.next();
 };
 
 it('should allow to change default layout', function (test) {
