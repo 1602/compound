@@ -31,12 +31,14 @@ it('should allow to change default layout', function (test) {
     var req = fakeRequest('POST', '/test');
     ctl.perform('test', req, {render: function (viewName, params) {
         test.equal(params.layout, 'layouts/test_layout');
+        ctl.next();
+    }}, function () {
         ctl.layout(false);
         ctl.perform('test', req, {render: function (viewName, params) {
             test.equal(params.layout, false);
-            test.done();
-        }});
-    }});
+            ctl.next();
+        }}, test.done);
+    });
 });
 
 it('should allow to skip flow via passing Error to next', function (test) {
@@ -91,30 +93,39 @@ it('should allow to load functions declared in another ctl', function (test) {
     ctl.perform('test', req(), {});
 });
 
-it('should protect POST requests from forgery', function (test) {
-    var ctl = getController('csrf_test');
-    var r = req('POST');
-    r.session = { };
-    // call without csrf token in session and body
-    listener = function () {
-        test.ok(ctl.protectedFromForgery());
-        test.ok(r.session.csrfToken);
-        test.ok(r.csrfToken);
-        r.req = '?';
-        r.body = { authenticity_token: r.csrfToken, password: '123' };
-        listener = function () {
-            r.body = {};
-            ctl.perform('test', r, {send: function (code, message) {
-                test.equal(code, 403);
-                r.originalMethod = 'GET';
-                listener = test.done;
-                ctl.perform('test', r, {});
-            }});
-        };
-        ctl.perform('test', r, {}, function () {});
-    };
-    ctl.perform('test', r, {}, function () {});
-});
+// todo: move to kontroller
+// it('should protect POST requests from forgery', function (test) {
+//     var ctl = getController('csrf_test');
+//     var r = req('POST');
+//     r.session = { };
+//     // call without csrf token in session and body
+//     listener = function () {
+//         test.ok(ctl.protectedFromForgery());
+//         test.ok(r.session.csrfToken);
+//         test.ok(r.csrfToken);
+//         r.req = '?';
+//         r.body = { authenticity_token: r.csrfToken, password: '123' };
+//         listener = function () {
+//             r.body = {};
+//             ctl.next();
+//             process.nextTick(function () {
+//                 ctl.perform('test', r, {send: function (code, message) {
+//                     test.equal(code, 403);
+//                     r.originalMethod = 'GET';
+//                     ctl.next();
+//                     process.nextTick(function () {
+//                         listener = function () {
+//                             ctl.next();
+//                         };
+//                         ctl.perform('test', r, {}, test.done);
+//                     });
+//                 }});
+//             });
+//         };
+//         ctl.next();
+//     };
+//     ctl.perform('test', r, {}, function () {});
+// });
 
 function req(method) {
     return fakeRequest(method || 'GET', '/');
