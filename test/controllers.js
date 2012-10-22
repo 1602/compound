@@ -26,61 +26,6 @@ railway.controller.extensions.event = function () {
     this.next();
 };
 
-it('should allow to change default layout', function (test) {
-    var ctl = getController('layout_test');
-    var req = fakeRequest('POST', '/test');
-    ctl.perform('test', req, {render: function (viewName, params) {
-        test.equal(params.layout, 'layouts/test_layout');
-        ctl.next();
-    }}, function () {
-        ctl.layout(false);
-        ctl.perform('test', req, {render: function (viewName, params) {
-            test.equal(params.layout, false);
-            ctl.next();
-        }}, test.done);
-    });
-});
-
-it('should allow to skip flow via passing Error to next', function (test) {
-    var ctl = getController('throwing');
-    ctl.perform('neverWillBeExecuted', req(), {
-        render: function (viewName, params) {
-            test.fail(true);
-        }
-    }, function (err) {
-        test.equal(err.constructor.name, 'Error');
-        process.nextTick(test.done);
-    });
-});
-
-it('should handle before filters', function (test) {
-
-    var templateStacks = {
-        action1: 'onlyOneAction|onlyFewActions|exceptOneAction|exceptFewActions|action1',
-        action2: 'runBeforeAll|onlyFewActions|exceptOneAction|exceptFewActions|action2',
-        action3: 'runBeforeAll|action3',
-        action4: 'runBeforeAll|exceptOneAction|action4'
-    };
-
-    var ctl = getController('before_filters');
-    asyncLoop(['action1', 'action2', 'action3', 'action4'], function (a, n) {
-        var stack = [];
-        listener = function (kind) {
-            console.log(arguments);
-            stack.push(kind);
-            if (kind.match(/action\d/)) {
-                check(kind, stack);
-                process.nextTick(n);
-            }
-        };
-        ctl.perform(a, req(), {});
-    }, test.done);
-
-    function check(action, stack) {
-        test.equal(stack.join('|'), templateStacks[action]);
-    }
-});
-
 it('should allow to load functions declared in another ctl', function (test) {
     var ctl = getController('inclusion_test');
     listener = function (exported) {
@@ -88,6 +33,7 @@ it('should allow to load functions declared in another ctl', function (test) {
         test.ok(typeof exported.admin === 'function');
         test.ok(exported.user.name === 'requireUser');
         test.ok(exported.admin.name == '');
+        listener = function () {};
         test.done();
     };
     ctl.perform('test', req(), {});
