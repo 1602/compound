@@ -6,7 +6,10 @@ if (!process.env.TRAVIS) {
     });
 }
 
-require('../lib/onrailway').createServer()
+global.app = require('../lib/onrailway').createServer()
+global.railway = app.railway;
+global.args = [];
+railway.generators.init(railway, global.args);
 
 process.env.NODE_ENV = 'test';
 try {

@@ -56,7 +56,7 @@ case 'help':
     commands.forEach(function (cmd) {
         help.push('  ' + addSpaces(cmd[0] + ',', 4) + addSpaces(cmd[1], maxLen + 1) + cmd[2]);
     });
-    generators.init(railway);
+    generators.init(railway, args);
     help.push('\nAvailable generators:\n');
     help.push('  ' + railway.generators.list());
     sys.puts(help.join('\n'));

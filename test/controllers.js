@@ -6,17 +6,19 @@ app.disable('quiet');
 app.enable('log actions');
 
 railway.controllerBridge.root = __dirname + '/.controllers';
-railway.structure = {
-    controllers: (function () {
-        var r = {};
-        var dir = __dirname + '/.controllers';
-        fs.readdirSync(dir).forEach(function (f) {
-            r[f.replace('.js', '')] = fs.readFileSync(dir + '/' + f).toString();
-        });
-        return r;
-    })(),
-    helpers: {}
-};
+railway.structure = function () {
+    return {
+        controllers: (function () {
+            var r = {};
+            var dir = __dirname + '/.controllers';
+            fs.readdirSync(dir).forEach(function (f) {
+                r[f.replace('.js', '')] = fs.readFileSync(dir + '/' + f).toString();
+            });
+            return r;
+        })(),
+        helpers: {}
+    };
+}
 
 var listener;
 railway.controller.extensions.event = function () {
@@ -25,6 +27,11 @@ railway.controller.extensions.event = function () {
     }
     this.next();
 };
+
+it('wait a little pause', function (test) {
+    setTimeout(test.done, 100);
+
+});
 
 it('should allow to load functions declared in another ctl', function (test) {
     var ctl = getController('inclusion_test');

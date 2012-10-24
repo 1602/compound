@@ -28,31 +28,31 @@ railway.utils.appendToFile = function (name, content) {
 var exit = process.exit;
 
 it('should generate app', function (test) {
-    global.args = ['--stylus'];
+    updArgs(['--stylus']);
     process.exit = test.done;
     railway.generators.perform('init', args);
 });
 
 it('should generate model', function (test) {
-    global.args = 'post title content'.split(' ');
+    updArgs('post title content'.split(' '));
     railway.generators.perform('model', args);
     test.done();
 });
 
 it('should generate controller', function (test) {
-    global.args = 'cars index show new create edit update'.split(' ');
+    updArgs('cars index show new create edit update'.split(' '));
     railway.generators.perform('controller', args);
     test.done();
 });
 
 it('should generate scaffold', function (test) {
-    global.args = 'book author title'.split(' ');
+    updArgs('book author title'.split(' '));
     railway.generators.perform('crud', args);
     test.done();
 });
 
 it('should generate features', function (test) {
-    global.args = [];
+    updArgs([]);
     railway.generators.perform('features', args);
     test.done();
 });
@@ -65,4 +65,10 @@ it('relax', function (test) {
     process.exit = exit;
     test.done();
 });
+
+function updArgs(a) {
+    while(global.args.pop());
+    var k;
+    while(k=a.shift())global.args.push(k);
+}
 
