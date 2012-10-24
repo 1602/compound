@@ -1,8 +1,9 @@
-var app = require('railway').createServer();
-app.enable('quiet');
-app.enable('models cache');
-app.enable('eval cache');
+global.app = app = require('railway').createServer();
+global.railway = app.railway;
+for (var i in railway.models) global[i] = railway.models[i];
 
+app.enable('quiet');
+app.disable('watch');
 
 exports.controller = function (controllerName, exp) {
 
