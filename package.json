@@ -1,12 +1,12 @@
 {
   "name": "railway",
-  "version": "1.0.1",
+  "version": "1.1.0-pre",
   "author": "Anatoliy Chakkaev",
   "description": "RailwayJS - Ruby-on-Rails inspired MVC web framework, fully ExpressJS compatible",
   "keywords": ["mvc", "web-framework", "rails", "ruby-on-rails", "express", "railway"],
   "homepage": "http://railwayjs.com",
   "engines": [
-    "node >= 0.4.0"
+    "node >= 0.6.0"
   ],
   "url": "http://railwayjs.com",
   "main": "lib/onrailway",
@@ -20,6 +20,7 @@
     "ejs-ext": ">= 0.0.8",
     "jade-ext": ">= 0.0.5",
     "railway-routes": ">= 0.0.6",
+    "kontroller": "https://github.com/1602/tarball/master",
     "seedjs": "*",
     "express": "~ 2.x"
   },

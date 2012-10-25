@@ -3,12 +3,13 @@ require('./spec_helper').init(exports);
 var fs = require('fs');
 var path = require('path');
 var memfs = {};
+var mkdirSync = fs.mkdirSync;
+var chmodSync = fs.chmodSync;
 fs.mkdirSync = function (name) {
     memfs[name] = true;
 };
 fs.chmodSync = function () {};
 var writeFileSync = fs.writeFileSync;
-var mkdirSync = fs.mkdirSync;
 var readFileSync = fs.readFileSync;
 var closeSync = fs.closeSync;
 var writeSync = fs.writeSync;
@@ -59,6 +60,7 @@ it('should generate features', function (test) {
 it('relax', function (test) {
     fs.writeFileSync = writeFileSync;
     fs.mkdirSync = mkdirSync;
+    fs.chmodSync = chmodSync;
     fs.readFileSync = readFileSync;
     process.exit = exit;
     test.done();
