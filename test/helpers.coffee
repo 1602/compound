@@ -71,7 +71,8 @@ context 'javascript_include_tag', (test) ->
 
 context 'formTag', (test) ->
     railway.helpers.controller =
-        request:
+        app: app
+        req:
             csrfParam: 'param_name'
             csrfToken: 'token_value'
 

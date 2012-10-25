@@ -2,17 +2,13 @@
 
 var sys = require('util');
 require('coffee-script');
-try {
-    require(process.cwd() + '/server');
-} catch (e) {
-    // TODO: remove this fallback
-    require('../lib/onrailway').createServer();
-}
+var app = require(process.cwd() + '/server');
+var railway = app.railway;
 var generators = railway.generators;
 var tools = railway.tools;
 var addSpaces = railway.utils.addSpaces;
 
-global.args = process.argv.slice(2);
+var args = process.argv.slice(2);
 
 var exitAfterAction = true;
 
@@ -27,7 +23,7 @@ case 'help':
         Object.keys(railway.tools).forEach(function (cmd) {
             var c = railway.tools[cmd];
             if (cmd === command || (c && c.help && c.help.shortcut === command)) {
-                exitAfterAction = c();
+                exitAfterAction = c(railway, args);
                 found = true;
             }
         });
@@ -60,6 +56,7 @@ case 'help':
     commands.forEach(function (cmd) {
         help.push('  ' + addSpaces(cmd[0] + ',', 4) + addSpaces(cmd[1], maxLen + 1) + cmd[2]);
     });
+    generators.init(railway, args);
     help.push('\nAvailable generators:\n');
     help.push('  ' + railway.generators.list());
     sys.puts(help.join('\n'));
@@ -68,11 +65,13 @@ case 'help':
 case 'i':
 case 'init':
     exitAfterAction = false;
+    generators.init(railway, args);
     generators.perform('init');
     break;
 case 'g':
 case 'generate':
     var what = args.shift();
+    generators.init(railway, args);
     if (typeof what == "undefined" || what == null) {
         console.log('Generator not specified, available generators: ', generators.list());
     } else {
