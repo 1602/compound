@@ -4,7 +4,7 @@
 , "main": "server.js"
 , "dependencies":
   { "VIEWENGINE":              "*"
-  , "VIEWENGINE-ext":          "*"
+  , "VIEWENGINE-ext":          "< 0.1.2"
   , "express":          "~2.x"
   , "railway":          ">= 0.2.6"
   , "jugglingdb":       ">= 0.1.0"
