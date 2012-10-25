@@ -20,7 +20,7 @@
     "ejs-ext": ">= 0.0.8",
     "jade-ext": ">= 0.0.5",
     "railway-routes": ">= 0.0.6",
-    "kontroller": "https://github.com/1602/tarball/master",
+    "kontroller": "https://github.com/1602/kontroller/tarball/master",
     "seedjs": "*",
     "express": "~ 2.x"
   },
