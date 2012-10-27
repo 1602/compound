@@ -1,8 +1,17 @@
 #!/usr/bin/env node
 
 var sys = require('util');
-require('coffee-script');
-var app = require(process.cwd() + '/server');
+var fs = require('fs');
+var srvFile = process.cwd() + '/server';
+var app;
+if (fs.existsSync(srvFile + '.js')) {
+    app = require(srvFile);
+} else if (fs.existsSync(srvFile + '.coffee')) {
+    require('coffee-script');
+    app = require(srvFile);
+} else {
+    app = require('../lib/onrailway').createServer();
+}
 var railway = app.railway;
 var generators = railway.generators;
 var tools = railway.tools;
