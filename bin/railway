@@ -9,9 +9,14 @@ if (fs.existsSync(srvFile + '.js')) {
 } else if (fs.existsSync(srvFile + '.coffee')) {
     require('coffee-script');
     app = require(srvFile);
+}
+
+if (typeof app === 'function') {
+    app = app();
 } else {
     app = require('../lib/onrailway').createServer();
 }
+
 var railway = app.railway;
 var generators = railway.generators;
 var tools = railway.tools;
