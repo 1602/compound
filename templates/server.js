@@ -1,10 +1,21 @@
 #!/usr/bin/env node
 
-var app = module.exports = require('railway').createServer();
+/**
+ * Server module exports method which returns new instance of application server
+ *
+ * @param params - railway/express webserver initialization params
+ * @returns RailwayJS powered express webserver
+ */
+var app = module.exports = function getServerInstance(params) {
+    // specify current dir as default root of server
+    params.root = params.root || __dirname;
+    return require('railway').createServer(params);
+};
 
 if (!module.parent) {
     var port = process.env.PORT || 3000
-    app.listen(port);
-    console.log("Railway server listening on port %d within %s environment", port, app.settings.env);
+    var server = app();
+    server.listen(port);
+    console.log("RailwayJS server listening on port %d within %s environment", port, server.settings.env);
 }
 
