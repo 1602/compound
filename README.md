@@ -12,10 +12,7 @@ Option 1: npm
 
 Option 2: GitHub
 
-    $ git clone git://github.com/1602/express-on-railway.git
-    $ cd express-on-railway
-    $ git submodule update --init
-    $ npm link
+    $ sudo npm install https://github.com/1602/express-on-railway/tarball/master -g
 
 Usage
 =====
