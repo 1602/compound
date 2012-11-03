@@ -1,12 +1,12 @@
 { "name": "APPNAME"
 , "version": "0.0.1"
-, "engines": ["node >= 0.4.0"]
+, "engines": ["node >= 0.8.0"]
 , "main": "server.js"
 , "dependencies":
   { "VIEWENGINE":              "*"
-  , "VIEWENGINE-ext":          "< 0.1.2"
-  , "express":          "~2.x"
-  , "railway":          ">= 0.2.6"
+  , "VIEWENGINE-ext":          "latest"
+  , "express":          "~3.x"
+  , "railway":          ">= 1.1.0"
   , "jugglingdb":       ">= 0.1.0"
   , "coffee-script":    ">= 1.1.1"
   },
