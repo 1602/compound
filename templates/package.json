@@ -9,6 +9,7 @@
   , "railway":          ">= 1.1.0"
   , "jugglingdb":       ">= 0.1.0"
   , "coffee-script":    ">= 1.1.1"
+  , "seedjs":			">= 0.0.2"
   },
   "devDependencies":
   { "nodeunit":         "*"
