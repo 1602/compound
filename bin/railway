@@ -18,6 +18,14 @@ if (typeof app === 'function') {
 }
 
 var railway = app.railway;
+var eventServer = railway.eventserver;
+
+eventServer.onAny( 
+	function(){
+		console.log("haveEvent",arguments);
+	}
+);
+
 var generators = railway.generators;
 var tools = railway.tools;
 var addSpaces = railway.utils.addSpaces;

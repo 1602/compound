@@ -22,7 +22,8 @@
     "jade-ext": ">= 0.0.5",
     "railway-routes": ">= 0.0.6",
     "kontroller": "https://github.com/1602/kontroller/tarball/master",
-    "seedjs": ">=0.0.2"
+    "seedjs": ">=0.0.2",
+    "eventemitter2": ">= 0.4.11"
   },
   "repository": {
     "type": "git",
