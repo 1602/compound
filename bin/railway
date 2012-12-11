@@ -22,7 +22,7 @@ var eventServer = railway.eventserver;
 
 eventServer.onAny( 
 	function(){
-		console.log("haveEvent",arguments);
+		//console.log("haveEvent",arguments);
 	}
 );
 
