@@ -15,6 +15,7 @@
     "rw": "bin/railway"
   },
   "dependencies": {
+    "express": "3.x",
     "yaml-js": ">= 0.0.2",
     "coffee-script": ">= 1.1.1",
     "ejs-ext": ">= 0.0.8",
