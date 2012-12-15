@@ -108,3 +108,15 @@ context 'formTag', (test) ->
         test.equal(buf[2], '<input type="hidden" name="_method" value="PUT" />')
         test.done()
 
+context 'errorMessagesFor', (test) ->
+    resource = 
+        errors:
+            name: 
+                ['can\'t be blank', 'is invalid']
+            email:
+                ['is not unique']
+
+    it 'should generate errors html', (test) ->
+        html = railway.helpers.errorMessagesFor resource
+        test.equal html, '<div class="alert alert-error"><p><strong>Validation failed. Fix following errors before you continue:</strong></p><ul><li class="error-message">Name can\'t be blank</li><li class="error-message">Name is invalid</li></ul><ul><li class="error-message">Email is not unique</li></ul></div>'
+        test.done()
