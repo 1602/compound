@@ -10,16 +10,16 @@ var app = module.exports = function getServerInstance(params) {
     params = params || {};
     // specify current dir as default root of server
     params.root = params.root || __dirname;
-    return require('railway').createServer(params);
+    return require('compoundjs').createServer(params);
 };
 
 if (!module.parent) {
-    var port = process.env.PORT || 3000
+    var port = process.env.PORT || 3000;
     var host = process.env.HOST || "0.0.0.0";
     var server = app();
     server.listen(port, host);
     console.log(
-        "RailwayJS server listening on %s:%d within %s environment",
+        "Compound server listening on %s:%d within %s environment",
         host, port, server.settings.env);
 }
 
