@@ -79,22 +79,21 @@ context 'formTag', (test) ->
     it 'should generate form', (test) ->
         buf = arguments.callee.buf = []
         railway.helpers.formTag()
-        test.equal(buf[1], '<input type="hidden" name="param_name" value="token_value" />')
+        test.equal(buf[0], '<form method="POST"><input type="hidden" name="param_name" value="token_value" />')
         test.done()
 
     it 'should generate form with custom method', (test) ->
         buf = arguments.callee.buf = []
         railway.helpers.formTag({method: 'PUT'})
-        test.equal(buf[0], '<form method="POST">')
-        test.equal(buf[2], '<input type="hidden" name="_method" value="PUT" />')
+        test.equal(buf[0], '<form method="POST"><input type="hidden" name="param_name" value="token_value" /><input type="hidden" name="_method" value="PUT" />')
         test.done()
 
     it 'should accept passed block', (test) ->
         buf = arguments.callee.buf = []
         railway.helpers.formTag ->
             buf.push 'BLOCK CONTENTS'
-        test.equal(buf[0], '<form method="POST">')
-        test.equal(buf[2], 'BLOCK CONTENTS')
+        test.equal(buf[0], '<form method="POST"><input type="hidden" name="param_name" value="token_value" />')
+        test.equal(buf[1], 'BLOCK CONTENTS')
         test.done()
 
     it 'should generate update form for resource with PUT method', (test) ->
@@ -103,15 +102,28 @@ context 'formTag', (test) ->
         railway.routeMapper.pathTo.resource = (res) ->
              "/resources/#{res.id}"
 
-        railway.helpers.formFor res
-        test.equal(buf[0], '<form method="POST" action="/resources/7">')
-        test.equal(buf[2], '<input type="hidden" name="_method" value="PUT" />')
+        railway.helpers.formFor res, {}, (f) -> return
+        test.equal(buf[0], '<form method="POST" action="/resources/7"><input type="hidden" name="param_name" value="token_value" /><input type="hidden" name="_method" value="PUT" />')
+        test.done()
+
+    it 'should be able to create inputs without a block', (test) ->
+        buf = arguments.callee.buf = []
+        res = { modelName: 'Resource', id: 7 }
+        railway.routeMapper.pathTo.resource = (res) ->
+            "/resources/#{res.id}"
+
+        f = railway.helpers.formFor res, {}
+        buf.push f.begin()
+        buf.push f.end()
+
+        test.equal(buf[0], '<form method="POST" action="/resources/7"><input type="hidden" name="param_name" value="token_value" /><input type="hidden" name="_method" value="PUT" />')
+
         test.done()
 
 context 'errorMessagesFor', (test) ->
-    resource = 
+    resource =
         errors:
-            name: 
+            name:
                 ['can\'t be blank', 'is invalid']
             email:
                 ['is not unique']
