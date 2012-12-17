@@ -1,6 +1,6 @@
 {
-  "name": "railway",
-  "version": "1.1.0-pre",
+  "name": "compoundjs",
+  "version": "1.1.2-3",
   "author": "Anatoliy Chakkaev",
   "description": "RailwayJS - Ruby-on-Rails inspired MVC web framework, fully ExpressJS compatible",
   "keywords": ["mvc", "web-framework", "rails", "ruby-on-rails", "express", "railway"],
@@ -8,11 +8,11 @@
   "engines": [
     "node >= 0.8.0"
   ],
-  "url": "http://railwayjs.com",
+  "url": "http://compoundjs.com",
   "main": "lib/onrailway",
   "bin": {
-    "railway": "bin/railway",
-    "rw": "bin/railway"
+    "compound": "bin/compound",
+    "rw": "bin/compound"
   },
   "dependencies": {
     "express": "3.x",
