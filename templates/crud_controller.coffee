@@ -29,15 +29,27 @@ action 'index', ->
   Model.all (err, models) =>
     @models = models
     @title = 'Models index'
-    render()
+    switch params.format
+      when "json"
+        send models
+      else
+        render models: models
 
 action 'show', ->
   @title = 'Model show'
-  render()
+  switch params.format
+    when "json"
+      send @model
+    else
+      render()
 
 action 'edit', ->
   @title = 'Model edit'
-  render()
+  switch params.format
+    when "json"
+      send @model
+    else
+      render()
 
 action 'update', ->
   @model.updateAttributes body.Model, (err) =>

@@ -1,6 +1,8 @@
 load('application');
 
-before(loadModel, {only: ['show', 'edit', 'update', 'destroy']});
+before(loadModel, {
+    only: ['show', 'edit', 'update', 'destroy']
+    });
 
 action('new', function () {
     this.title = 'New model';
@@ -26,20 +28,38 @@ action(function create() {
 action(function index() {
     this.title = 'Models index';
     Model.all(function (err, models) {
-        render({
-            models: models
-        });
+        switch(params.format) {
+            case "json":
+                send(models);
+                break;
+            default:
+                render({
+                    models: models
+                });
+        }
     });
 });
 
 action(function show() {
     this.title = 'Model show';
-    render();
+    switch(params.format) {
+        case "json":
+            send(this.model);
+            break;
+        default:
+            render();
+    }
 });
 
 action(function edit() {
     this.title = 'Model edit';
-    render();
+    switch(params.format) {
+        case "json":
+            send(this.model);
+            break;
+        default:
+            render();
+    }
 });
 
 action(function update() {
