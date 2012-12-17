@@ -1,6 +1,6 @@
 {
   "name": "compoundjs",
-  "version": "1.1.2-4",
+  "version": "1.1.2-5",
   "author": "Anatoliy Chakkaev",
   "description": "RailwayJS - Ruby-on-Rails inspired MVC web framework, fully ExpressJS compatible",
   "keywords": [
