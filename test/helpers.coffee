@@ -103,8 +103,21 @@ context 'formTag', (test) ->
         railway.routeMapper.pathTo.resource = (res) ->
              "/resources/#{res.id}"
 
-        railway.helpers.formFor res
+        railway.helpers.formFor res, {}, (f) -> return
         test.equal(buf[0], '<form method="POST" action="/resources/7">')
         test.equal(buf[2], '<input type="hidden" name="_method" value="PUT" />')
         test.done()
 
+    it 'should be able to create inputs without a block', (test) ->
+        buf = arguments.callee.buf = []
+        res = { modelName: 'Resource', id: 7 }
+        railway.routeMapper.pathTo.resource = (res) ->
+            "/resources/#{res.id}"
+
+        f = railway.helpers.formFor res, {}
+        buf.push f.begin()
+        buf.push f.end()
+
+        test.equal(buf[0], '<form method="POST" action="/resources/7">')
+        test.equal(buf[2], '<input type="hidden" name="_method" value="PUT" />')
+        test.done()
