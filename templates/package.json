@@ -6,7 +6,7 @@
   { "VIEWENGINE":              "*"
   , "VIEWENGINE-ext":          "latest"
   , "express":          "~3.x"
-  , "railway":          ">= 1.1.0"
+  , "compoundjs":       ">= 1.1.0"
   , "jugglingdb":       ">= 0.1.0"
   , "coffee-script":    ">= 1.1.1"
   },
