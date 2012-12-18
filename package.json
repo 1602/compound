@@ -2,6 +2,9 @@
   "name": "compound",
   "version": "1.1.2-7",
   "author": "Anatoliy Chakkaev",
+  "contributors": [
+    "Sascha Gehlich <contact@filshmedia.net> (http://filshmedia.net)"
+  ],
   "description": "CompoundJS - MVC framework for NodeJS",
   "keywords": [
     "mvc",
