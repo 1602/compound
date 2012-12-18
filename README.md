@@ -1,4 +1,4 @@
-About [<img src="https://secure.travis-ci.org/1602/express-on-compound.png" />](http://travis-ci.org/#!/1602/compound)
+About [<img src="https://secure.travis-ci.org/1602/compound.png" />](http://travis-ci.org/#!/1602/compound)
 =====
 
 CompoundJS - MVC framework for NodeJS&trade;. It allows you to build web application in minutes.
@@ -47,29 +47,31 @@ CLI tool
       s,  server [port]            Run compound server
       x,  install gitUrl [extName] Install compound eXtension
 
-**compound init [appname][ key(s)]**
+#### compound init [appname][ key(s)]
     keys:
     --coffee                 # Default: no coffee by default
     --tpl jade|ejs           # Default: ejs
     --db redis|mongoose|riak # Default: mongoose
 
-**compound generate smth** - smth = generator name (controller, model, scaffold, ...can be extended via plugins)
+#### compound generate smth - smth = generator name (controller, model, scaffold, ...can be extended via plugins)
 
-builtin generator: model
-`compound g model user email password approved:boolean` # generate User model with fields user, password: String, approved: Boolean
-`compound g post title content --coffee` # generate Post model in coffee script syntax
+##### builtin generator: model
 
-builtin generator: scaffold (crud)
-`compound g scaffold todo title done:boolean --coffee` # generate scaffold for Todo model (title: String, done: Boolean)
+    compound g model user email password approved:boolean # generate User model with fields user, password: String, approved: Boolean
+    compound g post title content --coffee # generate Post model in coffee script syntax
 
-builtin generator: controller
-`compound g controller sessions new create destroy` # generate sessions controller with actions and views
+##### builtin generator: scaffold (crud)
 
-**compound server 8000** or **PORT=8000 node server** - run server on port `8000`
+    compound g scaffold todo title done:boolean --coffee # generate scaffold for Todo model (title: String, done: Boolean)
 
-**compound c** - run debugging console (see details below)
+##### builtin generator: controller
+    compound g controller sessions new create destroy # generate sessions controller with actions and views
+    
+#### compound server 8000 or **PORT=8000 node server** - run server on port `8000`
 
-**compound r** - print routes map (see details below)
+#### compound console - run debugging console (see details below)
+
+#### compound routes - print routes map (see details below)
 
 
 Directory structure
