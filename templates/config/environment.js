@@ -7,6 +7,7 @@ app.configure(function(){
     app.set('view options', {complexNames: true});
     app.set('jsDirectory', '/javascripts/');
     app.set('cssDirectory', '/stylesheets/');
+    app.set('cssEngine', 'CSSENGINE');
     app.use(express.bodyParser());
     app.use(express.cookieParser('secret'));
     app.use(express.session({secret: 'secret'}));
