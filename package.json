@@ -16,7 +16,7 @@
     "node >= 0.8.0"
   ],
   "url": "http://compoundjs.com",
-  "main": "lib/onrailway",
+  "main": "lib/compound",
   "bin": {
     "compound": "bin/compound",
     "rw": "bin/compound"

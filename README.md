@@ -1,4 +1,4 @@
-About [<img src="https://secure.travis-ci.org/1602/express-on-compound.png" />](http://travis-ci.org/#!/1602/express-on-railway)
+About [<img src="https://secure.travis-ci.org/1602/express-on-compound.png" />](http://travis-ci.org/#!/1602/compound)
 =====
 
 CompoundJS - MVC framework for NodeJS&trade;. It allows you to build web application in minutes.
@@ -12,7 +12,7 @@ Option 1: npm
 
 Option 2: GitHub
 
-    $ sudo npm install 1602/express-on-railway
+    $ sudo npm install 1602/compound
 
 Usage
 =====

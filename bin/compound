@@ -14,7 +14,7 @@ if (fs.existsSync(srvFile + '.js')) {
 if (typeof app === 'function') {
     app = app();
 } else {
-    app = require('../lib/onrailway').createServer();
+    app = require('../lib/compound').createServer();
 }
 
 var railway = app.railway;
