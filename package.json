@@ -2,7 +2,7 @@
   "name": "compound",
   "version": "1.1.2-7",
   "author": "Anatoliy Chakkaev",
-  "description": "RailwayJS - Ruby-on-Rails inspired MVC web framework, fully ExpressJS compatible",
+  "description": "CompoundJS - MVC framework for NodeJS",
   "keywords": [
     "mvc",
     "web-framework",
@@ -28,7 +28,7 @@
     "ejs-ext": ">= 0.0.8",
     "jade-ext": ">= 0.0.5",
     "railway-routes": ">= 0.0.6",
-    "kontroller": "https://github.com/1602/kontroller/tarball/master",
+    "kontroller": "1602/kontroller",
     "seedjs": "*"
   },
   "repository": {

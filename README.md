@@ -1,7 +1,7 @@
 About [<img src="https://secure.travis-ci.org/1602/express-on-compound.png" />](http://travis-ci.org/#!/1602/express-on-railway)
 =====
 
-RailwayJS - MVC framework based on Exress. Ruby-on-Rails inspired. It allows you to build web application in minutes.  
+CompoundJS - MVC framework for NodeJS&trade;. It allows you to build web application in minutes.
 
 Installation
 ============
