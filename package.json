@@ -28,12 +28,12 @@
     "ejs-ext": ">= 0.0.8",
     "jade-ext": ">= 0.0.5",
     "railway-routes": ">= 0.0.6",
-    "kontroller": "1602/kontroller",
+    "kontroller": "latest",
     "seedjs": "*"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/1602/express-on-railway.git"
+    "url": "https://github.com/1602/compound.git"
   },
   "devDependencies": {
     "jugglingdb": ">= 0.1.25",
