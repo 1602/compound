@@ -51,6 +51,7 @@ CLI tool
     keys:
     --coffee                 # Default: no coffee by default
     --tpl jade|ejs           # Default: ejs
+    --css sass|less|stylus   # Default: stylus
     --db redis|mongoose|riak # Default: mongoose
 
 #### compound generate smth - smth = generator name (controller, model, scaffold, ...can be extended via plugins)
@@ -81,6 +82,11 @@ On initialization rails-like directories tree generated, like that:
 
     .
     |-- app
+    |   |-- assets
+    |   |   |-- coffeescripts
+    |   |   |   `-- application.coffee
+    |   |   `-- stylesheets
+    |   |       `-- application.styl
     |   |-- controllers
     |   |   |-- admin
     |   |   |   |-- categories_controller.js
