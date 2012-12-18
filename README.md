@@ -1,4 +1,4 @@
-About [<img src="https://secure.travis-ci.org/1602/express-on-railway.png" />](http://travis-ci.org/#!/1602/express-on-railway)
+About [<img src="https://secure.travis-ci.org/1602/express-on-compound.png" />](http://travis-ci.org/#!/1602/express-on-railway)
 =====
 
 RailwayJS - MVC framework based on Exress. Ruby-on-Rails inspired. It allows you to build web application in minutes.  
@@ -8,32 +8,27 @@ Installation
 
 Option 1: npm
 
-    $ sudo npm install railway -g
+    $ sudo npm install compound -g
 
 Option 2: GitHub
 
-    $ sudo npm install https://github.com/1602/express-on-railway/tarball/master -g
+    $ sudo npm install 1602/express-on-railway
 
 Usage
 =====
 
     # initialize app
-    $ railway init blog && cd blog
+    $ compound init blog && cd blog
     $ npm install -l
 
     # generate scaffold
-    $ railway generate crud post title content published:boolean
+    $ compound generate crud post title content published:boolean
 
     # run server on port 3000
-    $ railway s 3000
+    $ compound s 3000
 
     # visit appp
     $ open http://localhost:3000/posts
-
-## Participation
-
-Check status of project on trello board: https://trello.com/board/railwayjs/4f0a0d49128365065e008a1d
-Feel free to vote and comment on cards (tickets/issues), if you want to join team -- send me a message with your email.
 
 Short functionality review
 ==========================
@@ -41,40 +36,40 @@ Short functionality review
 CLI tool
 --------
 
-    Usage: railway command [argument(s)]
+    Usage: compound command [argument(s)]
 
     Commands:
       h,  help                     Display usage information
-      i,  init                     Initialize railway app
+      i,  init                     Initialize compound app
       g,  generate [smth]          Generate something awesome
       r,  routes [filter]          Display application routes
       c,  console                  Debug console
-      s,  server [port]            Run railway server
-      x,  install gitUrl [extName] Install railway eXtension
+      s,  server [port]            Run compound server
+      x,  install gitUrl [extName] Install compound eXtension
 
-**railway init [appname][ key(s)]**
+**compound init [appname][ key(s)]**
     keys:
     --coffee                 # Default: no coffee by default
     --tpl jade|ejs           # Default: ejs
     --db redis|mongoose|riak # Default: mongoose
 
-**railway generate smth** - smth = generator name (controller, model, scaffold, ...can be extended via plugins)
+**compound generate smth** - smth = generator name (controller, model, scaffold, ...can be extended via plugins)
 
 builtin generator: model
-`railway g model user email password approved:boolean` # generate User model with fields user, password: String, approved: Boolean
-`railway g post title content --coffee` # generate Post model in coffee script syntax
+`compound g model user email password approved:boolean` # generate User model with fields user, password: String, approved: Boolean
+`compound g post title content --coffee` # generate Post model in coffee script syntax
 
 builtin generator: scaffold (crud)
-`railway g scaffold todo title done:boolean --coffee` # generate scaffold for Todo model (title: String, done: Boolean)
+`compound g scaffold todo title done:boolean --coffee` # generate scaffold for Todo model (title: String, done: Boolean)
 
 builtin generator: controller
-`railway g controller sessions new create destroy` # generate sessions controller with actions and views
+`compound g controller sessions new create destroy` # generate sessions controller with actions and views
 
-**railway server 8000** or **PORT=8000 node server** - run server on port `8000`
+**compound server 8000** or **PORT=8000 node server** - run server on port `8000`
 
-**railway c** - run debugging console (see details below)
+**compound c** - run debugging console (see details below)
 
-**railway r** - print routes map (see details below)
+**compound r** - print routes map (see details below)
 
 
 Directory structure
@@ -121,11 +116,11 @@ On initialization rails-like directories tree generated, like that:
 HTTPS Support
 -------------
 
-Just place your key and cert into config directory, railway will use it.
+Just place your key and cert into config directory, compound will use it.
 Default names for keys are `tsl.key` and `tsl.cert`, but you can store in in another place, in that case just pass filenames to createServer function:
 `server.js`
 
-    require('railway').createServer({key: '/tmp/key.pem', cert: '/tmp/cert.pem'});
+    require('compound').createServer({key: '/tmp/key.pem', cert: '/tmp/cert.pem'});
 
 Few helpful commands:
 
@@ -193,9 +188,9 @@ if you have `custom_controller` with `test` action inside it you can now do:
     POST /custom/test
     GET /custom/test/1 // also sets params.id to 1
 
-for debugging routes described in `config/routes.js` you can use `railway routes` command:
+for debugging routes described in `config/routes.js` you can use `compound routes` command:
 
-    $ railway routes
+    $ compound routes
                      GET    /                               posts#index
                      GET    /:id                            posts#show
          sitemap.txt GET    /sitemap.txt                    posts#map
@@ -209,7 +204,7 @@ for debugging routes described in `config/routes.js` you can use `railway routes
 
 Filter by method:
 
-    $ railway routes GET
+    $ compound routes GET
                      GET    /                               posts#index
                      GET    /:id                            posts#show
          sitemap.txt GET    /sitemap.txt                    posts#map
@@ -219,7 +214,7 @@ Filter by method:
 
 Filter by helper name:
 
-    $ railway routes _admin
+    $ compound routes _admin
       new_admin_post GET    /admin/posts/new.:format?       admin/posts#new
      edit_admin_post GET    /admin/posts/:id/edit.:format?  admin/posts#edit
     likes_admin_post PUT    /admin/posts/:id/likes.:format? admin/posts#likes
@@ -283,11 +278,11 @@ The controller is a module containing the declaration of actions such as this:
 Railway offers several built-in generators: for a model, controller and for 
 initialization. Can be invoked as follows:
 
-    railway generate [what] [params]
+    compound generate [what] [params]
 
 `what` can be `model`, `controller` or `scaffold`. Example of controller generation:
 
-    $ railway generate controller admin/posts index new edit update
+    $ compound generate controller admin/posts index new edit update
     exists  app/
     exists  app/controllers/
     create  app/controllers/admin/
@@ -315,28 +310,28 @@ REPL console
 
 To run REPL console use command
 
-    railway console
+    compound console
 
 or it's shortcut
 
-    railway c
+    compound c
 
 It just simple node-js console with some Railway bindings, e.g. models. Just one note
 about working with console. Node.js is asynchronous by its nature, and it's great
 but it made console debugging much more complicated, because you should use callback
 to fetch result from database, for example. I have added one useful method to
-simplify async debugging using railway console. It's name `c`, you can pass it
+simplify async debugging using compound console. It's name `c`, you can pass it
 as parameter to any function requires callback, and it will store parameters passed
 to callback to variables `_0, _1, ..., _N` where N is index in `arguments`.
 
 Example:
 
-    railway c
-    railway> User.find(53, c)
+    compound c
+    compound> User.find(53, c)
     Callback called with 2 arguments:
     _0 = null
     _1 = [object Object]
-    railway> _1
+    compound> _1
     { email: [Getter/Setter],
       password: [Getter/Setter],
       activationCode: [Getter/Setter],
@@ -362,7 +357,7 @@ Logger
 -----
 
     app.set('quiet', true); // force logger to log into `log/#{app.settings.env}.log`
-    railway.logger.write(msg); // to log message
+    compound.logger.write(msg); // to log message
 
 Configuring
 ===========
