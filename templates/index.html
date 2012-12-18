@@ -1,96 +1,100 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Welcome to Railway</title>
-    <link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.3.0/bootstrap.min.css">
-    <meta name="viewport" content="width=500, initial-scale=0.5">
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
-    <script type="text/javascript" src="/javascripts/rails.js"></script>
-  </head>
-  <body>
-    <div class="container">
-      <div class="page-header">
-        <h1 style="text-align: center; padding: 35px;">Welcome to Railway</h1>
-      </div>
-      <h6 style="text-align: center;">
-        <a href="/railway/environment.json" id="show-env-info-link" data-remote="true" data-jsonp="load">Information about application environment</a>
-      </h6>
-      <div id="env-info"></div>
-      <hr />
-      <div class="row">
-        <div class="span8 offset4">
-          <a href="http://github.com/1602/express-on-railway"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://d3nwyuy0nl342s.cloudfront.net/img/e6bef7a091f5f3138b8cd40bc3e114258dd68ddf/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub"></a>
-          <div class="content">
-            <h6>1. Start with <a href="http://railwayjs.com/#generators">generators</a></h6>
-            <p> this is a fastest way to create application:</p>
-            <pre>railway g crud post title content date:date published:boolean</pre>
-            <h6>2. Then describe <a href="http://railwayjs.com/#routing">routes</a></h6>
-            <p>in <code>config/routes.js</code> and remove this file (<code>public/index.html</code>)</p>
-            <pre>exports.routes = function (map) {
-    map.get('/', 'posts#index');
-};</pre>
-            <h6>3. Design your <a href="http://railwayjs.com/#orm">database</a></h6>
-            <p>in <code>db/schema.js</code> and describe models in <code>app/models/*</code></p>
-            <h6>4. Keep you <a href="http://railwayjs.com/#controllers">controllers</a> thin</h6>
-            <p>write tests, and good luck.<br> If you have any questions feel free to ask at <a href="http://groups.google.com/group/railwayjs">RailwayJS Google Group</a>.</p>
-            <p>Track RailwayJS project state on <a href="https://trello.com/board/railwayjs/4f0a0d49128365065e008a1d">trello board</a>, vote for features, discuss. Help us to get better!</p>
-          </div>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Welcome to Railway</title>
+        <link href="stylesheets/bootstrap.css" rel="stylesheet">
+        <link href="stylesheets/bootstrap-responsive.css" rel="stylesheet">
+        <link rel="shortcut icon" href="favicon.ico">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    </head>
+
+    <body>
+        <div class="navbar">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="brand" href="#">Railway</a>
+                </div>
+            </div>
         </div>
-
-        <div class="span4">
-          <p>
-            <h6>5. Links in sidebar</h6>
-            <ul style="padding-left: 0px;">
-              <li><a href="http://railwayjs.com">RailwayJS project docs</a></li>
-              <li><a href="http://modules.node-js.ru">NodeJS modules rating</a></li>
-              <li><a href="http://expressjs.com">ExpressJS project homepage</a></li>
-              <li><a href="http://mongoosejs.com">MongooseJS ORM project homepage</a></li>
-              <li><a href="http://railwayjs.com/juggling.html">Try JugglingDB in your browser, docs</a></li>
-            </ul>
-          </p>
+        <div class="container">
+            <div class="hero-unit">
+                <h1>Welcome to Railway!</h1>
+                <p>A framework for fast-paced application development on Node.</p>
+                <p><a target="_blank" href="http://railwayjs.com" class="btn btn-large btn-primary">Get Started at RailwayJS.com</a></p>
+            </div>
+            <div id="env" style="display: none;">
+                <div class="page-header">
+                    <h1>Environment</h1>
+                </div>
+                <div class="row">    
+                    <div class="span12">                        
+                        <div id="info"></div>
+                    </div>
+                </div>
+            </div>
         </div>
-
-      </div>
-      <footer>
-      </footer>
-      <script>
-        function load(data) {
-          $('#show-env-info-link').hide();
-          if (data.forbidden) {
-            return '';
-          }
-          var html = '<table class=".zebra-striped">';
-          html += makeList('Versions', data.versions);
-          html += makeList('Settings', data.settings);
-          html += makeList('Application', data.application);
-          html += makeList('ENV', data.env);
-          html += '</table>';
-
-          $('#env-info').html(html);
-        }
-
-        function makeList(title, obj) {
-          var res = '<tr><td colspan="2"><h6>' + title + '</h6></td></tr>';
-          for (var i in obj) {
-            res += '<tr><td>' + i + '</td><td>' + toS(obj[i]) + '</td></tr>';
-          }
-          return res;
-        }
-
-        function toS(obj) {
-          if (obj instanceof Array) {
-            return obj.join('<br />');
-          } else if (typeof obj === 'object') {
-            var s = [];
-            for (var i in obj) {
-              s.push(i + ': ' + obj[i]);
+        
+        <script type="text/javascript">
+            $(window).load(function(){
+                init();
+            });
+        
+            function init() {
+                $.ajax({
+                    url: '/railway/environment.json',
+                    type: 'GET',
+                    success: function (data, status, xhr) {
+                        load(data);
+                    }
+                });
             }
-            return s.join(', ');
-          } else {
-            return obj;
-          }
-        }
-      </script>
-    </div>
-  </body>
+        
+            function load(data) {
+                if (data.forbidden) {
+                    return '';
+                }
+                
+                $('#env').show();
+                                   
+                var html = makeList('Versions', data.versions);
+                html += makeList('Settings', data.settings);
+                html += makeList('Application', data.application);
+                html += makeList('ENV', data.env);
+
+                $('#info').html(html);   
+            }
+            
+            function makeList(title, obj) {
+                var res = '<h2>' + title + '</h2>';
+                
+                res += '<table class="table table-striped table-bordered"><tbody>';
+                
+                for (var i in obj) {
+                    res += '<tr><th class="span3">' + i + '</th><td>' + toS(obj[i]) + '</td></tr>';
+                }
+                res += '</tbody></table>';
+                
+                return res;
+            }
+            
+            function toS(obj) {
+                if (obj instanceof Array) {
+                    return obj.join('<br />');
+                } else if (typeof obj === 'object') {
+                    var s = [];
+                    for (var i in obj) {
+                        s.push(i + ': ' + obj[i]);
+                    }
+                    return s.join(', ');
+                } else {
+                    return obj;
+                }
+            }
+        </script>
+    </body>
 </html>
+
+
+
+
