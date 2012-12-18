@@ -29,26 +29,26 @@ action 'index', ->
   Model.all (err, models) =>
     @models = models
     @title = 'Models index'
-    switch params.format
-      when "json"
+    respondTo (format) ->
+      format.json ->
         send models
-      else
+      format.html ->
         render models: models
 
 action 'show', ->
   @title = 'Model show'
-  switch params.format
-    when "json"
+  respondTo (format) ->
+    format.json ->
       send @model
-    else
+    format.html ->
       render()
 
 action 'edit', ->
   @title = 'Model edit'
-  switch params.format
-    when "json"
+  respondTo (format) ->
+    format.json ->
       send @model
-    else
+    format.html ->
       render()
 
 action 'update', ->
@@ -68,4 +68,3 @@ action 'destroy', ->
     else
       flash 'info', 'Model successfully removed'
     send "'" + path_to.models + "'"
-
