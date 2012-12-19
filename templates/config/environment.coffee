@@ -1,6 +1,9 @@
-express = require 'express'
+module.exports = (compound) ->
 
-app.configure ->
+  express = require 'express'
+  app = compound.app
+
+  app.configure ->
     PREPEND_MIDDLEWARE
     app.set 'view engine', 'VIEWENGINE'
     app.set 'view options', complexNames: true
@@ -14,4 +17,3 @@ app.configure ->
     app.use express.session secret: 'secret'
     app.use express.methodOverride()
     app.use app.router
-

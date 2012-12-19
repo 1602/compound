@@ -1,4 +1,6 @@
-app.configure 'production', ->
+module.exports = (compound) ->
+  app = compound.app
+  app.configure 'production', ->
     app.enable 'merge javascripts'
     app.enable 'merge stylesheets'
     app.disable 'assets timestamps'
