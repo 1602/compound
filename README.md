@@ -52,7 +52,8 @@ CLI tool
     --coffee                 # Default: no coffee by default
     --tpl jade|ejs           # Default: ejs
     --css sass|less|stylus   # Default: stylus
-    --db redis|mongoose|riak # Default: mongoose
+    --db redis|mongodb|nano|mysql|sqlite3|postgres
+                             # Default: memory
 
 #### compound generate smth - smth = generator name (controller, model, scaffold, ...can be extended via plugins)
 
