@@ -1,0 +1,26 @@
+$paddingLeft = 15px
+.sidebar
+  position: fixed
+  top: 0
+  left: 0
+
+  width: 200px
+  height: 100%
+
+  padding: 15px
+
+  ul
+    list-style-type: none
+
+    a
+      font: normal 12px 'Lucida Grande', Helvetica, sans-serif
+      display: block
+      padding: 3px
+      text-decoration: none
+
+      &.level-1
+        padding-left: ($paddingLeft * 1)
+      &.level-2
+        padding-left: ($paddingLeft * 2)
+      &.level-3
+        padding-left: ($paddingLeft * 3)

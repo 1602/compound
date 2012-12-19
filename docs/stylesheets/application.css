@@ -154,7 +154,6 @@ html.style-dark h1,
 html.style-dark h2,
 html.style-dark h3 {
   color: #fc0243;
-  padding: 0 20px 10px 20px;
   border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 html.style-dark p,
@@ -172,6 +171,20 @@ html.style-dark pre {
 html.style-dark .style-switch {
   background: #fff;
 }
+html.style-dark .sidebar {
+  background: rgba(0,0,0,0.3);
+  border-right: 1px solid rgba(255,255,255,0.1);
+}
+html.style-dark .sidebar a {
+  color: #fff;
+}
+html.style-dark .sidebar a:hover,
+html.style-dark .sidebar a.active {
+  background: rgba(0,0,0,0.3);
+}
+html.style-dark .sidebar a.level-0 {
+  color: #fc0243;
+}
 html.style-light body {
   background: #fff;
 }
@@ -179,7 +192,6 @@ html.style-light h1,
 html.style-light h2,
 html.style-light h3 {
   color: #fc0243;
-  padding: 0 20px 10px 20px;
   border-bottom: 1px solid rgba(40,40,40,0.1);
 }
 html.style-light p,
@@ -197,12 +209,34 @@ html.style-light pre {
 html.style-light .style-switch {
   background: #282828;
 }
+html.style-light .sidebar {
+  background: rgba(0,0,0,0.1);
+  border-right: 1px solid rgba(40,40,40,0.1);
+}
+html.style-light .sidebar a {
+  color: #282828;
+}
+html.style-light .sidebar a:hover,
+html.style-light .sidebar a.active {
+  background: rgba(0,0,0,0.1);
+}
+html.style-light .sidebar a.level-0 {
+  color: #fc0243;
+}
 h1,
 h2,
 h3 {
   font: 300 24px 'Quicksand', 'Lucida Grande', sans-serif;
   text-transform: uppercase;
   margin-bottom: 20px;
+  display: block;
+  padding: 10px 20px 10px 20px;
+}
+h1 .decimal,
+h2 .decimal,
+h3 .decimal {
+  opacity: 0.8;
+  margin-right: 5px;
 }
 h1 {
   font-size: 30px;
@@ -247,4 +281,33 @@ body {
   margin: auto;
   display: block;
   margin-bottom: 50px;
+}
+.content-wrapper section {
+  margin-bottom: 50px;
+}
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 200px;
+  height: 100%;
+  padding: 15px;
+}
+.sidebar ul {
+  list-style-type: none;
+}
+.sidebar ul a {
+  font: normal 12px 'Lucida Grande', Helvetica, sans-serif;
+  display: block;
+  padding: 3px;
+  text-decoration: none;
+}
+.sidebar ul a.level-1 {
+  padding-left: 15px;
+}
+.sidebar ul a.level-2 {
+  padding-left: 30px;
+}
+.sidebar ul a.level-3 {
+  padding-left: 45px;
 }

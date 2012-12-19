@@ -3,7 +3,6 @@ body
 
 h1, h2, h3
   color: $highlight-text-color
-  padding: 0 20px 10px 20px
   border-bottom: 1px solid rgba($main-color-b, 0.1)
 
 p, pre
@@ -18,3 +17,15 @@ code, pre
 
 .style-switch
   background: $main-color-b
+
+.sidebar
+  background: $code-pre-background
+  border-right: 1px solid rgba($main-color-b, 0.1)
+  a
+    color: $main-color-b
+
+    &:hover, &.active
+      background: $code-pre-background
+
+  a.level-0
+    color: $highlight-text-color
