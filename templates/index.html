@@ -9,7 +9,8 @@
   </head>
   <body>
     <div class="container">
-      <div class="page-header">
+      <div class="page-header" style="text-align: center;">
+        <img src="/images/compound.png" alt="CompoundJS" />
         <h1 style="text-align: center; padding: 35px;">Welcome to Compound</h1>
       </div>
       <h6 style="text-align: center;">
@@ -22,18 +23,18 @@
           <a href="http://github.com/1602/compound"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://d3nwyuy0nl342s.cloudfront.net/img/e6bef7a091f5f3138b8cd40bc3e114258dd68ddf/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub"></a>
           <div class="content">
             <h6>1. Start with <a href="http://compoundjs.com/docs.html#generators">generators</a></h6>
-            <p> this is a fastest way to create application:</p>
+            <p> This is the fastest way to create an application:</p>
             <pre>compound generate crud post title content date:date published:boolean</pre>
-            <h6>2. Then describe <a href="http://compoundjs.com/docs.html#routing">routes</a></h6>
+            <h6>2. Then describe a <a href="http://compoundjs.com/docs.html#routing">route</a></h6>
             <p>in <code>config/routes.js</code> and remove this file (<code>public/index.html</code>)</p>
             <pre>exports.routes = function (map) {
     map.get('/', 'posts#index');
 };</pre>
             <h6>3. Design your <a href="http://compoundjs.com/docs.html#orm">database</a></h6>
             <p>in <code>db/schema.js</code> and describe models in <code>app/models/*</code></p>
-            <h6>4. Keep you <a href="http://compoundjs.com/docs.html#controllers">controllers</a> thin</h6>
-            <p>write tests, and good luck.<br> If you have any questions feel free to ask at <a href="http://groups.google.com/group/compoundjs">CompoundJS Google Group</a>.</p>
-            <p>Track CompoundJS project state on <a href="https://trello.com/board/railwayjs/4f0a0d49128365065e008a1d">trello board</a>, vote for features, discuss. Help us to get better!</p>
+            <h6>4. Keep your <a href="http://compoundjs.com/docs.html#controllers">controllers</a> thin!</h6>
+            <p>Write tests, and good luck.<br> If you have any questions feel free to ask at <a href="http://groups.google.com/group/compoundjs">CompoundJS Google Group</a> or <a href="irc://irc.freenode.net/compoundjs">#compoundjs on irc.freenode.net</a>.</p>
+            <p>Track CompoundJS project state on our <a href="https://trello.com/board/railwayjs/4f0a0d49128365065e008a1d">Trello board</a>, vote for features, discuss. Help us to get better!</p>
           </div>
         </div>
 
