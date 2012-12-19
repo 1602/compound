@@ -22,16 +22,19 @@ module.exports = function (compound, ModelName) {
     ModelName.prototype.method = function () {
     };
 };
+```
 
 ### views
 
 Avoid using `formTag` and `formFor` with blocks, new syntax:
 
+```
 <% var form = formFor(resource) %>
 <%- form.begin() %>
 <%- form.input('propertyname') %>
 <%- form.submit() %>
 <%- form.end() %>
+```
 
 ### something else?
 
