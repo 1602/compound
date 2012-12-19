@@ -362,6 +362,10 @@ and `*.en.text` to `*.jp.html` and `*.jp.text` and translate new files.
 
 NOTE: translation can contain `%` symbol(s), that means variable substitution
 
+If you don't need locales support you can turn it off in `config/environment`:
+
+    app.disable('locales');
+
 Logger
 -----
 
