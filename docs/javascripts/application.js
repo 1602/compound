@@ -20,6 +20,19 @@ $(function() {
   });
 
   /**
+   * Shows / hides the sidebar depending on mouse x position
+   */
+  $(document).mousemove(function (e) {
+    var mouseX = e.pageX;
+    var windowW = $(window).width();
+    if (mouseX <= windowW / 4) {
+      $('.sidebar').removeClass('hidden');
+    } else {
+      $('.sidebar').addClass('hidden');
+    }
+  });
+
+  /**
    * Generates the sidebar navigation from all headlines
    * and gives them numbers
    */

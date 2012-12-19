@@ -292,6 +292,13 @@ body {
   width: 200px;
   height: 100%;
   padding: 15px;
+  transition: left 0.5s ease-out;
+  -webkit-transition: left 0.5s ease-out;
+  -moz-transition: left 0.5s ease-out;
+  -o-transition: left 0.5s ease-out;
+}
+.sidebar.hidden {
+  left: -205px;
 }
 .sidebar ul {
   list-style-type: none;
@@ -310,4 +317,8 @@ body {
 }
 .sidebar ul a.level-3 {
   padding-left: 45px;
+}
+* {
+  -webkit-transition: color 0.2s ease-out;
+  -webkit-transition: background-color 0.2s ease-out;
 }

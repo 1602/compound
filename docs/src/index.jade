@@ -10,9 +10,9 @@ html.style-dark
     script(src="javascripts/prettyprint.js")
     script(src="javascripts/application.js")
   body
-    .sidebar
+    .sidebar.hidden
       ul.items
-    
+
     .content-wrapper
       img.logo(src="images/logo.png", alt="CompoundJS")
 
@@ -145,3 +145,6 @@ html.style-dark
                  story DELETE /articles/:id.:format?      posts#destroy
                  story PUT    /articles/:id.:format?      posts#update
                  story GET    /articles/:id.:format?      posts#show
+
+      section(id="routing-nested-resources")
+        h2 Nested resources
