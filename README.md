@@ -52,7 +52,8 @@ CLI tool
     --coffee                 # Default: no coffee by default
     --tpl jade|ejs           # Default: ejs
     --css sass|less|stylus   # Default: stylus
-    --db redis|mongoose|riak # Default: mongoose
+    --db redis|mongodb|nano|mysql|sqlite3|postgres
+                             # Default: memory
 
 #### compound generate smth - smth = generator name (controller, model, scaffold, ...can be extended via plugins)
 
@@ -360,6 +361,10 @@ Next step - rename email files in `app/views/emails`, copy all files `*.en.html`
 and `*.en.text` to `*.jp.html` and `*.jp.text` and translate new files.
 
 NOTE: translation can contain `%` symbol(s), that means variable substitution
+
+If you don't need locales support you can turn it off in `config/environment`:
+
+    app.disable('locales');
 
 Logger
 -----

@@ -28,81 +28,85 @@ var exitAfterAction = true;
 
 var command = args.shift();
 
-switch (command) {
-default:
-case 'h':
-case 'help':
-    if (command && command !== 'help' && command !== 'h') {
-        var found = false;
-        Object.keys(railway.tools).forEach(function (cmd) {
-            var c = railway.tools[cmd];
-            if (cmd === command || (c && c.help && c.help.shortcut === command)) {
-                exitAfterAction = c(railway, args);
-                found = true;
-            }
-        });
+process.nextTick(function () {
 
-        if (found) {
-            break;
-        }
-    }
-    var help = [
-        'Usage: railway command [argument(s)]\n',
-        'Commands:'
-    ];
-    var commands = [
-        ['h', 'help',            'Display usage information'],
-        ['i', 'init',            'Initialize railway app'],
-        ['g', 'generate [smth]', 'Generate something awesome']
-    ];
-    Object.keys(railway.tools).forEach(function (cmd) {
-        var h = railway.tools[cmd].help;
-        if (h && h.usage) {
-            commands.push([h.shortcut || '', h.usage, h.description]);
-        }
-    });
-    var maxLen = 0;
-    commands.forEach(function (cmd) {
-        if (cmd[1].length > maxLen) {
-            maxLen = cmd[1].length;
-        }
-    });
-    commands.forEach(function (cmd) {
-        help.push('  ' + addSpaces(cmd[0] + ',', 4) + addSpaces(cmd[1], maxLen + 1) + cmd[2]);
-    });
-    generators.init(railway, args);
-    help.push('\nAvailable generators:\n');
-    help.push('  ' + railway.generators.list());
-    sys.puts(help.join('\n'));
-    break;
+  switch (command) {
+  default:
+  case 'h':
+  case 'help':
+      if (command && command !== 'help' && command !== 'h') {
+          var found = false;
+          Object.keys(railway.tools).forEach(function (cmd) {
+              var c = railway.tools[cmd];
+              if (cmd === command || (c && c.help && c.help.shortcut === command)) {
+                  exitAfterAction = c(railway, args);
+                  found = true;
+              }
+          });
 
-case 'i':
-case 'init':
-    exitAfterAction = false;
-    generators.init(railway, args);
-    generators.perform('init');
-    break;
-case 'g':
-case 'generate':
-    var what = args.shift();
-    generators.init(railway, args);
-    if (typeof what == "undefined" || what == null) {
-        console.log('Generator not specified, available generators: ', generators.list());
-    } else {
-        if (generators.exists(what)) {
-            generators.perform(what, args);
-        } else {
-            console.log('Generator "' + what + '" not found, available generators: ', generators.list());
-        }
-    }
-    break;
-case '--version':
-    console.log(railway.version);
-    break;
-}
+          if (found) {
+              break;
+          }
+      }
+      var help = [
+          'Usage: railway command [argument(s)]\n',
+          'Commands:'
+      ];
+      var commands = [
+          ['h', 'help',            'Display usage information'],
+          ['i', 'init',            'Initialize railway app'],
+          ['g', 'generate [smth]', 'Generate something awesome']
+      ];
+      Object.keys(railway.tools).forEach(function (cmd) {
+          var h = railway.tools[cmd].help;
+          if (h && h.usage) {
+              commands.push([h.shortcut || '', h.usage, h.description]);
+          }
+      });
+      var maxLen = 0;
+      commands.forEach(function (cmd) {
+          if (cmd[1].length > maxLen) {
+              maxLen = cmd[1].length;
+          }
+      });
+      commands.forEach(function (cmd) {
+          help.push('  ' + addSpaces(cmd[0] + ',', 4) + addSpaces(cmd[1], maxLen + 1) + cmd[2]);
+      });
+      generators.init(railway, args);
+      help.push('\nAvailable generators:\n');
+      help.push('  ' + railway.generators.list());
+      sys.puts(help.join('\n'));
+      break;
 
-if (exitAfterAction) {
-    process.exit(0);
-}
+  case 'i':
+  case 'init':
+      exitAfterAction = false;
+      generators.init(railway, args);
+      generators.perform('init');
+      break;
+  case 'g':
+  case 'generate':
+      var what = args.shift();
+      generators.init(railway, args);
+      if (typeof what == "undefined" || what == null) {
+          console.log('Generator not specified, available generators: ', generators.list());
+      } else {
+          if (generators.exists(what)) {
+              generators.perform(what, args);
+          } else {
+              console.log('Generator "' + what + '" not found, available generators: ', generators.list());
+          }
+      }
+      break;
+  case '--version':
+      console.log(railway.version);
+      break;
+  }
+
+  if (exitAfterAction) {
+      process.exit(0);
+  }
+
+});
 
 /*vim ft:javascript*/
