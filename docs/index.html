@@ -201,7 +201,7 @@ edit_admin_user GET    /admin/users/:id/edit.:format? admin/users#edit
         <p><strong>NOTE: Each action should invoke exactly one output method. This is the only requirement imposed by the asynchronous nature of Node.js. If you don't call an output method, the client will infinitely wait for a server response.</strong></p>
       </section>
       <section id="controllers-render">
-        <h3>render</h3>
+        <h3>render()</h3>
         <p>The <code>render</code> method accepts 0, 1 or 2 arguments. When called without any arguments, it just renders the view associated with this action. For example, this will render <code>app/views/posts/index.ejs</code>.</p><code>posts_controller.js</code>
         <pre class="prettyprint">action('index', function () {
   render();
@@ -234,7 +234,7 @@ edit_admin_user GET    /admin/users/:id/edit.:format? admin/users#edit
 </pre>
       </section>
       <section id="controllers-send">
-        <h2>send</h2>
+        <h3>send()</h3>
         <p>The <code>send</code> function is useful for debugging and one-page apps where you don't want to render a heavy template and just want to send text or JSON data.</p>
         <p>This function can be called with number (status code):</p>
         <pre class="prettyprint">action('destroy', function () {
@@ -253,7 +253,7 @@ edit_admin_user GET    /admin/users/:id/edit.:format? admin/users#edit
 </pre>
       </section>
       <section id="controllers-redirect">
-        <h2>redirect</h2>
+        <h3>redirect()</h3>
         <p>
            
           This function just sets the status code and <code>Location</code> header, so the client will be redirected to another location.
@@ -263,7 +263,7 @@ redirect('http://example.com'); // redirect to another host
 </pre>
       </section>
       <section id="controller-flash">
-        <h2>flash</h2>
+        <h3>flash()</h3>
         <p>
            
           The <code>flash</code> function stores a message in the session for future displaying, this is a regular expressjs function, refer to <a href="http://expressjs.com/guide.html#req.flash()" target="_blank">expressjs guide</a> to learn how it works. Few examples:
@@ -285,6 +285,73 @@ redirect('http://example.com'); // redirect to another host
           This <code>create</code> action sends a flash info on success and a flash error on fail.
         </p>
       </section>
+      <div id="controllers-execution-flow-control" class="section">
+        <h2>Execution flow control</h2>
+        <p>To provide the ability of DRY-ing controller code and reusing common code parts, CompoundJS provides a few additional tools: method chaining and external controllers loading.</p>
+        <p>
+           
+          To chain methods, you can use the <code>before</code>  and<code>after</code> methods.
+        </p><code>checkout_controller.js</code>
+        <pre class="prettyprint">before(userRequired, { only: 'order' });
+before(prepareBasket, { except: 'order' });
+before(loadProducts, { only: ['products', 'featuredProducts'] });
+
+action('products', function () { ... });
+action('featuredProducts', function () { ... });
+action('order', function () { ... });
+action('basket', function () { ... });
+
+function userRequired () { next() }
+function prepareBasket () { next() }
+function loadProducts () { next() }
+</pre>
+        <p>In this example, <code>userRequired</code> will be called only for the<code>order</code> action, <code>prepareBasket</code> will be called for all actions except <code>order</code>, and <code>loadProducts</code> will be called only for the <code>products</code> and <code>featuredProducts</code>methods.</p>
+        <p>
+           
+          Note, that the before-functions should call the global <code>next</code> method that will pass control to the next function in the chain.
+        </p>
+      </div>
+      <div id="controllers-common-execution-context" class="section">
+        <h2>Common execution context</h2>
+        <p>There is one extra feature in flow control: All functions are invoked in the same context, so you can pass data between the functions using the <code>this</code> object:</p>
+        <pre class="prettyprint">function loadProducts () {
+    Product.find(function (err, prds) {
+        this.products = prds;
+        next();
+    }.bind(this));
+}
+
+action('products', function () {
+    assert.ok(this.products, 'Products available here');
+    render(); // also products will available in view
+});
+</pre>
+      </div>
+      <div id="controllers-sharing-code" class="section">
+        <h2>Sharing code across controllers</h2>
+        <p> Some methods, like <code>userRequired</code> for example, can be used in different controllers. To allow cross-controller code sharing, CompoundJS provides a few methods: <code>load</code>, <code>use</code> and <code>publish</code>.</p>
+        <p>You can define <code>requireUser</code> in <code>application_controller.js</code> and call <code>publish</code> to make it accessible to all other controllers that inherit from this controller:</p><code>application_controller.js</code>
+        <pre class="prettyprint">publish('requireUser', requireUser);
+
+function requireUser () {
+  // ...
+}
+</pre><code>products_controller.js</code>
+        <pre class="prettyprint">load('application'); // note that _controller siffix omitted
+before(use('userRequired'), { only: 'products' });
+</pre>
+      </div>
+      <div id="controllers-other-expressjs" class="section">
+        <h2>Other express.js features</h2>
+        <p>
+           
+          To get familiar with CompoundJS controllers, look at a few examples available at github: <a href="https://github.com/anatoliychakkaev/railwayjs.com/blob/master/app/controllers/pages_controller.coffee" target="_blank">coffee controller</a>, <a href="https://github.com/1602/router/blob/master/app/controllers/users_controller.js" target="_blank">javascript controller</a>.
+        </p>
+        <p>
+           
+          All other expressjs features have no global shortcuts yet, but they can still be used since <code>request</code> (alias  <code>req</code>) and <code>response</code> (alias <code>res</code>) are available as global variables inside the controller context. In the view context, they are available as <code>request</code> and <code>response</code>.
+        </p>
+      </div>
     </div>
   </body>
 </html>

@@ -325,7 +325,7 @@ html.style-dark
           strong NOTE: Each action should invoke exactly one output method. This is the only requirement imposed by the asynchronous nature of Node.js. If you don't call an output method, the client will infinitely wait for a server response.
 
       section(id="controllers-render")
-        h3 render
+        h3 render()
 
         p
           | The 
@@ -375,7 +375,7 @@ html.style-dark
           });
 
       section(id="controllers-send")
-        h2 send
+        h3 send()
 
         p
           | The 
@@ -404,7 +404,7 @@ html.style-dark
           });
 
       section(id="controllers-redirect")
-        h2 redirect
+        h3 redirect()
 
         p 
           | This function just sets the status code and 
@@ -417,7 +417,7 @@ html.style-dark
           redirect('http://example.com'); // redirect to another host
 
       section(id="controller-flash")
-        h2 flash
+        h3 flash()
 
         p 
           | The 
@@ -445,3 +445,135 @@ html.style-dark
           | This 
           code create
           |  action sends a flash info on success and a flash error on fail.
+
+      .section(id="controllers-execution-flow-control")
+        h2 Execution flow control
+
+        p To provide the ability of DRY-ing controller code and reusing common code parts, CompoundJS provides a few additional tools: method chaining and external controllers loading.
+
+        p 
+          | To chain methods, you can use the 
+          code before
+          |  and
+          code after
+          |  methods.
+
+        code checkout_controller.js
+        pre.prettyprint.
+          before(userRequired, { only: 'order' });
+          before(prepareBasket, { except: 'order' });
+          before(loadProducts, { only: ['products', 'featuredProducts'] });
+
+          action('products', function () { ... });
+          action('featuredProducts', function () { ... });
+          action('order', function () { ... });
+          action('basket', function () { ... });
+
+          function userRequired () { next() }
+          function prepareBasket () { next() }
+          function loadProducts () { next() }
+
+        p
+          | In this example, 
+          code userRequired
+          |  will be called only for the
+          code order
+          |  action, 
+          code prepareBasket
+          |  will be called for all actions except 
+          code order
+          | , and 
+          code loadProducts
+          |  will be called only for the 
+          code products
+          |  and 
+          code featuredProducts
+          | methods.
+
+
+        p 
+          | Note, that the before-functions should call the global 
+          code next
+          |  method that will pass control to the next function in the chain.
+
+      .section(id="controllers-common-execution-context")
+        h2 Common execution context
+
+        p
+          | There is one extra feature in flow control: All functions are invoked in the same context, so you can pass data between the functions using the 
+          code this
+          |  object:
+
+        pre.prettyprint.
+          function loadProducts () {
+              Product.find(function (err, prds) {
+                  this.products = prds;
+                  next();
+              }.bind(this));
+          }
+
+          action('products', function () {
+              assert.ok(this.products, 'Products available here');
+              render(); // also products will available in view
+          });
+
+      .section(id="controllers-sharing-code")
+        h2 Sharing code across controllers
+
+        p
+          | Some methods, like 
+          code userRequired
+          |  for example, can be used in different controllers. To allow cross-controller code sharing, CompoundJS provides a few methods: 
+          code load
+          | , 
+          code use
+          |  and 
+          code publish
+          | .
+
+        p
+          | You can define 
+          code requireUser
+          |  in 
+          code application_controller.js
+          |  and call 
+          code publish
+          |  to make it accessible to all other controllers that inherit from this controller:
+
+        code application_controller.js
+        pre.prettyprint.
+          publish('requireUser', requireUser);
+
+          function requireUser () {
+            // ...
+          }
+
+        code products_controller.js
+        pre.prettyprint.
+          load('application'); // note that _controller siffix omitted
+          before(use('userRequired'), { only: 'products' });
+
+      .section(id="controllers-other-expressjs")
+        h2 Other express.js features
+
+        p 
+          | To get familiar with CompoundJS controllers, look at a few examples available at github: 
+          a(href="https://github.com/anatoliychakkaev/railwayjs.com/blob/master/app/controllers/pages_controller.coffee", target="_blank") coffee controller
+          | , 
+          a(href="https://github.com/1602/router/blob/master/app/controllers/users_controller.js", target="_blank") javascript controller
+          | .
+
+        p 
+          | All other expressjs features have no global shortcuts yet, but they can still be used since 
+          code request
+          |  (alias  
+          code req
+          | ) and 
+          code response
+          |  (alias 
+          code res
+          | ) are available as global variables inside the controller context. In the view context, they are available as 
+          code request
+          |  and 
+          code response
+          | .

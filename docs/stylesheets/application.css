@@ -188,6 +188,9 @@ html.style-dark .sidebar a.level-0 {
 html.style-dark ul {
   color: #fff;
 }
+html.style-dark a {
+  color: #fc0243;
+}
 html.style-light body {
   background: #fff;
 }
@@ -228,6 +231,9 @@ html.style-light .sidebar a.level-0 {
 }
 html.style-light ul {
   color: #282828;
+}
+html.style-light a {
+  color: #fc0243;
 }
 h1,
 h2,
@@ -295,6 +301,9 @@ body {
   font: normal 12px 'Lucida Grande', sans-serif;
   margin-bottom: 15px;
   margin-left: 50px;
+}
+.content-wrapper a:hover {
+  text-decoration: none;
 }
 .sidebar {
   position: fixed;
