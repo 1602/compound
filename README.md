@@ -316,6 +316,20 @@ Models
 
 Checkout [JugglingDB][2] docs to see how to work with models.
 
+CompoundJS Event model
+----------------------
+
+Compound application loading process supports following events to be attached
+(in chronological order):
+
+- before configure
+- after configure
+- before extensions
+- after extensions
+- post-init
+- structure loaded
+- after initializers
+
 REPL console
 ------------
 
