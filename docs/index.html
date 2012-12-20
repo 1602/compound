@@ -97,6 +97,75 @@ edit_story GET    /articles/:id/edit.:format? posts#edit
       </section>
       <section id="routing-nested-resources">
         <h2>Nested resources</h2>
+        <p>Some resources may have nested sub-resources, for example <code>Post</code> has many <code>Comments</code>, and of course we want to get a post's comments using <code>GET /post/1/comments</code>.</p>
+        <p>Let's describe the route for our nested resource:</p>
+        <pre class="prettyprint">map.resources('post', function (post) {
+  post.resources('comments');
+});.
+</pre>
+        <p>This routing map will provide the following routes:</p>
+        <pre class="prettyprint">$ compound routes
+     post_comments GET      /posts/:post_id/comments          comments#index
+     post_comments POST     /posts/:post_id/comments          comments#create
+&nbsp;&nbsp;new_post_comment GET      /posts/:post_id/comments/new      comments#new
+ edit_post_comment GET      /posts/:post_id/comments/:id/edit comments#edit
+      post_comment DELETE   /posts/:post_id/comments/:id      comments#destroy
+      post_comment PUT      /posts/:post_id/comments/:id      comments#update
+      post_comment GET      /posts/:post_id/comments/:id      comments#show
+             posts GET      /posts                            posts#index
+             posts POST     /posts                            posts#create
+      &nbsp;&nbsp;&nbsp;&nbsp;new_post GET      /posts/new                        posts#new
+         edit_post GET      /posts/:id/edit                   posts#edit
+              post DELETE   /posts/:id                        posts#destroy
+              post PUT      /posts/:id                        posts#update
+              post GET      /posts/:id                        posts#show.
+              </pre>
+        <section id="routing-url-helpers-nested">
+          <h3>Using url helpers for nested routes</h3>
+          <p>To use routes like <code>post_comments</code> you should call helper with param: parent resource or identifier before nested resource:</p>
+          <pre class="prettyprint">path_to.post_comments(post)               # /posts/1/comments
+path_to.edit_post_comment(post, comment)  # /posts/1/comments/10/edit
+path_to.edit_post_comment(2, 300)         # /posts/2/comments/300/edit.
+</pre>
+        </section>
+      </section>
+      <section id="routing-namespaces">
+        <h2>Namespaces</h2>
+        <p>You may wish to organize groups of controllers under a namespace. The most common use-case is an administration area. All controllers within the <code>admin</code> namespace should be located inside the <code>app/controllers/</code> directory.</p>
+        <p>For example, let's create an admin namespace:</p>
+        <pre class="prettyprint">map.namespace('admin', function (admin) {
+  admin.resources('users');
+});.
+</pre>
+        <p>This routing rule will match with <code>/admin/users</code>, <code>/admin/users/new</code> and will create appropriate url helpers:</p>
+        <pre class="prettyprint">&nbsp;&nbsp;&nbsp;&nbsp;admin_users GET    /admin/users.:format?          admin/users#index
+    admin_users POST   /admin/users.:format?          admin/users#create
+&nbsp;new_admin_user GET    /admin/users/new.:format?      admin/users#new
+edit_admin_user GET    /admin/users/:id/edit.:format? admin/users#edit
+     admin_user DELETE /admin/users/:id.:format?      admin/users#destroy
+     admin_user PUT    /admin/users/:id.:format?      admin/users#update
+     admin_user GET    /admin/users/:id.:format?      admin/users#show
+     </pre>
+      </section>
+      <section id="restricting-routes">
+        <h2>Restricting routes</h2>
+        <p>
+           
+          If you need routes only for several actions (e.g. <code>index</code>, <code>show</code>), you can specify the <code>only</code> option:
+        </p>
+        <pre class="prettyprint">map.resources('users', { only: ['index', 'show'] });</pre>
+        <p>
+           
+          If you want to have all routes except a specific route, you can specify the <code>except</code> option:
+        </p>
+        <pre class="prettyprint">map.resources('users', { except: ['create', 'destroy'] });</pre>
+      </section>
+      <section id="routing-custom-actions">
+        <h2>Custom actions in resourceful routes</h2>
+        <p>If you need some specific action to be added to your resource-based route, use this example:</p>
+        <pre class="prettyprint">map.resource('users', function (user) {
+  user.get('avatar', 'users#avatar');
+});.</pre>
       </section>
     </div>
   </body>
