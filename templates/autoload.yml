@@ -1,0 +1,10 @@
+common:
+  - 'VIEWENGINE-ext'
+  - 'jugglingdb'
+  - 'seedjs'
+
+development:
+
+test:
+
+production:
