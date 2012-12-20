@@ -10,7 +10,8 @@ html.style-dark
     script(src="javascripts/prettyprint.js")
     script(src="javascripts/application.js")
   body
-    .sidebar.hidden
+    .sidebar
+      .menu
       ul.items
 
     .content-wrapper
@@ -195,7 +196,7 @@ html.style-dark
           pre.prettyprint.
             path_to.post_comments(post)               # /posts/1/comments
             path_to.edit_post_comment(post, comment)  # /posts/1/comments/10/edit
-            path_to.edit_post_comment(2, 300)         # /posts/2/comments/300/edit.
+            path_to.edit_post_comment(2, 300)         # /posts/2/comments/300/edit
 
       section(id="routing-namespaces")
         h2 Namespaces
@@ -212,7 +213,7 @@ html.style-dark
         pre.prettyprint.
           map.namespace('admin', function (admin) {
             admin.resources('users');
-          });.
+          });
 
         p
           | This routing rule will match with 
@@ -259,4 +260,188 @@ html.style-dark
         pre.prettyprint.
           map.resource('users', function (user) {
             user.get('avatar', 'users#avatar');
-          });.
+          });
+
+      section(id="controllers")
+        h1 Controllers
+
+        p 
+          | In CompoundJS, a controller is a module that receives user input and initiates a response. Controllers consists of a set of actions. Each action is called by the request of a particular route. To define an action, you should use the reserved global function 
+          code action
+          | .
+
+      section(id="controllers-features")
+        h2 Features overview
+
+        p Inside controller you can use following reserved global functions to control response:
+
+        ul
+          li
+            strong render
+            |  - render view template related to this action
+          li
+            strong send
+            |  - send text, status code or json object to client
+          li
+            strong redirect
+            |  - redirect client to specific location
+          li
+            strong header
+            |  - send header to client
+          li
+            strong flash
+            |  - display flash message
+
+        p And here is a bunch of functions to control execution flow:
+
+        ul
+          li
+            strong before
+            |  - invoke this method before any action
+          li
+            strong after
+            |  - invoke this method after any action
+          li
+            strong load
+            |  - load another controller to use its methods
+          li
+            strong use
+            |  or 
+            strong export
+            |  - get method defined in another controller, loaded using 
+            code load
+          li
+            strong publish
+            |  or 
+            strong import
+            |  - allow method to be used in other controller
+
+        p Let's learn more about each of this functions
+
+      section(id="controllers-response-control")
+        h2 Response control
+
+        p
+          strong NOTE: Each action should invoke exactly one output method. This is the only requirement imposed by the asynchronous nature of Node.js. If you don't call an output method, the client will infinitely wait for a server response.
+
+      section(id="controllers-render")
+        h3 render
+
+        p
+          | The 
+          code render
+          |  method accepts 0, 1 or 2 arguments. When called without any arguments, it just renders the view associated with this action. For example, this will render 
+          code app/views/posts/index.ejs
+          | .
+
+        code posts_controller.js
+
+        pre.prettyprint.
+          action('index', function () {
+            render();
+          });
+
+        p If you want to pass some data to the view, there are two ways to do it. First is to simply pass a hash containing the data:
+
+        pre.prettyprint.
+          action('index', function () {
+            render({ title: "Posts index" });
+          });
+
+        p 
+          | and the second method is to set the properties of 
+          code this
+          | :
+
+        pre.prettyprint.
+          action('index', function () {
+            this.title = "Posts index";
+            render();
+          });
+
+        p And if you want to render another view, just put its name as the first argument:
+
+        pre.prettyprint.
+          action('update', function () {
+            this.title = "Update post";
+            render('edit');
+          });
+
+        p or:
+
+        pre.prettyprint.
+          action('update', function () {
+            render('edit', { title: "Update post" });
+          });
+
+      section(id="controllers-send")
+        h2 send
+
+        p
+          | The 
+          code send
+          |  function is useful for debugging and one-page apps where you don't want to render a heavy template and just want to send text or JSON data.
+
+        p This function can be called with number (status code):
+
+        pre.prettyprint.
+          action('destroy', function () {
+            send(403); // client will receive statusCode = 403 Forbidden
+          });
+
+        p or with a string:
+
+        pre.prettyprint.
+          action('sayHello', function () {
+            send('Hello!'); // client will receive 'Hello!'
+          });
+
+        p or with object:
+
+        pre.prettyprint.
+          action('apiCall', function () {
+            send({ hello: 'world' }); // client will receive '{"hello":"world"}'
+          });
+
+      section(id="controllers-redirect")
+        h2 redirect
+
+        p 
+          | This function just sets the status code and 
+          code Location
+          |  header, so the client will be redirected to another location.
+
+
+        pre.prettyprint.
+          redirect('/'); // root redirection
+          redirect('http://example.com'); // redirect to another host
+
+      section(id="controller-flash")
+        h2 flash
+
+        p 
+          | The 
+          code flash
+          |  function stores a message in the session for future displaying, this is a regular expressjs function, refer to 
+          a(href="http://expressjs.com/guide.html#req.flash()", target="_blank") expressjs guide
+          |  to learn how it works. Few examples:
+
+        code posts_controller.js
+
+        pre.prettyprint.
+          action('create', function () {
+              Post.create(req.body, function (err) {
+                  if (err) {
+                      flash('error', 'Error while post creation');
+                      render('new', {post: req.body});
+                  } else {
+                      flash('info', 'Post has been successfully created');
+                      redirect(path_to.posts);
+                  }
+              });
+          });
+
+        p 
+          | This 
+          code create
+          |  action sends a flash info on success and a flash error on fail.

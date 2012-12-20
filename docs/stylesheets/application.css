@@ -185,6 +185,9 @@ html.style-dark .sidebar a.active {
 html.style-dark .sidebar a.level-0 {
   color: #fc0243;
 }
+html.style-dark ul {
+  color: #fff;
+}
 html.style-light body {
   background: #fff;
 }
@@ -223,6 +226,9 @@ html.style-light .sidebar a.active {
 html.style-light .sidebar a.level-0 {
   color: #fc0243;
 }
+html.style-light ul {
+  color: #282828;
+}
 h1,
 h2,
 h3 {
@@ -251,7 +257,7 @@ body {
   padding: 30px 0 0 50px;
 }
 .content-wrapper {
-  width: 980px;
+  width: 650px;
   margin: auto;
 }
 .content-wrapper .style-switch {
@@ -285,11 +291,16 @@ body {
 .content-wrapper section {
   margin-bottom: 50px;
 }
+.content-wrapper ul {
+  font: normal 12px 'Lucida Grande', sans-serif;
+  margin-bottom: 15px;
+  margin-left: 50px;
+}
 .sidebar {
   position: fixed;
   top: 0;
   left: 0;
-  width: 200px;
+  width: 220px;
   height: 100%;
   padding: 15px;
   transition: left 0.5s ease-out;
@@ -298,7 +309,23 @@ body {
   -o-transition: left 0.5s ease-out;
 }
 .sidebar.hidden {
-  left: -205px;
+  left: -210px;
+}
+.sidebar.hidden .menu {
+  opacity: 1;
+}
+.sidebar .menu {
+  width: 40px;
+  height: 40px;
+  background: url("../images/menu.png") no-repeat center;
+  opacity: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transition: opacity 0.3s ease-out;
+  -webkit-transition: opacity 0.3s ease-out;
+  -moz-transition: opacity 0.3s ease-out;
+  -o-transition: opacity 0.3s ease-out;
 }
 .sidebar ul {
   list-style-type: none;

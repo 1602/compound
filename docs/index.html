@@ -10,7 +10,8 @@
     <script src="javascripts/application.js"></script>
   </head>
   <body>
-    <div class="sidebar hidden">
+    <div class="sidebar">
+      <div class="menu"></div>
       <ul class="items"></ul>
     </div>
     <div class="content-wrapper"><img src="images/logo.png" alt="CompoundJS" class="logo">
@@ -125,7 +126,7 @@ edit_story GET    /articles/:id/edit.:format? posts#edit
           <p>To use routes like <code>post_comments</code> you should call helper with param: parent resource or identifier before nested resource:</p>
           <pre class="prettyprint">path_to.post_comments(post)               # /posts/1/comments
 path_to.edit_post_comment(post, comment)  # /posts/1/comments/10/edit
-path_to.edit_post_comment(2, 300)         # /posts/2/comments/300/edit.
+path_to.edit_post_comment(2, 300)         # /posts/2/comments/300/edit
 </pre>
         </section>
       </section>
@@ -135,7 +136,7 @@ path_to.edit_post_comment(2, 300)         # /posts/2/comments/300/edit.
         <p>For example, let's create an admin namespace:</p>
         <pre class="prettyprint">map.namespace('admin', function (admin) {
   admin.resources('users');
-});.
+});
 </pre>
         <p>This routing rule will match with <code>/admin/users</code>, <code>/admin/users/new</code> and will create appropriate url helpers:</p>
         <pre class="prettyprint">&nbsp;&nbsp;&nbsp;&nbsp;admin_users GET    /admin/users.:format?          admin/users#index
@@ -165,7 +166,124 @@ edit_admin_user GET    /admin/users/:id/edit.:format? admin/users#edit
         <p>If you need some specific action to be added to your resource-based route, use this example:</p>
         <pre class="prettyprint">map.resource('users', function (user) {
   user.get('avatar', 'users#avatar');
-});.</pre>
+});
+</pre>
+      </section>
+      <section id="controllers">
+        <h1>Controllers</h1>
+        <p>
+           
+          In CompoundJS, a controller is a module that receives user input and initiates a response. Controllers consists of a set of actions. Each action is called by the request of a particular route. To define an action, you should use the reserved global function <code>action</code>.
+        </p>
+      </section>
+      <section id="controllers-features">
+        <h2>Features overview</h2>
+        <p>Inside controller you can use following reserved global functions to control response:</p>
+        <ul>
+          <li><strong>render</strong> - render view template related to this action</li>
+          <li><strong>send</strong> - send text, status code or json object to client</li>
+          <li><strong>redirect</strong> - redirect client to specific location</li>
+          <li><strong>header</strong> - send header to client</li>
+          <li><strong>flash</strong> - display flash message</li>
+        </ul>
+        <p>And here is a bunch of functions to control execution flow:</p>
+        <ul>
+          <li><strong>before</strong> - invoke this method before any action</li>
+          <li><strong>after</strong> - invoke this method after any action</li>
+          <li><strong>load</strong> - load another controller to use its methods</li>
+          <li><strong>use</strong> or <strong>export</strong> - get method defined in another controller, loaded using <code>load</code></li>
+          <li><strong>publish</strong> or <strong>import</strong> - allow method to be used in other controller</li>
+        </ul>
+        <p>Let's learn more about each of this functions</p>
+      </section>
+      <section id="controllers-response-control">
+        <h2>Response control</h2>
+        <p><strong>NOTE: Each action should invoke exactly one output method. This is the only requirement imposed by the asynchronous nature of Node.js. If you don't call an output method, the client will infinitely wait for a server response.</strong></p>
+      </section>
+      <section id="controllers-render">
+        <h3>render</h3>
+        <p>The <code>render</code> method accepts 0, 1 or 2 arguments. When called without any arguments, it just renders the view associated with this action. For example, this will render <code>app/views/posts/index.ejs</code>.</p><code>posts_controller.js</code>
+        <pre class="prettyprint">action('index', function () {
+  render();
+});
+</pre>
+        <p>If you want to pass some data to the view, there are two ways to do it. First is to simply pass a hash containing the data:</p>
+        <pre class="prettyprint">action('index', function () {
+  render({ title: &quot;Posts index&quot; });
+});
+</pre>
+        <p>
+           
+          and the second method is to set the properties of <code>this</code>:
+        </p>
+        <pre class="prettyprint">action('index', function () {
+  this.title = &quot;Posts index&quot;;
+  render();
+});
+</pre>
+        <p>And if you want to render another view, just put its name as the first argument:</p>
+        <pre class="prettyprint">action('update', function () {
+  this.title = &quot;Update post&quot;;
+  render('edit');
+});
+</pre>
+        <p>or:</p>
+        <pre class="prettyprint">action('update', function () {
+  render('edit', { title: &quot;Update post&quot; });
+});
+</pre>
+      </section>
+      <section id="controllers-send">
+        <h2>send</h2>
+        <p>The <code>send</code> function is useful for debugging and one-page apps where you don't want to render a heavy template and just want to send text or JSON data.</p>
+        <p>This function can be called with number (status code):</p>
+        <pre class="prettyprint">action('destroy', function () {
+  send(403); // client will receive statusCode = 403 Forbidden
+});
+</pre>
+        <p>or with a string:</p>
+        <pre class="prettyprint">action('sayHello', function () {
+  send('Hello!'); // client will receive 'Hello!'
+});
+</pre>
+        <p>or with object:</p>
+        <pre class="prettyprint">action('apiCall', function () {
+  send({ hello: 'world' }); // client will receive '{&quot;hello&quot;:&quot;world&quot;}'
+});
+</pre>
+      </section>
+      <section id="controllers-redirect">
+        <h2>redirect</h2>
+        <p>
+           
+          This function just sets the status code and <code>Location</code> header, so the client will be redirected to another location.
+        </p>
+        <pre class="prettyprint">redirect('/'); // root redirection
+redirect('http://example.com'); // redirect to another host
+</pre>
+      </section>
+      <section id="controller-flash">
+        <h2>flash</h2>
+        <p>
+           
+          The <code>flash</code> function stores a message in the session for future displaying, this is a regular expressjs function, refer to <a href="http://expressjs.com/guide.html#req.flash()" target="_blank">expressjs guide</a> to learn how it works. Few examples:
+        </p><code>posts_controller.js</code>
+        <pre class="prettyprint">action('create', function () {
+    Post.create(req.body, function (err) {
+        if (err) {
+            flash('error', 'Error while post creation');
+            render('new', {post: req.body});
+        } else {
+            flash('info', 'Post has been successfully created');
+            redirect(path_to.posts);
+        }
+    });
+});
+</pre>
+        <p>
+           
+          This <code>create</code> action sends a flash info on success and a flash error on fail.
+        </p>
       </section>
     </div>
   </body>

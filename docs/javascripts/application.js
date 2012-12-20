@@ -25,10 +25,13 @@ $(function() {
   $(document).mousemove(function (e) {
     var mouseX = e.pageX;
     var windowW = $(window).width();
-    if (mouseX <= windowW / 4) {
+    var viewportTooSmall = windowW <= $('.content-wrapper').width() + $('.sidebar').width() * 2;
+    if (mouseX <= windowW / 4 && viewportTooSmall) {
       $('.sidebar').removeClass('hidden');
-    } else {
+    } else if (mouseX >= windowW / 4 && viewportTooSmall) {
       $('.sidebar').addClass('hidden');
+    } else {
+      $('.sidebar').removeClass('hidden');
     }
   });
 
