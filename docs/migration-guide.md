@@ -45,15 +45,21 @@ module.exports = function (compound, ModelName) {
 
 ### views
 
-Avoid using `formTag` and `formFor` with blocks, new syntax:
+1. Avoid using `formTag` and `formFor` with blocks, new syntax:
 
-```
-<% var form = formFor(resource) %>
-<%- form.begin() %>
-<%- form.input('propertyname') %>
-<%- form.submit() %>
-<%- form.end() %>
-```
+    ```
+    <% var form = formFor(resource) %>
+    <%- form.begin() %>
+    <%- form.input('propertyname') %>
+    <%- form.submit() %>
+    <%- form.end() %>
+    ```
+
+2. Use include instead of partial:
+
+    <%- partial('post/form', {form: form, resource: resource}) %>
+    becomes
+    <%- include '_form' %>
 
 ### csrf protection
 
