@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Welcome to Railway</title>
+    <title>Welcome to Compound</title>
     <link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.3.0/bootstrap.min.css">
     <meta name="viewport" content="width=500, initial-scale=0.5">
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
@@ -9,31 +9,31 @@
   </head>
   <body>
     <div class="container">
-      <div class="page-header">
-        <h1 style="text-align: center; padding: 35px;">Welcome to Railway</h1>
+      <div class="page-header" style="text-align: center;">
+        <h1 style="text-align:left; padding-top: 35px; padding-left: 100px">Welcome to</h1>
+        <img src="/images/compound.png" alt="CompoundJS" />
       </div>
       <h6 style="text-align: center;">
-        <a href="/railway/environment.json" id="show-env-info-link" data-remote="true" data-jsonp="load">Information about application environment</a>
+        <a href="/compound/environment.json" id="show-env-info-link" data-remote="true" data-jsonp="load">Information about application environment</a>
       </h6>
       <div id="env-info"></div>
       <hr />
       <div class="row">
         <div class="span8 offset4">
-          <a href="http://github.com/1602/express-on-railway"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://d3nwyuy0nl342s.cloudfront.net/img/e6bef7a091f5f3138b8cd40bc3e114258dd68ddf/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub"></a>
           <div class="content">
-            <h6>1. Start with <a href="http://railwayjs.com/#generators">generators</a></h6>
-            <p> this is a fastest way to create application:</p>
-            <pre>railway g crud post title content date:date published:boolean</pre>
-            <h6>2. Then describe <a href="http://railwayjs.com/#routing">routes</a></h6>
+            <h6>1. Start with <a href="http://compoundjs.com/docs.html#generators">generators</a></h6>
+            <p> This is the fastest way to create an application:</p>
+            <pre>compound generate crud post title content date:date published:boolean</pre>
+            <h6>2. Then describe a <a href="http://compoundjs.com/docs.html#routing">route</a></h6>
             <p>in <code>config/routes.js</code> and remove this file (<code>public/index.html</code>)</p>
             <pre>exports.routes = function (map) {
     map.get('/', 'posts#index');
 };</pre>
-            <h6>3. Design your <a href="http://railwayjs.com/#orm">database</a></h6>
+            <h6>3. Design your <a href="http://compoundjs.com/docs.html#orm">database</a></h6>
             <p>in <code>db/schema.js</code> and describe models in <code>app/models/*</code></p>
-            <h6>4. Keep you <a href="http://railwayjs.com/#controllers">controllers</a> thin</h6>
-            <p>write tests, and good luck.<br> If you have any questions feel free to ask at <a href="http://groups.google.com/group/railwayjs">RailwayJS Google Group</a>.</p>
-            <p>Track RailwayJS project state on <a href="https://trello.com/board/railwayjs/4f0a0d49128365065e008a1d">trello board</a>, vote for features, discuss. Help us to get better!</p>
+            <h6>4. Keep your <a href="http://compoundjs.com/docs.html#controllers">controllers</a> thin!</h6>
+            <p>Write tests, and good luck.<br> If you have any questions feel free to ask at <a href="http://groups.google.com/group/compoundjs">CompoundJS Google Group</a> or <a href="irc://irc.freenode.net/compoundjs">#compoundjs on irc.freenode.net</a>.</p>
+            <p>Track CompoundJS project state on our <a href="https://trello.com/board/railwayjs/4f0a0d49128365065e008a1d">Trello board</a>, vote for features, discuss. Help us to get better!</p>
           </div>
         </div>
 
@@ -41,11 +41,10 @@
           <p>
             <h6>5. Links in sidebar</h6>
             <ul style="padding-left: 0px;">
-              <li><a href="http://railwayjs.com">RailwayJS project docs</a></li>
-              <li><a href="http://modules.node-js.ru">NodeJS modules rating</a></li>
+              <li><a href="http://compoundjs.com">CompoundJS project docs</a></li>
               <li><a href="http://expressjs.com">ExpressJS project homepage</a></li>
-              <li><a href="http://mongoosejs.com">MongooseJS ORM project homepage</a></li>
-              <li><a href="http://railwayjs.com/juggling.html">Try JugglingDB in your browser, docs</a></li>
+              <li><a href="http://jsdoc.info/1602/jugglingdb">JugglingDB ORM API docs</a></li>
+              <li><a href="http://compoundjs.com/juggling.html">Try JugglingDB in your browser, docs</a></li>
             </ul>
           </p>
         </div>

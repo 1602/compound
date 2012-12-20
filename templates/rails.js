@@ -36,6 +36,11 @@ jQuery(function ($) {
             } else {
                 if (el.triggerAndReturn('ajax:before')) {
                     var data = el.is('form') ? el.serializeArray() : [];
+                    var found = false;
+                    for (var i = data.length - 1; i >= 0; i -= 1) {
+                        if (data[i].name === csrf_param) found = true;
+                    }
+                    if (!found) data.push({name: csrf_param, value: csrf_token});
                     $.ajax({
                         url: url,
                         data: data,

@@ -6,10 +6,10 @@
   { "VIEWENGINE":              "*"
   , "VIEWENGINE-ext":          "latest"
   , "express":          "~3.x"
-  , "railway":          ">= 1.1.0"
+  , "compound":       ">= 1.1.0"
   , "jugglingdb":       ">= 0.1.0"
   , "coffee-script":    ">= 1.1.1"
-  , "seedjs":			">= 0.0.2"
+  , "CSSENGINE":           "latest"
   },
   "devDependencies":
   { "nodeunit":         "*"

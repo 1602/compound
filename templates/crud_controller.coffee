@@ -29,15 +29,27 @@ action 'index', ->
   Model.all (err, models) =>
     @models = models
     @title = 'Models index'
-    render()
+    respondTo (format) ->
+      format.json ->
+        send models
+      format.html ->
+        render models: models
 
 action 'show', ->
   @title = 'Model show'
-  render()
+  respondTo (format) ->
+    format.json ->
+      send @model
+    format.html ->
+      render()
 
 action 'edit', ->
   @title = 'Model edit'
-  render()
+  respondTo (format) ->
+    format.json ->
+      send @model
+    format.html ->
+      render()
 
 action 'update', ->
   @model.updateAttributes body.Model, (err) =>
@@ -56,4 +68,3 @@ action 'destroy', ->
     else
       flash 'info', 'Model successfully removed'
     send "'" + path_to.models + "'"
-
