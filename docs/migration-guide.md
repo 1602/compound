@@ -55,6 +55,12 @@ Avoid using `formTag` and `formFor` with blocks, new syntax:
 <%- form.end() %>
 ```
 
+### csrf protection
+
+In newest CompoundJS version PUT and DELETE methods also protected from CSRF,
+so you need to obtain latest `javascripts/rails.js` 
+from compoundjs (generate new project and copy to existing one).
+
 ### something else?
 
 fix this file, request pull
