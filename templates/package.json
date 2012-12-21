@@ -10,6 +10,7 @@
   , "jugglingdb":       ">= 0.1.0"
   , "coffee-script":    ">= 1.1.1"
   , "CSSENGINE":           "latest"
+  , "seedjs": "latest"
   },
   "devDependencies":
   { "nodeunit":         "*"
