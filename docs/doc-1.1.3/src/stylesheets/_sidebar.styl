@@ -1,0 +1,62 @@
+$paddingLeft = 15px
+.sidebar
+  position: fixed
+  top: 0
+  left: 0
+
+  width: 230px
+  height: 100%
+
+  padding: 15px
+
+  transition: left 0.5s ease-out
+  -webkit-transition: left 0.5s ease-out
+  -moz-transition: left 0.5s ease-out
+  -o-transition: left 0.5s ease-out
+
+  overflow-y: auto
+
+  &.hidden
+    left: -220px
+
+    .menu
+      opacity: 1
+
+  .menu
+    width: 40px
+    height: 40px
+
+    background: url('../images/menu.png') no-repeat center
+    opacity: 0
+
+    position: absolute
+    right: 0
+    top: 0
+
+    transition: opacity 0.3s ease-out
+    -webkit-transition: opacity 0.3s ease-out
+    -moz-transition: opacity 0.3s ease-out
+    -o-transition: opacity 0.3s ease-out
+
+  ul
+    list-style-type: none
+
+    a
+      font: normal 12px 'Lucida Grande', Helvetica, sans-serif
+      display: block
+      padding: 3px
+      text-decoration: none
+
+    li
+      ul
+        display: none
+      &.open
+        ul
+          display: block
+      &.level-1
+        padding-left: ($paddingLeft * 1)
+      &.level-2
+        padding-left: ($paddingLeft * 2)
+      &.level-3
+        padding-left: ($paddingLeft * 3)
+
