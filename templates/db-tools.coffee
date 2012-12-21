@@ -1,4 +1,5 @@
 module.exports = (compound) ->
+  app = compound.app
   compound.tools.database = ()->
     action = process.argv[3]
     switch action
@@ -14,8 +15,8 @@ module.exports = (compound) ->
 
   getUniqueSchemas = ()->
     schemas = []
-    Object.keys(app.models).forEach (modelName)->
-      Model = app.models[modelName]
+    Object.keys(compound.models).forEach (modelName)->
+      Model = compound.models[modelName]
       schema = Model.schema
       if !~schemas.indexOf(schema)
         schemas.push schema

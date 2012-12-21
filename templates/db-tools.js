@@ -1,4 +1,5 @@
 module.exports = function(compound) {
+    var app = compound.app;
     compound.tools.database = function db() {
         var action = process.argv[3];
         switch (action) {
@@ -20,8 +21,8 @@ module.exports = function(compound) {
 
     function getUniqueSchemas() {
         var schemas = [];
-        Object.keys(app.models).forEach(function (modelName) {
-            var Model = app.models[modelName];
+        Object.keys(compound.models).forEach(function (modelName) {
+            var Model = compound.models[modelName];
             var schema = Model.schema;
             if (!~schemas.indexOf(schema)) {
                 schemas.push(schema);
