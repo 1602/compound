@@ -182,7 +182,7 @@ html.style-dark .sidebar a:hover,
 html.style-dark .sidebar a.active {
   background: rgba(0,0,0,0.3);
 }
-html.style-dark .sidebar a.level-0 {
+html.style-dark .sidebar .level-0 > a {
   color: #fc0243;
 }
 html.style-dark ul {
@@ -226,7 +226,7 @@ html.style-light .sidebar a:hover,
 html.style-light .sidebar a.active {
   background: rgba(0,0,0,0.1);
 }
-html.style-light .sidebar a.level-0 {
+html.style-light .sidebar .level-0 > a {
   color: #fc0243;
 }
 html.style-light ul {
@@ -348,13 +348,19 @@ body {
   padding: 3px;
   text-decoration: none;
 }
-.sidebar ul a.level-1 {
+.sidebar ul li ul {
+  display: none;
+}
+.sidebar ul li.open ul {
+  display: block;
+}
+.sidebar ul li.level-1 {
   padding-left: 15px;
 }
-.sidebar ul a.level-2 {
+.sidebar ul li.level-2 {
   padding-left: 30px;
 }
-.sidebar ul a.level-3 {
+.sidebar ul li.level-3 {
   padding-left: 45px;
 }
 * {

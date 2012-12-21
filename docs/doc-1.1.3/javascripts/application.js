@@ -41,6 +41,14 @@ $(function() {
    */
 
   var sidebarNavi = {
+    activeTopLevelContainer: null,
+    handle: function() {
+      $sidebar = $('.sidebar');
+      $sidebar.find('.level-0').click(function (){
+        $(this).parent().find('.level-0').removeClass('open');
+        $(this).addClass('open');
+      });
+    },
     build: function() {
       var self = this;
       var decimals = [0, 0, 0];
@@ -72,16 +80,29 @@ $(function() {
         var decimalSpan = $('<span>').addClass('decimal').text(decimal);
         $headline.prepend(decimalSpan);
 
-        self.addListItem(level, section.attr('id'), text, decimal)
+        self.addListItem(level, section.attr('id'), text, decimals)
       });
     },
-    addListItem: function (level, id, text, decimal) {
-      var li = $('<li>').appendTo($('.sidebar ul.items'));
+    addListItem: function (level, id, text, decimalArr) {
+      var li = $('<li>').addClass('level-' + level).attr({ 'data-id': id });
       var a = $('<a>')
         .attr({ href: '#' + id })
-        .addClass('level-' + level)
         .text(text)
         .appendTo(li);
+
+      if (level === 0) {
+        var ul = $('<ul>').appendTo(li);
+
+        this.activeTopLevelContainer = ul;
+
+        li.appendTo($('.sidebar ul.items'));
+      } else {
+        li.appendTo(this.activeTopLevelContainer);
+      }
+
+      if (decimalArr[0] === 1 && level === 0) {
+        li.addClass('open');
+      }
     },
     buildDecimalString: function (decimals) {
       var usedDecimals = []
@@ -98,4 +119,5 @@ $(function() {
     }
   };
   sidebarNavi.build();
+  sidebarNavi.handle();
 }); 
