@@ -67,6 +67,19 @@ In newest CompoundJS version PUT and DELETE methods also protected from CSRF,
 so you need to obtain latest `javascripts/rails.js` 
 from compoundjs (generate new project and copy to existing one).
 
+### config/autoload
+
+This is replacement for npmfile. File should export function which return array
+of extensions:
+
+    module.exports = function (compound) {
+        return [
+            require('jugglingdb'),
+            require('ejs-ext',
+            require('seedjs')
+        ]
+    };
+
 ### something else?
 
 fix this file, request pull
