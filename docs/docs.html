@@ -1,0 +1,2132 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>CompoundJS</title>
+
+    <link rel="stylesheet" href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/javascripts/prettyprint/prettify.css" rel="stylesheet">
+    <meta name="description" content="CompoundJS - MVC framework for NodeJS, fully ExpressJS compatible" >
+    <meta name="keywords" content="nodejs, mvc, expressjs, framework, javascript, async" >
+
+    <script type="text/javascript" src="/javascripts/prettyprint/prettify.js"></script>
+    <script type="text/javascript" src="/javascripts/jquery.min.js"></script>
+    <script type="text/javascript" src="http://twitter.github.com/bootstrap/assets/js/bootstrap-scrollspy.js"></script>
+    <script type="text/javascript" src="/javascripts/bootstrap-dropdown.js"></script>
+    <script>$(function () { prettyPrint() })</script>
+
+    <style>
+      section, body {
+        padding-top: 60px;
+      }
+    </style>
+
+  </head>
+  <body data-spy="scroll">
+    <div class="navbar-wrapper navbar-fixed-top" style="z-index: 5;">
+      <div class="navbar">
+        <div class="navbar-inner">
+          <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </a>
+            <a class="brand" href="/">CompoundJS</a>
+            <div class="nav-collapse">
+              <ul class="nav">
+                <li><a href="#routing">Routing</a></li><li><a href="#controller">Controller</a></li><li><a href="#views">Views</a></li><li><a href="#orm">ORM</a></li><li><a href="#generators">Generators</a></li><li><a href="#console">Console</a></li><li><a href="#coffee">Coffee</a></li><li><a href="#localization">Locales</a></li><li><a href="#extensions">Extensions</a></li>
+                <li class="dropdown"><a href="#" class="dropdonw-toggle" data-toggle="dropdown"><b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#heroku">Heroku</a></li>
+                  <li><a href="#snippets">Snippets</a></li>
+                </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div><!-- /topbar-inner -->
+      </div><!-- /topbar -->
+    </div><!-- /topbar-wrapper -->
+
+<div class="container">
+  <h1 style="text-align: center; font-size: 250%; position: relative; top: 30px;"><span style="color: #a24;">CompoundJS - MVC framework</span>
+    <br/>
+    <small>
+      Build well-organized web apps using CompoundJS.
+    </small><br/>
+    <small><strong style="color:#a24">JugglingDB:</strong> <a href="/juggling.html">try in your browser</a></small></h1>
+
+
+<section id="about"><div class="page-header">
+
+<h1>About CompoundJS <small>Objective, getting started, technical details</small></h1>
+
+</div>
+
+<div class="row">
+
+<div class="span4">
+
+<h3>What is compound?</h3>
+
+<p>CompoundJS is the Node.JS MVC framework based on <a href="http://expressjs.com/guide">ExpressJS</a>, fully <strong>ExpressJS-compatible</strong>. It allows you to build well-structured web applications.</p>
+
+<p>The main objective of the framework - web development without pain.</p>
+
+<h3>Related links</h3>
+
+<ul>
+<li><a href="https://github.com/1602/compound/issues">Have spotted bug? Report!</a></li>
+<li><a href="http://groups.google.com/group/compoundjs">CompoundJS Google Group</a></li>
+<li><a href="https://trello.com/board/railwayjs/4f0a0d49128365065e008a1d">CompoundJS Trello Board</a></li>
+<li><a href="https://trello.com/board/jugglingdb/4f0a0b1e27d3103c64288388">JugglingDB Trello Board</a></li>
+</ul>
+
+</div>
+
+<div class="span4">
+
+<h3>1. Install</h3>
+
+<pre class="prettyprint">sudo npm install compound -g
+</pre>
+
+<h3>2. Use</h3>
+
+<p>You can use app generator and the scaffold generator to build your first CompoundJS app in seconds</p>
+
+<pre class="prettyprint">compound init blog &amp;&amp; cd blog
+npm install -l
+compound generate crud post title content
+compound server 8888
+open http://127.0.0.1:8888/posts
+</pre>
+
+</div>
+
+<div class="span4">
+
+<h3>What is under the hood</h3>
+
+<ul>
+<li>Full MVC+H stack</li>
+<li>Resource-based <a href="http://compoundjs.com/#routing">routing</a></li>
+<li><a href="https://github.com/1602/jugglingdb">JugglingDB</a> ORM</li>
+<li>Multi-locale support</li>
+<li><a href="http://jashkenas.github.com/coffee-script/">Coffee-script</a> support (<a href="http://compoundjs.com/#coffee">howto</a>)</li>
+<li>Generators for model, controller, scaffold</li>
+<li>Testing: nodeunit, cucumis, code coverage reporting</li>
+<li>Debugging: <a href="http://compoundjs.com/#console">railway console</a></li>
+<li><a href="http://compoundjs.com/#extensions">Extensions</a></li>
+</ul>
+
+</div>
+
+</div></section>
+
+<section id="routing"><div class="page-header">
+
+<h1>Routing</h1>
+
+</div>
+
+<div class="row">
+
+<div class="span4">
+
+<p>The purpose of routes is to connect URL with controller action. For example you can define the following route in <code>config/routes.js</code> file:</p>
+
+<pre class="prettyprint">map.get('signup', 'users#new');
+</pre>
+
+<p>to link <code>GET /signup</code> with <code>new</code> action of <code>users</code> controller.</p></p>
+
+<pre class="prettyprint">map.root('home#index');
+</pre>
+
+<p>Will link GET / to <code>index</code> action of <code>home</code> controller</p>
+
+</div>
+
+<div class="span8">
+
+<h3>Resource-based routing</h3>
+
+<p>Resource-based routing provides standart mapping between HTTP verbs and controller actions:</p>
+
+<pre class="prettyprint">map.resources('posts');
+</pre>
+
+<p>will provide following routes:</p>
+
+<pre class="prettyprint">   helper | method | path                   | controller#action
+---------------------------------------------------------------
+     posts GET      /posts                   posts#index
+     posts POST     /posts                   posts#create
+  new_post GET      /posts/new               posts#new
+ edit_post GET      /posts/:id/edit          posts#edit
+      post DELETE   /posts/:id               posts#destroy
+      post PUT      /posts/:id               posts#update
+      post GET      /posts/:id               posts#show
+</pre>
+
+<p>to list available routes you can run command <code>compound routes</code>.</p>
+
+<p>First column in table is <code>helper</code> - you can use this identifier in views and controllers to get route. Some examples:</p>
+
+<pre class="prettyprint">path_to.new_post            # /posts/new
+path_to.edit_post(1)        # /posts/1/edit
+path_to.edit_post(post)     # /posts/1/edit (in this example post = {id: 1})
+path_to.posts               # /posts
+path_to.post(post)          # /posts/1
+</pre>
+
+</div>
+
+</div>
+
+<h2>Aliases for resourceful routes</h2>
+
+<div class="row">
+
+<div class="span4">
+
+<p>If you want to override default routes behaviour, you can use two options:
+<code>as</code> and <code>path</code> to specify helper name and path you want to have in the result.</p>
+
+</div>
+
+<div class="span8">
+
+<h3>{ as: 'helperName' }</h3>
+
+<p>Path helper aliasing:</p>
+
+<pre class="prettyprint">map.resources('posts', {as: 'articles'});
+</pre>
+
+<p>will produce</p>
+
+<pre class="prettyprint">     articles GET    /posts.:format?          posts#index
+     articles POST   /posts.:format?          posts#create
+  new_article GET    /posts/new.:format?      posts#new
+ edit_article GET    /posts/:id/edit.:format? posts#edit
+      article DELETE /posts/:id.:format?      posts#destroy
+      article PUT    /posts/:id.:format?      posts#update
+      article GET    /posts/:id.:format?      posts#show
+</pre>
+
+<h3>{ path: 'alternatePath' }</h3>
+
+<p>If you want to change base path:</p>
+
+<pre class="prettyprint">map.resources('posts', {path: 'articles'});
+</pre>
+
+<p>this will create following routes:</p>
+
+<pre class="prettyprint">     posts GET    /articles.:format?          posts#index
+     posts POST   /articles.:format?          posts#create
+  new_post GET    /articles/new.:format?      posts#new
+ edit_post GET    /articles/:id/edit.:format? posts#edit
+      post DELETE /articles/:id.:format?      posts#destroy
+      post PUT    /articles/:id.:format?      posts#update
+      post GET    /articles/:id.:format?      posts#show
+</pre>
+
+<h3>all together</h3>
+
+<p>And if you want alias both helper and path, use both:</p>
+
+<pre class="prettyprint">map.resources('posts', {path: 'articles', as: 'stories'});
+</pre>
+
+<p>and you will get:</p>
+
+<pre class="prettyprint">    stories GET    /articles.:format?          posts#index
+    stories POST   /articles.:format?          posts#create
+  new_story GET    /articles/new.:format?      posts#new
+ edit_story GET    /articles/:id/edit.:format? posts#edit
+      story DELETE /articles/:id.:format?      posts#destroy
+      story PUT    /articles/:id.:format?      posts#update
+      story GET    /articles/:id.:format?      posts#show
+</pre>
+
+</div>
+
+</div>
+
+<h2>Nested resources</h2>
+
+<div class="row">
+
+<div class="span4">
+
+<p>Some resources may have nested sub-resources, for example <code>Post</code> has many <code>Comments</code>, and of course we want to get comments of the post using <code>GET /post/1/comments</code></p>
+
+</div>
+
+<div class="span8">
+
+<p>Let's describe route for nested resource</p>
+
+<pre class="prettyprint">map.resources('post', function (post) {
+    post.resources('comments');
+});
+</pre>
+
+<p>This routing map will provide the following routes:</p>
+
+<pre class="prettyprint">$ compound routes
+     post_comments GET      /posts/:post_id/comments          comments#index
+     post_comments POST     /posts/:post_id/comments          comments#create
+  new_post_comment GET      /posts/:post_id/comments/new      comments#new
+ edit_post_comment GET      /posts/:post_id/comments/:id/edit comments#edit
+      post_comment DELETE   /posts/:post_id/comments/:id      comments#destroy
+      post_comment PUT      /posts/:post_id/comments/:id      comments#update
+      post_comment GET      /posts/:post_id/comments/:id      comments#show
+             posts GET      /posts                            posts#index
+             posts POST     /posts                            posts#create
+          new_post GET      /posts/new                        posts#new
+         edit_post GET      /posts/:id/edit                   posts#edit
+              post DELETE   /posts/:id                        posts#destroy
+              post PUT      /posts/:id                        posts#update
+              post GET      /posts/:id                        posts#show
+</pre>
+
+<h3>Using url helpers for nested routes</h3>
+
+<p>To use routes like <code>post_comments</code> you should call helper with param: parent resource or identifier before nested resource:</p>
+
+<pre class="prettyprint">path_to.post_comments(post)               # /posts/1/comments
+path_to.edit_post_comment(post, comment)  # /posts/1/comments/10/edit
+path_to.edit_post_comment(2, 300)         # /posts/2/comments/300/edit
+</pre>
+
+</div>
+
+</div>
+
+<h2>Namespaces</h2>
+
+<div class="row">
+
+<div class="span4">
+
+<p>You may wish to organize groups of controllers under a namespace. The most common use-case is Admin area. All controllers within <code>admin</code> namespace should be located inside <code>app/controllers/</code> dir.</p>
+
+</div>
+
+<div class="span8">
+
+<p>For example, let's create admin namespace:</p>
+
+<pre class="prettyprint">map.namespace('admin', function (admin) {
+    admin.resources('users');
+});
+</pre>
+
+<p>This routing rule will match with urls <code>/admin/users</code>, <code>admin/users/new</code>, and create appropriated url helpers</p>
+
+<pre class="prettyprint">      admin_users GET    /admin/users.:format?          admin/users#index
+      admin_users POST   /admin/users.:format?          admin/users#create
+   new_admin_user GET    /admin/users/new.:format?      admin/users#new
+  edit_admin_user GET    /admin/users/:id/edit.:format? admin/users#edit
+       admin_user DELETE /admin/users/:id.:format?      admin/users#destroy
+       admin_user PUT    /admin/users/:id.:format?      admin/users#update
+       admin_user GET    /admin/users/:id.:format?      admin/users#show
+</pre>
+
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="span8">
+
+<h2>Restricting routes</h2>
+
+<p>If you need routes only for several actions (e.g. <code>index</code>, <code>show</code>) you can specify <code>only</code> option:</p>
+
+<pre class="prettyprint">map.resources('users', {only: ['index', 'show']});
+</pre>
+
+<p>If you want to have all routes except some route, you can specify <code>except</code> option:</p>
+
+<pre class="prettyprint">map.resources('users', {except: ['create', 'destroy']});
+</pre>
+
+</div>
+
+<div class="span8">
+
+<h2>Custom actions in resourceful routes</h2>
+
+<p>If you need some specific action to be added to you resource-based route, use this example:</p>
+
+<pre class="prettyprint">map.resources('users', function (user) {
+    user.get('avatar', 'users#avatar');
+});
+</pre>
+
+</div>
+
+</div></section>
+
+<section id="controller"><div class="page-header">
+
+<h1>Controller <small>middle-layer between models and views</small></h1>
+
+</div>
+
+<div class="row">
+
+<div class="span4">
+
+<h2>Synopsis</h2>
+
+<p>Compound controller is a module, that receives user input and initiates response. Controller consists of a set of actions. Each action is called by the request of particular route. To define action you should use reserved global function <code>action</code>:</p>
+
+<pre class="prettyprint">action('index', function () {
+    render();
+});
+</pre>
+
+</div>
+
+<div class="span8">
+
+<h2>Features overview</h2>
+
+<p>Inside controller you can use following reserved global functions to control response:</p>
+
+<ul>
+<li><strong>render</strong> - render view template related to this action</li>
+<li><strong>send</strong> - send to client text, status code or json object</li>
+<li><strong>redirect</strong> - redirect client to specific location</li>
+<li><strong>header</strong> - send header to client</li>
+<li><strong>flash</strong> - display flash message</li>
+</ul>
+
+<p>And here is a bunch of functions to control execution flow:</p>
+
+<ul>
+<li><strong>before</strong> - invoke this method before any action</li>
+<li><strong>after</strong> - invoke this method after any action</li>
+<li><strong>load</strong> - load another controller to use it methods</li>
+<li><strong>use</strong> or <strong>export</strong> - get method defined in another controller, loaded with <code>load</code> function</li>
+<li><strong>publish</strong> or <strong>import</strong> - allow method to be used in other controller</li>
+</ul>
+
+<p>Let's learn more about each of this functions.</p>
+
+</div>
+
+</div>
+
+<h2>Response control</h2>
+
+<div class="row">
+
+<div class="span4">
+
+<p><strong>NOTE: each action should invoke one output method. This is the only requirement imposed by the asynchronous nature Node.JS. If output method wouldn't called, client will wait for server responce indefinitely.</strong></p>
+
+</div>
+
+<div class="span8">
+
+<h3>render</h3>
+
+<p><code>render</code> method accepts 0, 1, or 2 arguments. Called without agruments it just render view associated with this action. For example:</p>
+
+<p><code>posts_controller.js</code></p>
+
+<pre class="prettyprint">action('index', function () {
+    render();
+});
+</pre>
+
+<p>will render view app/views/posts/index.ejs.</p>
+
+<p>If you want to pass some data to the view, there are two ways to do it. First:</p>
+
+<pre class="prettyprint">action('index', function () {
+    render({title: "Posts index"});
+});
+</pre>
+
+<p>and second:</p>
+
+<pre class="prettyprint">action('index', function () {
+    this.title = "Posts index";
+    render();
+});
+</pre>
+
+<p>And if you want to render another view, just put it's name as first argument:</p>
+
+<pre class="prettyprint">action('update', function () {
+    this.title = "Update post";
+    render('edit');
+});
+</pre>
+
+<p>or</p>
+
+<pre class="prettyprint">action('update', function () {
+    render('edit', {title: "Update post"});
+});
+</pre>
+
+<h3>send</h3>
+
+<p>Send function useful for debugging and one-page apps, where you don't want to render heavy template and just want to send text or JSON data.</p>
+
+<p>This function can be called with number (status code):</p>
+
+<pre class="prettyprint">action('destroy', function () {
+    send(403); // client will receive statusCode = 403 Forbidden
+});
+</pre>
+
+<p>or with string:</p>
+
+<pre class="prettyprint">action('sayHello', function () {
+    send('Hello!'); // client will receive 'Hello!'
+});
+</pre>
+
+<p>or with object:</p>
+
+<pre class="prettyprint">action('apiCall', function () {
+    send({hello: 'world'}); // client will receive '{"hello":"world"}'
+});
+</pre>
+
+<h3>redirect</h3>
+
+<p>This function just set status code and location header, so client will be redirected to another location.</p>
+
+<pre class="prettyprint">redirect('/'); // root redirection
+redirect('http://example.com'); // redirect to another host
+</pre>
+
+<h3>flash</h3>
+
+<p>Flash function stores message in session for future displaying, this is regular expressjs function, refer to <a href="http://expressjs.com/guide.html#req.flash()">expressjs guide</a> to learn how it works. Few examples:</p>
+
+<p><code>posts_controller.js</code></p>
+
+<pre class="prettyprint">action('create', function () {
+    Post.create(req.body, function (err) {
+        if (err) {
+            flash('error', 'Error while post creation');
+            render('new', {post: req.body});
+        } else {
+            flash('info', 'Post has been successfully created');
+            redirect(path_to.posts);
+        }
+    });
+});
+</pre>
+
+<p>This <code>create</code> action sends flash info on success and flash error on fail.</p>
+
+</div>
+
+</div>
+
+<h2>Execution flow control</h2>
+
+<div class="row">
+
+<div class="span4">
+
+<p>To provide ability of DRY-ing controller code, and reusing common code parts CompoundJS provides few additional tools: method chaining and external controllers loading.</p>
+
+</div>
+
+<div class="span8">
+
+<p>To chain methods you can use <code>before</code> and <code>after</code> methods:</p>
+
+<p><code>checkout_controller.js</code></p>
+
+<pre class="prettyprint">before(userRequired, {only: 'order'});
+before(prepareBasket, {except: 'order'});
+before(loadProducts, {only: ['products', 'featuredProducts']});
+
+action('products', function () {...});
+action('featuredProducts', function () {...});
+action('order', function () {...});
+action('basket', function () {...});
+
+function userRequired () {next()}
+function prepareBasket () {next()}
+function loadProducts () {next()}
+</pre>
+
+<p>In this example function <code>userRequired</code> will called only for <code>order</code> action, <code>prepareBasket</code> function will called for all actions except <code>order</code>, and <code>loadProducts</code> function will called only for actions <code>products</code> and <code>featuredProducts</code>.</p>
+
+<p>Note, that the before-functions should call global method <code>next</code> that will pass controll to the next function in chain.</p>
+
+</div>
+
+</div>
+
+<h2>Common execution context</h2>
+
+<div class="row">
+
+<div class="span4">
+
+<p>There is one implicit feature in chaining: all functions in chain invoked in one context, so you can pass data between chain using <code>this</code> object:</p>
+
+</div>
+
+<div class="span8">
+
+<pre class="prettyprint">function loadProducts () {
+    Product.find(function (err, prds) {
+        this.products = prds;
+        next();
+    }.bind(this));
+}
+
+action('products', function () {
+    assert.ok(this.products, 'Products available here');
+    render(); // also products will available in view
+});
+</pre>
+
+</div>
+
+</div>
+
+<h2>Sharing code between controllers</h2>
+
+<div class="row">
+
+<div class="span4">
+
+<p>Some methods, like <code>userRequired</code> for example, can be used in different controllers, to allow cross-controller code sharing compound provides few methods: <code>load</code>, <code>use</code> and <code>publish</code>.</p>
+
+</div>
+
+<div class="span8">
+
+<p>You can define <code>requireUser</code> in <code>application_controller.js</code> and call <code>publish</code>, and then you will be able to <code>use</code> it in your controller:</p>
+
+<p><code>application_controller.js</code></p>
+
+<pre class="prettyprint">publish('requireUser', requireUser);
+function requireUser () {
+}
+</pre>
+
+<p>then load application controller and use requireUser function here:</p>
+
+<p><code>products_controller.js</code></p>
+
+<pre class="prettyprint">load('application'); // note that _controller siffix omitted
+before(use('userRequired'), {only: 'products'});
+</pre>
+
+</div>
+
+</div>
+
+<h2>Other express.js features</h2>
+
+<div class="row">
+
+<div class="span4">
+
+<p>To get familiar with compound controllers look to few examples available at github: <a href="https://github.com/anatoliychakkaev/railwayjs.com/blob/master/app/controllers/pages_controller.coffee">coffee controller</a>, <a href="https://github.com/1602/router/blob/master/app/controllers/users_controller.js">javascript controller</a></p>
+
+</div>
+
+<div class="span8">
+
+<p>All other expressjs features have no global shortcuts yet, but they still can be used, because object <code>request</code> (or, shorter <code>req</code>) and <code>response</code> (alias <code>res</code>), are available as global variables in controller context. In view context only available long aliases: <code>response</code> and <code>request</code> to provide better coding style (it is bad to use this variables in views, but it's possible).</p>
+
+</div>
+
+</div></section>
+
+<section id="views"><div class="page-header">
+
+<h1>Views <small>layouts, partials, views, helpers, forms, csrf-stuff, etc..</small></h1>
+
+</div>
+
+<div class="row">
+
+<div class="span4">
+
+<h3>Templating engines</h3>
+
+<p>By default railway use <code>ejs</code> templating engine, but you can switch to jade, using settings</p>
+
+<pre class="prettyprint">app.set('view engine', 'jade');
+</pre>
+
+<p>and add line</p>
+
+<pre class="prettyprint">require('jade-ext');
+</pre>
+
+<p>to <code>./npmfile.js</code></p>
+
+</div>
+
+<div class="span8">
+
+<h3>View rendering flow</h3>
+
+<p>Every controller action may call <code>render</code> method to display associated view. For example, action <code>index</code> in controller <code>users</code> will render view in file <code>app/views/users/index.ejs</code>.</p>
+
+<p>This view will be rendered within the layout specified by <code>layout</code> call in the controller. By default layout name is the same as controller name, <code>app/views/layouts/users_layout.ejs</code> in this case. If this layout file is not exists, <code>application</code> layout used.</p>
+
+<p>If you need render view without layout you can call <code>layout(false)</code> inside controller, this will skip layout rendering.</p>
+
+</div>
+
+</div>
+
+<h3>Built-in Helpers</h3>
+
+<div class="row">
+
+<div class="span4">
+
+<ul>
+<li><code>link_to</code></li>
+</ul>
+
+</div>
+
+<div class="span8">
+
+<pre class="prettyprint">link_to('Users index', '/users');
+// &lt;a href="/users"&gt;Users index&lt;/a&gt;
+link_to('Users index', '/users', {class: 'menu-item'});
+// &lt;a href="/users" class="menu-item"&gt;Users index&lt;/a&gt;
+link_to('Users index', '/users', {remote: true});
+// &lt;a href="/users" data-remote="true"&gt;Users index&lt;/a&gt;
+</pre>
+
+<ul>
+<li>First argument is link text.</li>
+<li>Second argument is link path.</li>
+<li>Third argument is object with link properties.</li>
+</ul>
+
+<p>In the last example third argument is <code>{remote: true}</code>, and as you can see it will add <code>data-remote="true"</code> attribute to <code>a</code> tag. Clicking on this link will send async GET request to <code>/users</code>. Result will be executed as javascript.</p>
+
+<p>Here you can also specify <code>jsonp</code> param to handle response:</p>
+
+<pre class="prettyprint">link_to('Users index', '/users', {remote: true, jsonp: 'renderUsers'});
+// &lt;a href="/users" data-remote="true" data-jsonp="renderUsers"&gt;Users index&lt;/a&gt;
+</pre>
+
+<p>Server will send you json <code>{users: [{},{},{}]}</code>, and this object will be passed as an argument to the <code>renderUsers</code> function:</p>
+
+<pre class="prettyprint">renderUsers({users: [{},{},{}]});
+</pre>
+
+<p>You can also specify anonymous function in jsonp param:</p>
+
+<pre class="prettyprint">{jsonp: '(function (url) {location.href = url;})'}
+</pre>
+
+<p>When server will send you <code>"http://google.com/"</code> following javascript will be evaluated:</p>
+
+<pre class="prettyprint">(function (url) {location.href = url;})("http://google.com");
+</pre>
+
+<p>This is why you should wrap anonimous function with parentheses.</p>
+
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="span4">
+
+<ul>
+<li><code>form_for</code></li>
+</ul>
+
+</div>
+
+<div class="span8">
+
+<p>Accepts three params: resource, params and block. Block is function that receives as single param special object, which provide helpers with pre-filled values. Available helpers:</p>
+
+<ul>
+<li>input</li>
+<li>label</li>
+<li>textarea</li>
+<li>submit</li>
+<li><p>checkbox</p>
+
+<% form_for(user, {action: path_to.users}, function (form) { %>
+
+   <p>
+       <%- form.label('name', 'Username') %>
+       <%- form.input('name') %>
+   </p>
+   <p>
+       <%- form.submit('Save') %>
+   </p>
+<% }); %></li>
+</ul>
+
+<p>will generate</p>
+
+<pre class="prettyprint">&lt;form action="/users/1" method="POST"&gt;
+    &lt;input type="hidden" name="_method" value="PUT" /&gt;
+    &lt;input type="hidden" name="authencity_token" value="qwertyuiop1234567890!@#$%^&amp;*()" /&gt;
+   &lt;p&gt;
+       &lt;label for="name"&gt;Username&lt;/label&gt;
+       &lt;input id="name" name="name" value="Anatoliy" /&gt;
+   &lt;/p&gt;
+   &lt;p&gt;
+       &lt;input type="submit" value="Save" /&gt;
+   &lt;/p&gt;
+&lt;/form&gt;
+</pre>
+
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="span4">
+
+<ul>
+<li><code>form_tag</code></li>
+</ul>
+
+</div>
+
+<div class="span8">
+
+<p>This is "light" version of <code>form_for</code> helper. It accepts just two arguments: params and block. Block didn't receives any params.
+Use this helper when you have no any resource, but still want to be able to use simple method overriding and csrf protection tokens.
+<em>TODO: add code sample</em></p>
+
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="span4">
+
+<ul>
+<li><code>input_tag</code> and <code>form.input</code></li>
+</ul>
+
+</div>
+
+<div class="span8">
+
+<p>TODO: describe <code>input_tag</code></p>
+
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="span4">
+
+<ul>
+<li><code>label_tag</code> and <code>form.label</code></li>
+</ul>
+
+</div>
+
+<div class="span8">
+
+<p>TODO: describe <code>label_tag</code></p>
+
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="span4">
+
+<ul>
+<li><code>stylesheet_link_tag</code></li>
+</ul>
+
+</div>
+
+<div class="span8">
+
+<pre class="prettyprint">&lt;%- stylesheet_link_tag('reset', 'style', 'mobile') %&gt;
+</pre>
+
+<p>will generate</p>
+
+<pre class="prettyprint">&lt;link media="screen" rel="stylesheet" type="text/css" href="/stylesheets/reset.css?1306993455523" /&gt;
+&lt;link media="screen" rel="stylesheet" type="text/css" href="/stylesheets/style.css?1306993455523" /&gt;
+</pre>
+
+<p>Timestamps <code>?1306993455523</code> added to assets only in development mode in order to prevent browser from caching scripts and style in client-side</p>
+
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="span4">
+
+<ul>
+<li><code>javascript_include_tag</code></li>
+</ul>
+
+</div>
+
+<div class="span8">
+
+<pre class="prettyprint">&lt;%- javascript_include_tag(
+  'https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js',
+  'rails', 'application') %&gt;
+</pre>
+
+<p>will generate</p>
+
+<pre class="prettyprint">&lt;script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="/javascripts/rails.js?1306993455524"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="/javascripts/application.js?1306993455524"&gt;&lt;/script&gt;
+</pre>
+
+<p>Timestamps <code>?1306993455524</code> added to assets only in development mode in order to prevent browser from caching scripts and style in client-side</p>
+
+<p>By default compound expect assets to be located in <code>public/javascripts</code> and <code>public/stylesheets</code> directories, but this settings can be overwritten in <code>config/environment.js</code> file:</p>
+
+<pre class="prettyprint">app.set('jsDirectory', '/js/');
+app.set('cssDirectory', '/css/');
+</pre>
+
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="span4">
+
+<h3>Defining your own helpers</h3>
+
+</div>
+
+<div class="span8">
+
+<p>You can define your own helpers for each controller in the file <code>app/helpers/_controllername__helpers.js</code>. For example, if you want to define a helper called <code>my_helper</code> for use in the <code>users</code> controller, put the following in <code>app/helpers/users_controller.js</code>:</p>
+
+<pre class="prettyprint">module.exports = {
+  my_helper: function () {
+    return "This is my helper!";
+  }
+}
+</pre>
+
+The function `my_helper` can be now used by any of the views used by the `users` controller.
+</div>
+
+</div></section>
+
+<section id="orm"><div class="page-heading">
+
+<h1>Meet ORM: JugglingDB</h1>
+
+</div>
+
+<h2>1. Configure database</h2>
+
+<div class="row">
+
+<div class="span4">
+
+Describe which database adapter you going to use and how to connect with database in `config/database.json` file
+</div>
+
+<div class="span4">
+
+<pre class="prettyprint">{ "development":
+  { "driver":   "redis"
+  , "host":     "localhost"
+  , "port":     6379
+  }
+, "test":
+  { "driver":   "memory"
+  }
+, "staging":
+  { "driver":   "mongoose"
+  , "url":      "mongodb://localhost/test"
+  }
+, "production":
+  { "driver":   "mysql"
+  , "host":     "localhost"
+  , "post":     3306
+  , "database": "nodeapp-production"
+  , "username": "nodeapp-prod"
+  , "password": "t0ps3cr3t"
+  }
+}
+</pre>
+
+</div>
+
+<div class="span4">
+
+<p>Checkout list of available adapters in <a href="https://github.com/1602/jugglingdb/blob/master/test/common_test.js">this test</a>. Also possible to specify which database to use to directly in schema, using <code>schema</code> method:</p>
+
+<pre class="prettyprint">schema 'redis', url: process.env.REDISTOGO_URL, -&gt;
+    define 'User'
+    # other definitions for redis schema
+
+schema 'mongoose', url: process.env.MONGOHQ_URL, -&gt;
+    define 'Post'
+    # other definitions for mongoose schema
+</pre>
+
+<p>All of this schemas will work at the same time, and you even can describe relationships between different schemas, such as <code>User.hasMany(Post)</code>, cool, eh? This is why it called JugglingDB.</p>
+
+</div>
+
+</div>
+
+<h2>2. Define schema</h2>
+
+<div class="row">
+
+<div class="span4">
+
+<p>Use <code>define</code> method to describe database entities, and <code>property</code> method to specify types of fields.
+This method acceps following arguments:</p>
+
+<ul>
+<li>name of property</li>
+<li>type: Date, Number, Boolean, Text, String (can be omitted if String)</li>
+<li>options: Object {default: 'default value', index: true}</li>
+</ul>
+
+</div>
+
+<div class="span4">
+
+<p>javascript: <code>db/schema.js</code></p>
+
+<pre class="prettyprint">var Person = define('Person', function () {
+    property('email', {index: true});
+    property('active', Boolean, {default: true});
+    property('createdAt', Date);
+});
+
+var Book = define('Book', function () {
+    property('title');
+    property('ISBN');
+});
+</pre>
+
+</div>
+
+<div class="span4">
+
+<p>coffeescript: <code>db/schema.coffee</code></p>
+
+<pre class="prettyprint">Person = define 'Person', -&gt;
+    property 'email', index: true
+    property 'active', Boolean, default: true
+    property 'createdAt', Date, default: Date
+    property 'bio', Text
+    property 'name'
+
+Book = define 'Book', -&gt;
+    property 'title'
+    property 'ISBN'
+</pre>
+
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="offset4">
+
+<p>or define <strong>custom schema</strong> (non-juggling), for example, <strong>mongoose</strong>.
+Please note, in case of custom schema all jugglingdb features of course will be disabled.</p>
+
+</div>
+
+<div class="span12">
+
+<pre class="prettyprint">customSchema(function () {
+
+    var mongoose = require('mongoose');
+    mongoose.connect('mongodb://localhost/test');
+
+    var Schema = mongoose.Schema, ObjectId = Schema.ObjectId;
+
+    var BlogPost = new Schema({
+        author    : ObjectId
+        , title     : String
+        , body      : String
+        , date      : Date
+    });
+
+    var Post = mongoose.model('BlogPost', BlogPost);
+    Post.modelName = 'BlogPost'; // this is for some features inside compound (helpers, etc)
+
+    module.exports['BlogPost'] = Post;
+});
+</pre>
+
+</div>
+
+</div>
+
+<h2>3. Describe relations</h2>
+
+<div class="row">
+
+<div class="span4">
+
+<pre class="prettyprint">Currently supported only few relations: hasMany, belongsTo,
+of course set of possible relations between object will grow
+</pre>
+
+</div>
+
+<div class="span8">
+
+<pre class="prettyprint">User.hasMany(Post,   {as: 'posts',  foreignKey: 'userId'});
+// creates instance methods:
+// user.posts(conds)
+// user.posts.build(data) // like new Post({userId: user.id});
+// user.posts.create(data) // build and save
+// user.posts.find
+
+Post.belongsTo(User, {as: 'author', foreignKey: 'userId'});
+// creates instance methods:
+// post.author(callback) -- getter when called with function
+// post.author() -- sync getter when called without params
+// post.author(user) -- setter when called with object
+</pre>
+
+<p>It also possible to use scopes inside has many associations,
+for example if you have scope for <code>Post</code>:</p>
+
+<pre class="prettyprint">Post.scope('published', {published: true})
+</pre>
+
+<p>which is primarily just creates shortcut caller for <code>all</code> method:</p>
+
+<pre class="prettyprint">Post.published(cb) // same as Post.all({published: true});
+</pre>
+
+<p>So, you can use it with association:</p>
+
+<pre class="prettyprint">user.posts.published(cb); // same as Post.all({published: true, userId: user.id});
+</pre>
+
+</div>
+
+</div>
+
+<h2>4. Setup validations</h2>
+
+<div class="row">
+
+<div class="span4">
+
+<p>Currenty supported validations:</p>
+
+<ul>
+<li>presence</li>
+<li>length</li>
+<li>numericality</li>
+<li>inclusion</li>
+<li>exclusion</li>
+<li>format</li>
+</ul>
+
+</div>
+
+<div class="span8">
+
+<p>Validations invoked after <code>create</code>, <code>save</code> and <code>updateAttributes</code>, it also possible to skip validations when use <code>save</code> method:</p>
+
+<pre class="prettyprint">obj.save({validate: false});
+</pre>
+
+<p>Validations can be called manually using <code>isValid</code> method of object</p>
+
+<p>Normally all validations result in <code>errors</code> member of object, which is a hash of arrays of error messages:</p>
+
+<pre class="prettyprint">obj.errors
+{
+    email: [
+        'can\'t be blank',
+        'format is invalid'
+    ],
+    password: [ 'too short' ]
+}
+</pre>
+
+<p>It also can raise exception, if you want, just pass <code>throws: true</code> as param of <code>save</code> method:</p>
+
+<pre class="prettyprint">// be carefull, now it will throw Error object
+obj.save({throws: true});
+</pre>
+
+<p>To setup validation, call it configurator on class:</p>
+
+<pre class="prettyprint">Person.validatesPresenceOf('email', 'name')
+Person.validatesLengthOf('password', {min: 5})
+</pre>
+
+<p>Each configurator accepts set of string arguments, and one optional last argument, which is actually specify how validator should work, of course it depends on each validator, but there's few common options:</p>
+
+<ul>
+<li>if</li>
+<li>unless</li>
+<li>message</li>
+<li>allowNull</li>
+<li>allowBlank</li>
+</ul>
+
+<p><code>if</code> and <code>unless</code> methods is for skipping validations depending on conditions, it can be function, or string. Function invoked in context of object, where validation performed. If string passed, then one of object's member checked.</p>
+
+<p><code>message</code> member allows to configure error message, it can be string or object (depends on validator), see usage examples</p>
+
+<p><code>allowNull</code> and <code>allowBlank</code> is self explanatory :)</p>
+
+<p>Examples of different types of validations:</p>
+
+<h6>length</h6>
+
+<pre class="prettyprint">User.validatesLengthOf 'password', min: 3, max: 10, allowNull: true
+User.validatesLengthOf 'state', is: 2, allowBlank: true
+user = new User validAttributes
+
+user.password = 'qw'
+test.ok not user.isValid(), 'Invalid: too short'
+test.equal user.errors.password[0], 'too short'
+
+user.password = '12345678901'
+test.ok not user.isValid(), 'Invalid: too long'
+test.equal user.errors.password[0], 'too long'
+
+user.password = 'hello'
+test.ok user.isValid(), 'Valid with value'
+test.ok not user.errors
+
+user.password = null
+test.ok user.isValid(), 'Valid without value'
+test.ok not user.errors
+
+user.state = 'Texas'
+test.ok not user.isValid(), 'Invalid state'
+test.equal user.errors.state[0], 'length is wrong'
+
+user.state = 'TX'
+test.ok user.isValid(), 'Valid with value of state'
+test.ok not user.errors
+</pre>
+
+<h6>numericality</h6>
+
+<pre class="prettyprint">User.validatesNumericalityOf 'age', int: true
+user = new User validAttributes
+
+user.age = '26'
+test.ok not user.isValid(), 'User is not valid: not a number'
+test.equal user.errors.age[0], 'is not a number'
+
+user.age = 26.1
+test.ok not user.isValid(), 'User is not valid: not integer'
+test.equal user.errors.age[0], 'is not an integer'
+
+user.age = 26
+test.ok user.isValid(), 'User valid: integer age'
+test.ok not user.errors
+</pre>
+
+<h6>inclusion</h6>
+
+<pre class="prettyprint">User.validatesInclusionOf 'gender', in: ['male', 'female']
+user = new User validAttributes
+
+user.gender = 'any'
+test.ok not user.isValid()
+test.equal user.errors.gender[0], 'is not included in the list'
+
+user.gender = 'female'
+test.ok user.isValid()
+
+user.gender = 'male'
+test.ok user.isValid()
+
+user.gender = 'man'
+test.ok not user.isValid()
+test.equal user.errors.gender[0], 'is not included in the list'
+</pre>
+
+<h6>exclusion</h6>
+
+<pre class="prettyprint">User.validatesExclusionOf 'domain', in: ['www', 'admin']
+user = new User validAttributes
+
+user.domain = 'www'
+test.ok not user.isValid()
+test.equal user.errors.domain[0], 'is reserved'
+
+user.domain = 'my'
+test.ok user.isValid()
+</pre>
+
+<h6>format</h6>
+
+<pre class="prettyprint">User.validatesFormatOf 'email', with: /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i
+user = new User validAttributes
+
+user.email = 'invalid email'
+test.ok not user.isValid()
+
+user.email = 'valid@email.tld'
+test.ok user.isValid()
+</pre>
+
+</div>
+
+</div>
+
+<div class="row">
+
+<h3>defining additional model functions</h3>
+
+<p>You can define additional functions to your models by editing the file <code>app/models/modelname.js</code>:</p>
+
+<pre class="prettyprint">User.getActiveUsers = function getActiveUsers(callback) {
+  Users.all({active: true}, callback);
+}
+
+User.prototype.getFullName = function getFullName() {
+  return return [this.firstName, this.lastName].join(' ');
+};
+</pre>
+
+<p>Functions that need access to a specific User instance need to be declared in the prototype, otherwise they will not be available.</p>
+
+</div></section>
+
+<section id="generators"><div class="page-header">
+
+<h1>Generators <small>Create app from scratch using generators</small></h1>
+
+</div>
+
+<div class="row">
+
+<div class="span4">
+
+CompoundJS generators - are automated tools allows you to create bunch of files automatically.
+</div>
+
+<div class="span8">
+
+<p>Each generator can be invoked by command</p>
+
+<pre class="prettyprint">compound generate GENERATOR_NAME
+</pre>
+
+<p>or, using shortcut</p>
+
+<pre class="prettyprint">compound g GENERATOR_NAME
+</pre>
+
+Built-in generators: model, controller, scaffold (crud)
+</div>
+
+</div>
+
+<h2>Generate controller</h2>
+
+<div class="row">
+
+<div class="span4">
+
+<p>Usecase: you do not need standart RESTful controller, just few non-standart actions</p>
+
+</div>
+
+<div class="span8">
+
+<p>Example call:</p>
+
+<pre class="prettyprint">compound g controller controllername actionName anotherActionName
+</pre>
+
+<p>Generate files:</p>
+
+<pre class="prettyprint">exists  app/
+exists  app/controllers/
+create  app/controllers/controllername_controller.js
+exists  app/helpers/
+create  app/helpers/controllername_helper.js
+exists  app/views/
+create  app/views/controllername/
+create  app/views/controllername/actionName.ejs
+create  app/views/controllername/anotherActionName.ejs
+</pre>
+
+<p>Generated contents of controller file:</p>
+
+<pre class="prettyprint">load('application');
+
+action("actionName", function () {
+    render();
+});
+
+action("anotherActionName", function () {
+    render();
+});
+</pre>
+
+</div>
+
+</div>
+
+<h2>Generate model</h2>
+
+<div class="row">
+
+<div class="span4">
+
+<p>Usecase: you want to access some database entity using ORM interface (mongoose by default)</p>
+
+</div>
+
+<div class="span8">
+
+<p>Example call:</p>
+
+<pre class="prettyprint">compound g model user name password
+</pre>
+
+<p>Will generate</p>
+
+<pre class="prettyprint">exists  app/
+exists  app/models/
+create  app/models/user.js
+</pre>
+
+<p>Following mongoose schema will be created:</p>
+
+<pre class="prettyprint">/**
+ * User
+ */
+var UserSchema = new Schema;
+UserSchema.add({
+    name: { type: String },
+    password: { type: String }
+});
+mongoose.model("User", UserSchema);
+module.exports["User"] = mongoose.model("User");
+</pre>
+
+<p>If you need to specify field types (<code>String</code> by default):</p>
+
+<pre class="prettyprint">compound g model user name password createdAt:date activated:boolean
+</pre>
+
+</div>
+
+</div>
+
+<h2>Generate scaffold (crud)</h2>
+
+<div class="row">
+
+<div class="span4">
+
+<p>The most commonly used generator. It creates ready-to-use resource controller with all actions, views, schema definitions, routes, and <strong>tests</strong>. RW also can generated scaffold in <strong>CoffeeScript</strong>.</p>
+
+</div>
+
+<div class="span8">
+
+<p>Example call:</p>
+
+<pre class="prettyprint">compound g scaffold post title content createdAt:date
+exists  app/
+exists  app/models/
+create  app/models/post.js
+exists  app/
+exists  app/controllers/
+create  app/controllers/posts_controller.js
+exists  app/helpers/
+create  app/helpers/posts_helper.js
+create  app/views/layouts/posts_layout.ejs
+create  public/stylesheets/scaffold.css
+exists  app/views/
+create  app/views/posts/
+create  app/views/posts/_form.ejs
+create  app/views/posts/new.ejs
+create  app/views/posts/edit.ejs
+create  app/views/posts/index.ejs
+create  app/views/posts/show.ejs
+patch   config/routes.js
+</pre>
+
+<p>Using scaffold generator - fastest way to create prototype of application.</p>
+
+</div>
+
+</div></section>
+
+<section id="console"><div class="page-heading">
+
+<h1>REPL console <small>Learn, debug, investigate</small></h1>
+
+</div>
+
+<div class="row">
+
+<div class="span4">
+
+<p>To run REPL console use command</p>
+
+<pre class="prettyprint">compound console
+</pre>
+
+<p>or it's shortcut</p>
+
+<pre class="prettyprint">compound c
+</pre>
+
+</div>
+
+<div class="span8">
+
+<p>It just simple node-js console with some CompoundJS bindings, e.g. models. Just one note
+about working with console. Node.js is asynchronous by its nature, and it's great
+but it made console debugging much more complicated, because you should use callback
+to fetch result from database, for example. I have added one useful method to
+simplify async debugging using compound console. It's name <code>c</code>, you can pass it
+as parameter to any function requires callback, and it will store parameters passed
+to callback to variables <code>_0, _1, ..., _N</code> where N is index in <code>arguments</code>.</p>
+
+<p>Example:</p>
+
+<pre class="prettyprint">compound c
+compound&gt; User.find(53, c)
+Callback called with 2 arguments:
+_0 = null
+_1 = [object Object]
+compound&gt; _1
+{ email: [Getter/Setter],
+  password: [Getter/Setter],
+  activationCode: [Getter/Setter],
+  activated: [Getter/Setter],
+  forcePassChange: [Getter/Setter],
+  isAdmin: [Getter/Setter],
+  id: [Getter/Setter] }
+</pre>
+
+</div>
+
+</div></section>
+
+<section id="coffee"><div class="page-heading">
+
+<h1>Write your app in CoffeeScript <small>Drink coffee &mdash; do stupid things faster with more energy</small></h1>
+
+</div>
+
+<div class="row">
+
+<div class="span4">
+
+<p>Almost all parts of app can be written in CoffeeScript. If you like coding in Coffee, please do. Just put <code>--coffee</code> option to <code>compound</code> commands.</p>
+
+</div>
+
+<div class="span8">
+
+<pre class="prettyprint">compound init blog --coffee
+cd blog
+npm install -l
+compound g scaffold post title content --coffee
+</pre>
+
+<p>And then you can run <code>compound server</code> or <code>coffee server.coffee</code> to have server running on 3000 port</p>
+
+<p>For example, here is generated coffee-controller:</p>
+
+<pre class="prettyprint">before -&gt;
+    Post.findById req.params.id, (err, post) =&gt;
+        if err or not post
+            redirect path_to.posts
+        else
+            @post = post
+            next()
+, only: ['show', 'edit', 'update', 'destroy']
+
+# GET /posts/new
+action 'new', -&gt;
+    @post = new Post
+    render
+        title: 'New post'
+
+# POST /posts
+action 'create', -&gt;
+    @post = new Post
+    ['title', 'content'].forEach (field) =&gt;
+        @post[field] = req.body[field] if req.body[field]?
+
+    @post.save (errors) -&gt;
+        if errors
+            flash 'error', 'Post can not be created'
+            render 'new',
+                title: 'New post'
+        else
+            flash 'info', 'Post created'
+            redirect path_to.posts
+
+# GET /posts
+action 'index', -&gt;
+    Post.find (err, posts) -&gt;
+        render
+            posts: posts
+            title: 'Posts index'
+
+# GET /posts/:id
+action 'show', -&gt;
+    render
+        title: 'Post show'
+
+# GET /posts/:id/edit
+action 'edit', -&gt;
+    render
+        title: 'Post edit'
+
+# PUT /posts/:id
+action 'update', -&gt;
+    ['title', 'content'].forEach (field) =&gt;
+        @post[field] = req.body[field] if req.body[field]?
+
+    @post.save (err) =&gt;
+        if not err
+            flash 'info', 'Post updated'
+            redirect path_to.post(@post)
+        else
+            flash 'error', 'Post can not be updated'
+            render 'edit',
+                title: 'Edit post details'
+
+# DELETE /posts/:id
+action 'destroy', -&gt;
+    @post.remove (error) -&gt;
+        if error
+            flash 'error', 'Can not destroy post'
+        else
+            flash 'info', 'Post successfully removed'
+        send "'" + path_to.posts + "'"
+</pre>
+
+</div>
+
+</div></section>
+
+<section id="localization"><div class="page-header">
+
+<h1>Localization <small>How to build multi-language apps</small></h1>
+
+</div>
+
+<div class="row">
+
+<div class="span4">
+
+<p>Basic steps:</p>
+
+<ol>
+<li>create dictionary to translate tokens to natural language (<code>config/locales/*.yml</code>)</li>
+<li>Use tokens instead of natural language everywhere in app (<code>t</code> helper)</li>
+<li>Manually detect language of each user request (<code>setLocale</code> method)</li>
+</ol>
+
+</div>
+
+<div class="span8">
+
+<p>CompoundJS allows you to create application translated to different languages: just place localization file in <code>yaml</code> format to <code>config/locales</code> dir:</p>
+
+<p><code>config/locales/en.yml</code></p>
+
+<pre class="prettyprint">en:
+  session:
+    new: "Sign in"
+    destroy: "Sign out"
+  user:
+    new: "Sign up"
+    destroy: "Cancel my account"
+    welcome: "Hello %, howdy?
+    validation:
+      name: "Username required"
+</pre>
+
+<p>NOTE: translations can contain <code>%</code> symbol(s), that means variable substitution</p>
+
+<p>Define user locale in application controller:</p>
+
+<p><code>app/controllers/application_controller.js</code></p>
+
+<pre class="prettyprint">before(setUserLocale);
+function setUserLocale () {
+    // define locale from user settings, or from headers or use default
+    var locale = req.user ? req.user.locale : 'en';
+    // call global function setLocale
+    setLocale(locale);
+}
+</pre>
+
+<p>and use localized tokens inside app views with <code>t</code> helper:</p>
+
+<pre class="prettyprint">&lt;%= t('session.new') %&gt;
+&lt;%= t('user.new') %&gt;
+&lt;%= t(['user.welcome', user.name]) %&gt;
+</pre>
+
+<p>or inside controllers:</p>
+
+<pre class="prettyprint">flash('error', t('user.validation.name'));
+</pre>
+
+<p>or inside models:</p>
+
+<pre class="prettyprint">return t('email.activate', 'en');
+</pre>
+
+<p>NOTE: when use t helpers inside models you must pass <code>locale</code> as second param to <code>t</code> helper.</p>
+
+<h2>Configuration</h2>
+
+<p>Localization behavior can be configured using following settings:</p>
+
+<ul>
+<li>defaultLocale: name of default locale</li>
+<li>translationMissing: what action perfor when translation is missing, possible values: <code>default</code> - display translation for default locale, <code>display</code> - show error like "Translation missing for email.activate"</li>
+</ul>
+
+<p>Example:</p>
+
+<pre class="prettyprint">app.configure(function () {
+    app.set('defaultLocale', 'en');
+});
+
+app.configure('development', function(){
+    app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
+    app.set('translationMissing', 'display');
+});
+
+app.configure('production', function () {
+    app.use(express.errorHandler());
+    app.set('translationMissing', 'default');
+});
+</pre>
+
+</div>
+
+</div></section>
+
+<section id="extensions"><div class="page-header">
+
+<h1>Extensions API <small>Simple way to add missing functionality to the framework</small></h1>
+
+</div>
+
+<div class="row">
+
+<div class="span4">
+
+<p>Any npm package is already extension for compound. Just put line to <code>npmfile.js</code>, for example:</p>
+
+<pre class="prettyprint">require('railway-twitter');
+</pre>
+
+<p>Just one note: if package have <code>init</code> method, it will be invoked after application initialization.</p>
+
+<p>For example you can check out <a href="https://github.com/1602/compound-twitter">twitter-auth extension</a> for compound.</p>
+
+</div>
+
+<div class="span8">
+
+<h2>Installation script</h2>
+
+<p>If your extension have <code>install.js</code> script in the root, it will be invoked after installation with <code>compound install</code> command.</p>
+
+<p>This script will be executed in application context, i.e. you can access global variables <code>app</code> and <code>compound</code>. You <strong>must</strong> call <code>process.exit()</code> when installation process has been completed.</p>
+
+<h2>CompoundJS extension API</h2>
+
+<p>All compound modules published as global singleton <code>railway</code>. Any module can be extended or monkey-patched. Let's take a look to most common use-cases.</p>
+
+<h2>Tools</h2>
+
+<p>Hash <code>railway.tools</code> contains commands that can be invoked using command line, for example <code>compound routes</code> command will call <code>railway.tools.routes()</code> method.</p>
+
+<p>To write tool, just add method to <code>railway.tools</code> object, name of this method will become the command:</p>
+
+<pre class="prettyprint">railway.tools.database = function () {
+    switch (railway.args.shift()) {
+    case 'clean':
+        // clean db
+        break;
+    case 'backup':
+        // backup db
+        break;
+    case 'restore':
+        // restore db
+        break;
+    default:
+        console.log('Usage: compound database [clean|backup|restore]');
+    }
+};
+</pre>
+
+<p>then the following commands will be available for call:</p>
+
+<pre class="prettyprint">compound database
+compound database backup
+compound database clean
+compound database restore
+</pre>
+
+<p>If you want to see this command in help message <code>compound help</code> you can provide some information about tool using <code>help</code> hash:</p>
+
+<pre class="prettyprint">compound.tools.db.help = {
+    shortcut: 'db',
+    usage: 'database [backup|restore|clean]',
+    description: 'Some database features'
+};
+</pre>
+
+<p>Next time you will call compound help you'll see:</p>
+
+<pre class="prettyprint">Commands:
+   ...
+   db, database [backup|restore|clean]  Some database features
+</pre>
+
+<p>If you have defined shortcut, it can be used instead of full command name:</p>
+
+<pre class="prettyprint"> railway db clean
+</pre>
+
+<p>To learn more, please check out <a href="https://github.com/1602/compound/blob/master/lib/tools.js">the sources: <code>lib/tools.js</code></a></p>
+
+<h2>Generators</h2>
+
+<p>Coming soon. It's about <code>railway.generators</code> module and <code>compound generate smth</code> family of commands.</p>
+
+<h2>Discussion in google groups</h2>
+
+<p>API is still in develop now, feel free to leave comments about it in the related google groups <a href="http://groups.google.com/group/railwayjs/browse_thread/thread/1cfa3e1e348fc62c">thread</a>.</p>
+
+</div>
+
+</div></section>
+
+<section id="heroku"><div class="page-header">
+
+<h1>Heroku <small>Guide for deploying CompoundJS app on <a href="http://heroku.com/">Heroku.com</a> cloud hosting</small></h1>
+
+</div>
+
+<div class="row">
+
+<div class="span4">
+
+<p>Heroku nodejs hosting is available for public using now. You can deploy your CompoundJS application as simple as <code>git push</code>.</p>
+
+<p>To work with heroku you also need: ruby, <code>heroku</code> gem</p>
+
+</div>
+
+<div class="span8">
+
+<p>First of all, create app</p>
+
+<pre class="prettyprint">compound init heroku-app
+cd heroku-app
+sudo npm link
+compound g crud post title content
+</pre>
+
+<p>Then init git repo</p>
+
+<pre class="prettyprint">git init
+git add .
+git commit -m 'Init'
+</pre>
+
+<p>Create heroku app</p>
+
+<pre class="prettyprint">heroku create --stack cedar
+</pre>
+
+<p>Want to use <strong>mongodb</strong>?</p>
+
+<pre class="prettyprint">heroku addons:add mongohq:free
+</pre>
+
+<p>Want to use <strong>redis</strong>?</p>
+
+<pre class="prettyprint">heroku addons:add redistogo:nano
+</pre>
+
+<p>And deploy</p>
+
+<pre class="prettyprint">git push heroku master
+</pre>
+
+<p>Hook up Procfile (only once)</p>
+
+<pre class="prettyprint">heroku ps:scale web=1
+</pre>
+
+<p>Check application state</p>
+
+<pre class="prettyprint">heroku ps
+</pre>
+
+<p>Visit app</p>
+
+<pre class="prettyprint">heroku open
+</pre>
+
+<p>If something went wrong, you can check out logs</p>
+
+<pre class="prettyprint">heroku logs
+</pre>
+
+<p>But for me it useless. Better to run commands in node console:</p>
+
+<pre class="prettyprint">heroku run node
+&gt; var app = require('compoundjs').createServer();
+</pre>
+
+<p>It helps to identify exact problems with app installation.
+Also you can access compound console using command</p>
+
+<pre class="prettyprint">heroku run compound console
+</pre>
+
+<p>BTW, mongohq provides web interface for browsing your mongo database, to use it go to http://mongohq.com/ and create account,
+then click "Add remote connection" and configure link to database. You can retrieve details required for connection using command</p>
+
+<pre class="prettyprint">heroku config --long
+</pre>
+
+</div>
+
+</div></section>
+
+<section id="snippets"><div class="page-header">
+
+<h1>Code snippets <small>Useful pieces of code</small></h1>
+
+</div>
+
+<h2>Multiple workers compound server (node 0.6.0)</h2>
+
+<div class="row">
+
+<div class="span4">
+
+<p>Example in coffeescript: <code>server.coffee</code></p>
+
+</div>
+
+<div class="span8">
+
+<pre class="prettyprint">#!/usr/bin/env coffee
+
+app = module.exports = require('compoundjs').createServer()
+
+cluster = require('cluster')
+numCPUs = require('os').cpus().length
+
+port = process.env.PORT or 3000
+
+if not module.parent
+    if cluster.isMaster
+        # Fork workers.
+        cluster.fork() for i in [1..numCPUs]
+
+        cluster.on 'death', (worker) -&gt;
+            console.log 'worker ' + worker.pid + ' died'
+    else
+        # Run server
+        app.listen port
+        console.log "CompoundJS server listening on port %d within %s environment", port, app.settings.env
+</pre>
+
+</div>
+
+</div>
+
+<h2>Redis session store for Heroku deployment with redistogo addon</h2>
+
+<div class="row">
+
+<div class="span4">
+
+<p>Hook <code>REDISTOGO_URL</code> environment variable in
+<code>config/environment.js</code> and pass it to RedisStore constructor.</p>
+
+</div>
+
+<div class="span8">
+
+<pre class="prettyprint">var express    = require('express'),
+    RedisStore = require('connect-redis')(express);
+
+var redisOpts;
+if (process.env['REDISTOGO_URL']) {
+    var url = require('url').parse(process.env['REDISTOGO_URL']);
+    var redisOpts = {
+        port: url.port,
+        host: url.hostname,
+        pass: url.auth.split(':')[1]
+    };
+} else {
+    redisOpts = {};
+}
+
+app.configure(function(){
+    var cwd = process.cwd();
+    app.use(express.static(cwd + '/public', {maxAge: 86400000}));
+    app.set('views', cwd + '/app/views');
+    app.set('view engine', 'ejs');
+    app.set('jsDirectory', '/javascripts/');
+    app.set('cssDirectory', '/css/');
+    app.use(express.bodyParser());
+    app.use(express.cookieParser());
+    app.use(express.session({secret: 'secret', store: new RedisStore(redisOpts)}));
+    app.use(express.methodOverride());
+    app.use(app.router);
+});
+</pre>
+
+</div>
+
+</div>
+
+<h2>Upload file to compound server</h2>
+
+<div class="row">
+
+<div class="span4">
+
+<ul>
+<li><a href="http://groups.google.com/group/railwayjs/browse_thread/thread/592df72830898e9a">Discussion in google group</a></li>
+<li>The solution is to use <a href="https://github.com/anatoliychakkaev/connect-form-sync">this middleware</a></li>
+<li>Check out <a href="https://github.com/anatoliychakkaev/railway-example-upload">example app</a></li>
+</ul>
+
+</div>
+
+<div class="span8">
+
+<pre class="prettyprint">var form = require('connect-form-sync');
+app.configure(function(){
+    ....
+    app.use(form({ keepExtensions: true }));
+    app.use(express.bodyParser());
+    ....
+});
+</pre>
+
+<p>and use in controller like that:</p>
+
+<pre class="prettyprint">action('create', function () {
+    this.file = new File();
+    var tmpFile = req.form.files.file;
+    this.file.upload(tmpFile.name, tmpFile.path, function (err) {
+        if (err) {
+            console.log(err);
+            this.title = 'New file';
+            flash('error', 'File can not be created');
+            render('new');
+        } else {
+            flash('info', 'File created');
+            redirect(path_to.files);
+        }
+    }.bind(this));
+});
+</pre>
+
+</div>
+
+</div></section>
+<script>$(function () {$.getScript("http://compoundjs.disqus.com/count.js");})</script>
+</div>
+
+<footer class="footer">
+<div class="container">
+  <p class="pull-right"><a href="#">Back to top</a></p>
+  <p>
+    Documentation written by <a href="http://twitter.com/1602">@1602 (Anatoliy Chakkaev)</a>.<br/>
+    Built on <a href="http://twitter.github.com/bootstrap">Bootstrap</a> from Twitter<br/>
+    CompoundJS code licensed under the <a href="http://www.opensource.org/licenses/mit-license.php" target="_blank">MIT License</a>. Documentation licensed under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.
+  </p>
+  <h6 style="text-align: center" id="tip">
+    CompoundJS and JugglingDB projects are free, but you can leave a tip here:
+  </h6>
+  <form style="text-align: center" action="https://www.paypal.com/cgi-bin/webscr" method="post">
+    <input type="hidden" name="cmd" value="_s-xclick">
+    <input type="hidden" name="hosted_button_id" value="J3JJDYJW78LEJ">
+    <input type="image" style="box-shadow: none; -webkit-box-shadow: none; padding: 0; border: 0; width: 147px; height: 47px;" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+    <img alt="" border="0" src="https://www.paypalobjects.com/ru_RU/i/scr/pixel.gif" width="1" height="1">
+  </form>
+</div>
+</footer>
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-23280347-1']);
+  _gaq.push(['_setDomainName', 'none']);
+  _gaq.push(['_setAllowLinker', true]);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+   var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+   ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+   var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+   })();
+
+</script>
+
+</html>
