@@ -239,7 +239,6 @@ h1,
 h2,
 h3 {
   font: 300 24px 'Quicksand', 'Lucida Grande', sans-serif;
-  text-transform: uppercase;
   margin-bottom: 20px;
   display: block;
   padding: 10px 20px 10px 20px;
@@ -252,9 +251,11 @@ h3 .decimal {
 }
 h1 {
   font-size: 30px;
+  text-transform: uppercase;
 }
 h2 {
   font-size: 24px;
+  text-transform: uppercase;
 }
 h3 {
   font-size: 18px;
@@ -288,6 +289,7 @@ body {
 .content-wrapper pre {
   padding: 15px;
   margin-bottom: 15px;
+  overflow-x: auto;
 }
 .content-wrapper .logo {
   margin: auto;
@@ -309,16 +311,17 @@ body {
   position: fixed;
   top: 0;
   left: 0;
-  width: 220px;
+  width: 230px;
   height: 100%;
   padding: 15px;
   transition: left 0.5s ease-out;
   -webkit-transition: left 0.5s ease-out;
   -moz-transition: left 0.5s ease-out;
   -o-transition: left 0.5s ease-out;
+  overflow-y: auto;
 }
 .sidebar.hidden {
-  left: -210px;
+  left: -220px;
 }
 .sidebar.hidden .menu {
   opacity: 1;
@@ -355,6 +358,8 @@ body {
   padding-left: 45px;
 }
 * {
-  -webkit-transition: color 0.2s ease-out;
   -webkit-transition: background-color 0.2s ease-out;
+}
+p {
+  -webkit-transition: color 0.5s ease-out;
 }
