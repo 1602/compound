@@ -1,8 +1,8 @@
-global.app = app = require('railway').createServer();
-global.railway = app.railway;
+global.app = app = require('compound').createServer();
+global.railway = app.compound;
 for (var i in railway.models) global[i] = railway.models[i];
 
-app.enable('quiet');
+app.disable('quiet');
 app.disable('watch');
 
 exports.controller = function (controllerName, exp) {
@@ -21,7 +21,7 @@ exports.controller = function (controllerName, exp) {
     assert.render = function (template, message) {
         if (!this.res.render.calledWith(template) && !this.res.render.calledWith(controllerName + '/' + template)) {
             assert.fail([template, controllerName + '/' + template],
-                this.res.render.args.map(function (x) { return x[0]; }),
+                this.res.render.args[0],
                 message || 'Render template',
                 'in',
                 assert.render);
@@ -53,10 +53,10 @@ exports.controller = function (controllerName, exp) {
     };
 
     assert.flash = function (kind) {
-        if (!this.req.flash.called) {
-            assert.fail(this.req.flash.called, true, 'req.flash() does not called', '===', assert.flash);
-        } else if (!this.req.flash.calledWith(kind)) {
-            assert.fail(this.req.flash.args[0][0], kind, 'req.flash() does not called with ' + kind, '===', assert.flash);
+        if (!this.req.session.flash) {
+            assert.fail(this.req.session.flash, true, 'req.flash() does not called', '===', assert.flash);
+        } else if (kind in this.req.flash) {
+            assert.fail(kind in this.req.flash, true, 'req.flash() does not called with ' + kind, '===', assert.flash);
         }
     };
 
@@ -105,9 +105,33 @@ exports.controller = function (controllerName, exp) {
             var req = new http.IncomingMessage;
             var res = new http.ServerResponse({method: 'NOTHEAD'});
 
-            res.render   = sinon.spy(res.render);
+            res.render   = function () {
+                var args = [].slice.call(arguments);
+                res.render.args = args;
+                res.render.calledWith = function () {
+                    var res = true;
+                    [].slice.call(arguments).forEach(function (a, i) {
+                        if (a !== args[i]) res = false;
+                    });
+                    return res;
+                };
+                res.end();
+            };
+            res.redirect   = function (url) {
+                var args = [].slice.call(arguments);
+                res.statusCode = 302;
+                res.headers.location = url;
+                res.redirect.args = args;
+                res.redirect.calledWith = function () {
+                    var res = true;
+                    [].slice.call(arguments).forEach(function (a, i) {
+                        if (a !== args[i]) res = false;
+                    });
+                    return res;
+                };
+                res.end();
+            };
             res.send     = sinon.spy(res.send);
-            res.redirect = sinon.spy(res.redirect);
             res.headers  = {};
             res.setHeader = res.header = function (header, value) {
                 res.headers[header.toLowerCase()] = value;
@@ -118,7 +142,9 @@ exports.controller = function (controllerName, exp) {
                 cookie: cookieString(cookies)
             };
 
-            req.flash    = sinon.spy(req.flash);
+            req.flash    = sinon.spy(function (a, b) {
+                req.session.flash[a] = b;
+            });
             req.connection = {};
             req.url      = url;
             req.method   = method;

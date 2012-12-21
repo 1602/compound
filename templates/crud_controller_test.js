@@ -14,7 +14,6 @@ exports['models controller'] = {
         test.get('/models/new', function () {
             test.success();
             test.render('new');
-            test.render('form.' + app.set('view engine'));
             test.done();
         });
     },
