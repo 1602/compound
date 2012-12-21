@@ -328,6 +328,7 @@ Compound application loading process supports following events to be attached
 - after extensions
 - post-init
 - structure loaded
+- models loaded
 - after initializers
 
 REPL console
