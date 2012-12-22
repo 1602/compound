@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html class="style-light">
   <head>
     <title>CompoundJS</title>
 
     <link rel="stylesheet" href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css">
+    <link href="http://fonts.googleapis.com/css?family=Quicksand:300" rel="stylesheet">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="/javascripts/prettyprint/prettify.css" rel="stylesheet">
@@ -20,54 +21,100 @@
       section, body {
         padding-top: 60px;
       }
+      h1, h2, h3 {
+        font: 300 24px 'Quicksand', 'Lucida Grande', sans-serif;
+        margin-bottom: 20px;
+        display: block;
+        padding: 10px 20px 10px 20px;
+      }
+      h1 {
+        font-size: 30px;
+        text-transform: uppercase;
+      }
+      pre {
+          border: 1px solid rgba(255,255,255,0.1);
+          background: rgba(0,0,0,0.3);
+          color: #ddd
+      }
     </style>
 
   </head>
   <body>
-    <!--div class="navbar-wrapper navbar-fixed-top" style="z-index: 5;">
-      <div class="navbar">
-        <div class="navbar-inner">
-          <div class="container">
-            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </a>
-            <a class="brand" href="/">CompoundJS</a>
-            <div class="nav-collapse">
-              <ul class="nav">
-                <li><a href="#routing">Routing</a></li><li><a href="#controller">Controller</a></li><li><a href="#views">Views</a></li><li><a href="#orm">ORM</a></li><li><a href="#generators">Generators</a></li><li><a href="#console">Console</a></li><li><a href="#coffee">Coffee</a></li><li><a href="#localization">Locales</a></li><li><a href="#extensions">Extensions</a></li>
-                <li class="dropdown"><a href="#" class="dropdonw-toggle" data-toggle="dropdown"><b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                  <li><a href="#heroku">Heroku</a></li>
-                  <li><a href="#snippets">Snippets</a></li>
-                </ul>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div-->
 
-<div class="container">
 
     <div class="row">
-      <div class="span8" style="height: 300px; zoom: 75%; background: url(https://f.cloud.github.com/assets/119684/21484/a0314c0a-49b4-11e2-9c07-cd4a8adcc513.png)">
-        <div style="margin-top: 230px; margin-left: 400px; color: #ccc; font-size: 17px;">
-          build apps with love
+      <div class="container">
+        <div class="span8" style="height: 300px; zoom: 75%; background: url(https://f.cloud.github.com/assets/119684/21484/a0314c0a-49b4-11e2-9c07-cd4a8adcc513.png)">
+          <div style="margin-top: 230px; margin-left: 400px; color: #ccc; font-size: 17px;">
+            build apps with love
+          </div>
         </div>
-      </div>
-      <div class="span4">
-        <a class="btn" href="docs.html">Guide</a>
-        <a class="btn" href="https://github.com/1602/compound">Source</a>
-        <a class="btn" href="https://github.com/1602/compound/issues">Issues</a>
-        <a class="btn" href="https://groups.google.com/forum/?fromgroups#!forum/compoundjs">Discuss</a>
+        <div class="span4">
+          <a class="btn btn-primary" href="docs">Guide</a>
+          <a class="btn" href="https://github.com/1602/compound">Source</a>
+          <a class="btn" href="https://github.com/1602/compound/issues">Issues</a>
+          <a class="btn" href="https://groups.google.com/forum/?fromgroups#!forum/compoundjs">Discuss</a>
+
+        </div>
       </div>
     </div>
 
+    <div class="row" style="background: #282828; margin-top: 150px;">
+      <div class="container">
+        <div class="span4" style="margin-left: 12px;">
+          <h1 style="color: #fc0243">
+            why
+          </h1>
+          <ul style="color: #aaa;">
+            <li>Simple is better</li>
+            <li>Focus on what matters</li>
+            <li></li>
+          </ul>
+        </div>
+        <div class="span4" style="margin-left: 12px;">
+          <h1 style="color: #fc0243">
+            how
+          </h1>
+          <ul style="color: #aaa;">
+            <li>Compound best practices together</li>
+            <li>Use things in natural way</li>
+            <li>Keep code organized</li>
+            <li>Everything is module</li>
+          </ul>
+        </div>
+        <div class="span4" style="margin-left: 12px;">
+          <h1 style="color: #fc0243">
+            what
+          </h1>
+          <ul style="color: #aaa;">
+            <li>MVC without magic</li>
+            <li>Generators for everything</li>
+            <li>Rich toolset</li>
+          </ul>
+        </div>
+        <div class="row">
+          <div class="span6">
+              <h1 style="color: #fc0243">
+                  start right now
+              </h1>
+              <pre><code>npm install compound -g
+compound init compound-app; cd compound-app; npm install
+compound generate crud thing name description
+node .
 
-</div>
+curl http://localhost:3000/things.json
+curl -X POST -F 'Thing[name]=compound' http://localhost:3000/things.json
+              </code></pre>
+          </div>
+          <div class="span6">
+              <h1 style="color: #fc0243">
+                  learn more
+              </h1>
+          </div>
+        </div>
+      </div>
+    </div>
+
 
 <!--footer class="footer">
 <div class="container">
