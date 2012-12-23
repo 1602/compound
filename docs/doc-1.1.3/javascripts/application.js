@@ -3,7 +3,24 @@ $(function() {
 
   /**
    * Handle style switch clicking
+   *  + Remember state
    */
+
+  // Default style?
+  var style = localStorage.getItem('doc-style');
+  if (!style) {
+    style = 'style-dark';
+    localStorage.setItem('doc-style', style);
+  }
+
+  var logo = 'images/logo-dark.png';
+  if (style === 'style-dark') {
+    logo = 'images/logo.png';
+  }
+
+  $('html').removeClass().addClass(style);
+  $('img.logo').attr({ src: logo });
+
   $('.style-switch').click(function() {
     var newClass
       , newLogo;
@@ -15,6 +32,7 @@ $(function() {
       newLogo  = 'images/logo.png';
     }
 
+    localStorage.setItem('doc-style', newClass);
     $('html').removeClass().addClass(newClass);
     $('img.logo').attr({ src: newLogo });
   });
