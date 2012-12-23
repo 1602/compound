@@ -22,7 +22,8 @@ var template = fs.readFileSync('template.html')
     'generators',
     'extension-api',
     'heroku',
-    'code-snippets'
+    'code-snippets',
+    'about'
   ];
 
 String.prototype.inlineLexer = function() {
@@ -108,6 +109,7 @@ sections.forEach(function (section) {
         content += '</ul>\n';
         break;
       case 'text':
+      case 'html':
         var text = node.text;
         content += text;
         break;

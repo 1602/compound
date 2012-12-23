@@ -1499,7 +1499,10 @@ Localization behavior can be configured using the following settings:
 
 <ul>
 <li>`defaultLocale`: Default locale name</li>
-<li>`translationMissing`: Defines what action to perform when translation is missing. Possible Values:</li>
+<li>`translationMissing`: Defines what action to perform when translation is missing. Possible Values:<ul>
+<li>`default` - Display translation for default locale</li>
+<li>`display` - Show an error like "Translation missing for email.activate"</li>
+</ul></li>
 <li>`default` - Display translation for default locale</li>
 <li>`display` - Show an error like "Translation missing for email.activate"</li>
 </ul>
@@ -2042,7 +2045,27 @@ action('create', function () {
 });
 </pre>
 
-</section>
+<p>
+Documentation is maintained by <a href="http://twitter.com/1602" target="_blank">@1602 (Anatoliy Chakkaev)</a> and <a href="http://twitter.com/rattazong" target="_blank">@rattazong (Sascha Gehlich)</a>.
+
+</p>
+
+<p>
+CompoundJS is licensed under the <a href="http://www.opensource.org/licenses/mit-license.php" target="_blank">MIT License</a>. Documentation is licensed under <a href="http://creativecommons.org/licenses/by/3.0/" target="_blank">CC BY 3.0</a>.
+
+</p>
+
+<p>
+The CompoundJS and JugglingDB projects are free, but you can leave a tip here:
+
+</p>
+
+<form style="text-align: center" action="https://www.paypal.com/cgi-bin/webscr" method="post">
+  <input type="hidden" name="cmd" value="_s-xclick">
+  <input type="hidden" name="hosted_button_id" value="J3JJDYJW78LEJ">
+  <input type="image" style="box-shadow: none; -webkit-box-shadow: none; padding: 0; border: 0; width: 147px; height: 47px;" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+  <img alt="" border="0" src="https://www.paypalobjects.com/ru_RU/i/scr/pixel.gif" width="1" height="1">
+</form></section>
     </div>
   </body>
 </html>
