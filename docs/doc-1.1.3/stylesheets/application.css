@@ -181,6 +181,7 @@ html.style-dark .sidebar a {
 html.style-dark .sidebar a:hover,
 html.style-dark .sidebar a.active {
   background: rgba(0,0,0,0.3);
+  color: #fc0243;
 }
 html.style-dark .sidebar .level-0 > a {
   color: #fc0243;
@@ -225,6 +226,7 @@ html.style-light .sidebar a {
 html.style-light .sidebar a:hover,
 html.style-light .sidebar a.active {
   background: rgba(0,0,0,0.1);
+  color: #fc0243;
 }
 html.style-light .sidebar .level-0 > a {
   color: #fc0243;
