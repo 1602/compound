@@ -34,6 +34,14 @@ String.prototype.inlineLexer = function() {
   return text;
 }
 
+String.prototype.slugify = function {
+  var text = this;
+  text = text.replace(/[^-a-zA-Z0-9,&\s]+/ig, '');
+  text = text.replace(/-/gi, "_");
+  text = text.replace(/\s/gi, "-");
+  return text;
+};
+
 /**
  * Compile stylus files
  */
@@ -68,7 +76,7 @@ sections.forEach(function (section) {
         if (headingsCount !== 0)
           content += '</section>\n\n';
 
-        var node_id = section + '-' + node.text;
+        var node_id = section + '-' + node.text.slugify();
 
         content += '<section id="' + node_id + '">\n';
 
