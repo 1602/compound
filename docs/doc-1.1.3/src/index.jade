@@ -1236,7 +1236,7 @@ html.style-dark
         p Functions that need access to a specific Model instance need to be declared in the prototype, otherwise they will not be available.
 
       section(id="orm-generators")
-        h2 Generators
+        h1 Generators
 
         p CompoundJS generators are automated tools that allow you to create a bunch of files automatically. Each generator can be run via:
 
@@ -1258,7 +1258,7 @@ html.style-dark
           | )
 
       section(id="orm-generators-controller")
-        h3 Generate controller
+        h2 Generate controller
 
         p Use case: You don't need a standard RESTful controller, just a few non-standard actions.
 
@@ -1293,7 +1293,7 @@ html.style-dark
           });
 
       section(id="orm-generators-scaffold")
-        h3 Generate scaffold (crud)
+        h2 Generate scaffold (crud)
 
         p The most commonly used generator. It creates a ready-to-use resource controller with all needed actions, views, schema definitions, routes and tests. Compound can also generate scaffolds in CoffeeScript.
 
@@ -1323,7 +1323,7 @@ html.style-dark
         p Using scaffold generator is the fastest way to create a prototype application.
 
       section(id="repl-console")
-        h2 REPL console
+        h1 REPL console
 
         p To run the REPL console use this command:
 
@@ -1333,7 +1333,7 @@ html.style-dark
 
         pre.prettyprint compound c
 
-        p The REPL console is   just a simple Node.js console with some CompoundJS, for example models.
+        p The REPL console is just a simple Node.js console with some CompoundJS, for example models.
 
         p 
           | Just one note on working with the console: Node.js is asynchronous by its nature which makes console debugging much more compilcated, since you have to use a callback to fetch results from the database for instance. We have added one useful method to simplify asynchronous debugging using the REPL console. It's called 
@@ -1579,7 +1579,7 @@ html.style-dark
           });
 
       section(id="extensions-api")
-        h2 Extensions API
+        h1 Extensions API
 
         p 
           | Any npm package can be used as an extension for CompoundJS. Just add a line to 
@@ -1600,7 +1600,7 @@ html.style-dark
           |  for compound.
 
       section(id="extensions-api-installation-script")
-        h3 Installation script
+        h2 Installation script
 
         p
           | If your extensions have an 
@@ -1610,7 +1610,7 @@ html.style-dark
           | .
 
       section(id="extensions-api-compoundjs")
-        h3 CompoundJS extension API
+        h2 CompoundJS extension API
 
         p 
           | All CompoundJS modules are published in the 
@@ -1618,7 +1618,7 @@ html.style-dark
           | object. Any module can be extended or monkey-patched. Let's take a look at the most common use-cases.
 
       section(id="extensions-api-tools")
-        h3 Tools
+        h2 Tools
 
         p
           | The 
@@ -1695,7 +1695,7 @@ html.style-dark
           code lib/tools.js
 
       section(id="extensions-generators")
-        h3 Generators
+        h2 Generators
 
         p
           | Coming soon. It's about the 
@@ -1705,7 +1705,7 @@ html.style-dark
           |  commands.
 
       section(id="extension-discussion")
-        h3 Discussion in Google Groups
+        h2 Discussion in Google Groups
 
         p 
           | API is still in development now, feel free to leave comments about it in the related 
@@ -1714,7 +1714,7 @@ html.style-dark
 
 
       section(id="heroku")
-        h2 Heroku
+        h1 Heroku
 
         p 
           | Heroku's Node.js hosting is available fo public usage now. Deploying a CompoundJS application is as simple as 
@@ -1729,7 +1729,7 @@ html.style-dark
           |  gem.
 
       section(id="heroku-deploy")
-        h3 Deploying an application
+        h2 Deploying an application
 
         p First of all, create an application:
         pre.prettyprint.
@@ -1789,10 +1789,10 @@ html.style-dark
           heroku config --long
 
       section(id="code-snippets")
-        h2 Code snippets
+        h1 Code snippets
 
       section(id="code-snippets-multiple-workers")
-        h3 Multiple workers compound server (node 0.6.0)
+        h2 Multiple workers compound server (node 0.6.0)
 
         p
           | Example in CoffeeScript: 
@@ -1821,7 +1821,7 @@ html.style-dark
                   console.log "CompoundJS server listening on port %d within %s environment", port, app.settings.env
 
       section(id="code-snippets-redis-store")
-        h3 Redis session store for Heroku deployment with redistogo addon
+        h2 Redis session store for Heroku deployment with redistogo addon
 
         p
           | Hook the 
@@ -1861,7 +1861,7 @@ html.style-dark
           });
 
       section(id="code-snippets-upload-file")
-        h3 Upload file to compound server
+        h2 Upload file to compound server
 
         ul
           li
