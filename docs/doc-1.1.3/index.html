@@ -800,7 +800,7 @@ User.prototype.getFullName = function getFullName() {
         <p>Functions that need access to a specific Model instance need to be declared in the prototype, otherwise they will not be available.</p>
       </section>
       <section id="orm-generators">
-        <h2>Generators</h2>
+        <h1>Generators</h1>
         <p>CompoundJS generators are automated tools that allow you to create a bunch of files automatically. Each generator can be run via:</p>
         <pre class="prettyprint">compound generate GENERATOR_NAME</pre>
         <p>or using the shortcut:</p>
@@ -811,7 +811,7 @@ User.prototype.getFullName = function getFullName() {
         </p>
       </section>
       <section id="orm-generators-controller">
-        <h3>Generate controller</h3>
+        <h2>Generate controller</h2>
         <p>Use case: You don't need a standard RESTful controller, just a few non-standard actions.</p>
         <p>Example:</p>
         <pre class="prettyprint">compound g controller controllername actionName otherActionName</pre>
@@ -839,7 +839,7 @@ action(&quot;anotherActionName&quot;, function () {
 </pre>
       </section>
       <section id="orm-generators-scaffold">
-        <h3>Generate scaffold (crud)</h3>
+        <h2>Generate scaffold (crud)</h2>
         <p>The most commonly used generator. It creates a ready-to-use resource controller with all needed actions, views, schema definitions, routes and tests. Compound can also generate scaffolds in CoffeeScript.</p>
         <p>Example call:</p>
         <pre class="prettyprint">compound g scaffold post title content createdAt:date
@@ -865,12 +865,12 @@ patch   config/routes.js
         <p>Using scaffold generator is the fastest way to create a prototype application.</p>
       </section>
       <section id="repl-console">
-        <h2>REPL console</h2>
+        <h1>REPL console</h1>
         <p>To run the REPL console use this command:</p>
         <pre class="prettyprint">compound console</pre>
         <p>or its shortcut:</p>
         <pre class="prettyprint">compound c</pre>
-        <p>The REPL console is   just a simple Node.js console with some CompoundJS, for example models.</p>
+        <p>The REPL console is just a simple Node.js console with some CompoundJS, for example models.</p>
         <p>
            
           Just one note on working with the console: Node.js is asynchronous by its nature which makes console debugging much more compilcated, since you have to use a callback to fetch results from the database for instance. We have added one useful method to simplify asynchronous debugging using the REPL console. It's called <code>c</code> and you can pass it as a parameter to any function that requires a callback. It will store the parameters passed to the callback to variables called <code>_0, _1, ..., _N</code> where N is the length of <code>arguments</code>.
@@ -1061,7 +1061,7 @@ app.configure('production', function () {
 </pre>
       </section>
       <section id="extensions-api">
-        <h2>Extensions API</h2>
+        <h1>Extensions API</h1>
         <p>
            
           Any npm package can be used as an extension for CompoundJS. Just add a line to <code>npmfile.js</code>, for example:
@@ -1078,18 +1078,18 @@ app.configure('production', function () {
         </p>
       </section>
       <section id="extensions-api-installation-script">
-        <h3>Installation script</h3>
+        <h2>Installation script</h2>
         <p>If your extensions have an <code>install.js</code> script in the root directory, itw ill be invoked after installing it using <code>compound install</code>.</p>
       </section>
       <section id="extensions-api-compoundjs">
-        <h3>CompoundJS extension API</h3>
+        <h2>CompoundJS extension API</h2>
         <p>
            
           All CompoundJS modules are published in the <code>compound</code>object. Any module can be extended or monkey-patched. Let's take a look at the most common use-cases.
         </p>
       </section>
       <section id="extensions-api-tools">
-        <h3>Tools</h3>
+        <h2>Tools</h2>
         <p>The <code>compound.tools</code> hash contains commands that can be invoked using the command line, for example <code>compound routes</code> will call <code>compound.tools.routes()</code> .</p>
         <p>
            
@@ -1141,18 +1141,18 @@ compound database restore
         <p>To learn more, please check out <a href="https://github.com/1602/compound/blob/master/lib/tools.js" target="_blank">the sources</a>: <code>lib/tools.js</code></p>
       </section>
       <section id="extensions-generators">
-        <h3>Generators</h3>
+        <h2>Generators</h2>
         <p>Coming soon. It's about the <code>compound.generators</code> module and the <code>compound generate</code> commands.</p>
       </section>
       <section id="extension-discussion">
-        <h3>Discussion in Google Groups</h3>
+        <h2>Discussion in Google Groups</h2>
         <p>
            
           API is still in development now, feel free to leave comments about it in the related <a href="http://groups.google.com/group/railwayjs/browse_thread/thread/1cfa3e1e348fc62c" target="_blank">Google Groups thread</a>.
         </p>
       </section>
       <section id="heroku">
-        <h2>Heroku</h2>
+        <h1>Heroku</h1>
         <p>
            
           Heroku's Node.js hosting is available fo public usage now. Deploying a CompoundJS application is as simple as <code>git push</code>.
@@ -1160,7 +1160,7 @@ compound database restore
         <p>To work with heroku you also need <code>ruby</code> as well as the <code>heroku</code> gem.</p>
       </section>
       <section id="heroku-deploy">
-        <h3>Deploying an application</h3>
+        <h2>Deploying an application</h2>
         <p>First of all, create an application:</p>
         <pre class="prettyprint">compound init heroku-app
 cd heroku-app
@@ -1207,10 +1207,10 @@ git commit -m 'Init'
 </pre>
       </section>
       <section id="code-snippets">
-        <h2>Code snippets</h2>
+        <h1>Code snippets</h1>
       </section>
       <section id="code-snippets-multiple-workers">
-        <h3>Multiple workers compound server (node 0.6.0)</h3>
+        <h2>Multiple workers compound server (node 0.6.0)</h2>
         <p>Example in CoffeeScript: </p><code>server.coffee</code>
         <pre class="prettyprint">#!/usr/bin/env coffee
 
@@ -1235,7 +1235,7 @@ if not module.parent
         </pre>
       </section>
       <section id="code-snippets-redis-store">
-        <h3>Redis session store for Heroku deployment with redistogo addon</h3>
+        <h2>Redis session store for Heroku deployment with redistogo addon</h2>
         <p>Hook the <code>REDISTOGO_URL</code> environment variable in <code>config/environment.js</code> and pass it to the RedisStore constructor.</p>
         <pre class="prettyprint">var express    = require('express'),
     RedisStore = require('connect-redis')(express);
@@ -1268,7 +1268,7 @@ app.configure(function(){
 </pre>
       </section>
       <section id="code-snippets-upload-file">
-        <h3>Upload file to compound server</h3>
+        <h2>Upload file to compound server</h2>
         <ul>
           <li><a href="http://groups.google.com/group/railwayjs/browse_thread/thread/592df72830898e9a" target="_blank">Discussion in Google Groups</a></li>
           <li>The solution is to use <a href="https://github.com/anatoliychakkaev/connect-form-sync" target="_blank">this middleware</a></li>
