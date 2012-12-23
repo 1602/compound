@@ -1,15 +1,15 @@
-{ "name": "{{ APPNAME }}"
+{ "name": "APPNAME"
 , "version": "0.0.1"
 , "engines": ["node >= 0.8.0"]
 , "main": "server.js"
 , "dependencies":
-  { "{{ VIEWENGINE }}":              "*"
-  , "{{ VIEWENGINE }}-ext":          "latest"
+  { "VIEWENGINE":              "*"
+  , "VIEWENGINE-ext":          "latest"
   , "express":          "~3.x"
   , "compound":       ">= 1.1.0"
   , "jugglingdb":       ">= 0.1.0"
   , "coffee-script":    ">= 1.1.1"
-  , "{{ CSSENGINE }}":           "latest"
+  , "CSSENGINE":           "latest"
   , "seedjs": "latest"
   },
   "devDependencies":
