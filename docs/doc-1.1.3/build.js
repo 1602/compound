@@ -34,12 +34,12 @@ String.prototype.inlineLexer = function() {
   return text;
 }
 
-String.prototype.slugify = function {
+String.prototype.slugify = function () {
   var text = this;
   text = text.replace(/[^-a-zA-Z0-9,&\s]+/ig, '');
   text = text.replace(/-/gi, "_");
   text = text.replace(/\s/gi, "-");
-  return text;
+  return text.toLowerCase();
 };
 
 /**

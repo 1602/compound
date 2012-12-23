@@ -16,7 +16,7 @@
     </div>
     <div class="content-wrapper"><img src="images/logo.png" alt="CompoundJS" class="logo">
       <div class="style-switch"></div>
-      <section id="routing-Routing">
+      <section id="routing-routing">
 <h1>Routing</h1>
 
 <p>
@@ -39,7 +39,7 @@ map.root('home#index');
 
 </section>
 
-<section id="routing-Resource-based routing">
+<section id="routing-resource_based-routing">
 <h2>Resource-based routing</h2>
 
 <p>
@@ -87,7 +87,7 @@ path_to.post(post)          # /posts/1.
 
 </section>
 
-<section id="routing-Aliases for resourceful routes">
+<section id="routing-aliases-for-resourceful-routes">
 <h2>Aliases for resourceful routes</h2>
 
 <p>
@@ -97,7 +97,7 @@ If you want to override default routes behaviour, you can use two options: <code
 
 </section>
 
-<section id="routing-{ as: 'helperName' }">
+<section id="routing--as-helpername-">
 <h3>{ as: 'helperName' }</h3>
 
 <p>
@@ -126,7 +126,7 @@ edit_article GET    /posts/:id/edit.:format? posts#edit
 
 </section>
 
-<section id="routing-{ path: 'alternatePath' }">
+<section id="routing--path-alternatepath-">
 <h3>{ path: 'alternatePath' }</h3>
 
 <p>
@@ -155,7 +155,7 @@ edit_post GET    /articles/:id/edit.:format? posts#edit
 
 </section>
 
-<section id="routing-All together">
+<section id="routing-all-together">
 <h3>All together</h3>
 
 <p>
@@ -184,7 +184,7 @@ edit_story GET    /articles/:id/edit.:format? posts#edit
 
 </section>
 
-<section id="routing-Nested resources">
+<section id="routing-nested-resources">
 <h2>Nested resources</h2>
 
 <p>
@@ -228,7 +228,7 @@ $ compound routes
 
 </section>
 
-<section id="routing-Using url helpers for nested routes">
+<section id="routing-using-url-helpers-for-nested-routes">
 <h3>Using url helpers for nested routes</h3>
 
 <p>
@@ -244,7 +244,7 @@ path_to.edit_post_comment(2, 300)         # /posts/2/comments/300/edit
 
 </section>
 
-<section id="routing-Namespaces">
+<section id="routing-namespaces">
 <h2>Namespaces</h2>
 
 <p>
@@ -280,7 +280,7 @@ edit_admin_user GET    /admin/users/:id/edit.:format? admin/users#edit
 
 </section>
 
-<section id="routing-Restricting routes">
+<section id="routing-restricting-routes">
 <h2>Restricting routes</h2>
 
 <p>
@@ -303,7 +303,7 @@ map.resources('users', { except: ['create', 'destroy'] });
 
 </section>
 
-<section id="routing-Custom actions in resourceful routes">
+<section id="routing-custom-actions-in-resourceful-routes">
 <h2>Custom actions in resourceful routes</h2>
 
 <p>
@@ -319,7 +319,7 @@ map.resource('users', function (user) {
 
 </section>
 
-<section id="controllers-Controllers">
+<section id="controllers-controllers">
 <h1>Controllers</h1>
 
 <p>
@@ -329,7 +329,7 @@ In CompoundJS, a controller is a module that receives user input and initiates a
 
 </section>
 
-<section id="controllers-Features overview">
+<section id="controllers-features-overview">
 <h2>Features overview</h2>
 
 <p>
@@ -363,7 +363,7 @@ Let's learn more about each of this functions
 
 </section>
 
-<section id="controllers-Response control">
+<section id="controllers-response-control">
 <h2>Response control</h2>
 
 <p>
@@ -373,7 +373,7 @@ Let's learn more about each of this functions
 
 </section>
 
-<section id="controllers-render()">
+<section id="controllers-render">
 <h3>render()</h3>
 
 <p>
@@ -435,7 +435,7 @@ action('update', function () {
 
 </section>
 
-<section id="controllers-send()">
+<section id="controllers-send">
 <h3>send()</h3>
 
 <p>
@@ -478,7 +478,7 @@ action('apiCall', function () {
 
 </section>
 
-<section id="controllers-redirect()">
+<section id="controllers-redirect">
 <h3>redirect()</h3>
 
 <p>
@@ -493,7 +493,7 @@ redirect('http://example.com'); // redirect to another host
 
 </section>
 
-<section id="controllers-flash()">
+<section id="controllers-flash">
 <h3>flash()</h3>
 
 <p>
@@ -522,7 +522,7 @@ This <code>create</code> action sends a flash info on success and a flash error 
 
 </section>
 
-<section id="controllers-Execution flow control">
+<section id="controllers-execution-flow-control">
 <h2>Execution flow control</h2>
 
 <p>
@@ -562,7 +562,7 @@ Note, that the before-functions should call the global <code>next</code> method 
 
 </section>
 
-<section id="controllers-Common execution context">
+<section id="controllers-common-execution-context">
 <h2>Common execution context</h2>
 
 <p>
@@ -586,7 +586,7 @@ action('products', function () {
 
 </section>
 
-<section id="controllers-Sharing code across controllers">
+<section id="controllers-sharing-code-across-controllers">
 <h2>Sharing code across controllers</h2>
 
 <p>
@@ -614,7 +614,7 @@ before(use('userRequired'), { only: 'products' });
 
 </section>
 
-<section id="controllers-Other express.js features">
+<section id="controllers-other-expressjs-features">
 <h2>Other express.js features</h2>
 
 <p>
@@ -629,12 +629,12 @@ All other expressjs features have no global shortcuts yet, but they can still be
 
 </section>
 
-<section id="views-Views">
+<section id="views-views">
 <h1>Views</h1>
 
 </section>
 
-<section id="views-Templating engines">
+<section id="views-templating-engines">
 <h2>Templating engines</h2>
 
 <p>
@@ -652,7 +652,7 @@ require('jade-ext');
 
 </section>
 
-<section id="views-View rendering flow">
+<section id="views-view-rendering-flow">
 <h2>View rendering flow</h2>
 
 <p>
@@ -672,12 +672,12 @@ If you need to render a view without a layout, you can call <code>layout(false) 
 
 </section>
 
-<section id="views-Built-in helpers">
+<section id="views-built_in-helpers">
 <h2>Built-in helpers</h2>
 
 </section>
 
-<section id="views-linkTo">
+<section id="views-linkto">
 <h3>linkTo</h3>
 
 <pre class="prettyprint">
@@ -738,7 +738,7 @@ When server will send you <code>"http://google.com/"</code> following javascript
 
 </section>
 
-<section id="views-formFor">
+<section id="views-formfor">
 <h3>formFor</h3>
 
 <p>
@@ -791,7 +791,7 @@ This will generate:
 
 </section>
 
-<section id="views-formTag">
+<section id="views-formtag">
 <h3>formTag</h3>
 
 <p>
@@ -834,7 +834,7 @@ This will generate:
 
 </section>
 
-<section id="views-input_tag / form.input">
+<section id="views-inputtag--forminput">
 <h3>input_tag / form.input</h3>
 
 <p>
@@ -844,7 +844,7 @@ TODO: describe this
 
 </section>
 
-<section id="views-label_tag / form.label">
+<section id="views-labeltag--formlabel">
 <h3>label_tag / form.label</h3>
 
 <p>
@@ -854,7 +854,7 @@ TODO: describe this
 
 </section>
 
-<section id="views-stylesheet_link_tag">
+<section id="views-stylesheetlinktag">
 <h3>stylesheet_link_tag</h3>
 
 <pre class="prettyprint">
@@ -878,7 +878,7 @@ Timestamps like  <code>?1306993455524</code> are added to assets only in develop
 
 </section>
 
-<section id="views-javascript_link_tag">
+<section id="views-javascriptlinktag">
 <h3>javascript_link_tag</h3>
 
 <pre class="prettyprint">
@@ -915,7 +915,7 @@ app.set('cssDirectory', '/css/');
 
 </section>
 
-<section id="views-Defining your own helpers">
+<section id="views-defining-your-own-helpers">
 <h2>Defining your own helpers</h2>
 
 <p>
@@ -938,12 +938,12 @@ The function <code>my_helper</code> can be now used by any of the views used by 
 
 </section>
 
-<section id="orm-ORM: JugglingDB">
+<section id="orm-orm-jugglingdb">
 <h1>ORM: JugglingDB</h1>
 
 </section>
 
-<section id="orm-Configuration">
+<section id="orm-configuration">
 <h2>Configuration</h2>
 
 <p>
@@ -997,7 +997,7 @@ All of these schemas can be used simultaneously and you can even describe relati
 
 </section>
 
-<section id="orm-Define schema">
+<section id="orm-define-schema">
 <h2>Define schema</h2>
 
 <p>
@@ -1074,7 +1074,7 @@ customSchema(function () {
 
 </section>
 
-<section id="orm-Describe relations">
+<section id="orm-describe-relations">
 <h2>Describe relations</h2>
 
 <p>
@@ -1126,7 +1126,7 @@ user.posts.published(cb); // same as Post.all({ published: true, userId: user.id
 
 </section>
 
-<section id="orm-Setup validations">
+<section id="orm-setup-validations">
 <h2>Setup validations</h2>
 
 <p>
@@ -1201,7 +1201,7 @@ Each configurator accepts a set of string arguments and an optional last argumen
 
 </section>
 
-<section id="orm-Available validations">
+<section id="orm-available-validations">
 <h2>Available validations</h2>
 
 </section>
@@ -1320,7 +1320,7 @@ test.ok user.isValid()
 
 </section>
 
-<section id="orm-Defining additional model functions">
+<section id="orm-defining-additional-model-functions">
 <h2>Defining additional model functions</h2>
 
 <p>
@@ -1348,7 +1348,7 @@ Using scaffold generator is the fastest way to create a prototype application.</
 
 </section>
 
-<section id="repl-REPL console">
+<section id="repl-repl-console">
 <h1>REPL console</h1>
 
 <p>
@@ -1402,7 +1402,7 @@ compound&gt; _1
 
 </section>
 
-<section id="localization-Localization">
+<section id="localization-localization">
 <h1>Localization</h1>
 
 <p>
@@ -1489,7 +1489,7 @@ NOTE: When you use the <code>t</code> helper in models, you have to pass the <co
 
 </section>
 
-<section id="localization-Configuration">
+<section id="localization-configuration">
 <h2>Configuration</h2>
 
 <p>
@@ -1529,7 +1529,7 @@ app.configure('production', function () {
 
 </section>
 
-<section id="generators-Generators">
+<section id="generators-generators">
 <h1>Generators</h1>
 
 <p>
@@ -1557,7 +1557,7 @@ Built-in generators are:<code>model</code>, <code>controller</code>, <code>scaff
 
 </section>
 
-<section id="generators-Generate controller">
+<section id="generators-generate-controller">
 <h2>Generate controller</h2>
 
 <p>
@@ -1610,7 +1610,7 @@ action("anotherActionName", function () {
 
 </section>
 
-<section id="generators-Generate scaffold (crud)">
+<section id="generators-generate-scaffold-crud">
 <h2>Generate scaffold (crud)</h2>
 
 <p>
@@ -1647,7 +1647,7 @@ patch   config/routes.js
 
 </section>
 
-<section id="extension-api-Extensions API">
+<section id="extension-api-extensions-api">
 <h1>Extensions API</h1>
 
 <p>
@@ -1671,7 +1671,7 @@ For an example, you can check out the <a href="https://github.com/1602/compound-
 
 </section>
 
-<section id="extension-api-Installation script">
+<section id="extension-api-installation-script">
 <h3>Installation script</h3>
 
 <p>
@@ -1681,7 +1681,7 @@ If your extensions have an <code>install.js</code> script in the root directory,
 
 </section>
 
-<section id="extension-api-CompoundJS extension API">
+<section id="extension-api-compoundjs-extension-api">
 <h3>CompoundJS extension API</h3>
 
 <p>
@@ -1691,7 +1691,7 @@ All CompoundJS modules are published in the <code>compound</code>object. Any mod
 
 </section>
 
-<section id="extension-api-Tools">
+<section id="extension-api-tools">
 <h3>Tools</h3>
 
 <p>
@@ -1774,7 +1774,7 @@ To learn more, please check out <a href="https://github.com/1602/compound/blob/m
 
 </section>
 
-<section id="extension-api-Generators">
+<section id="extension-api-generators">
 <h3>Generators</h3>
 
 <p>
@@ -1784,7 +1784,7 @@ Coming soon. It's about the <code>compound.generators</code> module and the <cod
 
 </section>
 
-<section id="extension-api-Discussion in Google Groups">
+<section id="extension-api-discussion-in-google-groups">
 <h3>Discussion in Google Groups</h3>
 
 <p>
@@ -1792,7 +1792,7 @@ API is still in development now, feel free to leave comments about it in the rel
 
 </section>
 
-<section id="heroku-Heroku">
+<section id="heroku-heroku">
 <h1>Heroku</h1>
 
 <p>
@@ -1807,7 +1807,7 @@ To work with heroku you also need <code>ruby</code> as well as the <code>heroku<
 
 </section>
 
-<section id="heroku-Deploying an application">
+<section id="heroku-deploying-an-application">
 <h3>Deploying an application</h3>
 
 <p>
@@ -1925,12 +1925,12 @@ heroku config --long
 
 </section>
 
-<section id="code-snippets-Code snippets">
+<section id="code-snippets-code-snippets">
 <h1>Code snippets</h1>
 
 </section>
 
-<section id="code-snippets-Multiple workers compound server (node 0.6.0)">
+<section id="code-snippets-multiple-workers-compound-server-node-060">
 <h2>Multiple workers compound server (node 0.6.0)</h2>
 
 <p>
@@ -1963,7 +1963,7 @@ if not module.parent
 
 </section>
 
-<section id="code-snippets-Redis session store for Heroku deployment with redistogo addon">
+<section id="code-snippets-redis-session-store-for-heroku-deployment-with-redistogo-addon">
 <h2>Redis session store for Heroku deployment with redistogo addon</h2>
 
 <p>
@@ -2004,7 +2004,7 @@ app.configure(function(){
 
 </section>
 
-<section id="code-snippets-Upload file to compound server">
+<section id="code-snippets-upload-file-to-compound-server">
 <h2>Upload file to compound server</h2>
 
 <ul>
