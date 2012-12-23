@@ -1,22 +1,37 @@
 # Extensions API
 
-Any npm package can be used as an extension for CompoundJS. Just add a line to `npmfile.js`, for example:
+Any npm package can be used as an extension for CompoundJS. If it should be
+loaded at compound app starup, it should export `init` method. This method will
+receive single argument: compound app.
+
+Compound will initialize each extension listed in `config/autoload.js` file.
+Example of file generated on `compound init` command:
 
 ```
-require('railway-twitter');
+module.exports = function(compound) {
+    return [
+        require('ejs-ext'),
+        require('jugglingdb'),
+        require('seedjs')
+    ];
+};
 ```
 
-Just one note: If the package has an `init` method, it will be invoked after application initialization.
+We trying to keep compound core tiny, some parts of framework now moved to
+separate modules:
 
-For an example, you can check out the [twitter-auth extension](https://github.com/1602/compound-twitter "twitter-auth extension") for compound.
+- railway-routes
+- jugglingdb
+- kontroller
+- seedjs
 
-### Installation script
-
-If your extensions have an `install.js` script in the root directory, itw ill be invoked after installing it using `compound install`.
+Some of this modules still loaded from core, but in future everything will be
+moved to `config/autoload`. That means, every part of compound could be replaced
+with another module, which should follow common API.
 
 ### CompoundJS extension API
 
-All CompoundJS modules are published in the `compound`object. Any module can be extended or monkey-patched. Let's take a look at the most common use-cases.
+All CompoundJS modules are published in the `compound`object. Any module can be extended or replaced. Let's take a look at the most common use-cases.
 
 ### Tools
 
