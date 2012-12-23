@@ -80,23 +80,11 @@ process.nextTick(function () {
 
   case 'i':
   case 'init':
-      exitAfterAction = false;
-      generators.init(railway, args);
-      generators.perform('init');
-      break;
+      generators.init(railway);
+      generators.perform('app', args);
   case 'g':
   case 'generate':
-      var what = args.shift();
-      generators.init(railway, args);
-      if (typeof what == "undefined" || what == null) {
-          console.log('Generator not specified, available generators: ', generators.list());
-      } else {
-          if (generators.exists(what)) {
-              generators.perform(what, args);
-          } else {
-              console.log('Generator "' + what + '" not found, available generators: ', generators.list());
-          }
-      }
+      
       break;
   case '--version':
       console.log(railway.version);
