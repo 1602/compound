@@ -1,1 +1,1 @@
-web: {{ ENGINE }} server.{{ EXTENSION }}
+web: {{ ENGINE }} server.{{ CODE }}
