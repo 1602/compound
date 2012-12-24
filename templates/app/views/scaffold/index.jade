@@ -1,0 +1,39 @@
+ul.breadcrumb
+    li
+       a(href='/') Home
+       span.divider /
+    li.active
+       != linkTo('{{ models }}', path_to.{{ models }})
+
+.page-header
+  h1 Index of {{ models }}
+
+
+.row
+  .span12
+     p
+        != linkTo('<i class="icon-plus icon-white"></i> New {{ model }}', path_to.new_{{ model }}, {class: 'btn btn-primary'})
+
+- if ({{ models }}.length) {
+.row
+  .span12
+     table.table.table-striped
+       thead
+         tr
+           th ID
+           th.span3 Actions
+       tbody
+         - {{ models }}.forEach(function ({{ model }}) {
+         tr
+           td
+             != linkTo('{{ model }} #' + {{ model }}.id, path_to.{{ model }}({{ model }}))
+           td
+             != linkTo('<i class="icon-edit"></i> Edit', pathTo.edit_{{ model }}({{ model }}), {class: 'btn btn-mini'}) + ' '
+             != linkTo('<i class="icon-remove icon-white"></i> Delete', pathTo.{{ model }({{ model }}), {class: 'btn btn-mini btn-danger', method: 'delete', remote: true, jsonp: '(function (u) {location.href = u;})'})
+         - });
+- } else{
+.row
+  .span12
+     p.alert.alert-block.alert-info
+        strong No {{ models }} were found.
+- }

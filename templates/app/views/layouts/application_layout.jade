@@ -1,0 +1,27 @@
+!!! 5
+html
+  head
+    title= title
+    != stylesheet_link_tag('bootstrap', 'style', 'bootstrap-responsive')
+    != javascript_include_tag('https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js', 'rails', 'application')
+    != csrf_meta_tag()
+  body
+    .navbar
+        .navbar-inner
+            .container
+               a.brand(href='#') Project name
+
+    .container
+      - var flash = request.flash('info').pop(); if (flash) {
+        .alert-message.info= flash
+      - }
+
+      - flash = request.flash('error').pop(); if (flash) {
+        .alert-message.error= flash
+      - }
+
+      != body
+
+      hr
+      footer
+        p © Company 2012
