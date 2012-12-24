@@ -29,7 +29,6 @@ var exitAfterAction = true;
 var command = args.shift();
 
 process.nextTick(function () {
-
   switch (command) {
   default:
   case 'h':
@@ -84,7 +83,13 @@ process.nextTick(function () {
       generators.perform('app', args);
   case 'g':
   case 'generate':
-      
+      var what = args.shift();
+      generators.init(railway);
+      if (typeof what == "undefined" || what == null) {
+          console.log('Generator not specified, available generators: ', generators.list());
+      } else {
+          generators.perform(what, args);
+      }
       break;
   case '--version':
       console.log(railway.version);
