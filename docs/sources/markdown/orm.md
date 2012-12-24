@@ -1,29 +1,35 @@
-# ORM: JugglingDB
+# Models
 
-## Configuration
+By default models managed using [JugglingDB
+ORM](https://github.com/1602/jugglingdb), but you can use any ORM you like. For
+example, if you prefer [mongoose](http://mongoosejs.com), check [mongoose on
+compound](https://github.com/anatoliychakkaev/mongoose-compound-example-app) example app.
 
-Describe which database adapter you are going to use and how to connect with the database in `config/database.json` (`.yml` and `.js` are also supported):
+## Setup DB: config/database.js
+
+Describe which database adapter you are going to use and how to connect with the database in `config/database.js` (`.coffee`, `.json` and `.yml` are also supported):
 
 ```
-{ "development":
-  { "driver":   "redis"
-  , "host":     "localhost"
-  , "port":     6379
+module.exports = {
+  development:
+  { driver:   "redis"
+  , host:     "localhost"
+  , port:     6379
   }
-, "test":
-  { "driver":   "memory"
+, test:
+  { driver:   "memory"
   }
-, "staging":
-  { "driver":   "mongoose"
-  , "url":      "mongodb://localhost/test"
+, staging:
+  { driver:   "mongodb"
+  , url:      "mongodb://localhost/test"
   }
 , "production":
-  { "driver":   "mysql"
-  , "host":     "localhost"
-  , "post":     3306
-  , "database": "nodeapp-production"
-  , "username": "nodeapp-prod"
-  , "password": "t0ps3cr3t"
+  { driver:   "mysql"
+  , host:     "localhost"
+  , post:     3306
+  , database: "nodeapp-production"
+  , username: "nodeapp-prod"
+  , password: "t0ps3cr3t"
   }
 }
 ```
@@ -34,16 +40,16 @@ Checkout the list of available adapters [here](http://github.com/1602/jugglingdb
 schema 'redis', url: process.env.REDISTOGO_URL, ->
     define 'User'
     # other definitions for redis schema
-    
-schema 'mongoose', url: process.env.MONGOHQ_URL, ->
+
+schema 'mongodb', url: process.env.MONGOHQ_URL, ->
     define 'Post'
     # other definitions for mongoose schema
-    
+
 ```
 
 All of these schemas can be used simultaneously and you can even describe relations between different schemas, for example `User.hasMany(Post)`
 
-## Define schema
+## Define schema: db/schema.js
 
 Use `define` to describe database entities and `property` to specify types of fields. This method accepts the following arguments:
 
@@ -107,7 +113,47 @@ customSchema(function () {
 });
 ```
 
-## Describe relations
+## Implement: app/models/name
+
+### Describe models
+
+Models should be described in `app/models/modelname.js` files. Each model file
+should export function, which accepts two arguments:
+
+```
+module.exports = function(compound, ModelName) {
+
+  ModelName.classMethod = function classMethod() {
+    return 'hello from class method';
+  };
+
+  ModelName.prototype.instanceMethod = function instanceMethod() {
+    return 'hello from instance method';
+  };
+};
+```
+
+If you need initialize database-independent model in model file, disregard
+second param of exported function, use this example:
+
+```
+module.exports = function(compound) {
+  // define class
+  function MyModel() {
+    this.prop = '';
+  }
+
+  MyModel.prototype.method = function() {};
+
+  // register model in compound
+  compound.models.MyModel = MyModel;
+
+  // optionally specify modelname (used in view helpers)
+  MyModel.className = 'MyModel';
+};
+```
+
+### Describe relations
 
 Currently, only a few relations are supported: `hasMany`and `belongsTo`
 
@@ -144,7 +190,7 @@ So you can use it with an association:
 user.posts.published(cb); // same as Post.all({ published: true, userId: user.id });
 ```
 
-## Setup validations
+### Setup validations
 
 Validations invoked after `create`, `save` and `updateAttributes` can also be skipped when using `save`:
 
@@ -191,7 +237,7 @@ Each configurator accepts a set of string arguments and an optional last argumen
 
 `message` allows you to define an error message that is being displayed when the validation fails.
 
-## Available validations
+## Available validators
 
 ### length
 
@@ -292,20 +338,12 @@ user.email = 'valid@email.tld'
 test.ok user.isValid()
 ```
 
-## Defining additional model functions
+## Models reloading
 
-You can define additional functions to your models:
+In development env models automatically reloaded on file changing. If you don't
+need this behavior and prefer restart webserver you can turn off this setting in
+`config/environments/development.js`:
 
-```
-User.getActiveUsers = function getActiveUsers(callback) {
-  Users.all({ active: true }, callback);
-};
+    app.disable('watch');
 
-User.prototype.getFullName = function getFullName() {
-  return return [this.firstName, this.lastName].join(' ');
-};
-```
-
-Functions that need access to a specific Model instance need to be declared in the prototype, otherwise they will not be available.
-
-Using scaffold generator is the fastest way to create a prototype application.
+It also disables controllers reloading.

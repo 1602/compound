@@ -1103,39 +1103,48 @@ The function <code>my_helper</code> can be now used by any of the views used by 
 
 </section>
 
-<section id="orm-orm-jugglingdb">
-<h1>ORM: JugglingDB</h1>
+<section id="orm-models">
+<h1>Models</h1>
+
+<p>
+By default models managed using [JugglingDB
+ORM](https://github.com/1602/jugglingdb), but you can use any ORM you like. For
+example, if you prefer <a href="http://mongoosejs.com" target="_blank">mongoose</a>, check [mongoose on
+compound](https://github.com/anatoliychakkaev/mongoose-compound-example-app) example app.
+
+</p>
 
 </section>
 
-<section id="orm-configuration">
-<h2>Configuration</h2>
+<section id="orm-setup-db-configdatabasejs">
+<h2>Setup DB: config/database.js</h2>
 
 <p>
-Describe which database adapter you are going to use and how to connect with the database in <code>config/database.json</code> (<code>.yml</code> and <code>.js</code> are also supported):
+Describe which database adapter you are going to use and how to connect with the database in <code>config/database.js</code> (<code>.coffee</code>, <code>.json</code> and <code>.yml</code> are also supported):
 
 </p>
 
 <pre class="prettyprint">
-{ "development":
-  { "driver":   "redis"
-  , "host":     "localhost"
-  , "port":     6379
+module.exports = {
+  development:
+  { driver:   "redis"
+  , host:     "localhost"
+  , port:     6379
   }
-, "test":
-  { "driver":   "memory"
+, test:
+  { driver:   "memory"
   }
-, "staging":
-  { "driver":   "mongoose"
-  , "url":      "mongodb://localhost/test"
+, staging:
+  { driver:   "mongodb"
+  , url:      "mongodb://localhost/test"
   }
 , "production":
-  { "driver":   "mysql"
-  , "host":     "localhost"
-  , "post":     3306
-  , "database": "nodeapp-production"
-  , "username": "nodeapp-prod"
-  , "password": "t0ps3cr3t"
+  { driver:   "mysql"
+  , host:     "localhost"
+  , post:     3306
+  , database: "nodeapp-production"
+  , username: "nodeapp-prod"
+  , password: "t0ps3cr3t"
   }
 }
 </pre>
@@ -1150,7 +1159,7 @@ schema 'redis', url: process.env.REDISTOGO_URL, -&gt;
     define 'User'
     # other definitions for redis schema
 
-schema 'mongoose', url: process.env.MONGOHQ_URL, -&gt;
+schema 'mongodb', url: process.env.MONGOHQ_URL, -&gt;
     define 'Post'
     # other definitions for mongoose schema
 </pre>
@@ -1162,8 +1171,8 @@ All of these schemas can be used simultaneously and you can even describe relati
 
 </section>
 
-<section id="orm-define-schema">
-<h2>Define schema</h2>
+<section id="orm-define-schema-dbschemajs">
+<h2>Define schema: db/schema.js</h2>
 
 <p>
 Use <code>define</code> to describe database entities and <code>property</code> to specify types of fields. This method accepts the following arguments:
@@ -1239,8 +1248,60 @@ customSchema(function () {
 
 </section>
 
+<section id="orm-implement-appmodelsname">
+<h2>Implement: app/models/name</h2>
+
+</section>
+
+<section id="orm-describe-models">
+<h3>Describe models</h3>
+
+<p>
+Models should be described in <code>app/models/modelname.js</code> files. Each model file
+should export function, which accepts two arguments:
+
+</p>
+
+<pre class="prettyprint">
+module.exports = function(compound, ModelName) {
+
+  ModelName.classMethod = function classMethod() {
+    return 'hello from class method';
+  };
+
+  ModelName.prototype.instanceMethod = function instanceMethod() {
+    return 'hello from instance method';
+  };
+};
+</pre>
+
+<p>
+If you need initialize database-independent model in model file, disregard
+second param of exported function, use this example:
+
+</p>
+
+<pre class="prettyprint">
+module.exports = function(compound) {
+  // define class
+  function MyModel() {
+    this.prop = '';
+  }
+
+  MyModel.prototype.method = function() {};
+
+  // register model in compound
+  compound.models.MyModel = MyModel;
+
+  // optionally specify modelname (used in view helpers)
+  MyModel.className = 'MyModel';
+};
+</pre>
+
+</section>
+
 <section id="orm-describe-relations">
-<h2>Describe relations</h2>
+<h3>Describe relations</h3>
 
 <p>
 Currently, only a few relations are supported: <code>hasMany</code>and <code>belongsTo</code>
@@ -1292,7 +1353,7 @@ user.posts.published(cb); // same as Post.all({ published: true, userId: user.id
 </section>
 
 <section id="orm-setup-validations">
-<h2>Setup validations</h2>
+<h3>Setup validations</h3>
 
 <p>
 Validations invoked after <code>create</code>, <code>save</code> and <code>updateAttributes</code> can also be skipped when using <code>save</code>:
@@ -1366,8 +1427,8 @@ Each configurator accepts a set of string arguments and an optional last argumen
 
 </section>
 
-<section id="orm-available-validations">
-<h2>Available validations</h2>
+<section id="orm-available-validators">
+<h2>Available validators</h2>
 
 </section>
 
@@ -1485,31 +1546,23 @@ test.ok user.isValid()
 
 </section>
 
-<section id="orm-defining-additional-model-functions">
-<h2>Defining additional model functions</h2>
+<section id="orm-models-reloading">
+<h2>Models reloading</h2>
 
 <p>
-You can define additional functions to your models:
+In development env models automatically reloaded on file changing. If you don't
+need this behavior and prefer restart webserver you can turn off this setting in
+<code>config/environments/development.js</code>:
 
 </p>
 
 <pre class="prettyprint">
-User.getActiveUsers = function getActiveUsers(callback) {
-  Users.all({ active: true }, callback);
-};
-
-User.prototype.getFullName = function getFullName() {
-  return return [this.firstName, this.lastName].join(' ');
-};
+app.disable('watch');
 </pre>
 
 <p>
-Functions that need access to a specific Model instance need to be declared in the prototype, otherwise they will not be available.
-
+It also disables controllers reloading.
 </p>
-
-<p>
-Using scaffold generator is the fastest way to create a prototype application.</p>
 
 </section>
 
