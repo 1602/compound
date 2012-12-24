@@ -1,6 +1,8 @@
 # Routing
 
-The purpose of routes is to connect a URL with a controller action. For example, you can define the following route in `config/routes.js` to link `GET /signup` with `new` action of `users` controller:
+The purpose of routes is to connect a URL with a controller action. For example,
+you can define the following route in `config/routes.js` to link `GET /signup`
+with `new` action of `users` controller:
 
 ```
 map.get('signup', 'users#new');
@@ -10,6 +12,71 @@ The following route will link `GET /` to the `index` action of the`home` control
 
 ```
 map.root('home#index');
+```
+
+## URL helpers
+
+Another useful feature of routes: URL helpers. When you define route
+
+    map.get('bunny', 'bunny#show');
+
+you can use `pathTo.bunny` in your controllers and views, which will generate
+
+    /bunny
+
+path for you. You also can specify another helper name is you want:
+
+    map.get('bunny', 'bunny#show', {as: 'rabbit'});
+
+and now `pathTo.rabbit` available.
+
+If your route has param, for example
+
+    map.get('profile/:user', 'users#show');
+    map.get('posts/:post_id/comments/:comment_id', 'comments#show');
+
+URL helper will accept parameter (String), so that:
+
+    pathTo.profile('Bugs_Bunny', 'users#show');
+    > '/profile/Bugs_Bunny'
+    pathTo.post_comment(2, 2383);
+    > '/posts/2/comments/2383'
+
+<blockquote>
+<p>
+<strong>Why use URL helpers?</strong><br/>
+First of all it's convenient and beauty. But what is more important
+url helpers take care about namespaces. In case if your application will be
+used as part of another application, mounted on some URL like "/foreign-app"
+URL helpers will return correct value: "/foreign-app/profile/Bugs_Bunny"
+instead of "/profile/Bugs_Bunny"
+</p>
+</blockquote>
+
+How to learn what helper name was generated? Read "Debugging" section.
+
+## Debugging
+
+To debug routes of your compound application you can use `compound routes`
+command (or shortcut `compound r`). You can also specify optional argument for
+filtering by helper name or method, for example:
+
+```
+~: ) compound r post
+     posts GET    /posts.:format?          posts#index
+     posts POST   /posts.:format?          posts#create
+  new_post GET    /posts/new.:format?      posts#new
+ edit_post GET    /posts/:id/edit.:format? posts#edit
+      post DELETE /posts/:id.:format?      posts#destroy
+      post PUT    /posts/:id.:format?      posts#update
+      post GET    /posts/:id.:format?      posts#show
+~: ) compound r GET
+     posts GET    /posts.:format?          posts#index
+  new_post GET    /posts/new.:format?      posts#new
+ edit_post GET    /posts/:id/edit.:format? posts#edit
+      post GET    /posts/:id.:format?      posts#show
+~: ) compound r new
+ new_post GET    /posts/new.:format? posts#new
 ```
 
 ## Resources
@@ -47,11 +114,13 @@ path_to.post(post)          # /posts/1.
 
 ```
 
-## Options
+### Options
 
 If you want to override default routes behaviour, you can use two options: `as` and `path` to specify a helper name and a path you want to have in the result.
 
-### { as: 'helperName' }
+<strong>
+{ as: 'helperName' }
+</strong>
 
 Path helper aliasing:
 
@@ -72,7 +141,9 @@ edit_article GET    /posts/:id/edit.:format? posts#edit
      
 ```
 
-### { path: 'alternatePath' }
+<strong>
+{ path: 'alternatePath' }
+</strong>
 
 If you want to change the base path:
 
@@ -93,7 +164,9 @@ edit_post GET    /articles/:id/edit.:format? posts#edit
      
 ```
 
-### All together
+<strong>
+Both "as" and "path" together
+</strong>
 
 If you want to alias both the helper and the path:
 
@@ -202,7 +275,33 @@ If you need some specific action to be added to your resource-based route, use t
 
 ```
 map.resource('users', function (user) {
-  user.get('avatar', 'users#avatar');
+  user.get('avatar', 'users#avatar');               // /users/:user_id/avatar
+  user.get('top', 'users#top', {collection: true}); // /users/top
 });
 ```
+
+## Middleware
+
+You may want to use middleware in routes. It's not recommended, but if you need
+it you can put it as second argument:
+
+```
+map.get('/admin', authenticate, 'admin#index');
+map.get('/protected/resource', [ middleware1, middleware2 ], 'resource#access');
+```
+
+## Subdomain
+
+**experimental**
+
+If you want to support subdomain filter, specify it as `subdomain` option:
+
+    map.get('/url', 'ctl#action', {subdomain: 'subdomain.tld'});
+
+use \* as wildcard domain
+
+    map.get('/url', 'ctl#action', {subdomain: '*.example.com'});
+
+This feature relys on `host` header, if your node process behind nginx or proxy,
+make sure you've passed this header to process.
 

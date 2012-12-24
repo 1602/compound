@@ -21,7 +21,9 @@
 <h1>Routing</h1>
 
 <p>
-The purpose of routes is to connect a URL with a controller action. For example, you can define the following route in <code>config/routes.js</code> to link <code>GET /signup</code> with <code>new</code> action of <code>users</code> controller:
+The purpose of routes is to connect a URL with a controller action. For example,
+you can define the following route in <code>config/routes.js</code> to link <code>GET /signup</code>
+with <code>new</code> action of <code>users</code> controller:
 
 </p>
 
@@ -36,6 +38,111 @@ The following route will link <code>GET /</code> to the <code>index</code> actio
 
 <pre class="prettyprint">
 map.root('home#index');
+</pre>
+
+</section>
+
+<section id="routing-url-helpers">
+<h2>URL helpers</h2>
+
+<p>
+Another useful feature of routes: URL helpers. When you define route
+
+</p>
+
+<pre class="prettyprint">
+map.get('bunny', 'bunny#show');
+</pre>
+
+<p>
+you can use <code>pathTo.bunny</code> in your controllers and views, which will generate
+
+</p>
+
+<pre class="prettyprint">
+/bunny
+</pre>
+
+<p>
+path for you. You also can specify another helper name is you want:
+
+</p>
+
+<pre class="prettyprint">
+map.get('bunny', 'bunny#show', {as: 'rabbit'});
+</pre>
+
+<p>
+and now <code>pathTo.rabbit</code> available.
+
+</p>
+
+<p>
+If your route has param, for example
+
+</p>
+
+<pre class="prettyprint">
+map.get('profile/:user', 'users#show');
+map.get('posts/:post_id/comments/:comment_id', 'comments#show');
+</pre>
+
+<p>
+URL helper will accept parameter (String), so that:
+
+</p>
+
+<pre class="prettyprint">
+pathTo.profile('Bugs_Bunny', 'users#show');
+&gt; '/profile/Bugs_Bunny'
+pathTo.post_comment(2, 2383);
+&gt; '/posts/2/comments/2383'
+</pre>
+
+<blockquote>
+<p>
+<strong>Why use URL helpers?</strong><br/>
+First of all it's convenient and beauty. But what is more important
+url helpers take care about namespaces. In case if your application will be
+used as part of another application, mounted on some URL like "/foreign-app"
+URL helpers will return correct value: "/foreign-app/profile/Bugs_Bunny"
+instead of "/profile/Bugs_Bunny"
+</p>
+</blockquote>
+
+<p>
+How to learn what helper name was generated? Read "Debugging" section.
+
+</p>
+
+</section>
+
+<section id="routing-debugging">
+<h2>Debugging</h2>
+
+<p>
+To debug routes of your compound application you can use <code>compound routes</code>
+command (or shortcut <code>compound r</code>). You can also specify optional argument for
+filtering by helper name or method, for example:
+
+</p>
+
+<pre class="prettyprint">
+~: ) compound r post
+     posts GET    /posts.:format?          posts#index
+     posts POST   /posts.:format?          posts#create
+  new_post GET    /posts/new.:format?      posts#new
+ edit_post GET    /posts/:id/edit.:format? posts#edit
+      post DELETE /posts/:id.:format?      posts#destroy
+      post PUT    /posts/:id.:format?      posts#update
+      post GET    /posts/:id.:format?      posts#show
+~: ) compound r GET
+     posts GET    /posts.:format?          posts#index
+  new_post GET    /posts/new.:format?      posts#new
+ edit_post GET    /posts/:id/edit.:format? posts#edit
+      post GET    /posts/:id.:format?      posts#show
+~: ) compound r new
+ new_post GET    /posts/new.:format? posts#new
 </pre>
 
 </section>
@@ -89,17 +196,19 @@ path_to.post(post)          # /posts/1.
 </section>
 
 <section id="routing-options">
-<h2>Options</h2>
+<h3>Options</h3>
 
 <p>
 If you want to override default routes behaviour, you can use two options: <code>as</code> and <code>path</code> to specify a helper name and a path you want to have in the result.
 
 </p>
 
-</section>
+<p>
+<strong>
+{ as: 'helperName' }
+</strong>
 
-<section id="routing--as-helpername-">
-<h3>{ as: 'helperName' }</h3>
+</p>
 
 <p>
 Path helper aliasing:
@@ -125,10 +234,12 @@ edit_article GET    /posts/:id/edit.:format? posts#edit
      article GET    /posts/:id.:format?      posts#show.
 </pre>
 
-</section>
+<p>
+<strong>
+{ path: 'alternatePath' }
+</strong>
 
-<section id="routing--path-alternatepath-">
-<h3>{ path: 'alternatePath' }</h3>
+</p>
 
 <p>
 If you want to change the base path:
@@ -154,10 +265,12 @@ edit_post GET    /articles/:id/edit.:format? posts#edit
      post GET    /articles/:id.:format?      posts#show
 </pre>
 
-</section>
+<p>
+<strong>
+Both "as" and "path" together
+</strong>
 
-<section id="routing-all-together">
-<h3>All together</h3>
+</p>
 
 <p>
 If you want to alias both the helper and the path:
@@ -314,9 +427,60 @@ If you need some specific action to be added to your resource-based route, use t
 
 <pre class="prettyprint">
 map.resource('users', function (user) {
-  user.get('avatar', 'users#avatar');
+  user.get('avatar', 'users#avatar');               // /users/:user_id/avatar
+  user.get('top', 'users#top', {collection: true}); // /users/top
 });
 </pre>
+
+</section>
+
+<section id="routing-middleware">
+<h2>Middleware</h2>
+
+<p>
+You may want to use middleware in routes. It's not recommended, but if you need
+it you can put it as second argument:
+
+</p>
+
+<pre class="prettyprint">
+map.get('/admin', authenticate, 'admin#index');
+map.get('/protected/resource', [ middleware1, middleware2 ], 'resource#access');
+</pre>
+
+</section>
+
+<section id="routing-subdomain">
+<h2>Subdomain</h2>
+
+<p>
+**experimental**
+
+</p>
+
+<p>
+If you want to support subdomain filter, specify it as <code>subdomain</code> option:
+
+</p>
+
+<pre class="prettyprint">
+map.get('/url', 'ctl#action', {subdomain: 'subdomain.tld'});
+</pre>
+
+<p>
+use \* as wildcard domain
+
+</p>
+
+<pre class="prettyprint">
+map.get('/url', 'ctl#action', {subdomain: '*.example.com'});
+</pre>
+
+<p>
+This feature relys on <code>host</code> header, if your node process behind nginx or proxy,
+make sure you've passed this header to process.
+
+</p>
 
 </section>
 
@@ -1653,14 +1817,14 @@ patch   config/routes.js
 
 <p>
 This chapter describes internal API of compound application. Compound app designed
-as npm module which could be used as part of another modules.
+as npm module that can be used as part of other modules.
 
 </p>
 
 <p>
 Main entry point called <code>server.js</code> exports function for creating application.
 This function returns regular express application with one addition: <code>compound</code>
-object. This is object we talking about. It contains some information about
+object. This is object we are talking about. It contains some information about
 application, such as root directory path, MVC structure, models. Read this
 chapter to get familiar with this powerful tool.
 
@@ -1672,9 +1836,9 @@ chapter to get familiar with this powerful tool.
 <h2>Compound app</h2>
 
 <p>
-Let's start with entry point, called by default <code>server.js</code>. If you want to
-rename it, update package.json, <code>"main": "server.js"</code> line. The purpose of that
-file: publish function which creates application. This function can create many
+Let's start with the entry point, called <code>server.js</code> by default. If you want to
+rename it, update package.json with <code>"main": "server.js"</code> line. The purpose of that
+file: publish function that  creates application. This function can create many
 instances of application which could be configured and used separately:
 
 </p>
@@ -1809,7 +1973,7 @@ compound app without touching source code.
 
 <p>
 Any npm package can be used as an extension for CompoundJS. If it should be
-loaded at compound app starup, it should export <code>init</code> method. This method will
+loaded at compound app startup, it should export <code>init</code> method. This method will
 receive single argument: compound app.
 
 </p>
@@ -1831,7 +1995,7 @@ module.exports = function(compound) {
 </pre>
 
 <p>
-We trying to keep compound core tiny, some parts of framework now moved to
+We are trying to keep compound core tiny, some parts of framework now moved to
 separate modules:
 
 </p>
@@ -1843,9 +2007,9 @@ separate modules:
 <li>seedjs</li>
 </ul>
 <p>
-Some of this modules still loaded from core, but in future everything will be
-moved to <code>config/autoload</code>. That means, every part of compound could be replaced
-with another module, which should follow common API.
+Some of the modules still loaded from core, but in future everything will be
+moved to <code>config/autoload</code>. It means that every part of compound can be replaced
+with another module that should follow common API.
 
 </p>
 
