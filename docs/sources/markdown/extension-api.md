@@ -1,37 +1,36 @@
-# Extensions API
+# Compound API
 
-Any npm package can be used as an extension for CompoundJS. If it should be
-loaded at compound app starup, it should export `init` method. This method will
-receive single argument: compound app.
+This chapter describes internal API of compound application. Compound app designed
+as npm module that can be used as part of other modules.
 
-Compound will initialize each extension listed in `config/autoload.js` file.
-Example of file generated on `compound init` command:
+Main entry point called `server.js` exports function for creating application.
+This function returns regular express application with one addition: `compound`
+object. This is object we are talking about. It contains some information about
+application, such as root directory path, MVC structure, models. Read this
+chapter to get familiar with this powerful tool.
 
+## Compound app
+
+Let's start with the entry point, called `server.js` by default. If you want to
+rename it, update package.json with `"main": "server.js"` line. The purpose of that
+file: publish function that  creates application. This function can create many
+instances of application which could be configured and used separately:
+
+```javascript
+// load package
+var instantiateApp = require('.');
+
+// create different instances
+var app1 = instantiateApp();
+var app2 = instantiateApp(params);
+
+// run on different ports/hosts
+app1.listen(3000);
+app2.listen(3001, '10.0.0.2', callback);
 ```
-module.exports = function(compound) {
-    return [
-        require('ejs-ext'),
-        require('jugglingdb'),
-        require('seedjs')
-    ];
-};
-```
 
-We trying to keep compound core tiny, some parts of framework now moved to
-separate modules:
-
-- railway-routes
-- jugglingdb
-- kontroller
-- seedjs
-
-Some of this modules still loaded from core, but in future everything will be
-moved to `config/autoload`. That means, every part of compound could be replaced
-with another module, which should follow common API.
-
-### CompoundJS extension API
-
-All CompoundJS modules are published in the `compound`object. Any module can be extended or replaced. Let's take a look at the most common use-cases.
+Instantiation method accepts optional hash of params. These params hash will be
+passed to express.
 
 ### Tools
 
@@ -97,6 +96,39 @@ To learn more, please check out [the sources](https://github.com/1602/compound/b
 
 Coming soon. It's about the `compound.generators` module and the `compound generate` commands.
 
-### Discussion in Google Groups
+### Structure
 
-API is still in development now, feel free to leave comments about it in the related [Google Groups thread](http://groups.google.com/group/railwayjs/browse_thread/thread/1cfa3e1e348fc62c "Google Groups thread").
+Coming soon. This chapter about compound.structure api, overwriting internals of
+compound app without touching source code.
+
+# Extensions
+
+Any npm package can be used as an extension for CompoundJS. If it should be
+loaded at compound app startup, it should export `init` method. This method will
+receive single argument: compound app.
+
+Compound will initialize each extension listed in `config/autoload.js` file.
+Example of file generated on `compound init` command:
+
+```
+module.exports = function(compound) {
+    return [
+        require('ejs-ext'),
+        require('jugglingdb'),
+        require('seedjs')
+    ];
+};
+```
+
+We are trying to keep compound core tiny, some parts of framework now moved to
+separate modules:
+
+- railway-routes
+- jugglingdb
+- kontroller
+- seedjs
+
+Some of the modules still loaded from core, but in future everything will be
+moved to `config/autoload`. It means that every part of compound can be replaced
+with another module that should follow common API.
+
