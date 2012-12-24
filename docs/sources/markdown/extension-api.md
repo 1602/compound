@@ -1,19 +1,19 @@
 # Compound API
 
 This chapter describes internal API of compound application. Compound app designed
-as npm module which could be used as part of another modules.
+as npm module that can be used as part of other modules.
 
 Main entry point called `server.js` exports function for creating application.
 This function returns regular express application with one addition: `compound`
-object. This is object we talking about. It contains some information about
+object. This is object we are talking about. It contains some information about
 application, such as root directory path, MVC structure, models. Read this
 chapter to get familiar with this powerful tool.
 
 ## Compound app
 
-Let's start with entry point, called by default `server.js`. If you want to
-rename it, update package.json, `"main": "server.js"` line. The purpose of that
-file: publish function which creates application. This function can create many
+Let's start with the entry point, called `server.js` by default. If you want to
+rename it, update package.json with `"main": "server.js"` line. The purpose of that
+file: publish function that  creates application. This function can create many
 instances of application which could be configured and used separately:
 
 ```javascript
@@ -104,7 +104,7 @@ compound app without touching source code.
 # Extensions
 
 Any npm package can be used as an extension for CompoundJS. If it should be
-loaded at compound app starup, it should export `init` method. This method will
+loaded at compound app startup, it should export `init` method. This method will
 receive single argument: compound app.
 
 Compound will initialize each extension listed in `config/autoload.js` file.
@@ -120,7 +120,7 @@ module.exports = function(compound) {
 };
 ```
 
-We trying to keep compound core tiny, some parts of framework now moved to
+We are trying to keep compound core tiny, some parts of framework now moved to
 separate modules:
 
 - railway-routes
@@ -128,7 +128,7 @@ separate modules:
 - kontroller
 - seedjs
 
-Some of this modules still loaded from core, but in future everything will be
-moved to `config/autoload`. That means, every part of compound could be replaced
-with another module, which should follow common API.
+Some of the modules still loaded from core, but in future everything will be
+moved to `config/autoload`. It means that every part of compound can be replaced
+with another module that should follow common API.
 
