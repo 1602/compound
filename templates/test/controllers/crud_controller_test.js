@@ -4,7 +4,7 @@ var sinon  = require('sinon');
 
 function ValidAttributes () {
     return {
-        VALID_ATTRIBUTES
+        {{ VALID_ATTRIBUTES }}
     };
 }
 
