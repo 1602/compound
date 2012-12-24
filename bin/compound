@@ -81,6 +81,7 @@ process.nextTick(function () {
   case 'init':
       generators.init(railway);
       generators.perform('app', args);
+      break;
   case 'g':
   case 'generate':
       var what = args.shift();
