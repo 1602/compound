@@ -1,11 +1,11 @@
 # Compound API
 
 This chapter describes internal API of compound application. Compound app designed
-as npm module that can be used as part of other modules.
+as an npm module that can be used as part of other modules.
 
 Main entry point called `server.js` exports function for creating application.
 This function returns regular express application with one addition: `compound`
-object. This is object we are talking about. It contains some information about
+object. This is the object we are talking about. It contains some information about
 application, such as root directory path, MVC structure, models. Read this
 chapter to get familiar with this powerful tool.
 
