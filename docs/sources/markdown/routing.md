@@ -12,7 +12,7 @@ The following route will link `GET /` to the `index` action of the`home` control
 map.root('home#index');
 ```
 
-## Resource-based routing
+## Resources
 
 Resource-based routing provides standard mapping between HTTP verbs and controller actions:
 
@@ -47,7 +47,7 @@ path_to.post(post)          # /posts/1.
 
 ```
 
-## Aliases for resourceful routes
+## Options
 
 If you want to override default routes behaviour, you can use two options: `as` and `path` to specify a helper name and a path you want to have in the result.
 
