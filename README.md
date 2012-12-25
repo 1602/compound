@@ -283,7 +283,7 @@ The controller is a module containing the declaration of actions such as this:
 
 ## Generators ##
 
-Railway offers several built-in generators: for a model, controller and for 
+Compound offers several built-in generators: for a model, controller and for
 initialization. Can be invoked as follows:
 
     compound generate [what] [params]
@@ -324,7 +324,7 @@ or it's shortcut
 
     compound c
 
-It just simple node-js console with some Railway bindings, e.g. models. Just one note
+It just simple node-js console with some Compound bindings, e.g. models. Just one note
 about working with console. Node.js is asynchronous by its nature, and it's great
 but it made console debugging much more complicated, because you should use callback
 to fetch result from database, for example. I have added one useful method to
@@ -370,7 +370,7 @@ Logger
 Configuring
 ===========
 
-Railway has some configuration options allows to customize app behavior
+Compound has some configuration options allows to customize app behavior
 
 eval cache
 ----------
