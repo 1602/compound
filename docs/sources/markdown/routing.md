@@ -302,6 +302,6 @@ use \* as wildcard domain
 
     map.get('/url', 'ctl#action', {subdomain: '*.example.com'});
 
-This feature relys on `host` header, if your node process behind nginx or proxy,
+This feature relies on `host` header, if your node process behind nginx or proxy,
 make sure you've passed this header to process.
 
