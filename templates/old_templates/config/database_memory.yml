@@ -1,5 +1,0 @@
-development:
-  driver: "memory"
-
-test:
-  driver: "memory"
