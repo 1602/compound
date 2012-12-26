@@ -4,12 +4,12 @@ module.exports = (compound) ->
   app = compound.app
 
   app.configure ->
-    PREPEND_MIDDLEWARE
-    app.set 'view engine', 'VIEWENGINE'
+    {{ PREPEND_MIDDLEWARE }}
+    app.set 'view engine', '{{ VIEWENGINE }}'
     app.set 'view options', complexNames: true
     app.enable 'coffee'
 
-    app.set 'cssEngine', 'CSSENGINE'
+    app.set 'cssEngine', '{{ CSSENGINE }}'
 
     app.use express.static(app.root + '/public', maxAge: 86400000)
     app.use express.bodyParser()

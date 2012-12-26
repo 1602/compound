@@ -1,0 +1,2 @@
+{{ MODELNAME }} = describe '{{ MODELNAME }}', ->
+{{ PROPERTIES }}
