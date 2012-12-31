@@ -61,10 +61,6 @@ it('should generate features', function (test) {
 it('relax', function (test) {
     process.exit = exit;
     test.done();
-    fs.writeFileSync = writeFileSync;
-    fs.mkdirSync = mkdirSync;
-    fs.chmodSync = chmodSync;
-    fs.readFileSync = readFileSync;
 });
 
 function updArgs(a) {
