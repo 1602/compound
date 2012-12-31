@@ -27,7 +27,7 @@ compound.utils.appendToFile = function (name, content) {
 };
 var exit = process.exit;
 
-/*
+
 it('should generate app', function (test) {
     updArgs(['--stylus']);
     process.exit = test.done;
@@ -57,15 +57,14 @@ it('should generate features', function (test) {
     compound.generators.perform('features', args);
     test.done();
 });
-*/
 
 it('relax', function (test) {
+    process.exit = exit;
+    test.done();
     fs.writeFileSync = writeFileSync;
     fs.mkdirSync = mkdirSync;
     fs.chmodSync = chmodSync;
     fs.readFileSync = readFileSync;
-    process.exit = exit;
-    test.done();
 });
 
 function updArgs(a) {
