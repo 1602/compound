@@ -17,9 +17,6 @@ fs.writeFileSync = function (name, content) {
     memfs[name] = content;
     return name;
 };
-fs.readFileSync = function (name) {
-    return memfs[name] || readFileSync(name);
-};
 path.existsSync = function (path) {
     return !!memfs[path];
 };
@@ -27,16 +24,20 @@ compound.utils.appendToFile = function (name, content) {
 };
 var exit = process.exit;
 
-
 it('should generate app', function (test) {
     updArgs(['--stylus']);
     process.exit = test.done;
     compound.generators.perform('init', args);
+    test.done();
 });
 
 it('should generate model', function (test) {
+    fs.readFileSync = function (name) {
+        return memfs[name] || readFileSync(name);
+    };
     updArgs('post title content'.split(' '));
     compound.generators.perform('model', args);
+    fs.readFileSync = readFileSync;
     test.done();
 });
 
@@ -47,8 +48,12 @@ it('should generate controller', function (test) {
 });
 
 it('should generate scaffold', function (test) {
+    fs.readFileSync = function (name) {
+        return memfs[name] || readFileSync(name);
+    };
     updArgs('book author title'.split(' '));
     compound.generators.perform('crud', args);
+    fs.readFileSync = readFileSync;
     test.done();
 });
 
@@ -59,6 +64,9 @@ it('should generate features', function (test) {
 });
 
 it('relax', function (test) {
+    fs.writeFileSync = writeFileSync;
+    fs.mkdirSync = mkdirSync;
+    fs.chmodSync = chmodSync;
     process.exit = exit;
     test.done();
 });
