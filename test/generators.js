@@ -23,37 +23,37 @@ fs.readFileSync = function (name) {
 path.existsSync = function (path) {
     return !!memfs[path];
 };
-railway.utils.appendToFile = function (name, content) {
+compound.utils.appendToFile = function (name, content) {
 };
 var exit = process.exit;
 
 it('should generate app', function (test) {
     updArgs(['--stylus']);
     process.exit = test.done;
-    railway.generators.perform('init', args);
+    compound.generators.perform('init', args);
 });
 
 it('should generate model', function (test) {
     updArgs('post title content'.split(' '));
-    railway.generators.perform('model', args);
+    compound.generators.perform('model', args);
     test.done();
 });
 
 it('should generate controller', function (test) {
     updArgs('cars index show new create edit update'.split(' '));
-    railway.generators.perform('controller', args);
+    compound.generators.perform('controller', args);
     test.done();
 });
 
 it('should generate scaffold', function (test) {
     updArgs('book author title'.split(' '));
-    railway.generators.perform('crud', args);
+    compound.generators.perform('crud', args);
     test.done();
 });
 
 it('should generate features', function (test) {
     updArgs([]);
-    railway.generators.perform('features', args);
+    compound.generators.perform('features', args);
     test.done();
 });
 
