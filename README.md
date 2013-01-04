@@ -381,7 +381,7 @@ NOTE: translation can contain `%` symbol(s), that means variable substitution
 
 If you don't need locales support you can turn it off in `config/environment`:
 
-    app.set('locales', 'off');
+    app.set('i18n', 'off');
 
 Logger
 -----
