@@ -5,8 +5,8 @@ require('./spec_helper').init(exports);
 app.disable('quiet');
 app.enable('log actions');
 
-railway.controllerBridge.root = __dirname + '/.controllers';
-railway.structure = function () {
+compound.controllerBridge.root = __dirname + '/.controllers';
+compound.structure = function () {
     return {
         controllers: (function () {
             var r = {};
@@ -21,7 +21,7 @@ railway.structure = function () {
 }
 
 var listener;
-railway.controller.extensions.event = function () {
+compound.controller.extensions.event = function () {
     if (listener) {
         listener.apply(this, [].slice.call(arguments));
     }
@@ -85,7 +85,7 @@ function req(method) {
 }
 
 function getController(name) {
-    return railway.controllerBridge.loadController(name);
+    return compound.controllerBridge.loadController(name);
 }
 
 function fakeRequest(method, path) {
