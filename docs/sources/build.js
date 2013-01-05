@@ -20,6 +20,7 @@ var template = fs.readFileSync(__dirname + '/template.html')
     'repl',
     'localization',
     'generators',
+    'asset-compiler',
     'extension-api',
     'heroku',
     'code-snippets',
