@@ -80,6 +80,11 @@ of extensions:
         ]
     };
 
+### update /javascripts/rails.js
+
+Compound protects PUT and DELETE requests from request forgery, so you need to
+update old public/javascripts/rails.js file to get working ajax requests.
+
 ### something else?
 
 fix this file, request pull
