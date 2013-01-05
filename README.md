@@ -1,7 +1,8 @@
 About [<img src="https://secure.travis-ci.org/1602/compound.png" />](http://travis-ci.org/#!/1602/compound)
 =====
 
-<img src="https://raw.github.com/1602/compound/master/templates/compound.png" />
+<img
+src="https://github.com/1602/compound/blob/master/templates/public/images/compound.png" />
 
 CompoundJS - MVC framework for NodeJS&trade;. It allows you to build web application in minutes.
 
