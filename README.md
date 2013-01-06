@@ -2,7 +2,7 @@ About [<img src="https://secure.travis-ci.org/1602/compound.png" />](http://trav
 =====
 
 <img
-src="https://github.com/1602/compound/blob/master/templates/public/images/compound.png" />
+src="https://raw.github.com/1602/compound/master/templates/public/images/compound.png" />
 
 CompoundJS - MVC framework for NodeJS&trade;. It allows you to build web application in minutes.
 
@@ -30,7 +30,7 @@ Usage
     # run server on port 3000
     $ compound s 3000
 
-    # visit appp
+    # visit app
     $ open http://localhost:3000/posts
 
 Short functionality review

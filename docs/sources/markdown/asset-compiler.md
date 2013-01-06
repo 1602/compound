@@ -5,7 +5,7 @@
 * coffee (default for js)
 * less
 * sass
-* less (default for css)
+* stylus (default for css)
 
 ## Basic Usage
 
@@ -69,11 +69,11 @@ when using stylus you may want to use some custom configurations as described he
 ...
 app.configure(function(){
   app.use(compound.assetsCompiler.configure('stylus', {
-    use: function(style) {
-      style.use(mylib);
-      style.define('families', ['Helvetica Neue', 'Helvetica', 'sans-serif']);
-      style.import(path);
-      style.include(path);
+    use: function(stylus) {
+      stylus.use(mylib);
+      stylus.define('families', ['Helvetica Neue', 'Helvetica', 'sans-serif']);
+      stylus.import(path);
+      stylus.include(path);
     }
   }).init());
   ...
