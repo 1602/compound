@@ -110,7 +110,7 @@ redirect('http://example.com'); // redirect to another host
 
 ### flash()
 
-The `flash` function stores a message in the session for future displaying, this is a regular expressjs function, refer to [expressjs guide](http://expressjs.com/guide.html#req.flash() "expressjs guide") to learn how it works. Few examples:
+The `flash` function stores a message in the session for future displaying, this is a regular expressjs function, refer to [expressjs 2.0 guide](http://expressjs.com/2x/guide.html#req.flash%28%29 "Expressjs 2.0 guide") to learn how it works. Few examples:
 
 `posts_controller.js`
 ```
