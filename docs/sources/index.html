@@ -662,7 +662,7 @@ redirect('http://example.com'); // redirect to another host
 <h3>flash()</h3>
 
 <p>
-The <code>flash</code> function stores a message in the session for future displaying, this is a regular expressjs function, refer to <a href="http://expressjs.com/guide.html#req.flash(" target="_blank">expressjs guide</a> "expressjs guide") to learn how it works. Few examples:
+The <code>flash</code> function stores a message in the session for future displaying, this is a regular expressjs function, refer to <a href="http://expressjs.com/2x/guide.html#req.flash%28%29 "Expressjs 2.0 guide"" target="_blank">expressjs 2.0 guide</a> to learn how it works. Few examples:
 
 </p>
 
@@ -1775,6 +1775,61 @@ Built-in generators are:<code>model</code>, <code>controller</code>, <code>scaff
 
 </section>
 
+<section id="generators-generate-model">
+<h2>Generate model</h2>
+
+<p>
+Use case: You just need a model and schema.
+
+</p>
+
+<p>
+Example:
+
+</p>
+
+<pre class="prettyprint">
+compound g model user email password approved:boolean
+</pre>
+
+<p>
+Generated files:
+
+</p>
+
+<pre class="prettyprint">
+exists  app/
+exists  app/models/
+create  app/models/user.js
+patch   db/schema.js
+</pre>
+
+<p>
+The generated model file contains the following code:
+
+</p>
+
+<pre class="prettyprint">
+module.exports = function (compound, User) {
+  // define User here
+};
+</pre>
+
+<p>
+The patched schema file contains the following code:
+
+</p>
+
+<pre class="prettyprint">
+var User = describe('User', function () {
+    property('email', String);
+    property('password', String);
+    property('approved', Boolean);
+});
+</pre>
+
+</section>
+
 <section id="generators-generate-controller">
 <h2>Generate controller</h2>
 
@@ -1861,6 +1916,204 @@ create  app/views/posts/edit.ejs
 create  app/views/posts/index.ejs
 create  app/views/posts/show.ejs
 patch   config/routes.js
+</pre>
+
+</section>
+
+<section id="asset-compiler-asset-compiler">
+<h1>Asset Compiler</h1>
+
+</section>
+
+<section id="asset-compiler-included-compilers">
+<h2>Included Compilers</h2>
+
+<ul>
+<li>coffee (default for js)</li>
+<li>less</li>
+<li>sass</li>
+<li>stylus (default for css)</li>
+</ul>
+</section>
+
+<section id="asset-compiler-basic-usage">
+<h2>Basic Usage</h2>
+
+<p>
+Environment Settings:
+
+</p>
+
+<p>
+in <code>/config/environment.js</code>
+use the AssetCompiler middleware and set you css engine
+
+</p>
+
+<pre class="prettyprint">
+...
+app.configure(function(){
+  app.use(compound.assetsCompiler.init());
+  ...
+  app.set('cssEngine', 'stylus');
+  ...
+});
+...
+</pre>
+
+<p>
+This will compile stylus (or whatever you use as you css engine) files in
+<code>/app/assets/stylesheets</code> into <code>/public/stylesheets</code> and <code>/app/assets/coffeescripts</code> into <code>/public/javascripts</code>
+
+</p>
+
+</section>
+
+<section id="asset-compiler-configuration">
+<h2>Configuration</h2>
+
+<p>
+Configuration can be done either in an initializer or in the Environment file.
+
+</p>
+
+<p>
+Compilers should be configured using the <code>compound.assetCompiler.config(compilerName, options)</code> method.
+This method takes 2 params, the name of the compiler and an obje t containing the options to configure, 
+and returns <code>compound.assetCompiler</code> for chaining. the default compilers use the following options:
+
+</p>
+
+<ul>
+<li>render: a function to compile the source into js or css, see Adding Your Own Compiler for more details</li>
+<li>sourceExtension: `'coffee'`</li>
+<li>destExtension: `'js'`</li>
+<li>sourceDir: `''` or `'/coffeescripts'`</li>
+<li>destDir: `''` or `'/javascripts'`</li>
+</ul>
+<p>
+It may also contain any other options which can be accessed in the render function ( <code>this.myCustomOption</code> )
+
+</p>
+
+<p>
+configure the coffe compiler to look for coffe files in <code>assets/coffee</code> instead of <code>/assets/coffeescripts</code>:
+
+</p>
+
+<p>
+<code>/config/environment.js</code>
+
+</p>
+
+<pre class="prettyprint">
+...
+app.configure(function(){
+  app.use(compound.assetsCompiler.configure('coffee', {
+    sourceDir: '/coffee'
+  }).init());
+  ...
+});
+...
+</pre>
+
+</section>
+
+<section id="asset-compiler-compiler-specific-configuration">
+<h2>Compiler Specific Configuration</h2>
+
+</section>
+
+<section id="asset-compiler-stylus">
+<h3>stylus:</h3>
+
+<p>
+when using stylus you may want to use some custom configurations as described here: http://learnboost.github.com/stylus/docs/js.html
+
+</p>
+
+<p>
+<code>/config/environment.js</code>
+
+</p>
+
+<pre class="prettyprint">
+...
+app.configure(function(){
+  app.use(compound.assetsCompiler.configure('stylus', {
+    use: function(stylus) {
+      stylus.use(mylib);
+      stylus.define('families', ['Helvetica Neue', 'Helvetica', 'sans-serif']);
+      stylus.import(path);
+      stylus.include(path);
+    }
+  }).init());
+  ...
+});
+...
+</pre>
+
+</section>
+
+<section id="asset-compiler-adding-your-own-compiler">
+<h2>Adding Your Own Compiler</h2>
+
+<p>
+Adding your own comiler can be done using <code>compound.assetCompiler.add(compilerName, options)</code>
+
+</p>
+
+<p>
+options should contain the following:
+* render: a function to compile the source into js or css, see Adding Your Own Compiler for more details
+* sourceExtension: <code>'coffee'</code>
+* destExtension: <code>'js'</code>
+* sourceDir: <code>''</code> or <code>'/coffeescripts'</code>
+* destDir: <code>''</code> or <code>'/javascripts'</code>
+* any other options your render function needs
+
+</p>
+
+<p>
+The render function takes the 3 arguments:
+
+</p>
+
+<ul>
+<li>src, a string containing the source of the file to be compiled</li>
+<li>options: sourceDir, destDir, sourceFileName, destFileName.  shouldn't be necassary in most cases</li>
+<li>callback: pass 2 arguements, error and the compiled source.</li>
+</ul>
+<p>
+an example of how to add your own coffee compiler:
+
+</p>
+
+<p>
+<code>/config/environment.js</code>
+
+</p>
+
+<pre class="prettyprint">
+...
+app.configure(function(){
+  app.use(compound.assetsCompiler.add('coffee', {
+    render: function(str, options, fn) {
+      try {
+        fn(null, this.coffee.compile(str));
+      } catch (err) {
+        fn(err);
+      }
+    },
+    coffee: require('coffee-script'),
+    sourceDir: '/coffeescripts',
+    destDir: '/javascripts',
+    sourceExtension: 'coffee',
+    destExtension: 'js'
+  }).init());
+  ...
+});
+...
 </pre>
 
 </section>
@@ -2206,8 +2459,8 @@ heroku config --long
 
 </section>
 
-<section id="code-snippets-multiple-workers-compound-server-node-060">
-<h2>Multiple workers compound server (node 0.6.0)</h2>
+<section id="code-snippets-multiple-workers-compound-server-node-0816">
+<h2>Multiple workers compound server (node 0.8.16)</h2>
 
 <p>
 Example in CoffeeScript:
@@ -2217,24 +2470,30 @@ Example in CoffeeScript:
 <code>server.coffee</code><pre class="prettyprint">
 #!/usr/bin/env coffee
 
-app = module.exports = require('compoundjs').createServer()
+app = module.exports = (params) -&gt;
+  params = params || {}
+  # specify current dir as default root of server
+  params.root = params.root || __dirname
+  return require('compound').createServer(params)
 
 cluster = require('cluster')
 numCPUs = require('os').cpus().length
 
-port = process.env.PORT or 3000
-
 if not module.parent
-    if cluster.isMaster
-        # Fork workers.
-        cluster.fork() for i in [1..numCPUs]
+  port = process.env.PORT || 3000
+  host = process.env.HOST || "0.0.0.0"
+  server = app()
+  if cluster.isMaster
+    # Fork workers.
+    cluster.fork() for i in [1..numCPUs]
 
-        cluster.on 'death', (worker) -&gt;
-            console.log 'worker ' + worker.pid + ' died'
-    else
-        # Run server
-        app.listen port
-        console.log "CompoundJS server listening on port %d within %s environment", port, app.settings.env
+    cluster.on 'exit', (worker, code, signal) -&gt;
+      console.log 'worker ' + worker.process.pid + ' died'
+  else
+    server.listen port, host, -&gt;
+      console.log(
+        "Compound server listening on %s:%d within %s environment",
+        host, port, server.set('env'))
 </pre>
 
 </section>
@@ -2244,38 +2503,40 @@ if not module.parent
 
 <p>
 Hook the <code>REDISTOGO_URL</code> environment variable in <code>config/environment.js</code> and pass it to the RedisStore constructor.
+Example in CoffeeScript:
 
 </p>
 
 <pre class="prettyprint">
-var express    = require('express'),
-    RedisStore = require('connect-redis')(express);
 
-var redisOpts;
-if (process.env['REDISTOGO_URL']) {
-    var url = require('url').parse(process.env['REDISTOGO_URL']);
-    var redisOpts = {
-        port: url.port,
-        host: url.hostname,
-        pass: url.auth.split(':')[1]
-    };
-} else {
-    redisOpts = {};
-}
+module.exports = (compound) -&gt;
 
-app.configure(function(){
-    var cwd = process.cwd();
-    app.use(express.static(cwd + '/public', {maxAge: 86400000}));
-    app.set('views', cwd + '/app/views');
-    app.set('view engine', 'ejs');
-    app.set('jsDirectory', '/javascripts/');
-    app.set('cssDirectory', '/css/');
-    app.use(express.bodyParser());
-    app.use(express.cookieParser());
-    app.use(express.session({secret: 'secret', store: new RedisStore(redisOpts)}));
-    app.use(express.methodOverride());
-    app.use(app.router);
-});
+  express = require 'express'
+  RedisStore = require('connect-redis')(express)
+
+  if process.env['REDISTOGO_URL']
+    url = require('url').parse(process.env['REDISTOGO_URL'])
+    redisOpts =
+      port: url.port
+      host: url.hostname
+      pass: url.auth.split(':')[1]
+  else
+    redisOpts = {}
+
+  app.configure -&gt;
+    app.use compound.assetsCompiler.init()
+    app.set 'view engine', 'ejs'
+    app.set 'view options', complexNames: true
+    app.enable 'coffee'
+
+    app.set 'cssEngine', 'stylus'
+
+    app.use express.static(app.root + '/public', {maxAge: 86400000})
+    app.use express.bodyParser()
+    app.use express.cookieParser()
+    app.use express.session secret: 'secret', store: new RedisStore(redisOpts)
+    app.use express.methodOverride()
+    app.use app.router
 </pre>
 
 </section>

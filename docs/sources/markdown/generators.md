@@ -14,6 +14,42 @@ compound g GENERATOR_NAME
 
 Built-in generators are:`model`, `controller`, `scaffold` (alias: `crud`)
 
+## Generate model
+
+Use case: You just need a model and schema.
+
+Example:
+
+```
+compound g model user email password approved:boolean
+```
+Generated files:
+
+```
+exists  app/
+exists  app/models/
+create  app/models/user.js
+patch   db/schema.js
+```
+
+The generated model file contains the following code:
+
+```
+module.exports = function (compound, User) {
+  // define User here
+};
+```
+
+The patched schema file contains the following code:
+
+```
+var User = describe('User', function () {
+    property('email', String);
+    property('password', String);
+    property('approved', Boolean);
+});
+```
+
 ## Generate controller
 
 Use case: You don't need a standard RESTful controller, just a few non-standard actions.
