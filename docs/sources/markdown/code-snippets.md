@@ -1,6 +1,6 @@
 # Code snippets
 
-## Multiple workers compound server (node 0.6.0)
+## Multiple workers compound server (node 0.8.16)
 
 Example in CoffeeScript:
 
@@ -8,24 +8,29 @@ Example in CoffeeScript:
 ```
 #!/usr/bin/env coffee
 
-app = module.exports = require('compoundjs').createServer()
+app = module.exports = (params) ->
+  params = params || {}
+  # specify current dir as default root of server
+  params.root = params.root || __dirname
+  return require('compound').createServer(params)
 
 cluster = require('cluster')
 numCPUs = require('os').cpus().length
 
-port = process.env.PORT or 3000
-
 if not module.parent
-    if cluster.isMaster
-        # Fork workers.
-        cluster.fork() for i in [1..numCPUs]
-        
-        cluster.on 'death', (worker) ->
-            console.log 'worker ' + worker.pid + ' died'
-    else
-        # Run server
-        app.listen port
-        console.log "CompoundJS server listening on port %d within %s environment", port, app.settings.env
+  port = process.env.PORT || 3000
+  host = process.env.HOST || "0.0.0.0"
+  server = app()
+  if cluster.isMaster
+    # Fork workers.
+    cluster.fork() for i in [1..numCPUs]
+    cluster.on 'exit', (worker, code, signal) ->
+      console.log 'worker ' + worker.process.pid + ' died'
+  else
+    server.listen port, host, ->
+      console.log(
+        "Compound server listening on %s:%d within %s environment",
+        host, port, server.set('env'))
         
 ```
 
