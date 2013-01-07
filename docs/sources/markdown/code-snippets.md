@@ -1,6 +1,6 @@
 # Code snippets
 
-## Multiple workers compound server (node 0.6.0)
+## Multiple workers compound server (node 0.8.16)
 
 Example in CoffeeScript:
 
@@ -8,60 +8,69 @@ Example in CoffeeScript:
 ```
 #!/usr/bin/env coffee
 
-app = module.exports = require('compoundjs').createServer()
+app = module.exports = (params) ->
+  params = params || {}
+  # specify current dir as default root of server
+  params.root = params.root || __dirname
+  return require('compound').createServer(params)
 
 cluster = require('cluster')
 numCPUs = require('os').cpus().length
 
-port = process.env.PORT or 3000
-
 if not module.parent
-    if cluster.isMaster
-        # Fork workers.
-        cluster.fork() for i in [1..numCPUs]
-        
-        cluster.on 'death', (worker) ->
-            console.log 'worker ' + worker.pid + ' died'
-    else
-        # Run server
-        app.listen port
-        console.log "CompoundJS server listening on port %d within %s environment", port, app.settings.env
-        
+  port = process.env.PORT || 3000
+  host = process.env.HOST || "0.0.0.0"
+  server = app()
+  if cluster.isMaster
+    # Fork workers.
+    cluster.fork() for i in [1..numCPUs]
+
+    cluster.on 'exit', (worker, code, signal) ->
+      console.log 'worker ' + worker.process.pid + ' died'
+  else
+    server.listen port, host, ->
+      console.log(
+        "Compound server listening on %s:%d within %s environment",
+        host, port, server.set('env'))
+
 ```
 
 ## Redis session store for Heroku deployment with redistogo addon
 
 Hook the `REDISTOGO_URL` environment variable in `config/environment.js` and pass it to the RedisStore constructor.
+Example in CoffeeScript:
 
 ```
-var express    = require('express'),
-    RedisStore = require('connect-redis')(express);
-    
-var redisOpts;
-if (process.env['REDISTOGO_URL']) {
-    var url = require('url').parse(process.env['REDISTOGO_URL']);
-    var redisOpts = {
-        port: url.port,
-        host: url.hostname,
-        pass: url.auth.split(':')[1]
-    };
-} else {
-    redisOpts = {};
-}
 
-app.configure(function(){
-    var cwd = process.cwd();
-    app.use(express.static(cwd + '/public', {maxAge: 86400000}));
-    app.set('views', cwd + '/app/views');
-    app.set('view engine', 'ejs');
-    app.set('jsDirectory', '/javascripts/');
-    app.set('cssDirectory', '/css/');
-    app.use(express.bodyParser());
-    app.use(express.cookieParser());
-    app.use(express.session({secret: 'secret', store: new RedisStore(redisOpts)}));
-    app.use(express.methodOverride());
-    app.use(app.router);
-});
+module.exports = (compound) ->
+
+  express = require 'express'
+  RedisStore = require('connect-redis')(express)
+    
+  if process.env['REDISTOGO_URL']
+    url = require('url').parse(process.env['REDISTOGO_URL'])
+    redisOpts =
+      port: url.port
+      host: url.hostname
+      pass: url.auth.split(':')[1]
+  else
+    redisOpts = {}
+
+  app.configure ->
+    app.use compound.assetsCompiler.init()
+    app.set 'view engine', 'ejs'
+    app.set 'view options', complexNames: true
+    app.enable 'coffee'
+
+    app.set 'cssEngine', 'stylus'
+
+    app.use express.static(app.root + '/public', {maxAge: 86400000})
+    app.use express.bodyParser()
+    app.use express.cookieParser()
+    app.use express.session secret: 'secret', store: new RedisStore(redisOpts)
+    app.use express.methodOverride()
+    app.use app.router
+
 ```
 
 ## Upload file to compound server
