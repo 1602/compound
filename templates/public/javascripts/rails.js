@@ -31,6 +31,11 @@ jQuery(function ($) {
                 dataType = 'text';
             }
 
+            if (el.attr('stop-propagate')) {
+                el.attr('stop-propagate', null);
+                return;
+            }
+
             if (url === undefined) {
               throw "No URL specified for remote call (action or href must be present).";
             } else {
@@ -72,10 +77,11 @@ jQuery(function ($) {
     /**
      *  confirmation handler
      */
-    $('a[data-confirm],input[data-confirm]').live('click', function () {
+    $('a[data-confirm],input[data-confirm]').live('click', function (e) {
         var el = $(this);
         if (el.triggerAndReturn('confirm')) {
             if (!confirm(el.attr('data-confirm'))) {
+                el.attr('stop-propagate', true);
                 return false;
             }
         }
