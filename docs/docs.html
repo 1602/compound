@@ -774,19 +774,21 @@ link_to('Users index', '/users', {remote: true});
 <li>label</li>
 <li>textarea</li>
 <li>submit</li>
-<li><p>checkbox</p>
-
-<% form_for(user, {action: path_to.users}, function (form) { %>
-
-   <p>
-       <%- form.label('name', 'Username') %>
-       <%- form.input('name') %>
-   </p>
-   <p>
-       <%- form.submit('Save') %>
-   </p>
-<% }); %></li>
+<li>checkbox</li>
 </ul>
+
+<pre class="prettyprint">
+&lt;% form_for(user, {action: path_to.users}, function (form) { %&gt;
+
+   &lt;p&gt;
+       &lt;%- form.label('name', 'Username') %&gt;
+       &lt;%- form.input('name') %&gt;
+   &lt;/p&gt;
+   &lt;p&gt;
+       &lt;%- form.submit('Save') %&gt;
+   &lt;/p&gt;
+&lt;% }); %&gt;
+</pre>
 
 <p>will generate</p>
 
@@ -839,7 +841,31 @@ Use this helper when you have no any resource, but still want to be able to use 
 
 <div class="span8">
 
-<p>TODO: describe <code>input_tag</code></p>
+<p>This tag is the common way of inserting an <code>&lt;input /&gt;</code> tag into your view or layout.
+Just take a look over this code:
+
+<pre class="prettyprint">
+&lt;%- form.input({ name: 'my_field', placeholder: 'enter something' }) %&gt;
+</pre>
+
+It generates this HTML:
+
+<pre class="prettyprint">
+&lt;input type="text" name="my_field" placeholder="enter something" /&gt;
+</pre>
+
+Also, you could set the input' class via the <code>parameters</code> object:
+
+<pre class="prettyprint">
+&lt;%- form.input({ name: 'my_field', placeholder: 'enter something' }) %&gt;
+</pre>
+
+This will result into:
+
+<pre class="prettyprint">
+&lt;input type="text" name="my_field" placeholder="enter something" /&gt;
+</pre>
+</p>
 
 </div>
 
@@ -861,6 +887,46 @@ Use this helper when you have no any resource, but still want to be able to use 
 
 </div>
 
+</div>
+
+<div class="row">
+
+    <div class="span4">
+
+        <ul>
+            <li><code>select_tag</code> and <code>form.select</code></li>
+        </ul>
+
+    </div>
+
+    <div class="span8">
+
+        <p>
+
+<pre class="prettyprint">
+&lt;%- form.select('selectable',
+        [
+            { title: 'Option 1', value: 'option-1' },
+            { title: 'Option #2', value: 'option-2' },
+            { title: 'Option #3', value: 'option-3' }
+        ],
+        { fieldName: 'title', fieldValue: 'value', blank: 'Select an option' }
+    )
+%&gt;
+</pre>
+
+This injects the HTML:
+
+<pre calss="prettyprint">
+&lt;select name="selectable"&gt
+    &lt;option value=""&gt;Select an option&lt;/option&gt;
+    &lt;option value="option-1"&gt;Option 1&lt;/option&gt;
+    &lt;option value="option-2"&gt;Option #2&lt;/option&gt;
+    &lt;option value="option-3"&gt;Option #3&lt;/option&gt;
+&lt;/select&gt;
+</pre>
+
+        </p>
 </div>
 
 <div class="row">
