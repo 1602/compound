@@ -26,7 +26,7 @@
     "rw": "bin/compound"
   },
   "dependencies": {
-    "express": "3.x",
+    "express": "git://github.com/shybovycha/express.git#master",
     "yaml-js": ">= 0.0.2",
     "coffee-script": ">= 1.1.1",
     "ejs-ext": ">= 0.0.8",
