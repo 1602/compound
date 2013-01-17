@@ -1,6 +1,6 @@
 {
   "name": "compound",
-  "version": "1.1.4-38",
+  "version": "1.1.4-51",
   "author": "Anatoliy Chakkaev",
   "contributors": [
     "Sascha Gehlich <contact@filshmedia.net> (http://filshmedia.net)",
@@ -31,7 +31,6 @@
     "coffee-script": ">= 1.1.1",
     "ejs-ext": ">= 0.0.8",
     "jade-ext": ">= 0.0.5",
-    "kontroller": "latest",
     "seedjs": "latest",
     "wrench": "latest"
   },
