@@ -77,6 +77,7 @@ Accepts two params: `resource`, `params` and returns a form helper with the foll
 * `textarea`
 * `submit`
 * `checkbox`
+* `radio`
 
 An example:
 
@@ -142,6 +143,10 @@ This will generate:
 TODO: describe this
 
 ### label_tag / form.label
+
+TODO: describe this
+
+### radio_tag / form.radio
 
 TODO: describe this
 

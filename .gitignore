@@ -1,6 +1,7 @@
 node_modules
 tmp
 .DS_Store
+.idea
 dump.rdb
 doc
 coverage.html
