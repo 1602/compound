@@ -1,6 +1,6 @@
 # Heroku
 
-Heroku's Node.js hosting is available fo public usage now. Deploying a CompoundJS application is as simple as `git push`.
+Heroku's Node.js hosting is available for public use now. Deploying a CompoundJS application is as simple as `git push`.
 
 To work with heroku you also need `ruby` as well as the `heroku` gem.
 
@@ -77,7 +77,7 @@ To access the CompoundJS REPL console, do:
 heroku run compound console
 ```
 
-MongoHQ provides a web interface for browsing your MongoDB database, to use it go to `http://mongohq.com/`, create an account, then click "Add remote connection" and configure the link to your database. You can retrieve defails required for the connection using this command:
+MongoHQ provides a web interface for browsing your MongoDB database, to use it go to `http://mongohq.com/`, create an account, then click "Add remote connection" and configure the link to your database. You can retrieve details required for the connection using this command:
 
 ```
 heroku config --long
