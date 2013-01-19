@@ -9,7 +9,7 @@ context 'stylesheet_link_tag', ->
 
         app.enable 'assets timestamps'
         tag = compound.helpers.stylesheet_link_tag 'style'
-        reLinkTs = /\<link media="screen" rel="stylesheet" type="text\/css" href="\/stylesheets\/style\.css\?\d+" \/\>/
+        reLinkTs = /\<link media="screen" rel="stylesheet" type="text\/css" href="\/stylesheets\/style\.css" \/\>/
         test.ok tag.match reLinkTs, 'Link with timestamp param in development'
 
         app.disable 'assets timestamps'
@@ -42,7 +42,7 @@ context 'javascript_include_tag', (test) ->
 
         app.enable 'assets timestamps'
         tag = compound.helpers.javascript_include_tag 'app'
-        reLinkTs = /<script type="text\/javascript" src="\/javascripts\/app\.js\?\d+">/
+        reLinkTs = /<script type="text\/javascript" src="\/javascripts\/app\.js">/
         test.ok tag.match reLinkTs, 'Link with timestamp param in development'
 
         app.disable 'assets timestamps'
