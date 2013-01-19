@@ -66,8 +66,8 @@ var models = compound.models = {};
         routes.push({
             method: method === 'delete' ? 'del' : method,
             path: path,
-            re: new RegExp('^' + path.replace(/\.?:([^\/\?])+/g, '([^\/\?]+)') + '$'),
-            params: (path.match(/:[^\/\?]+/g) || []).map(function (s) {
+            re: new RegExp('^' + path.replace(/\.?:([^\/\?\.])+/g, '([^\/\?\.]+)') + '$'),
+            params: (path.match(/:[^\/\?\.]+/g) || []).map(function (s) {
                 return s.substr(1);
             }),
             tail: [].slice.call(arguments, 1)
@@ -103,8 +103,12 @@ function bridge(ns, controller, action) {
 function initializeBrowser() {
     $('a').live('click', handleRoute);
     $('form').live('submit', handleRoute);
+    $(window).bind('popstate', function () {
+        handleRoute(location.pathname, true);
+    });
 
-    function handleRoute(url) {
+    function handleRoute(url, doNotPushState) {
+        console.log('arguments', arguments);
         var $el = $(this);
         var method = 'GET';
         var data = {};
@@ -113,20 +117,29 @@ function initializeBrowser() {
             path = url;
         } else if ($el.is('form')) {
             $el.serializeArray().forEach(function (i) {
-                data[i.name] = i.value;
+                var m = i.name.match(/^(.*?)\[(.*?)\]$/);
+                if (m) {
+                    data[m[1]] = data[m[1]] || {};
+                    data[m[1]][m[2]] = i.value;
+                } else {
+                    data[i.name] = i.value;
+                }
             });
             method = $el.attr('method');
+            if (data._method) method = data._method;
             path = $el.attr('action');
         } else {
             path = $el.attr('href');
         }
         var m = match(path, method);
+        console.log(m);
         if (m) {
             var params = [].slice.call(m.values, 1);
             params.forEach(function (v, i) {
                 params[m.route.params[i]] = v;
             });
             var req = {
+                url: path,
                 method: method,
                 session: {},
                 originalMethod: method,
@@ -148,7 +161,11 @@ function initializeBrowser() {
                     if (callback) {
                         callback(null, html);
                     } else {
-                        $('body').html(html.match(/<body[^>]*>([\s\S.]*)<\/body>/i)[0]);
+                        $('body').html(html.match(/<body[^>]*>([\s\S.]*)<\/body>/i)[1]);
+                        $('title').text(html.match(/<title[^>]*>([\s\S.]*)<\/title>/i)[1]);
+                        if (!doNotPushState) {
+                            window.history.pushState(null, "", path);
+                        }
                         // initializeBrowser();
                     }
                 },
@@ -160,11 +177,11 @@ function initializeBrowser() {
             try {
                 m.route.tail[0](req, res);
             }catch(e){
-                // console.log(e.stack);
+                console.log(e.stack);
             }
             return false;
         } else {
-            // console.log('no routes matched', path);
+            console.log('no routes matched', path);
             return true;
         }
     }
