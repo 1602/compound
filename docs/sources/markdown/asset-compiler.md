@@ -12,7 +12,7 @@
 Environment Settings:
 
 in `/config/environment.js`
-use the AssetCompiler middleware and set you css engine
+use the AssetCompiler middleware to set your css engine
 
 ```
 ...
@@ -24,7 +24,7 @@ app.configure(function(){
 });
 ...
 ```
-This will compile stylus (or whatever you use as you css engine) files in
+This will compile stylus files (or whatever else you use as your css engine) in
 `/app/assets/stylesheets` into `/public/stylesheets` and `/app/assets/coffeescripts` into `/public/javascripts`
 
 ## Configuration
@@ -32,10 +32,10 @@ This will compile stylus (or whatever you use as you css engine) files in
 Configuration can be done either in an initializer or in the Environment file.
 
 Compilers should be configured using the `compound.assetCompiler.config(compilerName, options)` method.
-This method takes 2 params, the name of the compiler and an obje t containing the options to configure, 
-and returns `compound.assetCompiler` for chaining. the default compilers use the following options:
+This method takes two parameters, the name of the compiler and an object containing the options to configure, 
+and returns `compound.assetCompiler` for chaining. The default compilers use the following options:
 
-* render: a function to compile the source into js or css, see Adding Your Own Compiler for more details
+* render: a function to compile the source into js or css (see Adding Your Own Compiler for more details)
 * sourceExtension: `'coffee'`
 * destExtension: `'js'`
 * sourceDir: `''` or `'/coffeescripts'`
@@ -43,7 +43,7 @@ and returns `compound.assetCompiler` for chaining. the default compilers use the
 
 It may also contain any other options which can be accessed in the render function ( `this.myCustomOption` )
 
-configure the coffe compiler to look for coffe files in `assets/coffee` instead of `/assets/coffeescripts`:
+Configure the coffee compiler to look for coffee files in `assets/coffee` instead of `/assets/coffeescripts`:
 
 `/config/environment.js`
 
@@ -60,8 +60,8 @@ app.configure(function(){
 
 ## Compiler Specific Configuration
 
-### stylus:
-when using stylus you may want to use some custom configurations as described here: http://learnboost.github.com/stylus/docs/js.html
+### Stylus:
+When using stylus you may want to use some custom configurations as described here: http://learnboost.github.com/stylus/docs/js.html
 
 `/config/environment.js`
 
@@ -84,24 +84,24 @@ app.configure(function(){
 
 ## Adding Your Own Compiler
 
-Adding your own comiler can be done using `compound.assetCompiler.add(compilerName, options)`
+Adding your own compiler can be done using `compound.assetCompiler.add(compilerName, options)`
 
-options should contain the following:
-* render: a function to compile the source into js or css, see Adding Your Own Compiler for more details
+Options should contain the following:
+* render: a function to compile the source into js or css (see Adding Your Own Compiler for more details)
 * sourceExtension: `'coffee'`
 * destExtension: `'js'`
 * sourceDir: `''` or `'/coffeescripts'`
 * destDir: `''` or `'/javascripts'`
 * any other options your render function needs
 
-The render function takes the 3 arguments:
+The render function takes three arguments:
 
 1. src, a string containing the source of the file to be compiled
-2. options: sourceDir, destDir, sourceFileName, destFileName.  shouldn't be necassary in most cases
-3. callback: pass 2 arguements, error and the compiled source.
+2. options: sourceDir, destDir, sourceFileName, destFileName.  Shouldn't be necassary in most cases
+3. callback: pass two arguments, error and the compiled source.
 
 
-an example of how to add your own coffee compiler:
+An example of how to add your own coffee compiler:
 
 `/config/environment.js`
 
