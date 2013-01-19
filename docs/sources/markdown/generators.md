@@ -12,7 +12,7 @@ or using the shortcut:
 compound g GENERATOR_NAME
 ```
 
-Built-in generators are:`model`, `controller`, `scaffold` (alias: `crud`)
+Built-in generators are: `model`, `controller`, `scaffold` (alias: `crud`)
 
 ## Generate model
 
