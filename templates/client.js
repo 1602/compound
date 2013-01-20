@@ -103,7 +103,12 @@ function bridge(ns, controller, action) {
 function initializeBrowser() {
     $('a').live('click', handleRoute);
     $('form').live('submit', handleRoute);
+    var skipFirst = true;
     $(window).bind('popstate', function () {
+        if (skipFirst) {
+            skipFirst = false;
+            return;
+        }
         handleRoute(location.pathname, true);
     });
 
@@ -212,7 +217,7 @@ function match(path, method) {
 var jdb = require('jugglingdb');
 var Schema = jdb.Schema;
 
-var schema = new Schema(require('./node_modules/jugglingdb/lib/adapters/memory'));
+var schema = new Schema(require('./node_modules/jugglingdb/lib/adapters/http'));
 var fn = new Function('context', 'require', 'with(context){(function(){' + compound.files['{{ ROOT }}/db/schema.js'] + '})()}');
 fn(context(models, compound, app, schema), require);
 
