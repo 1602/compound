@@ -114,7 +114,7 @@ function initializeBrowser() {
     });
 
     function handleRoute(url, doNotPushState) {
-        console.log('arguments', arguments);
+        // console.log('arguments', arguments);
         var $el = $(this);
         var method = 'GET';
         var data = {};
@@ -138,7 +138,7 @@ function initializeBrowser() {
             path = $el.attr('href');
         }
         var m = match(path, method);
-        console.log(m);
+        // console.log(m);
         if (m) {
             var params = [].slice.call(m.values, 1);
             params.forEach(function (v, i) {
@@ -349,6 +349,10 @@ function context(models, railway, app, defSchema, done) {
      */
     ctx.restPath = function (path) {
         if (cname) settings[cname].restPath = path;
+    };
+
+    ctx.set = function (k, v) {
+        if (cname) settings[cname][k] = v;
     };
 
     return ctx;
