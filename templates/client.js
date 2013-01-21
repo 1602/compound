@@ -78,7 +78,7 @@ var models = compound.models = {};
 var map = compound.map = compound.routeMapper = new Map(app, bridge);
 require('./config/routes').routes(map);
 
-function bridge(ns, controller, action) {
+function bridge(ns, controller, action, params) {
     return function (req, res, next) {
         var Controller = ktl.BaseController.constructClass(controller, compound.structure.controllers[controller]);
         Controller.prototype.pathTo = map.pathTo;
@@ -95,6 +95,7 @@ function bridge(ns, controller, action) {
         ctl.compound = compound;
         ctl.app = compound.app;
         // console.log(controller, action);
+        req.routeParams = params;
         ctl.perform(action || req.params.action, req, res, function(err) {
         });
     };
@@ -168,6 +169,9 @@ function initializeBrowser() {
                     } else {
                         $('body').html(html.match(/<body[^>]*>([\s\S.]*)<\/body>/i)[1]);
                         $('title').text(html.match(/<title[^>]*>([\s\S.]*)<\/title>/i)[1]);
+                        if (req.routeParams && req.routeParams.state === false) {
+                            doNotPushState = true;
+                        }
                         if (!doNotPushState) {
                             window.history.pushState(null, "", path);
                         }
