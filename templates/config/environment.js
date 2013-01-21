@@ -11,6 +11,8 @@ module.exports = function (compound) {
         app.set('jsDirectory', '/javascripts/');
         app.set('cssDirectory', '/stylesheets/');
         app.set('cssEngine', '{{ CSSENGINE }}');
+        // make sure you run `npm install railway-routes` before enabling cs
+        // app.enable('clientside');
         app.use(express.bodyParser());
         app.use(express.cookieParser('secret'));
         app.use(express.session({secret: 'secret'}));
