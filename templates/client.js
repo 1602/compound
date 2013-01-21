@@ -32,7 +32,7 @@ require.define('fs', function(require, module, exports) {
 var ejs = require('ejs');
 var fs = require('fs');
 var Map = require('railway-routes').Map;
-var ktl = require('kontroller');
+var ktl = require('./node_modules/compound/node_modules/kontroller');
 var controllerExtensions = require('./node_modules/compound/lib/controller-extensions');
 
 compound.files = {
