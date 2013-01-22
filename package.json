@@ -19,7 +19,7 @@
     "node >= 0.8.0"
   ],
   "url": "http://compoundjs.com",
-  "main": "lib/compound",
+  "main": "lib/server/compound",
   "bin": {
     "compound": "bin/compound",
     "rw": "bin/compound"
