@@ -1,3 +1,3 @@
 {{ MODELNAME }} = describe '{{ MODELNAME }}', ->
 {{ PROPERTIES }}
-    set 'restPath', '/{{ models }}'
+    set 'restPath', pathTo.{{ models }}
