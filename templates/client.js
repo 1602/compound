@@ -34,6 +34,7 @@ var express = require('express');
 var ejs = require('ejs');
 
 var app = express();
+app.set('env', '{{ NODE_ENV }}');
 var compound = window.compound = new CompoundClient(app, '{{ ROOT }}');
 
 var fs = require('fs');
