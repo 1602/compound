@@ -1,4 +1,4 @@
 var {{ MODELNAME }} = describe('{{ MODELNAME }}', function () {
 {{ PROPERTIES }}
-    set('restPath', '/{{ models }}');
+    set('restPath', pathTo.{{ models }});
 });
