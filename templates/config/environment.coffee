@@ -11,6 +11,8 @@ module.exports = (compound) ->
 
     app.set 'cssEngine', '{{ CSSENGINE }}'
 
+    # make sure you run `npm install railway-routes browserify`
+    # app.enable 'clientside'
     app.use express.static(app.root + '/public', maxAge: 86400000)
     app.use express.bodyParser()
     app.use express.cookieParser 'secret'

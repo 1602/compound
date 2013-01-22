@@ -51,9 +51,6 @@ Run app
 
 Make sure you've included `public/javascripts/compound.js` in your layout.
 
-NOTE: application and controllers should be generated using `--noeval` flag,
-because currently only noeval controllers supported
-
 Short functionality review
 ==========================
 
