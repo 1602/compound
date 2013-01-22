@@ -6,7 +6,7 @@ if (!process.env.TRAVIS) {
     });
 }
 
-global.app = require('../lib/compound').createServer()
+global.app = require('../lib/server/compound').createServer()
 global.compound = app.compound;
 global.args = [];
 compound.generators.init(compound, global.args);
