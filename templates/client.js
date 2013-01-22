@@ -1,11 +1,30 @@
 require.define('module', function () {});
 require.define('fs', function(require, module, exports) {
-    module.exports.readFileSync = function (path) {
+    var path = require('path');
+    exports.readFileSync = function (path) {
         return compound.files[path];
     };
 
-    module.exports.existsSync = function (path) {
-        return path in compound.files;
+    exports.existsSync = function (name) {
+        if (name in compound.files) return true;
+        var dirFound = false;
+        Object.keys(compound.files).forEach(function (dir) {
+            if (path.dirname(dir).indexOf(name) !== -1) {
+                dirFound = true;
+            }
+        });
+        return dirFound;
+    };
+
+    exports.readdirSync = function (name) {
+        var res = [];
+        name = name.replace(/\/$/, '');
+        Object.keys(compound.files).forEach(function (file) {
+            if (path.dirname(file) === name) {
+                res.push(path.basename(file));
+            }
+        });
+        return res;
     };
 });
 
