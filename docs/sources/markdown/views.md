@@ -177,24 +177,35 @@ submit button. Following example doing the same thing:
 
 ### labelTag, form.label
 
-TODO: describe this
+Label tag
+
+```ejs
+<%- labelTag('Text on label', {'for': 'attachedInput', style: 'font-size: 10px'}) %>
+<%- form.label('attachedInput', 'Text on label', {style: 'font-size: 10px'}) %>
+```
+
+will both generate
+
+```html
+<label for="attachedInput" style="font-size: 10px">Text on label</label>
+```
 
 ### stylesheetLinkTag
 
-```
+```ejs
 <%- stylesheetLinkTag('reset', 'style', 'mobile') %>
 ```
 
 will generate
 
-```
+```html
 <link media="screen" rel="stylesheet" type="text/css" href="/stylesheets/reset.css" />
 <link media="screen" rel="stylesheet" type="text/css" href="/stylesheets/style.css" />
 ```
 
 ### javascriptIncludeTag
 
-```
+```ejs
 <%- javascriptIncludeTag(
   'https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js',
   'rails', 'application') %>
@@ -203,7 +214,7 @@ will generate
 
 will generate
 
-```
+```html
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script> 
 <script type="text/javascript" src="/javascripts/rails.js"></script>
 <script type="text/javascript" src="/javascripts/application.js"></script>
@@ -211,7 +222,7 @@ will generate
 
 By default, CompoundJS expects assets to be located in `public/javascripts` and`public/stylesheets` directories, but this settings can be overwritten in `config/environment.js`:
 
-```
+```javascript
 app.set('jsDirectory', '/js/');
 app.set('cssDirectory', '/css/');
 ```
@@ -220,7 +231,7 @@ app.set('cssDirectory', '/css/');
 
 You can define your own helpers for each controller in the file `app/helpers/controllername_helper.js`. For example, if you want to define a helper called `my_helper` to use it in the `users` controller, put the following in `app/helpers/users_controller.js`:
 
-```
+```javascript
 module.exports = {
   myHelper: function () {
     return "This is my helper!";
