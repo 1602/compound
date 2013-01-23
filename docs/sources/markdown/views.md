@@ -190,6 +190,43 @@ will both generate
 <label for="attachedInput" style="font-size: 10px">Text on label</label>
 ```
 
+One note about `form.label('name')`: when second argument is omitted and i18n is
+turned on, desired value from locale file used autimatically. For example we
+have `ru.yml`:
+
+```yml
+ru:
+  models:
+    User:
+      fields:
+        name: Имя пользователя
+```
+
+and form looks like
+
+```ejs
+<% var form = formFor(user); %>
+<%- form.label('name') %>
+```
+
+will create
+
+```html
+<label for="name">Имя пользователя</label>
+```
+
+Hint: you can create en.yml with
+
+```yml
+en:
+  models:
+    User:
+      fields:
+        name: Name of user
+```
+
+and DRY your labels over the application views
+
 ### stylesheetLinkTag
 
 ```ejs
@@ -201,6 +238,7 @@ will generate
 ```html
 <link media="screen" rel="stylesheet" type="text/css" href="/stylesheets/reset.css" />
 <link media="screen" rel="stylesheet" type="text/css" href="/stylesheets/style.css" />
+<link media="screen" rel="stylesheet" type="text/css" href="/stylesheets/mobile.css" />
 ```
 
 ### javascriptIncludeTag
