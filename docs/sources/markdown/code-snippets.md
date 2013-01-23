@@ -58,8 +58,6 @@ module.exports = (compound) ->
 
   app.configure ->
     app.use compound.assetsCompiler.init()
-    app.set 'view engine', 'ejs'
-    app.set 'view options', complexNames: true
     app.enable 'coffee'
 
     app.set 'cssEngine', 'stylus'

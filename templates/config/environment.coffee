@@ -5,8 +5,6 @@ module.exports = (compound) ->
 
   app.configure ->
     {{ PREPEND_MIDDLEWARE }}
-    app.set 'view engine', '{{ VIEWENGINE }}'
-    app.set 'view options', complexNames: true
     app.enable 'coffee'
 
     app.set 'cssEngine', '{{ CSSENGINE }}'
