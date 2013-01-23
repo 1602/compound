@@ -1,6 +1,6 @@
 {
   "name": "compound",
-  "version": "1.1.4-57",
+  "version": "1.1.4-58",
   "author": "Anatoliy Chakkaev",
   "contributors": [
     "Sascha Gehlich <contact@filshmedia.net> (http://filshmedia.net)",
@@ -29,8 +29,8 @@
     "express": "git://github.com/shybovycha/express.git#master",
     "yaml-js": ">= 0.0.2",
     "coffee-script": ">= 1.1.1",
-    "ejs-ext": ">= 0.0.8",
-    "jade-ext": ">= 0.0.5",
+    "ejs-ext": "git://github.com/shybovycha/ejs-ext.git#master",
+    "jade-ext": "git://github.com/shybovycha/jade-ext.git#master",
     "seedjs": "latest",
     "wrench": "latest"
   },
