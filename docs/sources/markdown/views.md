@@ -106,20 +106,20 @@ This will generate:
 </form>
 ```
 
-### formTag
+### formTagBegin
 
 This is the "light" version of the `formFor` helper which expects only one argument: `params`. Use this helper when you don't have a resource, but still want to be able to use simple method overriding and csrf protection tokens.
 
 An example:
 
 ```
-<% var form = formTag({ action: path_to.users }); %>
-<%- form.begin() %>
+<%- formTagBegin({ action: path_to.users }); %>
 
-<%- form.label('name', 'Username') %> <%- form.input('name') %>
-<%- form.submit('Save') %>
+<%- labelTag('name', 'Username') %>
+<%- inputTag('name', {value: 'Sascha'}) %>
+<%- submitTag('Save') %>
 
-<%- form.end() %>
+<%- formTagEnd() %>
 ```
 
 This will generate:
