@@ -31,7 +31,6 @@ require.define('fs', function(require, module, exports) {
 require('./node_modules/compound/lib/client/application');
 var CompoundClient = require('./node_modules/compound/lib/client/compound');
 var express = require('express');
-var ejs = require('ejs');
 
 var app = express();
 app.set('env', '{{ NODE_ENV }}');
@@ -42,6 +41,8 @@ var fs = require('fs');
 compound.files = {
     {{ FILES }}
 };
+
+{{ ENGINES }}
 
 Object.keys(compound.files).forEach(function (f) {
     if (f.match(/\.js$/)) {
