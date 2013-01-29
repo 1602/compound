@@ -4,7 +4,7 @@ In CompoundJS, a controller is a module that receives user input and initiates a
 
 ## Features overview
 
-Inside controller you can use following reserved global functions to control response:
+Inside controllers you can use following reserved global functions to control response:
 
 * <strong>render</strong> - render view template related to this action
 * <strong>send</strong> - send text, status code or json object to client
@@ -37,7 +37,7 @@ action('index', function () {
 });
 ```
 
-If you want to pass some data to the view, there are two ways to do it. First is to simply pass a hash containing the data:
+If you want to pass some data to the view, there are two ways to do it. The first is to simply pass a hash containing the data:
 
 ```
 action('index', function () {
@@ -45,7 +45,7 @@ action('index', function () {
 });
 ```
 
-and the second method is to set the properties of `this`:
+The second method is to set the properties of `this`:
 
 ```
 action('index', function () {
@@ -54,7 +54,7 @@ action('index', function () {
 });
 ```
 
-And if you want to render another view, just put its name as the first argument:
+If you want to render another view, just put its name as the first argument:
 
 ```
 action('update', function () {
@@ -75,7 +75,7 @@ action('update', function () {
 
 The `send` function is useful for debugging and one-page apps where you don't want to render a heavy template and just want to send text or JSON data.
 
-This function can be called with number (status code):
+This function can be called with a status code number:
 
 ```
 action('destroy', function () {
@@ -91,7 +91,7 @@ action('sayHello', function () {
 });
 ```
 
-or with object:
+or with an object:
 
 ```
 action('apiCall', function () {
@@ -110,7 +110,7 @@ redirect('http://example.com'); // redirect to another host
 
 ### flash()
 
-The `flash` function stores a message in the session for future displaying, this is a regular expressjs function, refer to [expressjs 2.0 guide](http://expressjs.com/2x/guide.html#req.flash%28%29 "Expressjs 2.0 guide") to learn how it works. Few examples:
+The `flash` function stores a message in the session to be displayed later.  This is a regular expressjs function (refer to [expressjs 2.0 guide](http://expressjs.com/2x/guide.html#req.flash%28%29 "Expressjs 2.0 guide") to learn how it works). Here are a few examples:
 
 `posts_controller.js`
 ```
@@ -133,7 +133,7 @@ This `create` action sends a flash info on success and a flash error on fail.
 
 To provide the ability of DRY-ing controller code and reusing common code parts, CompoundJS provides a few additional tools: method chaining and external controllers loading.
 
-To chain methods, you can use the `before` and`after` methods.
+To chain methods, you can use the `before` and `after` methods.
 
 `checkout_controller.js`
 ```
@@ -151,7 +151,7 @@ function prepareBasket () { next() }
 function loadProducts () { next() }
 ```
 
-In this example, `userRequired` will be called only for the`order` action, `prepareBasket` will be called for all actions except `order`, and `loadProducts` will be called only for the `products` and `featuredProducts`methods.
+In this example, `userRequired` will be called only for the `order` action, `prepareBasket` will be called for all actions except `order`, and `loadProducts` will be called only for the `products` and `featuredProducts`methods.
 
 Note, that the before-functions should call the global `next` method that will pass control to the next function in the chain.
 

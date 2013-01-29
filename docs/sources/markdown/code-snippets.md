@@ -58,8 +58,6 @@ module.exports = (compound) ->
 
   app.configure ->
     app.use compound.assetsCompiler.init()
-    app.set 'view engine', 'ejs'
-    app.set 'view options', complexNames: true
     app.enable 'coffee'
 
     app.set 'cssEngine', 'stylus'
@@ -77,7 +75,7 @@ module.exports = (compound) ->
 
 * <a href="http://groups.google.com/group/railwayjs/browse_thread/thread/592df72830898e9a" target="_blank">Discussion in Google Groups</a>
 * The solution is to use <a href="https://github.com/anatoliychakkaev/connect-form-sync" target="_blank">this middleware</a>
-* Check out <a href="https://github.com/anatoliychakkaev/railway-example-upload" target="_blank">example app</a>
+* Check out this <a href="https://github.com/anatoliychakkaev/railway-example-upload" target="_blank">example app</a>
 
 ```
 var form = require('connect-form-sync');

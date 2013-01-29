@@ -1,6 +1,6 @@
 {
   "name": "compound",
-  "version": "1.1.4-58",
+  "version": "1.1.4-17",
   "author": "Anatoliy Chakkaev",
   "contributors": [
     "Sascha Gehlich <contact@filshmedia.net> (http://filshmedia.net)",
@@ -20,7 +20,7 @@
     "node >= 0.8.0"
   ],
   "url": "http://compoundjs.com",
-  "main": "lib/compound",
+  "main": "lib/server/compound",
   "bin": {
     "compound": "bin/compound",
     "rw": "bin/compound"

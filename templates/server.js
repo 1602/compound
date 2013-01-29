@@ -4,7 +4,7 @@
  * Server module exports method which returns new instance of application server
  *
  * @param {Object} params - railway/express webserver initialization params.
- * @returns RailwayJS powered express webserver
+ * @returns CompoundJS powered express webserver
  */
 var app = module.exports = function getServerInstance(params) {
     params = params || {};
