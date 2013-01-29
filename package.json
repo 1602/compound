@@ -1,6 +1,6 @@
 {
   "name": "compound",
-  "version": "1.1.4-22",
+  "version": "1.1.4-24",
   "author": "Anatoliy Chakkaev",
   "contributors": [
     "Sascha Gehlich <contact@filshmedia.net> (http://filshmedia.net)",
@@ -34,7 +34,7 @@
     "railway-routes": "git://github.com/shybovycha/railway-routes.git#master",
     "kontroller": "latest",
     "seedjs": "latest",
-    "wrench": "latest"
+    "fs-extra": "latest"
   },
   "repository": {
     "type": "git",
