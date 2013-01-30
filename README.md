@@ -341,14 +341,14 @@ CompoundJS Event model
 Compound application loading process supports following events to be attached
 (in chronological order):
 
-- before configure
-- after configure
-- before extensions
-- after extensions
-- post-init
-- structure loaded
-- models loaded
-- after initializers
+1. configure
+2. after configure
+3. routes
+4. extensions
+5. after extensions
+6. structure
+7. models
+8. initializers
 
 REPL console
 ------------
