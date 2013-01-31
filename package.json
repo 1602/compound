@@ -1,9 +1,10 @@
 {
   "name": "compound",
-  "version": "1.1.4-16",
+  "version": "1.1.4-30",
   "author": "Anatoliy Chakkaev",
   "contributors": [
-    "Sascha Gehlich <contact@filshmedia.net> (http://filshmedia.net)"
+    "Sascha Gehlich <contact@filshmedia.net> (http://filshmedia.net)",
+    "Artem Shoobovych <shybovycha@gmail.com>"
   ],
   "description": "CompoundJS - MVC framework for NodeJS",
   "keywords": [
@@ -25,14 +26,15 @@
     "rw": "bin/compound"
   },
   "dependencies": {
-    "express": "3.x",
+    "express": "latest",
     "yaml-js": ">= 0.0.2",
     "coffee-script": ">= 1.1.1",
-    "ejs-ext": ">= 0.0.8",
-    "jade-ext": ">= 0.0.5",
-    "railway-routes": ">= 0.0.6",
+    "ejs-ext": "latest",
+    "jade-ext": "latest",
+    "railway-routes": "git://github.com/shybovycha/railway-routes.git#master",
     "kontroller": "latest",
-    "seedjs": "*"
+    "seedjs": "latest",
+    "fs-extra": "latest"
   },
   "repository": {
     "type": "git",

@@ -77,6 +77,7 @@ Accepts two params: `resource`, `params` and returns a form helper with the foll
 * `textarea`
 * `submit`
 * `checkbox`
+* `radio`
 
 An example:
 
