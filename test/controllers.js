@@ -90,6 +90,7 @@ function getController(name) {
 
 function fakeRequest(method, path) {
     return {
+        app: compound.app,
         method: method,
         originalMethod: method === 'GET' ? 'GET' : 'POST',
         url: path,
