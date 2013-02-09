@@ -17,7 +17,7 @@ if (typeof app === 'function') {
     app = require('../lib/compound').createServer();
 }
 
-var railway = app.railway;
+var railway = app.compound;
 var generators = railway.generators;
 var tools = railway.tools;
 var addSpaces = railway.utils.addSpaces;
