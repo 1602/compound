@@ -1,5 +1,7 @@
 var CompoundClient = require('./node_modules/compound/lib/client/compound');
 var express = require('express');
+var util = require('util');
+var fs = require('fs');
 
 var app = express();
 app.set('env', '{{ NODE_ENV }}');
@@ -37,6 +39,31 @@ compound.structure = function () {
     };
 };
 
+compound.on('configure', function () {
+    console.log('configure');
+    [
+        require('./config/environment'),
+        require('./config/environments/{{ NODE_ENV }}')
+    ].forEach(function (m) {
+        if (m && m.call) m(compound);
+    });
+}).on('routes', function (map) {
+    var r = require('./config/routes');
+    if (r && r.routes) r.routes(map)
+}).on('extensions', function (c) {
+    var f = require('./config/autoload');
+    if (typeof f === 'function') {
+        var s = f(compound);
+        s && s.forEach && s.forEach(function (m) {
+            m && m.init && m.init(c);
+        });
+    }
+}).on('initializers', function (c) {
+    [{{ INITIALIZERS }}].forEach(function (m) {
+        m(c);
+    });
+});
+
 function initializeBrowser() {
     $('a').live('click', compound.app.handle);
     $('form').live('submit', compound.app.handle);
@@ -55,4 +82,3 @@ function initializeBrowser() {
 $(initializeBrowser);
 
 compound.init();
-
