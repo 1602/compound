@@ -1,8 +1,9 @@
 module.exports = function (compound) {
-    return [
-        require('{{ VIEWENGINE }}-ext'),
-        require('jugglingdb'),
-        require('seedjs')
-    ];
+    return typeof window === 'undefined' ? [
+        '{{ VIEWENGINE }}-ext',
+        'jugglingdb',
+        'seedjs'
+    ].map(require) : [
+    ];
 };
 
