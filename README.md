@@ -22,7 +22,7 @@ Usage
 
     # initialize app
     $ compound init blog && cd blog
-    $ npm install -l
+    $ npm install
 
     # generate scaffold
     $ compound generate crud post title content published:boolean
