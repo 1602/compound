@@ -1,3 +1,4 @@
+
 var express = require('express');
 var util = require('util');
 var fs = require('fs');
@@ -28,7 +29,7 @@ function instantiateApplication(root) {
 
     var app = express();
     app.set('env', '{{ NODE_ENV }}');
-    var compound = window.compound = new CompoundClient(app, root);
+    var compound = new CompoundClient(app, root);
 
     var fs = require('fs');
 
