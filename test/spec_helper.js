@@ -1,9 +1,11 @@
 if (!process.env.TRAVIS) {
-    require('semicov').init('lib');
+    if (typeof __cov === 'undefined') {
+        process.on('exit', function () {
+            require('semicov').report();
+        });
+    }
 
-    process.on('exit', function () {
-        require('semicov').report();
-    });
+    require('semicov').init('lib');
 }
 
 global.app = require('../lib/server/compound').createServer()
