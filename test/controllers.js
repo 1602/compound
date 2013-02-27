@@ -1,5 +1,7 @@
 var path = require('path');
 var fs = require('fs');
+var co = require('../lib/server/compound');
+var jg = require('jugglingdb');
 
 require('./spec_helper').init(exports);
 app.disable('quiet');
@@ -44,6 +46,15 @@ it('should allow to load functions declared in another ctl', function (test) {
         test.done();
     };
     ctl.perform('test', req(), {});
+});
+
+it('should create CRUD controller', function (test) {
+    var schema = new jg.Schema('memory');
+    compound.models.Face = schema.define('Face', {});
+
+    compound.structure.controllers.faces = co.controllers.crudJSON('Face');
+    console.log(__cov["/Users/anatoliy/projects/compound/lib/server/controllers/crud-json.js"]);
+    test.done();
 });
 
 // todo: move to kontroller
