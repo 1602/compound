@@ -12,7 +12,8 @@ or using the shortcut:
 compound g GENERATOR_NAME
 ```
 
-Built-in generators are: `model`, `controller`, `scaffold` (alias: `crud`)
+Built-in generators are: `model`, `controller`, `scaffold` (alias: `crud`),
+`clienside`
 
 ## Generate model
 
@@ -115,3 +116,15 @@ create  app/views/posts/index.ejs
 create  app/views/posts/show.ejs
 patch   config/routes.js
 ```
+
+## Clientside
+
+For using compound on clienside we have to create application bundle. This
+bundle then could be passed to browserify to create full bundle (application +
+framework + dependencies). This generator allows to create bundle.
+
+    compound generate clientside # create only app bundle (./clien-side.js)
+
+    compound generate clientside --full # create full bundle (./public/javascripts/compound.js)
+
+    compound generate clienside --watch # create full bundle and regenerate on changes in any file
