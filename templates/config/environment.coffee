@@ -4,6 +4,11 @@ module.exports = (compound) ->
   app = compound.app
 
   app.configure ->
+    app.use ( req, res , next )->
+        res.on 'error', ( err )->
+          console.log 'error'
+          console.log err
+        next()
     {{ PREPEND_MIDDLEWARE }}
     app.enable 'coffee'
 
