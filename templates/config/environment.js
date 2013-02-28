@@ -9,7 +9,7 @@ module.exports = function (compound) {
             res.on( 'error', function( err ){
               console.log('error');
               console.log(err);   
-            }
+            });
             next();
         });
         {{ PREPEND_MIDDLEWARE }}
