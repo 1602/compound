@@ -9,9 +9,13 @@ module.exports = instantiateApplication;
 if (!window.compound) {
     window.compound = instantiateApplication('{{ ROOT }}');
 
-    $(function initializeBrowser() {
-        $('a').live('click', compound.app.handle);
-        $('form').live('submit', compound.app.handle);
+    function initializeBrowser() {
+        $('a').on('click', compound.app.handle);
+        $('form').on('submit', compound.app.handle);
+
+    }
+    $(function () {
+        initializeBrowser();
         var skipFirst = true;
 
         $(window).bind('popstate', function () {
@@ -19,10 +23,10 @@ if (!window.compound) {
                 skipFirst = false;
                 return;
             }
-            compound.app.handle(location.pathname, true);
+            compound.app.handle({url: location.pathname}, true);
         });
-
     });
+    compound.on('navigate', initializeBrowser);
 }
 
 function instantiateApplication(root) {
