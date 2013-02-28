@@ -4,6 +4,14 @@ module.exports = function (compound) {
     var app = compound.app;
 
     app.configure(function(){
+
+        app.use( function( req, res , next ){
+            res.on( 'error', function( err ){
+              console.log('error');
+              console.log(err);   
+            });
+            next();
+        });
         {{ PREPEND_MIDDLEWARE }}
         app.use(express.static(app.root + '/public', { maxAge: 86400000 }));
         app.set('jsDirectory', '/javascripts/');
