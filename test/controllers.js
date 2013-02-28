@@ -53,7 +53,7 @@ it('should create CRUD controller', function (test) {
     compound.models.Face = schema.define('Face', {});
 
     compound.structure.controllers.faces = co.controllers.crudJSON('Face');
-    console.log(__cov["/Users/anatoliy/projects/compound/lib/server/controllers/crud-json.js"]);
+    // console.log(__cov["/Users/anatoliy/projects/compound/lib/server/controllers/crud-json.js"]);
     test.done();
 });
 
