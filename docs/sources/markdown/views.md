@@ -265,6 +265,27 @@ app.set('jsDirectory', '/js/');
 app.set('cssDirectory', '/css/');
 ```
 
+### contentFor
+
+Content for named section.
+
+Called with one param acts as getter and returns all content pieces,
+collected before. Called with two params accumulates second param in named
+collection.
+
+Examples:
+
+In layout:
+
+    <%- contentFor('javascripts') %>
+
+In view:
+
+    <% contentFor('javascripts', javascriptIncludeTag('view-specific')) %>
+
+This will add some view-specific content to layout.
+This method also could be called from controller.
+
 ## Defining your own helpers
 
 You can define your own helpers for each controller in the file `app/helpers/controllername_helper.js`. For example, if you want to define a helper called `my_helper` to use it in the `users` controller, put the following in `app/helpers/users_controller.js`:
@@ -277,5 +298,5 @@ module.exports = {
 }
 ```
 
-The function `myHelper` can be now used by any of the views used by the `users` controller. Important thing: if you need to access controller object inside helper method, you can use `this` keyword. Inside helper method `this` points to controller.
+The function `myHelper` can be now used by any of the views used by the `users` controller. Important thing: if you need to access controller object inside helper method, you can use `this` keyword. Inside helper method `this` points to controller context.
 
