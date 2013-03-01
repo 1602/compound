@@ -123,8 +123,15 @@ For using compound on clienside we have to create application bundle. This
 bundle then could be passed to browserify to create full bundle (application +
 framework + dependencies). This generator allows to create bundle.
 
-    compound generate clientside # create only app bundle (./clien-side.js)
+    # create full bundle (./public/javascripts/compound.js)
+    compound generate clientside
 
-    compound generate clientside --full # create full bundle (./public/javascripts/compound.js)
+    # create full bundle and regenerate on changes in any file
+    compound generate clientside --watch
 
-    compound generate clienside --watch # create full bundle and regenerate on changes in any file
+    # create full bundle and force quit after completion
+    compound generate clientside --quit
+
+Use shortcuts to save your time:
+
+    compound g cs --watch
