@@ -13,7 +13,7 @@ compound g GENERATOR_NAME
 ```
 
 Built-in generators are: `model`, `controller`, `scaffold` (alias: `crud`),
-`clienside`
+`clientside`
 
 ## Generate model
 
@@ -119,7 +119,7 @@ patch   config/routes.js
 
 ## Clientside
 
-For using compound on clienside we have to create application bundle. This
+For using compound on clientside we have to create application bundle. This
 bundle then could be passed to browserify to create full bundle (application +
 framework + dependencies). This generator allows to create bundle.
 
