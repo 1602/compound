@@ -89,7 +89,7 @@ process.nextTick(function () {
       if (typeof what == "undefined" || what == null) {
           console.log('Generator not specified, available generators: ', generators.list());
       } else {
-          generators.perform(what, args);
+          exitAfterAction = !generators.perform(what, args);
       }
       break;
   case '--version':
