@@ -1116,14 +1116,14 @@ of course set of possible relations between object will grow
 
 <div class="span8">
 
-<pre class="prettyprint">User.hasMany(Post,   {as: 'posts',  foreignKey: 'userId'});
+<pre class="prettyprint">User.hasMany(compound.models.Post,   {as: 'posts',  foreignKey: 'userId'});
 // creates instance methods:
 // user.posts(conds)
 // user.posts.build(data) // like new Post({userId: user.id});
 // user.posts.create(data) // build and save
 // user.posts.find
 
-Post.belongsTo(User, {as: 'author', foreignKey: 'userId'});
+Post.belongsTo(compound.models.User, {as: 'author', foreignKey: 'userId'});
 // creates instance methods:
 // post.author(callback) -- getter when called with function
 // post.author() -- sync getter when called without params
