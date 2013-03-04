@@ -32,24 +32,6 @@ Usage
     # visit app
     $ open http://localhost:3000/posts
 
-Using client-side framework
-===========================
-
-Experimental feature. Allows to work transparently on client and server (same codebase working on clientside).
-Install additional prerequisites:
-
-    $ npm install railway-routes browserify
-
-Uncomment following configuration line in `config/environment.js`:
-
-    app.enable('clientside');
-
-Run app
-
-    node .
-
-Make sure you've included `public/javascripts/compound.js` in your layout.
-
 Short functionality review
 ==========================
 
