@@ -19,13 +19,12 @@
     "node >= 0.8.0"
   ],
   "url": "http://compoundjs.com",
-  "main": "lib/server/compound",
+  "main": "lib/server/compound.js",
   "bin": {
     "compound": "bin/compound",
     "rw": "bin/compound"
   },
   "dependencies": {
-    "express": "3.x",
     "yaml-js": ">= 0.0.2",
     "coffee-script": ">= 1.1.1",
     "ejs-ext": ">= 0.0.8",
@@ -45,6 +44,6 @@
     "marked": ">= 0.2.6"
   },
   "scripts": {
-    "test": "./support/nodeunit/bin/nodeunit test"
+    "test": "./node_modules/.bin/nodeunit test"
   }
 }
