@@ -41,7 +41,8 @@
     "jugglingdb": ">= 0.1.25",
     "nodeunit": "*",
     "semicov": "*",
-    "marked": ">= 0.2.6"
+    "marked": ">= 0.2.6",
+    "express": "3.x"
   },
   "scripts": {
     "test": "./node_modules/.bin/nodeunit test"
