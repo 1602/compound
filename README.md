@@ -47,7 +47,6 @@ CLI tool
       r,  routes [filter]          Display application routes
       c,  console                  Debug console
       s,  server [port]            Run compound server
-      x,  install gitUrl [extName] Install compound eXtension
 
 #### compound init [appname][ key(s)]
     keys:
@@ -202,42 +201,42 @@ if you have `custom_controller` with `test` action inside it you can now do:
 for debugging routes described in `config/routes.js` you can use `compound routes` command:
 
     $ compound routes
-                     GET    /                               posts#index
-                     GET    /:id                            posts#show
-         sitemap.txt GET    /sitemap.txt                    posts#map
-         admin_posts GET    /admin/posts.:format?           admin/posts#index
-         admin_posts POST   /admin/posts.:format?           admin/posts#create
-      new_admin_post GET    /admin/posts/new.:format?       admin/posts#new
-     edit_admin_post GET    /admin/posts/:id/edit.:format?  admin/posts#edit
-          admin_post DELETE /admin/posts/:id.:format?       admin/posts#destroy
-          admin_post PUT    /admin/posts/:id.:format?       admin/posts#update
-    likes_admin_post PUT    /admin/posts/:id/likes.:format? admin/posts#likes
+                   GET    /                               posts#index
+                   GET    /:id                            posts#show
+       sitemap.txt GET    /sitemap.txt                    posts#map
+        adminPosts GET    /admin/posts.:format?           admin/posts#index
+        adminPosts POST   /admin/posts.:format?           admin/posts#create
+      newAdminPost GET    /admin/posts/new.:format?       admin/posts#new
+     editAdminPost GET    /admin/posts/:id/edit.:format?  admin/posts#edit
+         adminPost DELETE /admin/posts/:id.:format?       admin/posts#destroy
+         adminPost PUT    /admin/posts/:id.:format?       admin/posts#update
+    likesAdminPost PUT    /admin/posts/:id/likes.:format? admin/posts#likes
 
 Filter by method:
 
     $ compound routes GET
-                     GET    /                               posts#index
-                     GET    /:id                            posts#show
-         sitemap.txt GET    /sitemap.txt                    posts#map
-         admin_posts GET    /admin/posts.:format?           admin/posts#index
-      new_admin_post GET    /admin/posts/new.:format?       admin/posts#new
-     edit_admin_post GET    /admin/posts/:id/edit.:format?  admin/posts#edit
+                   GET    /                               posts#index
+                   GET    /:id                            posts#show
+       sitemap.txt GET    /sitemap.txt                    posts#map
+        adminPosts GET    /admin/posts.:format?           admin/posts#index
+      newAdminPost GET    /admin/posts/new.:format?       admin/posts#new
+     editAdminPost GET    /admin/posts/:id/edit.:format?  admin/posts#edit
 
 Filter by helper name:
 
-    $ compound routes _admin
-      new_admin_post GET    /admin/posts/new.:format?       admin/posts#new
-     edit_admin_post GET    /admin/posts/:id/edit.:format?  admin/posts#edit
-    likes_admin_post PUT    /admin/posts/:id/likes.:format? admin/posts#likes
+    $ compound routes Admin
+      newAdminPost GET    /admin/posts/new.:format?       admin/posts#new
+     editAdminPost GET    /admin/posts/:id/edit.:format?  admin/posts#edit
+    likesAdminPost PUT    /admin/posts/:id/likes.:format? admin/posts#likes
 
 
 Helpers
 -------
 
-In addition to regular rails helpers `link_to`, `form_for`, `javascript_include_tag`, `form_for`, etc. there are also helpers for routing: each route generates a helper method that can be invoked in a view:
+In addition to regular helpers `linkTo`, `formFor`, `javascriptIncludeTag`, `formFor`, etc. there are also helpers for routing: each route generates a helper method that can be invoked in a view:
 
-    <%- link_to("New post", new_admin_post) %>
-    <%- link_to("New post", edit_admin_post(post)) %>
+    <%- link_to("New post", newAdminPost) %>
+    <%- link_to("New post", editAdminPost(post)) %>
 
 generates output:
 
@@ -259,7 +258,7 @@ The controller is a module containing the declaration of actions such as this:
 
     action('create', function () {
         Post.create(req.body, function () {
-            redirect(path_to.admin_posts);
+            redirect(pathTo.adminPosts);
         });
     });
 
@@ -273,7 +272,7 @@ The controller is a module containing the declaration of actions such as this:
 
     action('update', function () {
         request.post.save(req.locale, req.body, function () {
-            redirect(path_to.admin_posts);
+            redirect(pathTo.adminPosts);
         });
     });
 
