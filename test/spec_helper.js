@@ -64,7 +64,7 @@ function check_external_exports() {
 
 // add assertions
 
-var nuPath = require('module')._resolveFilename('../support/nodeunit');
+var nuPath = require('module')._resolveFilename('../node_modules/nodeunit');
 if (typeof nuPath === 'string') nuPath = [nuPath];
 var assert = require(nuPath[0].replace(/index\.js$/, 'lib/assert'));
 

@@ -39,7 +39,7 @@
   },
   "devDependencies": {
     "jugglingdb": ">= 0.1.25",
-    "nodeunit": "*",
+    "nodeunit": "latest",
     "semicov": "*",
     "marked": ">= 0.2.6",
     "express": "3.x"
