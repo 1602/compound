@@ -17,6 +17,7 @@
   , "sinon": "*"
   , "semicov": "*"
   , "co-generators": "0.0.1"
+  , "co-assets-compiler": "*"
   }
 , "scripts":
   { "test": "nodeunit test/*/*"
