@@ -58,18 +58,9 @@ CLI tool
 
 #### compound generate smth - smth = generator name (controller, model, scaffold, ...can be extended via plugins)
 
-##### builtin generator: model
+more information about generators available here:
+http://compoundjs.github.com/generators
 
-    compound g model user email password approved:boolean # generate User model with fields user, password: String, approved: Boolean
-    compound g post title content --coffee # generate Post model in coffee script syntax
-
-##### builtin generator: scaffold (crud)
-
-    compound g scaffold todo title done:boolean --coffee # generate scaffold for Todo model (title: String, done: Boolean)
-
-##### builtin generator: controller
-    compound g controller sessions new create destroy # generate sessions controller with actions and views
-    
 #### compound server 8000 or **PORT=8000 node server** - run server on port `8000`
 
 #### compound console - run debugging console (see details below)
