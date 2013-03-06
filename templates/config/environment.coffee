@@ -4,7 +4,6 @@ module.exports = (compound) ->
   app = compound.app
 
   app.configure ->
-    {{ PREPEND_MIDDLEWARE }}
     app.enable 'coffee'
 
     app.set 'cssEngine', '{{ CSSENGINE }}'
