@@ -1,17 +1,15 @@
-if (!process.env.TRAVIS) {
-    require('semicov').init('lib'); // 'lib' is name of dir with code
-    process.on('exit', require('semicov').report);
-}
 
-var Compound = require('../').Compound;
-var express = require('express');
-
+describe('middleware-inject', function() {
 describe('Compound.injectMiddleware{At,Before,After}', function() {
 
     var app, compound;
 
+    before(function () {
+        app = getApp();
+        compound = app.compound;
+    });
+
     beforeEach(function() {
-        app = express();
         app.stack = [
             {handle: function zero() {}},
             {handle: function first() {}},
@@ -19,7 +17,6 @@ describe('Compound.injectMiddleware{At,Before,After}', function() {
             {handle: function third() {}},
             {handle: function fourth() {}}
         ];
-        compound = new Compound(app, '/tmp');
     });
 
     it('should inject middleware at position', function() {
@@ -74,4 +71,5 @@ describe('Compound.injectMiddleware{At,Before,After}', function() {
         app.stack[5].handle.name.should.equal('fourth');
     });
 
+});
 });
