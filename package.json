@@ -42,7 +42,9 @@
     "nodeunit": "latest",
     "semicov": "*",
     "marked": ">= 0.2.6",
-    "express": "3.x"
+    "express": "3.x",
+    "should": "1.2.2",
+    "mocha": "1.8.1"
   },
   "scripts": {
     "test": "./node_modules/.bin/nodeunit test/*_test.js"
