@@ -45,6 +45,6 @@
     "express": "3.x"
   },
   "scripts": {
-    "test": "./node_modules/.bin/nodeunit test"
+    "test": "./node_modules/.bin/nodeunit test/*_test.js"
   }
 }

@@ -123,4 +123,3 @@ function asyncLoop(collection, iteration, complete) {
         complete.call(self);
     }
 }
-

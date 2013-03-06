@@ -84,4 +84,3 @@ function updArgs(a) {
     var k;
     while(k=a.shift())global.args.push(k);
 }
-
