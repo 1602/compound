@@ -31,6 +31,7 @@
     "jade-ext": ">= 0.0.5",
     "railway-routes": ">= 0.0.6",
     "kontroller": "latest",
+    "uglify-js":">= 2.2.5",
     "seedjs": "*"
   },
   "repository": {
