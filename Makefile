@@ -1,5 +1,5 @@
 test:
-	@./node_modules/.bin/mocha --reporter dot --require should test/*.test.js
+	@./node_modules/.bin/mocha --reporter dot --require ./test/init.js --require should test/*.test.js
 docs:
 	node docs/sources/build
 apidocs:
