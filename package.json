@@ -30,8 +30,7 @@
     "ejs-ext": ">= 0.1.4-2",
     "jade-ext": ">= 0.0.5",
     "railway-routes": ">= 0.0.6",
-    "kontroller": "latest",
-    "uglify-js": ">= 2.2.5",
+    "kontroller": ">= 0.0.9",
     "seedjs": "*"
   },
   "repository": {
