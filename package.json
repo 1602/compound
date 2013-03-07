@@ -25,6 +25,7 @@
     "rw": "bin/compound"
   },
   "dependencies": {
+    "express": "3.x",
     "yaml-js": ">= 0.0.2",
     "coffee-script": ">= 1.1.1",
     "ejs-ext": ">= 0.1.4-2",
@@ -42,7 +43,6 @@
     "nodeunit": "latest",
     "semicov": "*",
     "marked": ">= 0.2.6",
-    "express": "3.x",
     "should": "1.2.2",
     "mocha": "1.8.1"
   },
