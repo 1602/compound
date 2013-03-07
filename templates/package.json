@@ -11,13 +11,13 @@
   , "coffee-script": ">= 1.1.1"
   , "{{ CSSENGINE }}": "latest"
   , "seedjs": "latest"
+  , "co-assets-compiler": "*"
   },
   "devDependencies":
   { "nodeunit": "*"
   , "sinon": "*"
   , "semicov": "*"
-  , "co-generators": "0.0.1"
-  , "co-assets-compiler": "*"
+  , "co-generators": "*"
   }
 , "scripts":
   { "test": "nodeunit test/*/*"
