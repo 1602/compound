@@ -2,30 +2,24 @@
 
 var sys = require('util');
 var fs = require('fs');
-var srvFile = process.cwd() + '/server';
-var app;
-if (fs.existsSync(srvFile + '.js')) {
-    app = require(srvFile);
-} else if (fs.existsSync(srvFile + '.coffee')) {
-    require('coffee-script');
-    app = require(srvFile);
+var Compound = require('compound');
+
+try {
+    instantiateApp = require('.');
+} catch(e) {
+    instantiateApp = null;
 }
 
-if (typeof app === 'function') {
-    app = app();
+var app, compound;
+if (typeof instantiateApp === 'function' && instantiateApp.name === 'app') {
+    app = instantiateApp();
+    compound = app.compound;
 } else {
-    app = require('../lib/server/compound').createServer();
+    compound = new Compound;
 }
-
-var compound = app.compound;
-var generators = compound.generators;
-var tools = compound.tools;
-var addSpaces = compound.utils.addSpaces;
 
 var args = process.argv.slice(2);
-
 var exitAfterAction = true;
-
 var command = args.shift();
 
 process.nextTick(function () {

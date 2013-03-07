@@ -21,8 +21,8 @@
   "url": "http://compoundjs.com",
   "main": "lib/server/compound.js",
   "bin": {
-    "compound": "bin/compound",
-    "rw": "bin/compound"
+    "compound": "bin/compound.js",
+    "rw": "bin/compound.js"
   },
   "dependencies": {
     "yaml-js": ">= 0.0.2",
