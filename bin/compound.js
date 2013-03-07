@@ -2,19 +2,20 @@
 
 var sys = require('util');
 var fs = require('fs');
-var Compound = require('compound');
 
 try {
-    instantiateApp = require('.');
+    instantiateApp = require(process.cwd());
 } catch(e) {
     instantiateApp = null;
 }
 
 var app, compound;
-if (typeof instantiateApp === 'function' && instantiateApp.name === 'app') {
+if (typeof instantiateApp === 'function') {
     app = instantiateApp();
     compound = app.compound;
-} else {
+}
+if (!compound) {
+    var Compound = require('compound').Compound;
     compound = new Compound;
 }
 
@@ -65,7 +66,7 @@ process.nextTick(function () {
       commands.forEach(function (cmd) {
           help.push('  ' + addSpaces(cmd[0] + ',', 4) + addSpaces(cmd[1], maxLen + 1) + cmd[2]);
       });
-      generators.init(compound, args);
+      compound.generators.init(compound, args);
       help.push('\nAvailable generators:\n');
       help.push('  ' + compound.generators.list());
       sys.puts(help.join('\n'));
@@ -73,17 +74,17 @@ process.nextTick(function () {
 
   case 'i':
   case 'init':
-      generators.init(compound);
-      generators.perform('app', args);
+      compound.generators.init(compound);
+      compound.generators.perform('app', args);
       break;
   case 'g':
   case 'generate':
       var what = args.shift();
-      generators.init(compound);
+      compound.generators.init(compound);
       if (typeof what == "undefined" || what == null) {
           console.log('Generator not specified, available generators: ', generators.list());
       } else {
-          exitAfterAction = !generators.perform(what, args);
+          exitAfterAction = !compound.generators.perform(what, args);
       }
       break;
   case '--version':
