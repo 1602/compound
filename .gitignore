@@ -7,3 +7,6 @@ coverage.html
 coverage
 docs/sources/index.html
 log/test.log
+analyse-ab.r
+log
+tags.sh
