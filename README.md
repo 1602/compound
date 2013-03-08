@@ -5,6 +5,8 @@ About [<img src="https://secure.travis-ci.org/1602/compound.png" />](http://trav
 
 CompoundJS - MVC framework for NodeJS&trade;. It allows you to build web application in minutes.
 
+Compound modules now available at https://github.com/compoundjs
+
 Installation
 ============
 
