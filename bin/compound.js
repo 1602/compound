@@ -4,6 +4,10 @@ var sys = require('util');
 var fs = require('fs');
 
 try {
+    var package = require(process.cwd() + '/package.json');
+    if (package.main.match(/\.coffee$/)) {
+        require('coffee-script');
+    }
     instantiateApp = require(process.cwd());
 } catch(e) {
     instantiateApp = null;
