@@ -57,7 +57,7 @@ process.nextTick(function () {
               commands.push([h.shortcut || '', h.usage, h.description]);
           }
       });
-      var maxLen = 0;
+      var maxLen = 0, addSpaces = compound.utils.addSpaces;
       commands.forEach(function (cmd) {
           if (cmd[1].length > maxLen) {
               maxLen = cmd[1].length;
@@ -82,7 +82,7 @@ process.nextTick(function () {
       var what = args.shift();
       compound.generators.init(compound);
       if (typeof what == "undefined" || what == null) {
-          console.log('Generator not specified, available generators: ', generators.list());
+          console.log('Generator not specified, available generators: ', compound.generators.list());
       } else {
           exitAfterAction = !compound.generators.perform(what, args);
       }

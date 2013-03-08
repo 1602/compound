@@ -38,7 +38,7 @@ Short functionality review
 CLI tool
 --------
 
-    Usage: compound command [argument(s)]
+    Usage: compound command <strong>[argument(s)]</strong>
 
     Commands:
       h,  help                     Display usage information
@@ -48,7 +48,7 @@ CLI tool
       c,  console                  Debug console
       s,  server [port]            Run compound server
 
-#### compound init [appname][ key(s)]
+#### compound init <strong>[appname][ key(s)]</strong>
     keys:
     --coffee                 # Default: no coffee by default
     --tpl jade|ejs           # Default: ejs
