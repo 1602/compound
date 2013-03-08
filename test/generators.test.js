@@ -11,12 +11,13 @@ describe('Generators API', function() {
 
     var app, compound, args = ['--quiet'];
 
-    before(function() {
+    before(function(done) {
         app = getApp();
         compound = app.compound;
         compound.generators.init(compound);
         // compound.generators.quiet = true;
         stubFS();
+        compound.on('ready', done);
     });
 
     after(unstubFS);
