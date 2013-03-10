@@ -23,11 +23,14 @@ module.exports = (compound) ->
     schemas
 
   perform = (action, callback)->
-    console.log 'Perform', action, 'on'
     wait = 0
+    done = ()->
+        if --wait == 0 then callback()
+
+    console.log 'Perform', action, 'on'
     getUniqueSchemas().forEach (schema)->
+      console.log ' - ' + schema.name
       if schema['auto' + action]
-        console.log ' - ' + schema.name
         wait += 1
         process.nextTick ->
           schema['auto' + action](done)
@@ -37,5 +40,4 @@ module.exports = (compound) ->
     else
       console.log wait
 
-    done = ()->
-        if --wait == 0 then callback()
+    return true

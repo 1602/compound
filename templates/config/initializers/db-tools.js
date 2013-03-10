@@ -49,6 +49,8 @@ module.exports = function(compound) {
         function done() {
             if (--wait === 0) callback();
         }
+
+        return true;
     }
 
 };
