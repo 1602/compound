@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
 /**
- * Server module exports method which returns new instance of application server
+ * Server module exports method returning new instance of app.
  *
- * @param {Object} params - railway/express webserver initialization params.
+ * @param {Object} params - compound/express webserver initialization params.
  * @returns CompoundJS powered express webserver
  */
 var app = module.exports = function getServerInstance(params) {
