@@ -1,9 +1,18 @@
 module.exports = (compound) ->
-  return if typeof window == 'undefined'  then [
+  defaultModules = [
     'jugglingdb',
     'co-assets-compiler'
-  ].concat( if 'development' == compound.app.get('env') then [
-    '{{ VIEWENGINE }}-ext',
-    'seedjs',
-    'co-generators'
-  ] else [] ).map(require) else []
+  ]
+
+  developmentModules = []
+  if compound.app.get('env') is 'development'
+    developmentModules = [
+      '{{ VIEWENGINE }}-ext',
+      'seedjs',
+      'co-generators'
+    ]
+
+  unless window?
+    return defaultModules.concat(developmentModules).map(require)
+  else
+    return []
