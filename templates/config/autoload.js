@@ -4,7 +4,7 @@ module.exports = function (compound) {
       'co-assets-compiler'
     ], developmentModules = [];
 
-  if ('development' === compound.app.get) {
+  if ('development' === compound.app.get('env')) {
     developmentModules = [
       '{{ VIEWENGINE }}-ext',
       'seedjs',
