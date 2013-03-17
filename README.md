@@ -51,6 +51,7 @@ CLI tool
       r,  routes [filter]          Display application routes
       c,  console                  Debug console
       s,  server [port]            Run compound server
+      install [module]             Installs a compound module and patches the autoload file
 
 #### compound init <strong>[appname][ key(s)]</strong>
     keys:
