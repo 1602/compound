@@ -1,0 +1,148 @@
+var app, compound;
+before(function(done) {
+    app = getApp();
+    compound = app.compound;
+    compound.on('ready', done);
+});
+
+/*
+ * stylesheetLinkTag helper tests
+ */
+describe('stylesheetLinkTag', function() {
+  it('should generate a single tag', function (){
+    var match = /\<link media="screen" rel="stylesheet" type="text\/css" href="\/stylesheets\/style\.css" \/\>/;
+    var tag = compound.helpers.stylesheetLinkTag('style');
+
+    tag.should.match(match);
+  });
+
+  it('should generate multiple tags', function (){
+    var match = /<link.*?href="\/stylesheets\/.*?\.css/g;
+    var tag = compound.helpers.stylesheetLinkTag('reset', 'bootstrap');
+
+    tag.should.match(match);
+    tag.match(match).length.should.equal(2);
+  });
+
+  describe('assets timestamps', function() {
+    it('should generate a link with a timestamp if enabled');
+    it('should generate a link without a timestamp if disabled');
+    it('should never add a timestamp to external links');
+  });
+});
+
+/*
+ * javascriptIncludeTag helper tests
+ */
+describe('javascriptIncludeTag', function() {
+  it('should generate a single tag', function (){
+    var match = /<script type="text\/javascript" src="\/javascripts\/app\.js">/
+    var tag = compound.helpers.javascriptIncludeTag('app');
+
+    tag.should.match(match);
+  });
+
+  it('should generate multiple tags', function (){
+    var match = /<script.*?src="\/javascripts\/.*?\.js/g
+    var tag = compound.helpers.javascriptIncludeTag('rails', 'application');
+
+    tag.should.match(match);
+    tag.match(match).length.should.equal(2);
+  });
+
+  describe('assets timestamps', function() {
+    it('should generate a link with a timestamp if enabled');
+    it('should generate a link without a timestamp if disabled');
+    it('should never add a timestamp to external links');
+  });
+});
+
+/*
+ * formTag helper tests
+ */
+describe('formTag', function (){
+  before(function() {
+    compound.helpers.controller = {
+      app: app,
+      req: {
+        csrfParam: 'param_name',
+        csrfToken: 'token_value'
+      }
+    };
+  });
+
+  it('should generate a form', function (){
+    var buf = arguments.callee.buf = [];
+    compound.helpers.formTag();
+
+    var expectedFormString = '<form method="POST"><input type="hidden" name="param_name" value="token_value" />';
+    buf[0].should.equal(expectedFormString);
+  });
+
+  it('should generate a form with a custom method', function () {
+    var buf = arguments.callee.buf = [];
+    compound.helpers.formTag({ method: 'PUT' });
+
+    var expectedFormString = '<form method="POST"><input type="hidden" name="param_name" value="token_value" /><input type="hidden" name="_method" value="PUT" />';
+    buf[0].should.equal(expectedFormString);
+  });
+
+  it('should generate an update form for resource with PUT method', function () {
+    var buf = arguments.callee.buf = [];
+    var res = {
+      constructor: {
+        modelName: 'Resource'
+      },
+      id: 7
+    };
+
+    compound.map.pathTo.resource = function (res) {
+      return '/resources/' + res.id;
+    }
+
+    compound.helpers.formFor(res, {}, function (f){ return; });
+    var expectedFormString = '<form method="POST" action="/resources/7"><input type="hidden" name="param_name" value="token_value" /><input type="hidden" name="_method" value="PUT" />';
+    buf[0].should.equal(expectedFormString);
+  });
+
+  it('should be able to create inputs without a block', function () {
+    var buf = arguments.callee.buf = [];
+    var res = {
+      constructor: {
+        modelName: 'Resource'
+      },
+      id: 7
+    };
+
+    compound.map.pathTo.resource = function (res) {
+      return '/resources/' + res.id;
+    }
+
+    var f = compound.helpers.formFor(res, {});
+    buf.push(f.begin());
+    buf.push(f.input('name'));
+    buf.push(f.input('sub[obj]'));
+    buf.push(f.end());
+
+    buf[0].should.equal('<form method="POST" action="/resources/7"><input type="hidden" name="param_name" value="token_value" /><input type="hidden" name="_method" value="PUT" />');
+    buf[1].should.equal('<input name="Resource[name]" id="Resource_name" type="text" value="" />');
+    buf[2].should.equal('<input name="Resource[sub][obj]" id="Resource_sub_obj" type="text" value="" />');
+  });
+});
+
+/*
+ * errorMessagesFor helper tests
+ */
+describe('errorMessagesFor', function () {
+  var resource = {
+    errors: {
+      name: ['can\'t be blank', 'is invalid'],
+      email: ['is not unique']
+    }
+  };
+  it('should generate html errors', function () {
+    var html = compound.helpers.errorMessagesFor(resource);
+    var expectedErrorString = '<div class="alert alert-error"><p><strong>Validation failed. Fix following errors before you continue:</strong></p><ul><li class="error-message">Name can\'t be blank</li><li class="error-message">Name is invalid</li></ul><ul><li class="error-message">Email is not unique</li></ul></div>';
+    html.should.equal(expectedErrorString);
+  });
+});
