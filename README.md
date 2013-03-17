@@ -7,6 +7,8 @@ CompoundJS - MVC framework for NodeJS&trade;. It allows you to build web applica
 
 Compound modules now available at https://github.com/compoundjs
 
+Full documentation is available at http://compoundjs.com/docs/ (automatically generated from [the markdown documentation files](docs/sources/markdown))
+
 Installation
 ============
 
@@ -169,7 +171,7 @@ and you can more finely tune the resources to specify certain actions, middlewar
         map.get('/', 'posts#index');
         map.get(':id', 'posts#show');
         map.get('sitemap.txt', 'posts#map');
-    
+
         map.namespace('admin', function (admin) {
             admin.resources('posts', {middleware: basic_auth, except: ['show']}, function (post) {
                 post.resources('comments');
@@ -366,7 +368,7 @@ for example `config/locales/jp.yml`, copy contents of `config/locales/en.yml` to
 file and rename root node (`en` to `jp` in that case), also in `lang` section rename
 `name` to Japanese (for example).
 
-Next step - rename email files in `app/views/emails`, copy all files `*.en.html` 
+Next step - rename email files in `app/views/emails`, copy all files `*.en.html`
 and `*.en.text` to `*.jp.html` and `*.jp.text` and translate new files.
 
 NOTE: translation can contain `%` symbol(s), that means variable substitution
