@@ -59,6 +59,7 @@ CLI tool
     --css sass|less|stylus   # Default: stylus
     --db redis|mongodb|nano|mysql|sqlite3|postgres
                              # Default: memory
+    --nib                    # Installs nib, a stylus framework
 
 #### compound generate smth - smth = generator name (controller, model, scaffold, ...can be extended via plugins)
 
