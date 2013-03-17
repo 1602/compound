@@ -14,11 +14,10 @@
     "express",
     "railway"
   ],
-  "homepage": "http://railwayjs.com",
+  "url": "http://compoundjs.com",
   "engines": [
     "node >= 0.8.0"
   ],
-  "url": "http://compoundjs.com",
   "main": "lib/server/compound.js",
   "bin": {
     "compound": "bin/compound.js",

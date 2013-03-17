@@ -1,8 +1,18 @@
 module.exports = (compound) ->
-  [
-    require('{{ VIEWENGINE }}-ext'),
-    require('jugglingdb'),
-    require('seedjs'),
-    require('co-generators'),
-    require('co-assets-compiler')
+  defaultModules = [
+    'jugglingdb',
+    'co-assets-compiler'
   ]
+
+  developmentModules = []
+  if compound.app.get('env') is 'development'
+    developmentModules = [
+      '{{ VIEWENGINE }}-ext',
+      'seedjs',
+      'co-generators'
+    ]
+
+  unless window?
+    return defaultModules.concat(developmentModules).map(require)
+  else
+    return []
