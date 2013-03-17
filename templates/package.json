@@ -12,6 +12,7 @@
   , "{{ CSSENGINE }}": "latest"
   , "seedjs": "latest"
   , "co-assets-compiler": "*"
+{{ DEPENDENCIES }}
   },
   "devDependencies":
   { "nodeunit": "*"
