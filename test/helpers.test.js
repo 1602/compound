@@ -146,3 +146,31 @@ describe('errorMessagesFor', function () {
     html.should.equal(expectedErrorString);
   });
 });
+
+describe('metaTag', function() {
+
+    it('should generate metaTag(name, content)', function() {
+        var result = compound.helpers.metaTag('pageId', 77);
+        var expected = '<meta name="pageId" content="77" />';
+        result.should.equal(expected);
+    });
+
+    it('should generate metaTag(name, params)', function() {
+        var result = compound.helpers.metaTag('pageId', {foo: 'bar'});
+        var expected = '<meta name="pageId" foo="bar" />';
+        result.should.equal(expected);
+    });
+
+    it('should generate metaTag(params)', function() {
+        var result = compound.helpers.metaTag({name: 'foo', content: 'bar'});
+        var expected = '<meta name="foo" content="bar" />';
+        result.should.equal(expected);
+    });
+
+    it('should generate metaTag()', function() {
+        var result = compound.helpers.metaTag();
+        var expected = '<meta />';
+        result.should.equal(expected);
+    });
+
+});
