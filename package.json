@@ -46,6 +46,6 @@
     "mocha": "1.8.1"
   },
   "scripts": {
-    "test": "./node_modules/.bin/nodeunit test/*_test.js"
+    "test": "make test"
   }
 }
