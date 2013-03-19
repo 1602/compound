@@ -8,9 +8,9 @@
   "description": "CompoundJS - MVC framework for NodeJS",
   "keywords": [
     "mvc",
-    "web-framework",
+    "web",
+    "framework",
     "rails",
-    "ruby-on-rails",
     "express",
     "railway"
   ],
