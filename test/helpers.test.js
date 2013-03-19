@@ -100,9 +100,10 @@ describe('formTag', function (){
       return '/resources/' + res.id;
     }
 
-    compound.helpers.formFor(res, {}, function (f){ return; });
+    var f = compound.helpers.formFor(res, {});
+    var res = f.begin();
     var expectedFormString = '<form method="POST" action="/resources/7"><input type="hidden" name="param_name" value="token_value" /><input type="hidden" name="_method" value="PUT" />';
-    buf[0].should.equal(expectedFormString);
+    res.should.equal(expectedFormString);
   });
 
   it('should be able to create inputs without a block', function () {
