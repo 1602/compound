@@ -3,6 +3,11 @@
 src=$1
 dest=$2
 
+if ! [ `which ronn` ]; then
+  echo 'ronn rubygem is not installed, run "gem install ronn"'
+  exit 0
+fi
+
 mkdir -p $(dirname $dest)
 
 case $dest in
