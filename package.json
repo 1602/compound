@@ -3,6 +3,7 @@
   "version": "1.1.5-18",
   "author": "Anatoliy Chakkaev",
   "contributors": [
+    "Anatoliy Chakkaev <mail@anatoliy.in> (http://anatoliy.in)",
     "Sascha Gehlich <contact@filshmedia.net> (http://filshmedia.net)"
   ],
   "description": "CompoundJS - MVC framework for NodeJS",
@@ -23,6 +24,11 @@
     "compound": "bin/compound.js",
     "rw": "bin/compound.js"
   },
+  "man": [
+    "./man/compound.1",
+    "./man/helpers.3",
+    "./man/routing.3"
+  ],
   "dependencies": {
     "yaml-js": ">= 0.0.2",
     "coffee-script": ">= 1.1.1",
@@ -46,6 +52,7 @@
     "mocha": "1.8.1"
   },
   "scripts": {
-    "test": "make test"
+    "test": "make test",
+    "prepublish": "make build"
   }
 }
