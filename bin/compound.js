@@ -108,7 +108,7 @@ process.nextTick(function () {
 });
 
 function showMan(topic) {
-    var manDir = require('path').resolve(__dirname + '/../man/man3');
+    var manDir = require('path').resolve(__dirname + '/../man');
     require('child_process').spawn(
         'man', [manDir + '/' + topic + '.3'],
         {
