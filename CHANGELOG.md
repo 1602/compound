@@ -1,4 +1,4 @@
-compound-changelog(3) -- Changes
+compound-changelog(3) -- Changes in CompoundJS
 ================================
 
 ## HISTORY
@@ -6,26 +6,21 @@ compound-changelog(3) -- Changes
 ### upcoming release
 
 * **man**:
-  Docs in roff (man). `compound help` command can proxy request to `man`.
+  Docs in roff (man). Change `compound help` command to proxy request to `man`.
   Unfortunately compound have optional `ronn` rubygem dependency.
 
 * **inject middleware**:
   New API for middleware injections.
 
 * **mocha**:
-  All tests rewritten. Mocha is default test engine.
+  All tests rewritten. Mocha is new default test engine.
 
 * **cleanup core**:
   Generators, assets compiler, clientside moved to separate packages. Refactor
   and speedup render.
 
 * **new helpers**:
-  * icon
-  * imageTag
-  * metaTag
-  * anchor
-  * contentFor
-  * button
+  icon, imageTag, metaTag, anchor, contentFor, button.
 
 ### 1.1.5
 
