@@ -46,12 +46,17 @@ process.nextTick(function () {
               break;
           }
       }
+      var topic = args.shift();
+      if (topic) {
+          showMan(topic);
+          return;
+      }
       var help = [
           'Usage: compound command [argument(s)]\n',
           'Commands:'
       ];
       var commands = [
-          ['h', 'help',            'Display usage information'],
+          ['h', 'help [topic]',    'Display compound man page'],
           ['i', 'init',            'Initialize compound app'],
           ['g', 'generate [smth]', 'Generate something awesome']
       ];
@@ -101,5 +106,17 @@ process.nextTick(function () {
   }
 
 });
+
+function showMan(topic) {
+    var manDir = require('path').resolve(__dirname + '/../man/man3');
+    require('child_process').spawn(
+        'man', [manDir + '/' + topic + '.3'],
+        {
+            customFds: [0, 1, 2],
+            env: process.env,
+            cwd: process.cwd()
+        }
+    );
+}
 
 /*vim ft:javascript*/
