@@ -10,6 +10,8 @@ fi
 
 mkdir -p $(dirname $dest)
 
+# VERSION=$(grep version package.json | perl -pi -e 's/[^-\d\.]//g')
+
 case $dest in
   *.[13])
     ronn --roff $1 --pipe --organization=1602\ Software --manual=CompoundJS > $2

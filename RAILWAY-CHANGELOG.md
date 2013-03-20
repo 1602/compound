@@ -1,3 +1,6 @@
+compound-railway-changelog(3) -- RailwayJS History
+==================================================
+
 ## 0.2.13 Sun, 25 Mar 2012
 
 - Added db-tools and seedjs
