@@ -135,44 +135,38 @@ To debug routes of your compound application you can use `compound routes`
 command (or shortcut `compound r`). You can also specify optional argument for
 filtering by helper name or method, for example:
 
-```
-~: ) compound r post
-     posts GET    /posts.:format?          posts#index
-     posts POST   /posts.:format?          posts#create
-  new_post GET    /posts/new.:format?      posts#new
- edit_post GET    /posts/:id/edit.:format? posts#edit
-      post DELETE /posts/:id.:format?      posts#destroy
-      post PUT    /posts/:id.:format?      posts#update
-      post GET    /posts/:id.:format?      posts#show
-~: ) compound r GET
-     posts GET    /posts.:format?          posts#index
-  new_post GET    /posts/new.:format?      posts#new
- edit_post GET    /posts/:id/edit.:format? posts#edit
-      post GET    /posts/:id.:format?      posts#show
-~: ) compound r new
- new_post GET    /posts/new.:format? posts#new
-```
+    ~: ) compound r post
+         posts GET    /posts.:format?          posts#index
+         posts POST   /posts.:format?          posts#create
+      new_post GET    /posts/new.:format?      posts#new
+     edit_post GET    /posts/:id/edit.:format? posts#edit
+          post DELETE /posts/:id.:format?      posts#destroy
+          post PUT    /posts/:id.:format?      posts#update
+          post GET    /posts/:id.:format?      posts#show
+    ~: ) compound r GET
+         posts GET    /posts.:format?          posts#index
+      new_post GET    /posts/new.:format?      posts#new
+     edit_post GET    /posts/:id/edit.:format? posts#edit
+          post GET    /posts/:id.:format?      posts#show
+    ~: ) compound r new
+     new_post GET    /posts/new.:format? posts#new
 
 ## Resources
 
 Resource-based routing provides standard mapping between HTTP verbs and controller actions:
 
-```
-map.resources('posts');
-```
+    map.resources('posts');
 
 will provide the following routes:
 
-```
-  helper | method | path                   | controller#action
-    posts GET      /posts                   posts#index
-    posts POST     /posts                   posts#create
- new_post GET      /posts/new               posts#new
-edit_post GET      /posts/:id/edit          posts#edit
-     post DELETE   /posts/:id               posts#destroy
-     post PUT      /posts/:id               posts#update
-     post GET      /posts/:id               posts#show.
-```
+      helper | method | path                   | controller#action
+        posts GET      /posts                   posts#index
+        posts POST     /posts                   posts#create
+     new_post GET      /posts/new               posts#new
+    edit_post GET      /posts/:id/edit          posts#edit
+         post DELETE   /posts/:id               posts#destroy
+         post PUT      /posts/:id               posts#update
+         post GET      /posts/:id               posts#show.
 
 To list all available routes you can run the command `compound routes`.
 
@@ -197,21 +191,17 @@ If you want to override default routes behaviour, you can use two options: `as` 
 
 Path helper aliasing:
 
-```
-map.resources('posts', { as: 'articles' });
-```
+    map.resources('posts', { as: 'articles' });
 
 This will create the following routes:
 
-```
-    articles GET    /posts.:format?          posts#index
-    articles POST   /posts.:format?          posts#create
- new_article GET    /posts/new.:format?      posts#new
-edit_article GET    /posts/:id/edit.:format? posts#edit
-     article DELETE /posts/:id.:format?      posts#destroy
-     article PUT    /posts/:id.:format?      posts#update
-     article GET    /posts/:id.:format?      posts#show.
-```
+        articles GET    /posts.:format?          posts#index
+        articles POST   /posts.:format?          posts#create
+     new_article GET    /posts/new.:format?      posts#new
+    edit_article GET    /posts/:id/edit.:format? posts#edit
+         article DELETE /posts/:id.:format?      posts#destroy
+         article PUT    /posts/:id.:format?      posts#update
+         article GET    /posts/:id.:format?      posts#show.
 
 <strong>
 { path: 'alternatePath' }
@@ -219,21 +209,17 @@ edit_article GET    /posts/:id/edit.:format? posts#edit
 
 If you want to change the base path:
 
-```
-map.resources('posts', { path: 'articles' });
-```
+    map.resources('posts', { path: 'articles' });
 
 This will create the following routes:
 
-```
-    posts GET    /articles.:format?          posts#index
-    posts POST   /articles.:format?          posts#create
- new_post GET    /articles/new.:format?      posts#new
-edit_post GET    /articles/:id/edit.:format? posts#edit
-     post DELETE /articles/:id.:format?      posts#destroy
-     post PUT    /articles/:id.:format?      posts#update
-     post GET    /articles/:id.:format?      posts#show
-```
+        posts GET    /articles.:format?          posts#index
+        posts POST   /articles.:format?          posts#create
+     new_post GET    /articles/new.:format?      posts#new
+    edit_post GET    /articles/:id/edit.:format? posts#edit
+         post DELETE /articles/:id.:format?      posts#destroy
+         post PUT    /articles/:id.:format?      posts#update
+         post GET    /articles/:id.:format?      posts#show
 
 <strong>
 Both "as" and "path" together
@@ -241,21 +227,17 @@ Both "as" and "path" together
 
 If you want to alias both the helper and the path:
 
-```
-map.resources('posts', { path: 'articles', as: 'stories' });
-```
+    map.resources('posts', { path: 'articles', as: 'stories' });
 
 This will create the following routes:
 
-```
-   stories GET    /articles.:format?          posts#index
-   stories POST   /articles.:format?          posts#create
- new_story GET    /articles/new.:format?      posts#new
-edit_story GET    /articles/:id/edit.:format? posts#edit
-     story DELETE /articles/:id.:format?      posts#destroy
-     story PUT    /articles/:id.:format?      posts#update
-     story GET    /articles/:id.:format?      posts#show
-```
+       stories GET    /articles.:format?          posts#index
+       stories POST   /articles.:format?          posts#create
+     new_story GET    /articles/new.:format?      posts#new
+    edit_story GET    /articles/:id/edit.:format? posts#edit
+         story DELETE /articles/:id.:format?      posts#destroy
+         story PUT    /articles/:id.:format?      posts#update
+         story GET    /articles/:id.:format?      posts#show
 
 ## Nested resources
 
@@ -263,41 +245,35 @@ Some resources may have nested sub-resources, for example `Post` has many `Comme
 
 Let's describe the route for our nested resource:
 
-```
-map.resources('post', function (post) {
-  post.resources('comments');
-});.
-```
+    map.resources('post', function (post) {
+      post.resources('comments');
+    });.
 
 This routing map will provide the following routes:
 
-```
-$ compound routes
-     post_comments GET      /posts/:post_id/comments          comments#index
-     post_comments POST     /posts/:post_id/comments          comments#create
-  new_post_comment GET      /posts/:post_id/comments/new      comments#new
- edit_post_comment GET      /posts/:post_id/comments/:id/edit comments#edit
-      post_comment DELETE   /posts/:post_id/comments/:id      comments#destroy
-      post_comment PUT      /posts/:post_id/comments/:id      comments#update
-      post_comment GET      /posts/:post_id/comments/:id      comments#show
-             posts GET      /posts                            posts#index
-             posts POST     /posts                            posts#create
-          new_post GET      /posts/new                        posts#new
-         edit_post GET      /posts/:id/edit                   posts#edit
-              post DELETE   /posts/:id                        posts#destroy
-              post PUT      /posts/:id                        posts#update
-              post GET      /posts/:id                        posts#show.
-```
+    $ compound routes
+         post_comments GET      /posts/:post_id/comments          comments#index
+         post_comments POST     /posts/:post_id/comments          comments#create
+      new_post_comment GET      /posts/:post_id/comments/new      comments#new
+     edit_post_comment GET      /posts/:post_id/comments/:id/edit comments#edit
+          post_comment DELETE   /posts/:post_id/comments/:id      comments#destroy
+          post_comment PUT      /posts/:post_id/comments/:id      comments#update
+          post_comment GET      /posts/:post_id/comments/:id      comments#show
+                 posts GET      /posts                            posts#index
+                 posts POST     /posts                            posts#create
+              new_post GET      /posts/new                        posts#new
+             edit_post GET      /posts/:id/edit                   posts#edit
+                  post DELETE   /posts/:id                        posts#destroy
+                  post PUT      /posts/:id                        posts#update
+                  post GET      /posts/:id                        posts#show.
 
 ### Using url helpers for nested routes
 
 To use routes like `post_comments` you should call helper with param: parent resource or identifier before nested resource:
 
-```
-path_to.post_comments(post)               # /posts/1/comments
-path_to.edit_post_comment(post, comment)  # /posts/1/comments/10/edit
-path_to.edit_post_comment(2, 300)         # /posts/2/comments/300/edit
-```
+    path_to.post_comments(post)               # /posts/1/comments
+    path_to.edit_post_comment(post, comment)  # /posts/1/comments/10/edit
+    path_to.edit_post_comment(2, 300)         # /posts/2/comments/300/edit
 
 ## Namespaces
 
@@ -305,58 +281,46 @@ You may wish to organize groups of controllers under a namespace. The most commo
 
 For example, let's create an admin namespace:
 
-```
-map.namespace('admin', function (admin) {
-  admin.resources('users');
-});
-```
+    map.namespace('admin', function (admin) {
+      admin.resources('users');
+    });
 
 This routing rule will match with `/admin/users`, `/admin/users/new` and will create appropriate url helpers:
 
-```
-    admin_users GET    /admin/users.:format?          admin/users#index
-    admin_users POST   /admin/users.:format?          admin/users#create
- new_admin_user GET    /admin/users/new.:format?      admin/users#new
-edit_admin_user GET    /admin/users/:id/edit.:format? admin/users#edit
-     admin_user DELETE /admin/users/:id.:format?      admin/users#destroy
-     admin_user PUT    /admin/users/:id.:format?      admin/users#update
-     admin_user GET    /admin/users/:id.:format?      admin/users#show
-```
+        admin_users GET    /admin/users.:format?          admin/users#index
+        admin_users POST   /admin/users.:format?          admin/users#create
+     new_admin_user GET    /admin/users/new.:format?      admin/users#new
+    edit_admin_user GET    /admin/users/:id/edit.:format? admin/users#edit
+         admin_user DELETE /admin/users/:id.:format?      admin/users#destroy
+         admin_user PUT    /admin/users/:id.:format?      admin/users#update
+         admin_user GET    /admin/users/:id.:format?      admin/users#show
 
 ## Restricting routes
 
 If you need routes only for several actions (e.g. `index`, `show`), you can specify the `only` option:
 
-```
-map.resources('users', { only: ['index', 'show'] });
-```
+    map.resources('users', { only: ['index', 'show'] });
 
 If you want to have all routes except a specific route, you can specify the `except` option:
 
-```
-map.resources('users', { except: ['create', 'destroy'] });
-```
+    map.resources('users', { except: ['create', 'destroy'] });
 
 ## Custom actions in resourceful routes
 
 If you need some specific action to be added to your resource-based route, use this example:
 
-```
-map.resource('users', function (user) {
-  user.get('avatar', 'users#avatar');               // /users/:user_id/avatar
-  user.get('top', 'users#top', {collection: true}); // /users/top
-});
-```
+    map.resource('users', function (user) {
+      user.get('avatar', 'users#avatar');               // /users/:user_id/avatar
+      user.get('top', 'users#top', {collection: true}); // /users/top
+    });
 
 ## Middleware
 
 You may want to use middleware in routes. It's not recommended, but if you need
 it you can put it as second argument:
 
-```
-map.get('/admin', authenticate, 'admin#index');
-map.get('/protected/resource', [ middleware1, middleware2 ], 'resource#access');
-```
+    map.get('/admin', authenticate, 'admin#index');
+    map.get('/protected/resource', [ middleware1, middleware2 ], 'resource#access');
 
 ## Subdomain
 
