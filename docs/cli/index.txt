@@ -1,4 +1,6 @@
 # manuals
+compound-railway-changelog railway-changelog.3
+compound-changelog      changelog.3
 compound-routing(3)     routing.3
 compound-controller(3)  controller.3
 compound-views(3)       views.3

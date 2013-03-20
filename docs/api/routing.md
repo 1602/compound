@@ -3,7 +3,7 @@ compound-routing(3) - compound map drawer
 
 ## DESCRIPTION
 
-The purpose of routes is to connect an URL with a controller action.
+The purpose of routes is to bind an URL to controller action.
 
 ## FILE
 
@@ -56,37 +56,65 @@ Params meaning:
   some path, which could contain params, see [ROUTE PATH PARAMS][]
 
 * `handler`:
-  string `controllerName#actionName`
+  string `controllerName#actionName`, see [ROUTE HANDLER][]
 
 * `middleware`:
-  function or array of functions (optional)
+  function or array of functions (optional), see [MIDDLEWARE][]
 
 * `options`:
   object containing params for route (optional), see [ROUTE OPTIONS][]
 
-## ADVANCED ROUTING METHODS
+### ROUTE PATH PARAMS
 
-### NAMESPACE
+Path may contain params - words started with colon ":". Parameter is optional
+when param name followed by question mark "?". After matching request param
+values populated `req.params` object.
 
-### RESOURCE
+### ROUTE HANDLER
 
-## ROUTE PATH PARAMS
+Route handler is a string composed from `controllerName` and `actionName`
+separated by `#` sign. When route nested inside resource `controllerName` could
+be optional, in that case resource controller name assumed:
 
-TODO
+    map.resources('posts', function (post) {
+        // map '/posts/destroyAll'
+        // to {controller: 'posts', action: 'cleanup'}
+        post.get('destroyAll', '#cleanup', {collection: true});
+    });
 
-## ROUTE OPTIONS
+Route handler could be skipped at all when route nested inside resource, then
+actionName assumed to equals path:
 
-TODO
+    map.resources('posts', function (post) {
+        // map '/posts/:post_id/commentsCount'
+        // to {controller: 'posts', action: 'commentsCount'}
+        post.get('commentsCount');
+    });
 
-## EXAMPLES
+### MIDDLEWARE
 
-To link `GET /signup` with `new` action of `users` controller:
+You may want to use middleware in routes. It's not recommended, but if you need
+it you can put it as second argument:
 
-`map.get('signup', 'users#new');`
+    map.get('/admin', authenticate, 'admin#index');
+    map.get('/protected/resource', [ middleware1, middleware2 ], 'resource#access');
 
-The following route will link `GET /` to the `index` action of the`home` controller:
+### ROUTE OPTIONS
 
-`map.root('home#index');`
+* `as`:
+Specify custom URL helper name
+
+    map.get('/some/action', 'some#action', {as: 'myAction'});
+    pathTo.myAction() => '/some/action'
+
+* `subdomain`:
+Check HOST header when matching request, use \* as wildcard domain:
+
+    map.get('/url', 'ctl#action', {subdomain: 'subdomain.tld'});
+    map.get('/url', 'ctl#action', {subdomain: '*.example.com'});
+
+*NOTE*: This feature relies on `host` header, if your node process behind nginx
+or proxy, make sure you've passed this header to process.
 
 ## URL HELPERS
 
@@ -118,40 +146,32 @@ URL helper will accept parameter (String), so that:
     pathTo.post_comment(2, 2383);
     > '/posts/2/comments/2383'
 
-<p>
-<strong>Why use URL helpers?</strong><br/>
-First of all it's convenient and beauty. But what is more important
-url helpers take care about namespaces. In case if your application will be
-used as part of another application, mounted on some URL like "/foreign-app"
-URL helpers will return correct value: "/foreign-app/profile/Bugs_Bunny"
-instead of "/profile/Bugs_Bunny"
-</p>
+To learn how to get list of generated url helpers see [DEBUGGING][] section.
 
-How to learn what helper name was generated? Read "Debugging" section.
 
-## Debugging
+## ADVANCED ROUTING METHODS
 
-To debug routes of your compound application you can use `compound routes`
-command (or shortcut `compound r`). You can also specify optional argument for
-filtering by helper name or method, for example:
+### NAMESPACES
 
-    ~: ) compound r post
-         posts GET    /posts.:format?          posts#index
-         posts POST   /posts.:format?          posts#create
-      new_post GET    /posts/new.:format?      posts#new
-     edit_post GET    /posts/:id/edit.:format? posts#edit
-          post DELETE /posts/:id.:format?      posts#destroy
-          post PUT    /posts/:id.:format?      posts#update
-          post GET    /posts/:id.:format?      posts#show
-    ~: ) compound r GET
-         posts GET    /posts.:format?          posts#index
-      new_post GET    /posts/new.:format?      posts#new
-     edit_post GET    /posts/:id/edit.:format? posts#edit
-          post GET    /posts/:id.:format?      posts#show
-    ~: ) compound r new
-     new_post GET    /posts/new.:format? posts#new
+You may wish to organize groups of controllers under a namespace. The most common use-case is an administration area. All controllers within the `admin` namespace should be located inside the `app/controllers/` directory.
 
-## Resources
+For example, let's create an admin namespace:
+
+    map.namespace('admin', function (admin) {
+        admin.resources('users');
+    });
+
+This routing rule will match with `/admin/users`, `/admin/users/new` and will create appropriate url helpers:
+
+        admin_users GET    /admin/users.:format?          admin/users#index
+        admin_users POST   /admin/users.:format?          admin/users#create
+     new_admin_user GET    /admin/users/new.:format?      admin/users#new
+    edit_admin_user GET    /admin/users/:id/edit.:format? admin/users#edit
+         admin_user DELETE /admin/users/:id.:format?      admin/users#destroy
+         admin_user PUT    /admin/users/:id.:format?      admin/users#update
+         admin_user GET    /admin/users/:id.:format?      admin/users#show
+
+### RESOURCES
 
 Resource-based routing provides standard mapping between HTTP verbs and controller actions:
 
@@ -181,14 +201,11 @@ path_to.post(post)          # /posts/1.
 
 ```
 
-### Options
+**OPTIONS**
 
 If you want to override default routes behaviour, you can use two options: `as` and `path` to specify a helper name and a path you want to have in the result.
 
-<strong>
-{ as: 'helperName' }
-</strong>
-
+* `{ as: 'helperName' }`:
 Path helper aliasing:
 
     map.resources('posts', { as: 'articles' });
@@ -203,10 +220,7 @@ This will create the following routes:
          article PUT    /posts/:id.:format?      posts#update
          article GET    /posts/:id.:format?      posts#show.
 
-<strong>
-{ path: 'alternatePath' }
-</strong>
-
+* `{ path: 'alternatePath' }`:
 If you want to change the base path:
 
     map.resources('posts', { path: 'articles' });
@@ -221,9 +235,7 @@ This will create the following routes:
          post PUT    /articles/:id.:format?      posts#update
          post GET    /articles/:id.:format?      posts#show
 
-<strong>
-Both "as" and "path" together
-</strong>
+* `Both "as" and "path" together`:
 
 If you want to alias both the helper and the path:
 
@@ -239,14 +251,24 @@ This will create the following routes:
          story PUT    /articles/:id.:format?      posts#update
          story GET    /articles/:id.:format?      posts#show
 
-## Nested resources
+* `only`:
+If you need routes only for several actions (e.g. `index`, `show`), you can specify the `only` option:
+
+    map.resources('users', { only: ['index', 'show'] });
+
+* `except`:
+If you want to have all routes except a specific route, you can specify the `except` option:
+
+    map.resources('users', { except: ['create', 'destroy'] });
+
+**Nested resources**
 
 Some resources may have nested sub-resources, for example `Post` has many `Comments`, and of course we want to get a post's comments using `GET /post/1/comments`.
 
 Let's describe the route for our nested resource:
 
     map.resources('post', function (post) {
-      post.resources('comments');
+        post.resources('comments');
     });.
 
 This routing map will provide the following routes:
@@ -267,7 +289,7 @@ This routing map will provide the following routes:
                   post PUT      /posts/:id                        posts#update
                   post GET      /posts/:id                        posts#show.
 
-### Using url helpers for nested routes
+**Using url helpers for nested routes**
 
 To use routes like `post_comments` you should call helper with param: parent resource or identifier before nested resource:
 
@@ -275,64 +297,54 @@ To use routes like `post_comments` you should call helper with param: parent res
     path_to.edit_post_comment(post, comment)  # /posts/1/comments/10/edit
     path_to.edit_post_comment(2, 300)         # /posts/2/comments/300/edit
 
-## Namespaces
-
-You may wish to organize groups of controllers under a namespace. The most common use-case is an administration area. All controllers within the `admin` namespace should be located inside the `app/controllers/` directory.
-
-For example, let's create an admin namespace:
-
-    map.namespace('admin', function (admin) {
-      admin.resources('users');
-    });
-
-This routing rule will match with `/admin/users`, `/admin/users/new` and will create appropriate url helpers:
-
-        admin_users GET    /admin/users.:format?          admin/users#index
-        admin_users POST   /admin/users.:format?          admin/users#create
-     new_admin_user GET    /admin/users/new.:format?      admin/users#new
-    edit_admin_user GET    /admin/users/:id/edit.:format? admin/users#edit
-         admin_user DELETE /admin/users/:id.:format?      admin/users#destroy
-         admin_user PUT    /admin/users/:id.:format?      admin/users#update
-         admin_user GET    /admin/users/:id.:format?      admin/users#show
-
-## Restricting routes
-
-If you need routes only for several actions (e.g. `index`, `show`), you can specify the `only` option:
-
-    map.resources('users', { only: ['index', 'show'] });
-
-If you want to have all routes except a specific route, you can specify the `except` option:
-
-    map.resources('users', { except: ['create', 'destroy'] });
-
-## Custom actions in resourceful routes
+**Custom actions in resourceful routes**
 
 If you need some specific action to be added to your resource-based route, use this example:
 
     map.resource('users', function (user) {
-      user.get('avatar', 'users#avatar');               // /users/:user_id/avatar
-      user.get('top', 'users#top', {collection: true}); // /users/top
+        user.get('avatar', 'users#avatar');               // /users/:user_id/avatar
+        user.get('top', 'users#top', {collection: true}); // /users/top
     });
 
-## Middleware
+## EXAMPLES
 
-You may want to use middleware in routes. It's not recommended, but if you need
-it you can put it as second argument:
+To link `GET /signup` with `new` action of `users` controller:
 
-    map.get('/admin', authenticate, 'admin#index');
-    map.get('/protected/resource', [ middleware1, middleware2 ], 'resource#access');
+    map.get('signup', 'users#new');
 
-## Subdomain
+The following route will link `GET /` to the `index` action of the`home` controller:
 
-**experimental**
+    map.root('home#index');
 
-If you want to support subdomain filter, specify it as `subdomain` option:
+## DEBUGGING
 
-    map.get('/url', 'ctl#action', {subdomain: 'subdomain.tld'});
+To debug routes of your compound application you can use `compound routes`
+command (or shortcut `compound r`). You can also specify optional argument for
+filtering by helper name or method, for example:
 
-use \* as wildcard domain
+    ~: ) compound r post
+         posts GET    /posts.:format?          posts#index
+         posts POST   /posts.:format?          posts#create
+      new_post GET    /posts/new.:format?      posts#new
+     edit_post GET    /posts/:id/edit.:format? posts#edit
+          post DELETE /posts/:id.:format?      posts#destroy
+          post PUT    /posts/:id.:format?      posts#update
+          post GET    /posts/:id.:format?      posts#show
+    ~: ) compound r GET
+         posts GET    /posts.:format?          posts#index
+      new_post GET    /posts/new.:format?      posts#new
+     edit_post GET    /posts/:id/edit.:format? posts#edit
+          post GET    /posts/:id.:format?      posts#show
+    ~: ) compound r new
+     new_post GET    /posts/new.:format? posts#new
 
-    map.get('/url', 'ctl#action', {subdomain: '*.example.com'});
+## CONTRIBUTION
 
-This feature relies on `host` header, if your node process behind nginx or proxy,
-make sure you've passed this header to process.
+Compound use `railway-routes` npm package to provide routes functionality. If
+you spotted an bug or have any suggestions or requests feel free to open issue
+at
+[github.com/1602/railway-routes](https://github.com/1602/railway-routes/issues)
+
+## SEE ALSO
+
+compound-tools(3) compound-tools(1) compound-controller(3)
