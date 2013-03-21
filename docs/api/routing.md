@@ -18,7 +18,7 @@ The purpose of routes is to bind an URL to controller action.
 
 ## EVENT
 
-You can use `routes` event on compound object to define routes:
+The `routes` event can be used on compound object to define routes:
 
     compound.on('routes', function(map, compound) {
         map.get('auth', 'session#auth');
