@@ -172,9 +172,9 @@ Fragment of `app/controllers/posts.js`:
         c.render('edit');
     };
 
-### renderFile(filename[, callback])
+### renderView(view[, callback])
 
-Render file and return result to callback(err, html) or send to client when
+Render view and return result to callback(err, html) or send to client when
 callback is missing. This method does not accept params and works with
 `viewContext` member of controller. Run `prepareViewContext` to create that
 member.

@@ -12,7 +12,7 @@ describe('controller-extensions', function() {
         context: {inAction: false},
         prepareViewContext: function() {},
         locals: {layout: false},
-        renderFile: compound.controllerExtensions.renderFile
+        renderView: compound.controllerExtensions.renderView
     };
 
     it('should render existing view', function(done) {
@@ -29,7 +29,7 @@ describe('controller-extensions', function() {
     it('should throw when render missing view', function() {
         (function () {
             compound.controllerExtensions.render.call(controller, 'missing');
-        }).should.throw('View controller/missing not found');
+        }).should.throw('Template controller/missing not found');
     });
 
 });
