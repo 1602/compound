@@ -22,8 +22,12 @@ compound-roadmap(3) -- Major things to do in upcoming releases
 * `configuration`:
   Allow client-side app configuration: blacklist/whitelist controllers/models.
 
-* `angular`:
-  Think about using angular or maybe other frameworks.
+* `angular` and `components`:
+  Think about using angular or maybe other frameworks. TJ's
+  [components](http://tjholowaychuk.com/post/27984551477/components) look
+  decent. Investigate.
+
+
 
 ## MISC
 
