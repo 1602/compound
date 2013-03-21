@@ -13,17 +13,27 @@ web applications development.
 
 Run `compound help [topic]` to get help on specific topic.
 
-### <command>
+### command
 
-* `generate smth`:
+* `g`, `generate smth`:
   Call **smth** generator, where **smth** could be: app, controller, model, crud,
   scaffold or anything else.
 
-* `routes`:
+* `r`, `routes`:
   Display routing map
 
-* `server [port]`:
+* `s`, `server [port]`:
   Run HTTP server on specified port, default port = 3000
+
+* `c`, `console`:
+  Run debugging console with compound environment loaded
+
+### opts
+
+* `--coffee`
+* `--tpl ENGINE`
+* `--db NAME`
+* `--stylus`
 
 ## ENVIRONMENT
 
@@ -32,6 +42,11 @@ Run `compound help [topic]` to get help on specific topic.
 
 * `PORT`:
   Set port of HTTP server
+
+## FUTURE
+
+See compound-roadmap(3) and [github issues][issues] to catch up current
+development and see where compound going.
 
 ## BUGS
 

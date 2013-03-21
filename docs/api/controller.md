@@ -116,11 +116,9 @@ to configure controller on creation.
 
 To define hook call `before` or `after` on `init` object passed to constructor.
 
-## FEATURES
+## MEMBERS
 
-Controller context has the following set of methods and members:
-
-### COMMON MEMBERS
+Controller context has the following set of members:
 
 * `req`:
 Request object (instance of http.IncomingMessage)
@@ -132,165 +130,180 @@ Response object (instance of http.ServerResponse)
 Request body (null in case of GET)
 
 
-### COMMON METHODS
+## OUTPUT METHODS
 
 **NOTE:** Each action should invoke exactly one output method (render, send).
 This is the only requirement imposed by the asynchronous nature of Node.js. If
 you don't call an output method, the client will infinitely wait for a server
 response.
 
-* `render([view[, params]])`:
+### render([view[, params]])
 
-  Render view and send result to client.
+Render view and send result to client.
 
-  The `render` method accepts 0, 1 or 2 arguments. When called without any
-  arguments, it just renders the view associated with current action. For
-  example, this will render `app/views/posts/index.ejs`.
+The `render` method accepts 0, 1 or 2 arguments. When called without any
+arguments, it just renders the view associated with current action. For
+example, this will render `app/views/posts/index.ejs`.
 
-  Fragment of `app/controllers/posts.js`:
+Fragment of `app/controllers/posts.js`:
 
-      PostsController.prototype.index = function index(c) {
-          c.render();
-      });
+    PostsController.prototype.index = function index(c) {
+        c.render();
+    });
 
-  To pass some data to the view, there are two ways to do it. The first is to
-  simply pass a hash containing the data:
+To pass some data to the view, there are two ways to do it. The first is to
+simply pass a hash containing the data:
 
-  Fragment of `app/controllers/posts.js`:
+Fragment of `app/controllers/posts.js`:
 
-      PostsController.prototype.index = function index(c) {
-          this.data = [];
-          c.render({title: 'Posts index'});
-      });
+    PostsController.prototype.index = function index(c) {
+        this.data = [];
+        c.render({title: 'Posts index'});
+    });
 
-  Example above will render 'posts/index' view passing `title` and `data` to it.
+Example above will render 'posts/index' view passing `title` and `data` to it.
 
-  To render another view, just put its name as the first argument:
+To render another view, just put its name as the first argument:
 
-  Fragment of `app/controllers/posts.js`:
+Fragment of `app/controllers/posts.js`:
 
-      PostsController.prototype.update = function update(c) {
-          this.title = 'Edit post';
-          c.render('edit');
-      };
+    PostsController.prototype.update = function update(c) {
+        this.title = 'Edit post';
+        c.render('edit');
+    };
 
-* `send(smth)`:
-  Send text, status code or json object to client
+### renderFile(filename[, callback])
 
-  The `send` function is useful for debugging and one-page apps where you don't
-  want to render a heavy template and just want to send text or JSON data.
+Render file and return result to callback(err, html) or send to client when
+callback is missing. This method does not accept params and works with
+`viewContext` member of controller. Run `prepareViewContext` to create that
+member.
 
-  This function can be called with a status code number:
+### send(smth)
 
-      Controller.prototype.destroy = function destroy(c) {
-          // client will receive statusCode = 403 Forbidden
-          c.send(403);
-      });
+Send text, status code or json object to client
 
-  or with a string:
+The `send` function is useful for debugging and one-page apps where you don't
+want to render a heavy template and just want to send text or JSON data.
 
-      Controller.prototype.sayHello = function sayHello(c) {
-          // client will receive 'Hello!'
-          c.send('Hello!');
-      });
+This function can be called with a status code number:
 
-  or with an object:
+    Controller.prototype.destroy = function destroy(c) {
+        // client will receive statusCode = 403 Forbidden
+        c.send(403);
+    });
 
-      Controller.prototype.action = function action(c) {
-          // client will receive '{"hello":"world"}'
-          c.send({ hello: 'world' });
-      });
+or with a string:
 
-* `redirect(location)`:
-  Redirect client to specific location
+    Controller.prototype.sayHello = function sayHello(c) {
+        // client will receive 'Hello!'
+        c.send('Hello!');
+    });
 
-  This function just sets the status code and `Location` header, so the client
-  will be redirected to another location.
+or with an object:
 
-      redirect('/'); // root redirection
-      redirect('http://example.com'); // redirect to another host
+    Controller.prototype.action = function action(c) {
+        // client will receive '{"hello":"world"}'
+        c.send({ hello: 'world' });
+    });
 
-* `header`:
+### redirect(location)
+
+Redirect client to specific location
+
+This function just sets the status code and `Location` header, so the client
+will be redirected to another location.
+
+    redirect('/'); // root redirection
+    redirect('http://example.com'); // redirect to another host
+
+### header
 Send header to client
 
-* `flash(type, message)`:
-  Display flash message
+### flash(type, message)
+Display flash message
 
-  The `flash` function stores a message in the session to be displayed later.
-  Here are a few examples:
+The `flash` function stores a message in the session to be displayed later.
+Here are a few examples:
 
-  Fragment of `app/controllers/posts.js`:
+Fragment of `app/controllers/posts.js`:
 
-      PostsController.prototype.create = function create(c) {
-          c.Post.create(req.body, function (err) {
-              if (err) {
-                  c.flash('error', 'Error while post creation');
-                  c.render('new', {post: req.body});
-              } else {
-                  c.flash('info', 'Post has been successfully created');
-                  c.redirect(c.pathTo.posts);
-              }
-          });
-      });
+    PostsController.prototype.create = function create(c) {
+        c.Post.create(req.body, function (err) {
+            if (err) {
+                c.flash('error', 'Error while post creation');
+                c.render('new', {post: req.body});
+            } else {
+                c.flash('info', 'Post has been successfully created');
+                c.redirect(c.pathTo.posts);
+            }
+        });
+    });
 
-  This `create` action sends a flash info on success and a flash error on fail.
+This `create` action sends a flash info on success and a flash error on fail.
 
-* `before([name, ]hook[, params])`:
-  Invoke `hook` before any action. Name param is optional when hook is named
-  function. Examples of params object:
+## FLOW CONTROL METHODS
 
-      { only: ['actionName', 'actionName2'] }
-      { except: 'anotherActionName' }
+To provide the ability of DRY-ing controller code and reusing common code
+parts, CompoundJS provides a few additional tools: method chaining and
+external controllers loading.
 
-  First configuration will run hook only for `actionName` and `actionName2`
-  actions.  Second configuration will run hook before each action except
-  `anotherActionName`.
+### before([name, ]hook[, params])
 
-  To provide the ability of DRY-ing controller code and reusing common code
-  parts, CompoundJS provides a few additional tools: method chaining and
-  external controllers loading.
+Invoke `hook` before any action. Name param is optional when hook is named
+function. Examples of params object:
 
-  To chain methods, you can use the `before` and `after` methods.
+    { only: ['actionName', 'actionName2'] }
+    { except: 'anotherActionName' }
 
-  Fragment of `app/controllers/checkout.js`
+First configuration will run hook only for `actionName` and `actionName2`
+actions.  Second configuration will run hook before each action except
+`anotherActionName`.
 
-      function CheckoutController(init) {
-          init.before(userRequired, { only: 'order' });
-          init.before(prepareBasket, { except: 'order' });
-          init.before(loadProducts, { only: ['products', 'featuredProducts'] });
-      }
+To chain methods, you can use the `before` and `after` methods.
 
-      CheckoutController.prototype.products = function(c) { ... };
-      CheckoutController.prototype.featuredProducts = function(c) { ... };
-      CheckoutController.prototype.order = function(c) { ... };
-      CheckoutController.prototype.basket = function(c) { ... };
+Fragment of `app/controllers/checkout.js`
 
-      function userRequired(c) { c.next() }
-      function prepareBasket(c) { c.next() }
-      function loadProducts(c) { c.next() }
+    function CheckoutController(init) {
+        init.before(userRequired, { only: 'order' });
+        init.before(prepareBasket, { except: 'order' });
+        init.before(loadProducts, { only: ['products', 'featuredProducts'] });
+    }
 
-  In this example, `userRequired` will be called only for the `order` action,
-  `prepareBasket` will be called for all actions except `order`, and
-  `loadProducts` will be called only for the `products` and
-  `featuredProducts`methods.
+    CheckoutController.prototype.products = function(c) { ... };
+    CheckoutController.prototype.featuredProducts = function(c) { ... };
+    CheckoutController.prototype.order = function(c) { ... };
+    CheckoutController.prototype.basket = function(c) { ... };
 
-  Note, that the before-functions should call the global `next` method that will
-  pass control to the next function in the chain.
+    function userRequired(c) { c.next() }
+    function prepareBasket(c) { c.next() }
+    function loadProducts(c) { c.next() }
 
+In this example, `userRequired` will be called only for the `order` action,
+`prepareBasket` will be called for all actions except `order`, and
+`loadProducts` will be called only for the `products` and
+`featuredProducts`methods.
 
-* `after([name, ]hook[, params])`:
-  Invoke `hook` after any action. Name param is optional when hook is named
-  function. Params object is the same as for before hook.
+Note, that the before-functions should call the global `next` method that will
+pass control to the next function in the chain.
 
-* `skipBefore(name, params)`:
-  Skip before hook by it's name. Params object allows to specify skip/only
-  actions.
+### after([name, ]hook[, params])
 
-* `skipBefore(name, params)`:
-  Skip before hook by it's name. Params object allows to specify skip/only
-  actions.
+Invoke `hook` after any action. Name param is optional when hook is named
+function. Params object is the same as for before hook.
 
-* `next(err)`:
+### skipBefore(name, params)
+
+Skip before hook by it's name. Params object allows to specify skip/only
+actions.
+
+### skipBefore(name, params)
+
+Skip before hook by it's name. Params object allows to specify skip/only
+actions.
+
+### next(err)
+
 Go to next hook/action in chain. When error param passed to next rest of chain
 skipped and error passed to error handling middleware.
 

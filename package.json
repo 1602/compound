@@ -26,6 +26,9 @@
   },
   "man": [
     "./man/compound.1",
+    "./man/controller.3",
+    "./man/changelog.3",
+    "./man/railway-changelog.3",
     "./man/helpers.3",
     "./man/routing.3"
   ],
