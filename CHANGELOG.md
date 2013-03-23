@@ -22,6 +22,10 @@ compound-changelog(3) -- Changes in CompoundJS
 * **new helpers**:
   icon, imageTag, metaTag, anchor, contentFor, button.
 
+* **async initializers**:
+  Initializer may accept second optional param: `Function done`. In that case
+  next initializer will be called only when `done` callback called.
+
 ### 1.1.5
 
 * **generators**:
