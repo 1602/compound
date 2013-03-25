@@ -11,7 +11,7 @@ if (!process.env.TRAVIS) {
 }
 
 global.getApp = function() {
-    var app = require('../lib/server/compound').createServer()
+    var app = require('../').createServer()
     app.enable('quiet');
     return app;
 };
