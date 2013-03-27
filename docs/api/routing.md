@@ -96,8 +96,8 @@ actionName assumed to equals path:
 You may want to use middleware in routes. It's not recommended, but if you need
 it you can put it as second argument:
 
-    map.get('/admin', authenticate, 'admin#index');
-    map.get('/protected/resource', [ middleware1, middleware2 ], 'resource#access');
+    map.get('/admin', 'admin#index', authenticate);
+    map.get('/protected/resource', 'resource#access', [middleware1, middleware2]);
 
 ### ROUTE OPTIONS
 
