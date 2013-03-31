@@ -42,7 +42,7 @@ Short functionality review
 CLI tool
 --------
 
-    Usage: compound command <strong>[argument(s)]</strong>
+    Usage: compound command [argument(s)]
 
     Commands:
       h,  help                     Display usage information
