@@ -1,7 +1,7 @@
 # Models
 
 By default models managed using [JugglingDB
-ORM](https://github.com/1602/jugglingdb), but you can use any ORM you like. For
+ORM](http://jugglingdb.co), but you can use any ORM you like. For
 example, if you prefer [mongoose](http://mongoosejs.com), check [mongoose on
 compound](https://github.com/anatoliychakkaev/mongoose-compound-example-app) example app.
 
