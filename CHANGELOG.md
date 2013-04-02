@@ -3,7 +3,7 @@ compound-changelog(3) -- Changes in CompoundJS
 
 ## HISTORY
 
-### upcoming release
+### 1.1.6
 
 * **man**:
   Docs in roff (man). Change `compound help` command to proxy request to `man`.
@@ -25,6 +25,11 @@ compound-changelog(3) -- Changes in CompoundJS
 * **async initializers**:
   Initializer may accept second optional param: `Function done`. In that case
   next initializer will be called only when `done` callback called.
+
+* **compound.model() api**:
+   - compound.model('modelname') - getter (case insensitive)
+   - compound.model('ModelName', true) - case sensitive getter
+   - compound.model(NamedFn) - setter for model as named fn (or jugglingdb model)
 
 ### 1.1.5
 
