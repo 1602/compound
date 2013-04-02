@@ -11,15 +11,12 @@
     <meta name="description" content="CompoundJS - MVC framework for NodeJS, fully ExpressJS compatible" >
     <meta name="keywords" content="nodejs, mvc, expressjs, framework, javascript, async" >
 
-    <script type="text/javascript" src="/javascripts/prettyprint/prettify.js"></script>
-    <script type="text/javascript" src="/javascripts/jquery.min.js"></script>
-    <script type="text/javascript" src="http://twitter.github.com/bootstrap/assets/js/bootstrap-scrollspy.js"></script>
-    <script type="text/javascript" src="/javascripts/bootstrap-dropdown.js"></script>
-    <script>$(function () { prettyPrint() })</script>
-
     <style>
       section, body {
         padding-top: 60px;
+      }
+      h4 {
+        font: 300 20px 'Lucida Grande', sans-serif;
       }
       h1, h2, h3 {
         font: 300 24px 'Quicksand', 'Lucida Grande', sans-serif;
@@ -36,6 +33,11 @@
           background: rgba(0,0,0,0.7);
           color: #ddd
       }
+      a.btn small {
+          color: #888;
+          font-size: 11px;
+          line-height: 10px;
+      }
     </style>
 
   </head>
@@ -50,12 +52,81 @@
           </div>
         </div>
         <div class="span5">
-          <a class="btn btn-large" href="docs">Guide</a>
-          <a class="btn" href="https://github.com/1602/compound">Source</a>
-          <a class="btn" href="https://github.com/1602/compound/issues">Issues</a>
-          <a class="btn" href="https://groups.google.com/forum/?fromgroups#!forum/compoundjs">Discuss</a>
-          <div style="text-align: center; padding: 20px;">
-              <a href="https://github.com/1602/compound/blob/master/docs/migration-guide.md">RailwayJS Migration Guide</a>
+            <div class="row">
+                <h4>
+                    Latest stable release: 1.1.6
+                </h4>
+                <div class="btn-group">
+                    <a class="btn" href="https://github.com/1602/compound/archive/v1.1.6.zip">
+                        <small>Download</small><br/>
+                        <strong>ZIP File</strong>
+                    </a>
+                    <a class="btn" href="https://github.com/1602/compound/archive/v1.1.6.tar.gz">
+                        <small>Download</small><br/>
+                        <strong>TAR Ball</strong>
+                    </a>
+                    <a class="btn" href="https://github.com/1602/compound">
+                        <small>Fork on</small><br/>
+                        <strong>GitHub</strong>
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                <h4>
+                    Actual Information <small>(work in progress)</small>
+                </h4>
+                <div class="span2" style="margin-left: 0; width: 160px;">
+                    <a class="btn btn-large" href="http://compoundjs.github.com/guides">Guides</a>
+                    <ul>
+                        <li><a href="https://github.com/compoundjs/guides/blob/master/crash-course.md">Getting Started</a></li>
+                        <li><a href="https://github.com/compoundjs/guides/blob/master/elements-explained.md">Elements Explained</a></li>
+                        <li>+ more coming soon</li>
+                    </ul>
+                </div>
+                <div class="span3">
+                    <a class="btn btn-large" href="http://compoundjs.com/man/compound.1.html">API Docs</a>
+                    <ul>
+                        <li><a href="http://compoundjs.com/man/compound.1.html">compound(1)</a></li>
+                        <li><a href="http://compoundjs.com/man/routing.3.html">routing</a></li>
+                        <li><a href="http://compoundjs.com/man/controller.3.html">controller</a></li>
+                        <li><a href="http://compoundjs.com/man/helpers.3.html">helpers</a></li>
+                        <li>views</li>
+                        <li><a href="http://jugglingdb.co">models</a></li>
+                        <li>i18n</li>
+                        <li>events</li>
+                        <li>api</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <h4>
+                    Full Docs+Guides mix <small>(outdated)</small>
+                </h4>
+                <ul>
+                    <li>
+                        <a href="docs">Old docs (1.1.4)</a>
+                    </li>
+                    <li>
+                        <a href="docs.html">Oldest docs (RailwayJS)</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="row">
+                <h4>
+                    Other Resources
+                </h4>
+                <ul>
+                    <li>
+                        <a href="https://github.com/1602/compound/issues">Issues on GitHub</a>
+                    </li>
+                    <li>
+                        <a href="https://groups.google.com/forum/?fromgroups#!forum/compoundjs">Discussion on Google Groups</a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/1602/compound/blob/master/docs/migration-guide.md">RailwayJS Migration Guide</a>
+                    </li>
+                </ul>
+            </div>
           </div>
 
                <!--h1 style="color: #fc0243" margin-top:30px> start now
@@ -70,7 +141,7 @@ curl -X POST -F 'Thing[name]=compound' http://localhost:3000/things.json
               </code></pre-->
         </div>
       </div>
-      <div class="row" style="padding-top: 50px;">
+      <!-- div class="row" style="padding-top: 50px;">
           <div class="container">
               <div class="span10" style="text-align: center">
                   <h1>Breaking news: <span style="color:red">client-side compound</span></h1>
@@ -80,7 +151,7 @@ curl -X POST -F 'Thing[name]=compound' http://localhost:3000/things.json
                   <a class="btn btn-large btn-warning" style="margin-top: 20px" href="http://demo.compoundjs.com/books">Try demo</a>
               </div>
           </div>
-      </div>
+      </div-->
 <script type="text/javascript">
 
   var _gaq = _gaq || [];

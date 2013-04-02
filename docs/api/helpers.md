@@ -64,10 +64,16 @@ depending on `app.set('merge stylesheets');` option.
 
 ## CUSTOM HELPERS
 
-There are two kind of custom helpers: application-wide and local. To define
-custom helpers create *./app/helpers/application_helper.js* file. Local helpers
-available only for specific controller, and should be located in
-*./app/helpers/controllerName_helper.js* file.
+There are two kind of custom helpers: application-wide and controller-wide.
+Application-wide helpers defined in `./app/helpers/application_helper.js` file.
+Controller-wide helpers available only for specific controller, and should be
+defined in `./app/helpers/controllerName_helper.js` file.
+
+Each controller is a javascript file exports set of functions (helper methods).
+These methods available in views and called on controller context, i.e. `this`
+keyword inside helper method refers to controller, so that you can access every
+member available in controller context: `req`, `res`, `body`, `compound`. To
+access view context use `this.viewContext`.
 
 ## SEE ALSO
 

@@ -61,6 +61,7 @@ html: $(API_WEB) $(CLI_WEB)
 
 web: $(API_WEB)
 	rsync ./man/html/* compoundjs.com:/var/www/apps/compoundjs.com/public/man
+	scp ./docs/index.html git@compoundjs.com:/var/www/apps/compoundjs.com/compound/docs
 
 all: $(MAN) $(API_WEB)
 
