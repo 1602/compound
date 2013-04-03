@@ -19,10 +19,12 @@ case $dest in
     ;;
 
   *.html)
-    ronn -5 $1 --pipe\
+    (ronn -5 $1 --pipe\
       --style=toc\
       --organization=1602\ Software\
-      --manual=CompoundJS > $2
+      --manual=CompoundJS &&\
+      cat docs/ga.html &&\
+      cat docs/footer.html) > $2
     exit $?
     ;;
 esac

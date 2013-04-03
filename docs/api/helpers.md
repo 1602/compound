@@ -45,6 +45,27 @@ depending on `app.set('merge stylesheets');` option.
 ### formTagBegin
 ### formTagEnd
 ### labelTag
+Accepts two optional arguments: label text and set of html params.
+### inputTag
+
+Accepts single argument - set of html params:
+
+    <%- inputTag({type: 'password', name: 'User[password]'}) %>
+
+will generate:
+
+    <input type="password" name="User[password]" />
+
+### texteareaTag
+
+Accepts two optional arguments: value and set of html params.
+
+    <%- texteareaTag('Hello World', {name: 'greeting'}) %>
+
+will generate:
+
+    <textarea name="greeting">Hello World</textarea>
+
 ### submitTag
 ### buttonTag
 ### selectTag

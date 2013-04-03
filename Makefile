@@ -39,7 +39,7 @@ man/%.3: docs/api/%.md scripts/doc.sh
 	@[ -d man ] || mkdir man
 	scripts/doc.sh $< $@
 
-man/html/%.3.html: docs/api/%.md scripts/doc.sh
+man/html/%.3.html: docs/api/%.md scripts/doc.sh docs/footer.html
 	@[ -d man/html ] || mkdir -p man/html
 	scripts/doc.sh $< $@
 
