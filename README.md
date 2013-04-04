@@ -116,24 +116,27 @@ On initialization directories tree generated, like that:
     `-- config
         |-- database.json
         |-- routes.js
-        |-- tsl.cert
-        `-- tsl.key
+        |-- tls.cert
+        `-- tls.key
 
 HTTPS Support
 -------------
 
 Just place your key and cert into config directory, compound will use it.
-Default names for keys are `tsl.key` and `tsl.cert`, but you can store in in another place, in that case just pass filenames to createServer function:
+Default names for keys are `tls.key` and `tls.cert`, but you can store in in another place, in that case just pass filenames to createServer function:
 `server.js`
 
-    require('compound').createServer({key: '/tmp/key.pem', cert: '/tmp/cert.pem'});
+    require('compound').createServer({
+        key: fs.readFileSync('/tmp/tls.key').toString(),
+        cert: fs.readFileSync('/tmp/tls.key').toString()
+    });
 
 Few helpful commands:
 
     # generate private key
-    openssl genrsa -out config/tsl.key
+    openssl genrsa -out /tmp/tls.key
     # generate cert
-    openssl req -new -x509 -key config/tsl.key  -out config/tsl.cert -days 1095 -batch
+    openssl req -new -x509 -key /tmp/tls.key  -out /tmp/tls.cert -days 1095 -batch
 
 Routing
 -------
