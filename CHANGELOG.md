@@ -3,6 +3,11 @@ compound-changelog(3) -- Changes in CompoundJS
 
 ## HISTORY
 
+### Upcoming release
+
+- Fixed HTTPS support
+- Introduce `req.locals` API to early access controller action context (`this`).
+
 ### 1.1.6
 
 * **man**:
