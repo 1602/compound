@@ -39,7 +39,7 @@
     "jade-ext": ">= 0.0.5",
     "railway-routes": ">= 0.0.6",
     "kontroller": ">= 0.0.9",
-    "seedjs": "*"
+    "inflection": "~1.2.5"
   },
   "repository": {
     "type": "git",
