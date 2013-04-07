@@ -16,10 +16,13 @@
   "devDependencies":
   { "nodeunit": "*"
   , "sinon": "*"
+  , "supertest": ">= 0"
+  , "mocha": ">= 0"
+  , "should": ">= 0"
   , "semicov": "*"
   , "co-generators": "*"
   }
 , "scripts":
-  { "test": "nodeunit test/*/*"
+  { "test": "./node_modules/.bin/mocha --include test/init.js test/*/*.test.js"
   }
 }
