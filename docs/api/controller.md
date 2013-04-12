@@ -297,9 +297,9 @@ function. Params object is the same as for before hook.
 Skip before hook by it's name. Params object allows to specify skip/only
 actions.
 
-### skipBefore(name, params)
+### skipAfter(name, params)
 
-Skip before hook by it's name. Params object allows to specify skip/only
+Skip after hook by it's name. Params object allows to specify skip/only
 actions.
 
 ### next(err)
