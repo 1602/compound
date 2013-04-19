@@ -39,7 +39,8 @@ compound-roadmap(3) -- Major things to do in upcoming releases
   Port existing tests to mocha. Including generated tests for crud controllers.
 
 * `helpers`:
-  Reorganize helpers. Now we have 1000 lines of code, which is not okay.
+  - Reorganize helpers. Now we have 1000 lines of code, which is not okay.
+  - Nested fieldsets using fieldsFor
 
 * `optimize loading`:
   It takes about 300 - 500ms to load compound app. It's time to improve loading
