@@ -7,7 +7,7 @@ CompoundJS - MVC framework for NodeJS&trade;. It allows you to build web applica
 
 Compound modules now available at https://github.com/compoundjs
 
-Full documentation is available at http://compoundjs.com/docs/ (automatically generated from [the markdown documentation files](docs/sources/markdown))
+Full documentation is available at http://compoundjs.com/ and using man(1).
 
 Installation
 ============
