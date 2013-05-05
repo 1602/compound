@@ -15,7 +15,7 @@ var app = module.exports = function getServerInstance(params) {
 
 if (!module.parent) {
     var port = process.env.PORT || 3000;
-    var host = process.env.HOST || '0.0.0.0';
+    var host = process.env.HOST || process.env.IP || '0.0.0.0';
 
     var server = app();
     server.listen(port, host, function () {
