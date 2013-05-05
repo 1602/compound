@@ -1,10 +1,12 @@
 /*
  db/schema.js contains database schema description for application models
  by default (when using jugglingdb as ORM) this file uses database connection
- described in config/database.json. But it's possible to use another database
- connections and multiple different schemas, docs available at
+ described in config/database.js. 
 
- http://railwayjs.com/orm.html
+ Compound setup docs: http://compoundjs.com/docs/#orm-models
+ ORM API docs: http://jugglingdb.co/
+
+ It's possible to use other databases and multiple schemas.
 
  Example of model definition:
 
