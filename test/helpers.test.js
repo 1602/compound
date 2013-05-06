@@ -2,7 +2,9 @@ var app, compound;
 before(function(done) {
     app = getApp();
     compound = app.compound;
-    compound.on('ready', done);
+    compound.on('ready', function() {
+        done();
+    });
 });
 
 /*

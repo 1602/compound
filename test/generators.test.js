@@ -17,7 +17,9 @@ describe('Generators API', function() {
         compound.generators.init(compound);
         // compound.generators.quiet = true;
         stubFS();
-        compound.on('ready', done);
+        compound.on('ready', function() {
+            done();
+        });
     });
 
     after(unstubFS);
