@@ -435,6 +435,13 @@ merge stylesheets
 Join all stylesheet files listed in `stylesheets_include_tag` into one
 
     app.enable('merge stylesheets'); // in config/environments/production.js
+    
+minify merged
+-----------------
+
+Minify the unified javascript or css from the merge options listed above. __Note: this includes mangling variable names within functions for javascript.__
+
+    app.enable('minify merged'); // in config/environments/production.js
 
 MIT License
 ===========

@@ -39,7 +39,9 @@
     "jade-ext": ">= 0.0.5",
     "railway-routes": ">= 0.0.6",
     "kontroller": ">= 0.0.9",
-    "inflection": "~1.2.5"
+    "inflection": "~1.2.5",
+    "uglify-js": "~2.3.6",
+    "clean-css": "~1.0.7"
   },
   "repository": {
     "type": "git",
