@@ -77,7 +77,7 @@ jQuery(function ($) {
     /**
      *  confirmation handler
      */
-    $('a[data-confirm],input[data-confirm]').live('click', function (e) {
+    $('a[data-confirm],input[data-confirm]').on('click', function (e) {
         var el = $(this);
         if (el.triggerAndReturn('confirm')) {
             if (!confirm(el.attr('data-confirm'))) {
@@ -91,17 +91,17 @@ jQuery(function ($) {
     /**
      * remote handlers
      */
-    $('form[data-remote]').live('submit', function (e) {
+    $('form[data-remote]').on('submit', function (e) {
         $(this).callRemote();
         e.preventDefault();
     });
 
-    $('a[data-remote],input[data-remote]').live('click', function (e) {
+    $('a[data-remote],input[data-remote]').on('click', function (e) {
         $(this).callRemote();
         e.preventDefault();
     });
 
-    $('a[data-method]:not([data-remote])').live('click', function (e){
+    $('a[data-method]:not([data-remote])').on('click', function (e){
         var link = $(this),
             href = link.attr('href'),
             method = link.attr('data-method'),
@@ -131,15 +131,15 @@ jQuery(function ($) {
         $(this).find(disable_with_input_selector).each(function () {
             var input = $(this);
             input.data('enable-with', input.val())
-                .attr('value', input.attr('data-disable-with'))
+                .attr('value', input.attr('danta-disable-with'))
                 .attr('disabled', 'disabled');
         });
     };
 
-    $(disable_with_form_remote_selector).live('ajax:before', disable_with_input_function);
-    $(disable_with_form_not_remote_selector).live('submit', disable_with_input_function);
+    $(disable_with_form_remote_selector).on('ajax:before', disable_with_input_function);
+    $(disable_with_form_not_remote_selector).on('submit', disable_with_input_function);
 
-    $(disable_with_form_remote_selector).live('ajax:complete', function () {
+    $(disable_with_form_remote_selector).on('ajax:complete', function () {
         $(this).find(disable_with_input_selector).each(function () {
             var input = $(this);
             input.removeAttr('disabled')
