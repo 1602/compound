@@ -131,7 +131,7 @@ jQuery(function ($) {
         $(this).find(disable_with_input_selector).each(function () {
             var input = $(this);
             input.data('enable-with', input.val())
-                .attr('value', input.attr('danta-disable-with'))
+                .attr('value', input.attr('data-disable-with'))
                 .attr('disabled', 'disabled');
         });
     };
