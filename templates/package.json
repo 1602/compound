@@ -23,6 +23,6 @@
   , "co-generators": "*"
   }
 , "scripts":
-  { "test": "./node_modules/.bin/mocha --require test/init.js test/*/*test.js"
+  { "test": "./node_modules/.bin/mocha --require test/init.js test/*/*.test.js"
   }
 }
