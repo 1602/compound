@@ -11,7 +11,7 @@ section.
 
 ### stylesheetLinkTag(file1[, file2[, ...[, fileN]]])
 
-Generates `<link rel="stylesheets" href="..." />` tag.
+Generate `<link rel="stylesheets" href="..." />` tag.
 Following ejs:
 
     <%- stylesheetLinkTag('reset', 'style', 'mobile') %>
@@ -30,6 +30,16 @@ depending on `app.set('merge stylesheets');` option.
 
 ### javascriptIncludeTag
 ### linkTo
+
+Generate html string `<a href="url">text</a>`. Signature:
+
+    HelperSet.prototype.linkTo = function linkTo(text, url, params)
+
+Example:
+
+    linkTo('Home', '/', {title: 'Go Home'});
+    // <a href="/" title="Go Home">Home</a>
+
 ### contentFor
 ### anchor
 ### matcher
