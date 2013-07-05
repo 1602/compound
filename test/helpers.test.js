@@ -145,7 +145,7 @@ describe('errorMessagesFor', function () {
   };
   it('should generate html errors', function () {
     var html = compound.helpers.errorMessagesFor(resource);
-    var expectedErrorString = '<div class="alert alert-error"><p><strong>Validation failed. Fix following errors before you continue:</strong></p><ul><li class="error-message">Name can\'t be blank</li><li class="error-message">Name is invalid</li></ul><ul><li class="error-message">Email is not unique</li></ul></div>';
+    var expectedErrorString = '<div class="alert alert-error"><p><strong>Validation failed. Fix the following errors to continue:</strong></p><ul><li class="error-message">Name can\'t be blank</li><li class="error-message">Name is invalid</li></ul><ul><li class="error-message">Email is not unique</li></ul></div>';
     html.should.equal(expectedErrorString);
   });
 });
