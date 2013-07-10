@@ -8,6 +8,7 @@ module.exports = function (compound) {
         app.set('jsDirectory', '/javascripts/');
         app.set('cssDirectory', '/stylesheets/');
         app.set('cssEngine', '{{ CSSENGINE }}');
+        app.loadConfigs(__dirname);
         app.use(express.bodyParser());
         app.use(express.cookieParser('secret'));
         app.use(express.session({secret: 'secret'}));

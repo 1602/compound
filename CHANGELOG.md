@@ -7,6 +7,8 @@ compound-changelog(3) -- Changes in CompoundJS
 
 - Fixed HTTPS support
 - Introduce `req.locals` API to early access controller action context (`this`).
+- compound.loadConfigs(dir) for loading configs from entire directory into
+  compound.app.settings
 
 ### 1.1.6
 

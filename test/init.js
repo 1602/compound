@@ -1,5 +1,7 @@
 module.exports = require('should');
 
+process.env.NODE_ENV = 'test';
+
 if (!process.env.TRAVIS) {
     if (typeof __cov === 'undefined') {
         process.on('exit', function () {
