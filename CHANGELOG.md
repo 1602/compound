@@ -7,6 +7,7 @@ compound-changelog(3) -- Changes in CompoundJS
 
 - Fixed HTTPS support
 - Introduce `req.locals` API to early access controller action context (`this`).
+- Added `vhost` route option.
 
 ### 1.1.6
 
