@@ -9,6 +9,7 @@ compound-changelog(3) -- Changes in CompoundJS
 - Introduce `req.locals` API to early access controller action context (`this`).
 - compound.loadConfigs(dir) for loading configs from entire directory into
   compound.app.settings
+- Added `vhost` route option.
 
 ### 1.1.6
 

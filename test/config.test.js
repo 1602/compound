@@ -1,6 +1,6 @@
 var should = require('./init.js');
 
-describe.only('compound.loadConfigs', function() {
+describe('compound.loadConfigs', function() {
     it('should load configs from given directory', function() {
         var app = getApp();
         var compound = app.compound;

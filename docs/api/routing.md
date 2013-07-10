@@ -108,13 +108,31 @@ Specify custom URL helper name
     pathTo.myAction() => '/some/action'
 
 * `subdomain`:
-Check HOST header when matching request, use \* as wildcard domain:
+Check HTTP/1.1 Host header when matching request, use \* as wildcard domain:
 
     map.get('/url', 'ctl#action', {subdomain: 'subdomain.tld'});
     map.get('/url', 'ctl#action', {subdomain: '*.example.com'});
 
-*NOTE*: This feature relies on `host` header, if your node process behind nginx
-or proxy, make sure you've passed this header to process.
+A subdomain match will ignore the first- and second-level components of the
+domain. This value is hard-coded into the `ControllerBrigde` class.
+
+*NOTE*: This feature relies on `Host` HTTP/1.1 header, if your Node process
+behind a proxy (like Nginx), make sure you've passed this header to CompoundJS.
+
+* `vhost`:
+Constrains the route match to include the given virtual host name
+
+    map.get('/apples/:id', 'fruit#action', {vhost: '.fruit.com'});
+    map.get('/carrots/:id', 'vegetable#action', {vhost: 'vegetables.com'});
+
+In the examples above, the `/apples/:id` route matches `http://fruit.com` and
+`http://*.fruit.com`, while the `/carrots/:id` route will only match
+`http://vegetables.com`.
+
+Compared to the `subdomain` option, the `vhost` option allows for a more
+straightforward route constraint on domain name.
+
+*NOTE*: Like the `subdomain` feature, this relies on `Host` HTTP/1.1 header.
 
 ## URL HELPERS
 
