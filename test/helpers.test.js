@@ -73,22 +73,6 @@ describe('formTag', function (){
     };
   });
 
-  it('should generate a form', function (){
-    var buf = arguments.callee.buf = [];
-    compound.helpers.formTag();
-
-    var expectedFormString = '<form method="POST"><input type="hidden" name="param_name" value="token_value" />';
-    buf[0].should.equal(expectedFormString);
-  });
-
-  it('should generate a form with a custom method', function () {
-    var buf = arguments.callee.buf = [];
-    compound.helpers.formTag({ method: 'PUT' });
-
-    var expectedFormString = '<form method="POST"><input type="hidden" name="param_name" value="token_value" /><input type="hidden" name="_method" value="PUT" />';
-    buf[0].should.equal(expectedFormString);
-  });
-
   it('should generate an update form for resource with PUT method', function () {
     var buf = arguments.callee.buf = [];
     var res = {
