@@ -75,7 +75,7 @@ of extensions:
     module.exports = function (compound) {
         return [
             require('jugglingdb'),
-            require('ejs-ext',
+            require('ejs-ext'),
             require('seedjs')
         ]
     };
