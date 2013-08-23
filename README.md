@@ -151,7 +151,7 @@ Default names for keys are `tls.key` and `tls.cert`, but you can store in in ano
 ```js
 require('compound').createServer({
     key: fs.readFileSync('/tmp/tls.key').toString(),
-    cert: fs.readFileSync('/tmp/tls.key').toString()
+    cert: fs.readFileSync('/tmp/tls.cert').toString()
 });
 ```
 
