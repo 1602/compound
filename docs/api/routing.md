@@ -114,7 +114,7 @@ Check HTTP/1.1 Host header when matching request, use \* as wildcard domain:
     map.get('/url', 'ctl#action', {subdomain: '*.example.com'});
 
 A subdomain match will ignore the first- and second-level components of the
-domain. This value is hard-coded into the `ControllerBrigde` class.
+domain. This value is hard-coded into the `ControllerBridge` class.
 
 *NOTE*: This feature relies on `Host` HTTP/1.1 header, if your Node process
 behind a proxy (like Nginx), make sure you've passed this header to CompoundJS.
