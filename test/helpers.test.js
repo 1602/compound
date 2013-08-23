@@ -93,7 +93,7 @@ describe('formTag', function (){
   });
 
   it('should be able to create inputs without a block', function () {
-    var buf = arguments.callee.buf = [];
+    var buf = [];
     var res = {
       constructor: {
         modelName: 'Resource'
@@ -115,6 +115,19 @@ describe('formTag', function (){
     buf[1].should.equal('<input name="Resource[name]" id="Resource_name" type="text" value="" />');
     buf[2].should.equal('<input name="Resource[sub][obj]" id="Resource_sub_obj" type="text" value="" />');
   });
+
+  it('should allow to override "id" attribute of tag', function() {
+      var res = {
+          constructor: {
+              modelName: 'Resource'
+          },
+          id: 7
+      };
+      var f = compound.helpers.formFor(res, {});
+      f.textarea('name').should.equal('<textarea name="Resource[name]" id="Resource_name"></textarea>');
+      f.textarea('name', {id: 'over'}).should.equal('<textarea name="Resource[name]" id="over"></textarea>');
+  });
+
 });
 
 /*
