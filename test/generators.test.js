@@ -47,7 +47,6 @@ describe('Generators API', function() {
             'create  app/assets/stylesheets/',
             'create  app/models/',
             'create  app/controllers/',
-            'create  app/observers/',
             'create  app/helpers/',
             'create  app/views/',
             'create  app/views/layouts/',
