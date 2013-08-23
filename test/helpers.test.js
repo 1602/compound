@@ -128,6 +128,23 @@ describe('formTag', function (){
       f.textarea('name', {id: 'over'}).should.equal('<textarea name="Resource[name]" id="over"></textarea>');
   });
 
+  it('should work for nested resource', function() {
+      var res = {
+          constructor: {
+              modelName: 'User'
+          },
+          id: 7,
+          address: {
+              constructor: 'Address',
+              id: 9,
+              street: 'Liberty st'
+          }
+      };
+      var f = compound.helpers.formFor(res, {action: '/'});
+      var addr = f.fieldsFor('address');
+      addr.input('street').should.equal('<input name="User[address][street]" id="User_address_street" type="text" value="Liberty st" />');
+  });
+
 });
 
 /*
