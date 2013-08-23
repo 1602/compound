@@ -14,27 +14,33 @@ Installation
 
 Option 1: npm
 
-    $ sudo npm install compound -g
+```sh
+sudo npm install compound -g
+```
 
 Option 2: GitHub
 
-    $ sudo npm install 1602/compound
+```sh
+sudo npm install 1602/compound
+```
 
 Usage
 =====
 
-    # initialize app
-    $ compound init blog && cd blog
-    $ npm install
+```sh
+# initialize app
+compound init blog && cd blog
+npm install
 
-    # generate scaffold
-    $ compound generate crud post title content published:boolean
+# generate scaffold
+compound generate crud post title content published:boolean
 
-    # run server on port 3000
-    $ compound s 3000
+# run server on port 3000
+compound s 3000
 
-    # visit app
-    $ open http://localhost:3000/posts
+# visit app
+open http://localhost:3000/posts
+```
 
 Short functionality review
 ==========================
@@ -42,35 +48,49 @@ Short functionality review
 CLI tool
 --------
 
-    Usage: compound command [argument(s)]
+```
+$ compound help
+Usage: compound command [argument(s)]
 
-    Commands:
-      h,  help                     Display usage information
-      i,  init                     Initialize compound app
-      g,  generate [smth]          Generate something awesome
-      r,  routes [filter]          Display application routes
-      c,  console                  Debug console
-      s,  server [port]            Run compound server
-      install [module]             Installs a compound module and patches the autoload file
+Commands:
+  h,  help                     Display usage information
+  i,  init                     Initialize compound app
+  g,  generate [smth]          Generate something awesome
+  r,  routes [filter]          Display application routes
+  c,  console                  Debug console
+  s,  server [port]            Run compound server
+  install [module]             Installs a compound module and patches the autoload file
+```
 
-#### compound init <strong>[appname][ key(s)]</strong>
-    keys:
-    --coffee                 # Default: no coffee by default
-    --tpl jade|ejs           # Default: ejs
-    --css sass|less|stylus   # Default: stylus
-    --db redis|mongodb|nano|mysql|sqlite3|postgres
-                             # Default: memory
+#### compound init [appname][ option(s)]
 
-#### compound generate smth - smth = generator name (controller, model, scaffold, ...can be extended via plugins)
+```
+options:
+  --coffee                 # Default: no coffee by default
+  --tpl jade|ejs           # Default: ejs
+  --css sass|less|stylus   # Default: stylus
+  --db redis|mongodb|nano|mysql|sqlite3|postgres
+                           # Default: memory
+```
+
+#### compound generate smth
+
+smth = generator name (controller, model, scaffold, ...can be extended via plugins)
 
 more information about generators available here:
 http://compoundjs.github.com/generators
 
-#### compound server 8000 or **PORT=8000 node server** - run server on port `8000`
+#### compound server 8000
 
-#### compound console - run debugging console (see details below)
+equals to `PORT=8000 node server` - run server on port `8000`
 
-#### compound routes - print routes map (see details below)
+#### compound console
+
+run debugging console (see details below)
+
+#### compound routes
+
+print routes map (see details below)
 
 
 Directory structure
@@ -78,46 +98,48 @@ Directory structure
 
 On initialization directories tree generated, like that:
 
-    .
-    |-- app
-    |   |-- assets
-    |   |   |-- coffeescripts
-    |   |   |   `-- application.coffee
-    |   |   `-- stylesheets
-    |   |       `-- application.styl
-    |   |-- controllers
-    |   |   |-- admin
-    |   |   |   |-- categories_controller.js
-    |   |   |   |-- posts_controller.js
-    |   |   |   `-- tags_controller.js
-    |   |   |-- comments_controller.js
-    |   |   `-- posts_controller.js
-    |   |-- models
-    |   |   |-- category.js
-    |   |   |-- post.js
-    |   |   `-- tag.js
-    |   |-- views
-    |   |   |-- admin
-    |   |   |   `-- posts
-    |   |   |       |-- edit.ejs
-    |   |   |       |-- index.ejs
-    |   |   |       |-- new.ejs
-    |   |   |-- layouts
-    |   |   |   `-- application_layout.ejs
-    |   |   |-- partials
-    |   |   `-- posts
-    |   |       |-- index.ejs
-    |   |       `-- show.ejs
-    |   `-- helpers
-    |       |-- admin
-    |       |   |-- posts_helper.js
-    |       |   `-- tags_helper.js
-    |       `-- posts_helper.js
-    `-- config
-        |-- database.json
-        |-- routes.js
-        |-- tls.cert
-        `-- tls.key
+```
+.
+|-- app
+|   |-- assets
+|   |   |-- coffeescripts
+|   |   |   `-- application.coffee
+|   |   `-- stylesheets
+|   |       `-- application.styl
+|   |-- controllers
+|   |   |-- admin
+|   |   |   |-- categories_controller.js
+|   |   |   |-- posts_controller.js
+|   |   |   `-- tags_controller.js
+|   |   |-- comments_controller.js
+|   |   `-- posts_controller.js
+|   |-- models
+|   |   |-- category.js
+|   |   |-- post.js
+|   |   `-- tag.js
+|   |-- views
+|   |   |-- admin
+|   |   |   `-- posts
+|   |   |       |-- edit.ejs
+|   |   |       |-- index.ejs
+|   |   |       |-- new.ejs
+|   |   |-- layouts
+|   |   |   `-- application_layout.ejs
+|   |   |-- partials
+|   |   `-- posts
+|   |       |-- index.ejs
+|   |       `-- show.ejs
+|   `-- helpers
+|       |-- admin
+|       |   |-- posts_helper.js
+|       |   `-- tags_helper.js
+|       `-- posts_helper.js
+`-- config
+    |-- database.json
+    |-- routes.js
+    |-- tls.cert
+    `-- tls.key
+```
 
 HTTPS Support
 -------------
@@ -126,107 +148,127 @@ Just place your key and cert into config directory, compound will use it.
 Default names for keys are `tls.key` and `tls.cert`, but you can store in in another place, in that case just pass filenames to createServer function:
 `server.js`
 
-    require('compound').createServer({
-        key: fs.readFileSync('/tmp/tls.key').toString(),
-        cert: fs.readFileSync('/tmp/tls.key').toString()
-    });
+```js
+require('compound').createServer({
+    key: fs.readFileSync('/tmp/tls.key').toString(),
+    cert: fs.readFileSync('/tmp/tls.cert').toString()
+});
+```
 
 Few helpful commands:
 
-    # generate private key
-    openssl genrsa -out /tmp/tls.key
-    # generate cert
-    openssl req -new -x509 -key /tmp/tls.key  -out /tmp/tls.cert -days 1095 -batch
+```sh
+# generate private key
+openssl genrsa -out /tmp/tls.key
+# generate cert
+openssl req -new -x509 -key /tmp/tls.key  -out /tmp/tls.cert -days 1095 -batch
+```
 
 Routing
 -------
 
 Now we do not have to tediously describe REST rotes for each resource, enough to write in `config/routes.js` code like this:
 
-    exports.routes = function (map) {
-        map.resources('posts', function (post) {
-            post.resources('comments');
-        });
-    };
+```js
+exports.routes = function (map) {
+    map.resources('posts', function (post) {
+        post.resources('comments');
+    });
+};
+```
 
 instead of:
 
-    var ctl = require('./lib/posts_controller.js');
-    app.get('/posts/new.:format?', ctl.new);
-    app.get('/posts.:format?', ctl.index);
-    app.post('/posts.:format?', ctl.create);
-    app.get('/posts/:id.:format?', ctl.show);
-    app.put('/posts/:id.:format?', ctl.update);
-    app.delete('/posts/:id.:format?', ctl.destroy);
-    app.get('/posts/:id/edit.:format?', ctl.edit);
+```js
+var ctl = require('./lib/posts_controller.js');
+app.get('/posts/new.:format?', ctl.new);
+app.get('/posts.:format?', ctl.index);
+app.post('/posts.:format?', ctl.create);
+app.get('/posts/:id.:format?', ctl.show);
+app.put('/posts/:id.:format?', ctl.update);
+app.delete('/posts/:id.:format?', ctl.destroy);
+app.get('/posts/:id/edit.:format?', ctl.edit);
 
-    var com_ctl = require('./lib/comments_controller.js');
-    app.get('/posts/:post_id/comments/new.:format?', com_ctl.new);
-    app.get('/posts/:post_id/comments.:format?', com_ctl.index);
-    app.post('/posts/:post_id/comments.:format?', com_ctl.create);
-    app.get('/posts/:post_id/comments/:id.:format?', com_ctl.show);
-    app.put('/posts/:post_id/comments/:id.:format?', com_ctl.update);
-    app.delete('/posts/:post_id/comments/:id.:format?', com_ctl.destroy);
-    app.get('/posts/:post_id/comments/:id/edit.:format?', com_ctl.edit);
+var com_ctl = require('./lib/comments_controller.js');
+app.get('/posts/:post_id/comments/new.:format?', com_ctl.new);
+app.get('/posts/:post_id/comments.:format?', com_ctl.index);
+app.post('/posts/:post_id/comments.:format?', com_ctl.create);
+app.get('/posts/:post_id/comments/:id.:format?', com_ctl.show);
+app.put('/posts/:post_id/comments/:id.:format?', com_ctl.update);
+app.delete('/posts/:post_id/comments/:id.:format?', com_ctl.destroy);
+app.get('/posts/:post_id/comments/:id/edit.:format?', com_ctl.edit);
+```
 
 and you can more finely tune the resources to specify certain actions, middleware, and other. Here example routes of [my blog][1]:
 
-    exports.routes = function (map) {
-        map.get('/', 'posts#index');
-        map.get(':id', 'posts#show');
-        map.get('sitemap.txt', 'posts#map');
+```js
+exports.routes = function (map) {
+    map.get('/', 'posts#index');
+    map.get(':id', 'posts#show');
+    map.get('sitemap.txt', 'posts#map');
 
-        map.namespace('admin', function (admin) {
-            admin.resources('posts', {middleware: basic_auth, except: ['show']}, function (post) {
-                post.resources('comments');
-                post.get('likes', 'posts#likes')
-            });
+    map.namespace('admin', function (admin) {
+        admin.resources('posts', {middleware: basic_auth, except: ['show']}, function (post) {
+            post.resources('comments');
+            post.get('likes', 'posts#likes')
         });
-    };
+    });
+};
+```
 
 since version 0.2.0 it is possible to use generic routes:
 
-    exports.routes = function (map) {
-        map.get(':controller/:action/:id');
-        map.all(':controller/:action');
-    };
+```js
+exports.routes = function (map) {
+    map.get(':controller/:action/:id');
+    map.all(':controller/:action');
+};
+```
 
 if you have `custom_controller` with `test` action inside it you can now do:
 
-    GET /custom/test
-    POST /custom/test
-    GET /custom/test/1 // also sets params.id to 1
+```
+GET /custom/test
+POST /custom/test
+GET /custom/test/1 // also sets params.id to 1
+```
 
 for debugging routes described in `config/routes.js` you can use `compound routes` command:
 
-    $ compound routes
-                   GET    /                               posts#index
-                   GET    /:id                            posts#show
-       sitemap.txt GET    /sitemap.txt                    posts#map
-        adminPosts GET    /admin/posts.:format?           admin/posts#index
-        adminPosts POST   /admin/posts.:format?           admin/posts#create
-      newAdminPost GET    /admin/posts/new.:format?       admin/posts#new
-     editAdminPost GET    /admin/posts/:id/edit.:format?  admin/posts#edit
-         adminPost DELETE /admin/posts/:id.:format?       admin/posts#destroy
-         adminPost PUT    /admin/posts/:id.:format?       admin/posts#update
-    likesAdminPost PUT    /admin/posts/:id/likes.:format? admin/posts#likes
+```
+$ compound routes
+               GET    /                               posts#index
+               GET    /:id                            posts#show
+   sitemap.txt GET    /sitemap.txt                    posts#map
+    adminPosts GET    /admin/posts.:format?           admin/posts#index
+    adminPosts POST   /admin/posts.:format?           admin/posts#create
+  newAdminPost GET    /admin/posts/new.:format?       admin/posts#new
+ editAdminPost GET    /admin/posts/:id/edit.:format?  admin/posts#edit
+     adminPost DELETE /admin/posts/:id.:format?       admin/posts#destroy
+     adminPost PUT    /admin/posts/:id.:format?       admin/posts#update
+likesAdminPost PUT    /admin/posts/:id/likes.:format? admin/posts#likes
+```
 
 Filter by method:
 
-    $ compound routes GET
-                   GET    /                               posts#index
-                   GET    /:id                            posts#show
-       sitemap.txt GET    /sitemap.txt                    posts#map
-        adminPosts GET    /admin/posts.:format?           admin/posts#index
-      newAdminPost GET    /admin/posts/new.:format?       admin/posts#new
-     editAdminPost GET    /admin/posts/:id/edit.:format?  admin/posts#edit
+```
+$ compound routes GET
+               GET    /                               posts#index
+               GET    /:id                            posts#show
+   sitemap.txt GET    /sitemap.txt                    posts#map
+    adminPosts GET    /admin/posts.:format?           admin/posts#index
+  newAdminPost GET    /admin/posts/new.:format?       admin/posts#new
+ editAdminPost GET    /admin/posts/:id/edit.:format?  admin/posts#edit
+```
 
 Filter by helper name:
 
-    $ compound routes Admin
-      newAdminPost GET    /admin/posts/new.:format?       admin/posts#new
-     editAdminPost GET    /admin/posts/:id/edit.:format?  admin/posts#edit
-    likesAdminPost PUT    /admin/posts/:id/likes.:format? admin/posts#likes
+```
+$ compound routes Admin
+  newAdminPost GET    /admin/posts/new.:format?       admin/posts#new
+ editAdminPost GET    /admin/posts/:id/edit.:format?  admin/posts#edit
+likesAdminPost PUT    /admin/posts/:id/likes.:format? admin/posts#likes
+```
 
 
 Helpers
@@ -234,78 +276,88 @@ Helpers
 
 In addition to regular helpers `linkTo`, `formFor`, `javascriptIncludeTag`, `formFor`, etc. there are also helpers for routing: each route generates a helper method that can be invoked in a view:
 
-    <%- link_to("New post", newAdminPost) %>
-    <%- link_to("New post", editAdminPost(post)) %>
+```html
+<%- link_to("New post", newAdminPost) %>
+<%- link_to("New post", editAdminPost(post)) %>
+```
 
 generates output:
 
-    <a href="/admin/posts/new">New post</a>
-    <a href="/admin/posts/10/edit">New post</a>
+```html
+<a href="/admin/posts/new">New post</a>
+<a href="/admin/posts/10/edit">New post</a>
+```
 
 Controllers
 -----------
 
 The controller is a module containing the declaration of actions such as this:
 
-    beforeFilter(loadPost, {only: ['edit', 'update', 'destroy']});
+```js
+beforeFilter(loadPost, {only: ['edit', 'update', 'destroy']});
 
-    action('index', function () {
-        Post.allInstances({order: 'created_at'}, function (collection) {
-            render({ posts: collection });
-        });
+action('index', function () {
+    Post.allInstances({order: 'created_at'}, function (collection) {
+        render({ posts: collection });
     });
+});
 
-    action('create', function () {
-        Post.create(req.body, function () {
-            redirect(pathTo.adminPosts);
-        });
+action('create', function () {
+    Post.create(req.body, function () {
+        redirect(pathTo.adminPosts);
     });
+});
 
-    action('new', function () {
-        render({ post: new Post });
+action('new', function () {
+    render({ post: new Post });
+});
+
+action('edit', function () {
+    render({ post: request.post });
+});
+
+action('update', function () {
+    request.post.save(req.locale, req.body, function () {
+        redirect(pathTo.adminPosts);
     });
+});
 
-    action('edit', function () {
-        render({ post: request.post });
+function loadPost () {
+    Post.find(req.params.id, function () {
+        request.post = this;
+        next();
     });
-
-    action('update', function () {
-        request.post.save(req.locale, req.body, function () {
-            redirect(pathTo.adminPosts);
-        });
-    });
-
-    function loadPost () {
-        Post.find(req.params.id, function () {
-            request.post = this;
-            next();
-        });
-    }
+}
+```
 
 ## Generators ##
 
 Compound offers several built-in generators: for a model, controller and for
 initialization. Can be invoked as follows:
 
-    compound generate [what] [params]
+```js
+compound generate [what] [params]
+```
 
 `what` can be `model`, `controller` or `scaffold`. Example of controller generation:
 
-    $ compound generate controller admin/posts index new edit update
-    exists  app/
-    exists  app/controllers/
-    create  app/controllers/admin/
-    create  app/controllers/admin/posts_controller.js
-    create  app/helpers/
-    create  app/helpers/admin/
-    create  app/helpers/admin/posts_helper.js
-    exists  app/views/
-    create  app/views/admin/
-    create  app/views/admin/posts/
-    create  app/views/admin/posts/index.ejs
-    create  app/views/admin/posts/new.ejs
-    create  app/views/admin/posts/edit.ejs
-    create  app/views/admin/posts/update.ejs
+```
+$ compound generate controller admin/posts index new edit update
+exists  app/
+exists  app/controllers/
+create  app/controllers/admin/
+create  app/controllers/admin/posts_controller.js
+create  app/helpers/
+create  app/helpers/admin/
+create  app/helpers/admin/posts_helper.js
+exists  app/views/
+create  app/views/admin/
+create  app/views/admin/posts/
+create  app/views/admin/posts/index.ejs
+create  app/views/admin/posts/new.ejs
+create  app/views/admin/posts/edit.ejs
+create  app/views/admin/posts/update.ejs
+```
 
 Currently it generates only `*.ejs` views
 
@@ -334,11 +386,15 @@ REPL console
 
 To run REPL console use command
 
-    compound console
+```sh
+compound console
+```
 
 or it's shortcut
 
-    compound c
+```sh
+compound c
+```
 
 It just simple node-js console with some Compound bindings, e.g. models. Just one note
 about working with console. Node.js is asynchronous by its nature, and it's great
@@ -350,19 +406,21 @@ to callback to variables `_0, _1, ..., _N` where N is index in `arguments`.
 
 Example:
 
-    compound c
-    compound> User.find(53, c)
-    Callback called with 2 arguments:
-    _0 = null
-    _1 = [object Object]
-    compound> _1
-    { email: [Getter/Setter],
-      password: [Getter/Setter],
-      activationCode: [Getter/Setter],
-      activated: [Getter/Setter],
-      forcePassChange: [Getter/Setter],
-      isAdmin: [Getter/Setter],
-      id: [Getter/Setter] }
+```
+$ compound c
+compound> User.find(53, c)
+Callback called with 2 arguments:
+_0 = null
+_1 = [object Object]
+compound> _1
+{ email: [Getter/Setter],
+  password: [Getter/Setter],
+  activationCode: [Getter/Setter],
+  activated: [Getter/Setter],
+  forcePassChange: [Getter/Setter],
+  isAdmin: [Getter/Setter],
+  id: [Getter/Setter] }
+```
 
 Localization
 ------------
@@ -379,13 +437,17 @@ NOTE: translation can contain `%` symbol(s), that means variable substitution
 
 If you don't need locales support you can turn it off in `config/environment`:
 
-    app.set('i18n', 'off');
+```js
+app.set('i18n', 'off');
+```
 
 Logger
 -----
 
-    app.set('quiet', true); // force logger to log into `log/#{app.settings.env}.log`
-    compound.logger.write(msg); // to log message
+```js
+app.set('quiet', true); // force logger to log into `log/#{app.settings.env}.log`
+compound.logger.write(msg); // to log message
+```
 
 Configuring
 ===========
@@ -398,43 +460,55 @@ eval cache
 Enable controllers caching, should be turned on in prd. In development mode
 disabling cache allows to avoid server restarting after each model/controller change
 
-    app.disable('eval cache'); // in config/environments/development.js
-    app.enable('eval cache'); // in config/environments/production.js
+```js
+app.disable('eval cache'); // in config/environments/development.js
+app.enable('eval cache'); // in config/environments/production.js
+```
 
 model cache
 -----------
 
 Same option for models. When disabled model files evaluated per each request.
 
-    app.disable('model cache'); // in config/environments/development.js
+```js
+app.disable('model cache'); // in config/environments/development.js
+```
 
 view cache
 ----------
 
 Express.js option, enables view caching.
 
-    app.disable('view cache'); // in config/environments/development.js
+```js
+app.disable('view cache'); // in config/environments/development.js
+```
 
 quiet
 -----
 
 Write logs to `log/NODE_ENV.log`
 
-    app.set('quiet', true); // in config/environments/test.js
+```js
+app.set('quiet', true); // in config/environments/test.js
+```
 
 merge javascripts
 -----------------
 
 Join all javascript files listed in `javascript_include_tag` into one
 
-    app.enable('merge javascripts'); // in config/environments/production.js
+```js
+app.enable('merge javascripts'); // in config/environments/production.js
+```
 
 merge stylesheets
 -----------------
 
 Join all stylesheet files listed in `stylesheets_include_tag` into one
 
-    app.enable('merge stylesheets'); // in config/environments/production.js
+```js
+app.enable('merge stylesheets'); // in config/environments/production.js
+```
 
 MIT License
 ===========
