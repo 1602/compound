@@ -93,6 +93,13 @@ describe('Generators API', function() {
             'create  app/controllers/application_controller.js'
         ]);
     });
+
+    it('should generate app', function () {
+        var package = path.normalize(__dirname + '/../package.json');
+        delete memfs[package];
+        compound.generators.perform('init', ['--db', 'mongodb']);
+        memfs[package].should.include('jugglingdb-mongodb');
+    });
 });
 
 function stubFS() {
