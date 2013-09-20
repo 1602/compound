@@ -77,7 +77,7 @@ jQuery(function ($) {
     /**
      *  confirmation handler
      */
-    $('a[data-confirm],input[data-confirm]').on('click', function (e) {
+    $('body').on('click', 'a[data-confirm],input[data-confirm]', function (e) {
         var el = $(this);
         if (el.triggerAndReturn('confirm')) {
             if (!confirm(el.attr('data-confirm'))) {
@@ -96,12 +96,12 @@ jQuery(function ($) {
         e.preventDefault();
     });
 
-    $('a[data-remote],input[data-remote]').on('click', function (e) {
+    $('body').on('click', 'a[data-remote],input[data-remote]', function (e) {
         $(this).callRemote();
         e.preventDefault();
     });
 
-    $('a[data-method]:not([data-remote])').on('click', function (e){
+    $('body').on('click', 'a[data-method]:not([data-remote])', function (e) {
         var link = $(this),
             href = link.attr('href'),
             method = link.attr('data-method'),
