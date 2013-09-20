@@ -1,3 +1,4 @@
+var should = require('./init.js');
 var app, compound;
 
 describe('utilities', function () {
@@ -32,6 +33,32 @@ describe('utilities', function () {
     it('should add spaces', function () {
         compound.utils.addSpaces('hello', 8).should.equal('hello   ');
         compound.utils.addSpaces('hello', 8, true).should.equal('   hello');
+    });
+
+    describe('utils#inherits', function() {
+
+        it('should inherit superclass', function() {
+            function MyClass(){}
+            SuperClass.classMethod = function(){};
+            function SuperClass(){}
+            compound.utils.inherits(MyClass, SuperClass);
+            var myObj = new MyClass;
+            myObj.should.be.an.instanceOf(SuperClass);
+            MyClass.super_.should.equal(SuperClass);
+            should.not.exists(MyClass.classMethod);
+        });
+
+        it('should inherit superclass with class methods', function() {
+            function MyClass(){}
+            SuperClass.classMethod = function(){};
+            function SuperClass(){}
+            compound.utils.inherits(MyClass, SuperClass, true);
+            var myObj = new MyClass;
+            myObj.should.be.an.instanceOf(SuperClass);
+            MyClass.super_.should.equal(SuperClass);
+            should.exists(MyClass.classMethod);
+        });
+
     });
 });
 
