@@ -288,7 +288,7 @@ This method also could be called from controller.
 
 ## Defining your own helpers
 
-You can define your own helpers for each controller in the file `app/helpers/controllername_helper.js`. For example, if you want to define a helper called `my_helper` to use it in the `users` controller, put the following in `app/helpers/users_controller.js`:
+You can define your own helpers for each controller in the file `app/helpers/controllername_helper.js`. For example, if you want to define a helper called `my_helper` to use it in the `users` controller, put the following in `app/helpers/users_helper.js`:
 
 ```javascript
 module.exports = {
