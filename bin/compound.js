@@ -37,6 +37,9 @@ process.nextTick(function () {
           Object.keys(compound.tools).forEach(function (cmd) {
               var c = compound.tools[cmd];
               if (cmd === command || (c && c.help && c.help.shortcut === command)) {
+                  if (cmd !== 'server' && cmd !== 's') {
+                      compound.app.enable('tools');
+                  }
                   exitAfterAction = c(compound, args);
                   found = true;
               }
