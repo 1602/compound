@@ -449,6 +449,12 @@ app.set('quiet', true); // force logger to log into `log/#{app.settings.env}.log
 compound.logger.write(msg); // to log message
 ```
 
+setup custom log dir:
+
+```javascript
+app.get('log dir', '/var/log/compound-app/');
+```
+
 Configuring
 ===========
 
