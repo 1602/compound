@@ -40,4 +40,4 @@ module.exports = (compound) ->
     else
       console.log wait
 
-    return true
+    return false
