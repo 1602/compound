@@ -541,3 +541,7 @@ MIT License
 
   [1]: http://anatoliy.in
   [2]: https://github.com/1602/jugglingdb
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/1602/compound/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
