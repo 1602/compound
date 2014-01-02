@@ -117,6 +117,8 @@ On initialization directories tree generated, like that:
 |   |   |-- category.js
 |   |   |-- post.js
 |   |   `-- tag.js
+|   |-- tools
+|   |   `-- database.js
 |   |-- views
 |   |   |-- admin
 |   |   |   `-- posts
@@ -515,6 +517,24 @@ Join all stylesheet files listed in `stylesheets_include_tag` into one
 ```js
 app.enable('merge stylesheets'); // in config/environments/production.js
 ```
+
+## Custom tools
+
+Put your function to ./app/tools/toolname.js to be able to run it within application
+environment as `compound toolname` command via CLI. See example tool in generated
+example: ./app/tools/dabatase.js
+
+Optionally you can specify some usage information on your function to be able to see
+it in list of available commands (using `compound` command).
+
+```javascript
+module.exports.help = {
+    shortcut:    'db',
+    usage:       'db [migrate|update]',
+    description: 'Migrate or update database(s)'
+};
+```
+
 
 MIT License
 ===========
