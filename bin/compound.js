@@ -72,8 +72,8 @@ compound.once('ready', function () {
       ];
       Object.keys(compound.tools).forEach(function (cmd) {
           var h = compound.tools[cmd].help;
-          if (h && h.usage) {
-              commands.push([h.shortcut || '', h.usage, h.description]);
+          if (h) {
+              commands.push([h.shortcut || '', h.usage || cmd, h.description]);
           }
       });
       var maxLen = 0, addSpaces = compound.utils.addSpaces;
