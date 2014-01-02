@@ -27,23 +27,30 @@ var args = process.argv.slice(2);
 var exitAfterAction = true;
 var command = args.shift();
 
-process.nextTick(function () {
+compound.once('ready', function () {
   switch (command) {
   default:
   case 'h':
   case 'help':
       if (command && command !== 'help' && command !== 'h') {
           var found = false;
-          Object.keys(compound.tools).forEach(function (cmd) {
-              var c = compound.tools[cmd];
-              if (cmd === command || (c && c.help && c.help.shortcut === command)) {
-                  if (cmd !== 'server' && cmd !== 's') {
-                      compound.app.enable('tools');
+          Object.keys(compound.tools).forEach(runner(compound.tools));
+          function runner(base) {
+              return function (cmd) {
+                  if (!base) {
+                      return false;
                   }
-                  exitAfterAction = c(compound, args);
-                  found = true;
+                  var c = base[cmd];
+                  if (cmd === command || (c && c.help && c.help.shortcut === command)) {
+                      if (cmd !== 'server' && cmd !== 's') {
+                          compound.app.enable('tools');
+                      }
+                      exitAfterAction = false;
+                      c(compound, args);
+                      found = true;
+                  }
               }
-          });
+          }
 
           if (found) {
               break;
