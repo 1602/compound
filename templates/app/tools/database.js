@@ -48,8 +48,8 @@ module.exports = function(compound) {
 };
 
 module.exports.help = {
-        shortcut:    'db',
-        usage:       'db [migrate|update]',
-        description: 'Migrate or update database(s)'
-    };
+    shortcut:    'db',
+    usage:       'db [migrate|update]',
+    description: 'Migrate or update database(s)'
+};
 
