@@ -1,17 +1,5 @@
 module.exports = (compound) ->
   app = compound.app
-  compound.tools.database = ()->
-    action = process.argv[3]
-    switch action
-      when 'migrate', 'update'
-        perform action, process.exit
-      else
-        console.log 'Unknown action', action
-
-  compound.tools.database.help =
-    shortcut:    'db'
-    usage:       'db [migrate|update]'
-    description: 'Migrate or update database(s)'
 
   getUniqueSchemas = ()->
     schemas = []
@@ -40,4 +28,16 @@ module.exports = (compound) ->
     else
       console.log wait
 
+  action = process.argv[3]
+  switch action
+    when 'migrate', 'update'
+      perform action, process.exit
+    else
+      console.log 'Unknown action', action
     return false
+
+module.exports.help =
+  shortcut:    'db'
+  usage:       'db [migrate|update]'
+  description: 'Migrate or update database(s)'
+

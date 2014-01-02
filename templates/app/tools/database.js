@@ -1,23 +1,15 @@
 module.exports = function(compound) {
     var app = compound.app;
-    compound.tools.database = function db() {
-        var action = process.argv[3];
-        switch (action) {
-            case 'migrate':
-            case 'update':
-            perform(action, process.exit);
-            break;
-            default:
-            console.log('Unknown action', action);
-            break;
-        }
-    };
-
-    compound.tools.database.help = {
-        shortcut:    'db',
-        usage:       'db [migrate|update]',
-        description: 'Migrate or update database(s)'
-    };
+    var action = process.argv[3];
+    switch (action) {
+        case 'migrate':
+        case 'update':
+        perform(action, process.exit);
+        break;
+        default:
+        console.log('Unknown action', action);
+        break;
+    }
 
     function getUniqueSchemas() {
         var schemas = [];
@@ -50,7 +42,14 @@ module.exports = function(compound) {
             if (--wait === 0) callback();
         }
 
-        return true;
     }
 
+    return false;
 };
+
+module.exports.help = {
+        shortcut:    'db',
+        usage:       'db [migrate|update]',
+        description: 'Migrate or update database(s)'
+    };
+
