@@ -9,7 +9,8 @@ module.exports = function (compound) {
         app.set('cssDirectory', '/stylesheets/');
         app.set('cssEngine', '{{ CSSENGINE }}');
         compound.loadConfigs(__dirname);
-        app.use(express.bodyParser());
+        app.use(express.urlencoded());
+        app.use(express.json());
         app.use(express.cookieParser('secret'));
         app.use(express.session({secret: 'secret'}));
         app.use(express.methodOverride());
