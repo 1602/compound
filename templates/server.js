@@ -13,7 +13,7 @@ var app = module.exports = function getServerInstance(params) {
     return require('compound').createServer(params);
 };
 
-if (!module.parent) {
+if (!module.parent || module.parent.isApplicationLoader) {
     var port = process.env.PORT || 3000;
     var host = process.env.HOST || '0.0.0.0';
 
