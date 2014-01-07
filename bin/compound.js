@@ -23,12 +23,13 @@ if (!compound) {
     compound = new Compound;
 }
 
+compound.init();
+
 var args = process.argv.slice(2);
 var exitAfterAction = true;
 var command = args.shift();
 
-compound.once('ready', function () {
-  switch (command) {
+switch (command) {
   default:
   case 'h':
   case 'help':
@@ -114,8 +115,6 @@ compound.once('ready', function () {
   if (exitAfterAction) {
       process.exit(0);
   }
-
-});
 
 function showMan(topic) {
     var manDir = require('path').resolve(__dirname + '/../man');
