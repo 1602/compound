@@ -38,7 +38,7 @@
     "ejs-ext": ">= 0.1.4-2",
     "jade-ext": ">= 0.0.5",
     "railway-routes": ">= 0.0.10",
-    "kontroller": ">= 0.0.9-0",
+    "kontroller": ">= 0.0.10",
     "inflection": "~1.2.5"
   },
   "repository": {
