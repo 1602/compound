@@ -5,6 +5,7 @@ function initApp() {
     var s = compound.structure;
     s.controllers.ctl = function Ctl(){};
     s.views['ctl/view'] = 'exists';
+    s.views['ctl/section'] = 'section';
     s.views['layouts/application_layout'] = 'layout';
 
 };
@@ -46,6 +47,18 @@ describe('controller-extensions', function() {
                 c.render('view', {layout: false});
             }, function() {
                 rendered.should.eql(['exists']);
+                done();
+            });
+        });
+
+        it('should render file and put result in local context', function(done) {
+            declareAndRun(function renderOnlySection(c) {
+                c.renderSection('sectionname', 'section');
+                self.next();
+            }, function() {
+                controller.locals.should.have.ownProperty('sections');
+                controller.locals.sections.should.be.an.instanceOf(Object).and.have.ownProperty('sectionname');
+                rendered.should.eql(['section']);
                 done();
             });
         });
