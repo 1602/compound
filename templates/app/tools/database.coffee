@@ -34,7 +34,7 @@ module.exports = (compound) ->
       perform action, process.exit
     else
       console.log 'Unknown action', action
-    return false
+  false
 
 module.exports.help =
   shortcut:    'db'
