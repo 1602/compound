@@ -38,7 +38,15 @@ describe('Compound', function() {
         (function() {
             c.model(function() {});
         }).should.throw('Named function or jugglingdb model required');
+    });
 
+    it('should find initializer files without README', function() {
+        var path = '/test'
+        ,   c = new Compound();
+        
+        (function(){
+            c.runInitializers(c.root + path);
+        }).should.not.throw();
     });
 
 });
