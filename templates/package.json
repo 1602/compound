@@ -1,20 +1,29 @@
-{ "name": "APPNAME"
+{ "name": "{{ APPNAME }}"
 , "version": "0.0.1"
-, "engines": ["node >= 0.4.0"]
-, "main": "server.js"
+, "engines": ["node >= 0.8.0"]
+, "main": "server.{{ CODE }}"
 , "dependencies":
-  { "VIEWENGINE":       ">= 0"
-  , "VIEWENGINE-ext":   ">= 0"
-  , "express":          ">= 2.2.2"
-  , "connect":          ">= 1.4.2"
-  , "railway":          ">= 0.1.6"
-  , "coffee-script":    ">= 1.1.1"
-  , "mime":             ">= 1.2.2"
-  , "qs":               ">= 0.1.0"
-  , "nodeunit":         ">= 0"
-  , "sinon":            ">= 0"
+  { "{{ VIEWENGINE }}": "*"
+  , "{{ VIEWENGINE }}-ext": "latest"
+  , "express": "~3.x"
+  , "compound": ">= 1.1.0"
+  , "jugglingdb": ">= 0.1.0"
+  {{ DBDEPENDENCY }}
+  , "coffee-script": ">= 1.1.1"
+  , "{{ CSSENGINE }}": "latest"
+  , "seedjs": "latest"
+  , "co-assets-compiler": "*"
+  },
+  "devDependencies":
+  { "nodeunit": "*"
+  , "sinon": "*"
+  , "supertest": ">= 0"
+  , "mocha": ">= 0"
+  , "should": ">= 0"
+  , "semicov": "*"
+  , "co-generators": "*"
   }
 , "scripts":
-  { "test": "nodeunit test/*/*"
+  { "test": "./node_modules/.bin/mocha --require test/init.js test/*/*.test.js"
   }
 }

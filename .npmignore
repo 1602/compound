@@ -1,0 +1,11 @@
+node_modules
+tmp
+.DS_Store
+dump.rdb
+doc
+log
+coverage.html
+coverage
+docs
+analyse-ab.r
+tags.sh

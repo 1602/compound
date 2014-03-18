@@ -1,0 +1,12 @@
+# manuals
+compound-railway-changelog(3) railway-changelog.3
+compound-changelog(3)   changelog.3
+compound-routing(3)     routing.3
+compound-controller(3)  controller.3
+compound-views(3)       views.3
+compound-helpers(3)     helpers.3
+compound-tools(3)       tools.3
+compound-tools(1)       tools.1
+compound(3)             compound.3
+compound-roadmap(3)     roadmap.3
+issues                  https://github.com/1602/compound/issues

@@ -1,8 +1,11 @@
-app.configure 'development', ->
+express = require 'express'
+
+module.exports = (compound) ->
+  app = compound.app
+  app.configure 'development', ->
+    app.enable 'watch'
     app.enable 'log actions'
     app.enable 'env info'
-    app.disable 'view cache'
-    app.disable 'model cache'
-    app.disable 'eval cache'
-    app.use require('express').errorHandler dumpExceptions: true, showStack: true
-
+    app.enable 'force assets compilation'
+    app.set 'translationMissing', 'display'
+    app.use express.errorHandler dumpExceptions: true, showStack: true

@@ -1,78 +1,124 @@
-load('application');
+var Application = require('./application');
 
-before(loadModel, {only: ['show', 'edit', 'update', 'destroy']});
+var ModelsController = module.exports = function ModelsController(init) {
+    Application.call(this, init);
 
-action('new', function () {
+    init.before(loadModel, {
+        only: ['show', 'edit', 'update', 'destroy']
+    });
+};
+
+require('util').inherits(ModelsController, Application);
+
+ModelsController.prototype['new'] = function (c) {
     this.title = 'New model';
-    this.model = new Model;
-    render();
-});
+    this.model = new (c.Model);
+    c.render();
+};
 
-action(function create() {
-    Model.create(req.body, function (err, user) {
+ModelsController.prototype.create = function create(c) {
+    c.Model.create(c.body.Model, function (err, model) {
         if (err) {
-            flash('error', 'Model can not be created');
-            render('new', {
-                model: user,
+            c.flash('error', 'Model can not be created');
+            c.render('new', {
+                model: model,
                 title: 'New model'
             });
         } else {
-            flash('info', 'Model created');
-            redirect(path_to.models);
+            c.flash('info', 'Model created');
+            c.redirect(c.pathTo.models);
         }
     });
-});
+};
 
-action(function index() {
+ModelsController.prototype.index = function index(c) {
     this.title = 'Models index';
-    Model.all(function (err, models) {
-        render({
-            models: models
+    c.Model.all(function (err, models) {
+        c.respondTo(function (format) {
+            format.json(function () {
+                c.send(models);
+            });
+            format.html(function () {
+                c.render({
+                    models: models
+                });
+            });
         });
     });
-});
+};
 
-action(function show() {
+ModelsController.prototype.show = function show(c) {
     this.title = 'Model show';
-    render();
-});
+    var model = this.model;
+    c.respondTo(function (format) {
+        format.json(function () {
+            c.send(model);
+        });
+        format.html(function () {
+            c.render();
+        });
+    });
+};
 
-action(function edit() {
+ModelsController.prototype.edit = function edit(c) {
     this.title = 'Model edit';
-    render();
-});
+    c.render();
+};
 
-action(function update() {
-    this.model.updateAttributes(body, function (err) {
-        if (!err) {
-            flash('info', 'Model updated');
-            redirect(path_to.model(this.model));
-        } else {
-            flash('error', 'Model can not be updated');
-            this.title = 'Edit model details';
-            render('edit');
-        }
-    }.bind(this));
-});
+ModelsController.prototype.update = function update(c) {
+    var model = this.model;
+    var self = this;
 
-action(function destroy() {
+    this.title = 'Model edit';
+
+    model.updateAttributes(c.body.Model, function (err) {
+        c.respondTo(function (format) {
+            format.json(function () {
+                if (err) {
+                    c.send({
+                        code: 500,
+                        error: model && model.errors || err
+                    });
+                } else {
+                    c.send({
+                        code: 200,
+                        model: model.toObject()
+                    });
+                }
+            });
+            format.html(function () {
+                if (!err) {
+                    c.flash('info', 'Model updated');
+                    c.redirect(c.pathTo.model(model));
+                } else {
+                    c.flash('error', 'Model can not be updated');
+                    c.render('edit');
+                }
+            });
+        });
+    });
+
+};
+
+ModelsController.prototype.destroy = function destroy(c) {
     this.model.destroy(function (error) {
         if (error) {
-            flash('error', 'Can not destroy model');
+            c.flash('error', 'Can not destroy model');
         } else {
-            flash('info', 'Model successfully removed');
+            c.flash('info', 'Model successfully removed');
         }
-        send("'" + path_to.models + "'");
+        c.send("'" + c.pathTo.models + "'");
     });
-});
+};
 
-function loadModel() {
-    Model.find(params.id, function (err, model) {
-        if (err) {
-            redirect(path_to.models);
+function loadModel(c) {
+    var self = this;
+    c.Model.find(c.params.id, function (err, model) {
+        if (err || !model) {
+            c.redirect(c.pathTo.models);
         } else {
-            this.model = model;
-            next();
+            self.model = model;
+            c.next();
         }
-    }.bind(this));
+    });
 }

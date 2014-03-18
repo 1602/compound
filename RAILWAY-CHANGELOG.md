@@ -1,0 +1,290 @@
+compound-railway-changelog(3) -- RailwayJS History
+==================================================
+
+## 0.2.13 Sun, 25 Mar 2012
+
+- Added db-tools and seedjs
+- Removing validations before loading models
+- Models not running in sandbox, just a regular `require`, `publish` method deprecated, use `module.exports` instead
+- Removed `import` and `export` methods from controller scope
+- **IMPORTANT** jugglingdb dependency removed from railway, add it to your project when it's necessary
+- Added filter names uniquenes checking, issue #136
+- Added support for coffeescript format for locales, thanks to [David Butler](https://github.com/dwbutler)
+- Add support for file uploads to form helper, via [David Butler](https://github.com/dwbutler)
+- New helper `csrf_tag` to create the hidden input tag, thanks to [fsateler](https://github.com/fsateler)
+- Changes to routing (fixed behavior of `as` option), now it affects helper names too, via [fsateler](https://github.com/fsateler)
+
+## 0.2.10
+
+### Monitoring API
+
+Allow to collect information about response handling, db queries, etc..
+Now we can build our own newrelic, with blackjack and hookers!
+
+### Bootstrap 2.0
+
+Updated generators, helpers and ejs-ext module.
+Many thanks to [Garret Johnson](https://github.com/garrettrayj)
+
+### Various fixes:
+
+- allowing nested namespaces within routes, thanks Ross Grayton
+- spec helper adjustments (for new node verion)
+- express 3.0 server startup, thanks @keichii
+
+## 0.2.8 Sun, 29 Jan 2012
+
+### Helpers extenstion API
+
+Extend helpers API prototype object:
+
+    railway.helpers.HelperSet.prototype.myCoolHelper = function () {
+        return '<p>Application-wide helper</p>'; // use this in your plugins
+    };
+
+to get `<%- myCoolHelper %>` availabe in every view
+
+### Stylus support
+
+Generate your application with `--stylus` option to work with stylus out-of-box:
+
+- store your assets in `/app/assets/styles/*.styl`
+- access styles at `GET /styles/*.css`
+
+
+## 0.2.7 Fri, 20 Jan 2012
+
+- complex names in forms (see details below)
+- view option to disable layout `app.set 'view options', layout : false`
+- display env info in index.html
+- tests/fixes [rolling on travis-ci now](http://travis-ci.org/#!/1602/express-on-railway)
+
+### Complex names in forms
+
+**Important change!** Now resourceful form helpers generates input names within csope:
+
+    form_for(post, function (f)
+        f.input('title')
+    });
+
+Will generate `<input name="Post[title]" />` instead of `<input name="title" />`
+For all existing code this behavior **is not turned on** to not break anything,
+but for newly generated apps it turned on in `config/environment` file
+
+    app.set 'view options', complexNames: true
+
+CRUD generator also rewritten to match new structure
+
+
+## 0.2.6 Fri, 13 Jan 2012
+
+Major amends:
+
+- routing moved to separate project
+- default database engine is `memory`
+- node 0.4 compatible
+
+Minor improvements:
+
+- scaffold/show populated with properties
+- cleanup init generator
+- remove unnecesary dependencies
+- cleanup css [by Eric Chan]
+- improve locale.yaml loading [by VladimirTechMan]
+
+Bugfixes:
+
+- incorrect behavior for coffee-script server.coffee when running `rw s`
+- body entries in server log for GET requests
+- jade-ext, ejs-ext dependencies with bundled ejs and jade (bad monkey-patching)
+- relative paths in require inside models and controllers
+
+## 0.2.0 For node 0.6.0, jugglingdb 0.0.6
+
+A lot of changes in core, fully rewritten controllers flow, node 0.6.0 compatible
+
+Migration notes:
+
+- Model.allInstances deprecated, use Model.all
+- No more class definition in model files, do it in db/schema.js
+- If you want to define non-persistence class in model file, publish it using `publish` method, not `export` (not allowed in node 0.6.0).
+- Mongoose driver not available out of box for direct using (only within jugglingdb logic layer)
+- db/schema not reloaded every time in dev mode, you should reload server after changing `db/schema` [issue #63]
+
+New features:
+
+- logging actions, app.enable('log actions') to turn on
+- logging jugglingdb queries
+- generic routes: app.get(':controller/:action');
+- incredibly fast controllers (2.5x faster) (controllers pool)
+- sexy bootstrap scaffolding
+
+## 0.1.9 Experimental release
+
+- removed mongoose and datamapper, switched to jugglingdb
+- cleaning up all generators stuff, related to different ORMs
+
+## 0.1.8.1
+
+- RIAK datamapper *beta*, thanks Taliesin Sisson (https://github.com/taliesins)
+- routes tuning (map.all, map.root, path alias, helpers alias)
+- controller changes: params, body, session objects published in controller context
+- skipBeforeFilter, skipAfterFilter support
+- controllerName and actionName available in all views
+- some bugfixes
+- minor changes
+
+## 0.1.7
+
+### Test generators
+
+ensure mongo and redis servers are running, then run
+
+    nodeunit test/generators.coffee
+
+or
+
+    npm test
+
+### Testing API for controllers
+
+Check out autogenerated tests for controllers, additional nodeunit stubs
+can be used:
+
+    test.redirect '/path'
+    test.render 'viewName'
+    test.send 'what'
+    test.success() # check status 200
+    test.assign 'memberName'
+
+More stubs coming soon
+
+
+### Localize form labels automagically
+
+Now form labels can be localized automatically, just use it as previously:
+
+    <% form_for(user, {}, function (form) { %>
+        <%- form.label('name') %>
+    <% }); %>
+
+And add translation to `locales/en.yml`:
+
+    en:
+      models:
+        User:
+          fields:
+            name: User name
+            email: Email address
+
+### Jade templating engine (and any others)
+
+Application can be generated with `--tpl` key, for now possibly values are
+
+- jade
+- ejs (default)
+
+This list can be extended. Check out packages npm `ejs-ext` and `jade-ext`
+if you need to learn how to do it. It easy: just add another `lang-ext` package
+and install it before running `railway g app --tpl lang`
+
+## 0.1.6
+
+- Merge javascripts and stylesheets
+- NPM 1.0.6 support (requires `sudo npm link` after `railway init`)
+- Filter parameter logging
+- CSRF protection (turned on by default)
+- Faster server startup (two-stage loading)
+
+Small improvements:
+
+- By default static cache max age is one day
+- Merge js and css option turned on in production
+- Railway helpers now instantiated per request (localization support can be hooked up now)
+- Heroku-friendly app generation for mongo
+
+## 0.1.5
+
+- Extension API
+- Logger support (app.set('quiet', true) now forces logger to log in `log/ENV.log`
+- Railway common API (almost all existing modules)
+- Observers support
+
+Observer is a kind of controller, that listen for some event in 
+the system, for example: paypal, twitter or facebook observers 
+listens for callback from foreign service. Email observer may 
+listen some events related to emails.
+
+If you need app.on('someEvent') you should place this code in
+`APPROOT/app/observers/NAME_observer.js`
+
+## 0.1.3
+
+### HTTPS Support
+
+Just place your key and cert into config directory, railway will use it.
+Default names for keys are `tsl.key` and `tsl.cert`, but you can store in in another place, in that case just pass filenames to createServer function:
+`server.js`
+
+    require('railway').createServer({key: '/tmp/key.pem', cert: '/tmp/cert.pem'});
+
+0.1.2
+=====
+
+ - npmfile
+ - Extenstions
+ - Support (partially) security tokens generation
+
+0.1.1
+=====
+
+ - Localization in `config/locales/*.yml`
+ - Coffeescript support for models, controllers and initializers
+ - Disable caching settings: `app.disable('model cache');` and `app.disable('eval cache');`
+
+0.0.9
+=====
+
+Scaffold generator `railway generate scaffold ModelName field1:type1 field2:type2`
+It generates model, crud controller and appropriated views
+
+0.0.8
+=====
+
+Now you can run `railway init blog` and railway will create directory structure
+within `blog` root folder
+
+By default will created file `config/database.json` that will force you to use
+mongoose driver, feel free to modify it and use redis or mysql (both supported)
+
+Also, running `express -t ejs` no longer required
+
+0.0.7
+=====
+
+Mongoose driver support
+
+Describe your schema in `db/schema.js`, it's just commonjs module which should export
+models. For describing logic please use `app/models/*.js` files. Every model
+described in schema accessible as global object in all models and controllers.
+
+0.0.6
+=====
+
+Added features generator for `cucumis`. Run `railway generate features`, then
+you will be able to create `features` using Gherkin language, parsed by kyuri.
+
+0.0.5
+=====
+
+  * CRUD generator
+  * improved `form_for` helper
+  * binary file bugfixes
+  * layouts moved to `app/views/layouts`
+
+0.0.4
+=====
+
+  * Rewritten controllers
+  * Rewritten models
+  * ORM for mysql, redis, works like datamapper (e.g. one entity -- one object)

@@ -1,9 +1,10 @@
-app.configure 'production', ->
-    app.enable 'view cache'
-    app.enable 'model cache'
-    app.enable 'eval cache'
+express = require 'express'
+
+module.exports = (compound) ->
+  app = compound.app
+  app.configure 'production', ->
+    app.enable 'quiet'
     app.enable 'merge javascripts'
     app.enable 'merge stylesheets'
-    app.use require('express').errorHandler()
-    app.enable 'quiet'
-
+    app.disable 'assets timestamps'
+    app.use express.errorHandler()
