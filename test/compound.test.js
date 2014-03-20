@@ -59,7 +59,7 @@ describe('Compound', function() {
         });
 
         it('should initialize files without README with config pattern', function() {
-            app.set('ignore initializers pattern', '^\\.|\\.md$');
+            app.set('ignore initializers pattern', /^\.|\.md$/);
             (function(){
                 c.runInitializers(root);
             }).should.not.throw();
