@@ -38,6 +38,32 @@ describe('Compound', function() {
         (function() {
             c.model(function() {});
         }).should.throw('Named function or jugglingdb model required');
+    });
+
+    describe('run initializers', function(){
+        var app, c, root, path = '/test';
+
+        before(function(done) {
+            app = getApp();
+            c = app.compound;
+            c.on('ready', function() {
+                root = c.root + path;
+                done();
+            });
+        });
+
+        it('should fail to initialize files with README files', function() {
+            (function(){
+                c.runInitializers(root);
+            }).should.throw();
+        });
+
+        it('should initialize files without README with config pattern', function() {
+            app.set('ignore initializers pattern', /^\.|\.md$/);
+            (function(){
+                c.runInitializers(root);
+            }).should.not.throw();
+        });
 
     });
 
