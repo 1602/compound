@@ -175,12 +175,14 @@ Fragment of `app/controllers/posts.js`:
 You can enable different views for mobile and tablets by passing in ```isMobile: true``` or ```isTablet: true```
 
     UserController.prototype.index = function index(c) {
-        c.render({
+        c.render('showUser', {
             isMobile: true
         });
     }
 
-If isMobile:true then the framework will look for the view file with ```_mobile``` appended to it. For instance, if you are trying to render the view 'showUser', and you set ```isMobile: true```, then compound will be looking for the view file under ```/app/views/user/showUser_mobile.ejs```
+If ```isMobile: true``` then the framework will look for the view file with ```_mobile``` appended to it. For instance, the above example is trying to render the view 'showUser', with ```isMobile: true```, so compound will be looking for the view file under ```/app/views/user/showUser_mobile.ejs```. If ```isTablet: true``` was set, then it would be looking for the view file under ```/app/views/user/showUser_tablet.ejs```.
+
+Also note that if you have the ```isMobile``` or ```isTablet``` set, then compound will be expecting device specific layout files ```application_layout_mobile.ejs``` or ```application_layout_tablet.ejs```.
 
 
 ### renderView(view[, callback])
