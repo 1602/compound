@@ -3,6 +3,10 @@ compound-changelog(3) -- Changes in CompoundJS
 
 ## HISTORY
 
+### 1.1.8-2
+
+- set device specific layout depending on params.isMobile or params.isTablet
+
 ### 1.1.8-1
 
 - load _mobile or _tablet view if params.isMobile or params.isTable is true. When you call render('viewName', { isMobile: true }); ==> this will try to render /app/views/someController/viewName_mobile.ejs
