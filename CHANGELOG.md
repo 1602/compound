@@ -3,6 +3,12 @@ compound-changelog(3) -- Changes in CompoundJS
 
 ## HISTORY
 
+### 1.1.8-1
+
+- load _mobile or _tablet view if params.isMobile or params.isTable is true. When you call render('viewName', { isMobile: true }); ==> this will try to render /app/views/someController/viewName_mobile.ejs
+- adds javascript_include_tag_versioned and stylesheet_link_tag_versioned view helpers
+
+
 ### Upcoming release
 
 - Fixed HTTPS support
