@@ -5,6 +5,10 @@ var fs = require('fs');
 
 try {
     var package = require(process.cwd() + '/package.json');
+    if (package && !package.main) {
+        console.log('Please fill `main` field in your `package.json` file');
+        process.exit();
+    }
     if (package.main.match(/\.coffee$/)) {
         require('coffee-script');
     }
