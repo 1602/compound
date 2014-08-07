@@ -10,7 +10,7 @@ try {
         process.exit();
     }
     if (package.main.match(/\.coffee$/)) {
-        require('coffee-script');
+        require('coffee-script/register');
     }
     instantiateApp = require(process.cwd());
 } catch(e) {
