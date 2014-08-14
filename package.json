@@ -34,7 +34,7 @@
   ],
   "dependencies": {
     "yaml-js": ">= 0.0.2",
-    "coffee-script": "1.6.x",
+    "coffee-script": "1.7.x",
     "ejs-ext": ">= 0.1.4-2",
     "jade-ext": ">= 0.0.5",
     "railway-routes": ">= 0.0.10",
