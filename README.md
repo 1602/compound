@@ -169,7 +169,7 @@ openssl req -new -x509 -key /tmp/tls.key  -out /tmp/tls.cert -days 1095 -batch
 Routing
 -------
 
-Now we do not have to tediously describe REST rotes for each resource, enough to write in `config/routes.js` code like this:
+Now we do not have to tediously describe REST routes for each resource, enough to write in `config/routes.js` code like this:
 
 ```js
 exports.routes = function (map) {
@@ -201,7 +201,7 @@ app.delete('/posts/:post_id/comments/:id.:format?', com_ctl.destroy);
 app.get('/posts/:post_id/comments/:id/edit.:format?', com_ctl.edit);
 ```
 
-and you can more finely tune the resources to specify certain actions, middleware, and other. Here example routes of [my blog][1]:
+and you can more finely tune the resources to specify certain actions, middleware, and other. Here are example routes for [my blog][1]:
 
 ```js
 exports.routes = function (map) {
@@ -218,7 +218,7 @@ exports.routes = function (map) {
 };
 ```
 
-since version 0.2.0 it is possible to use generic routes:
+since version 0.2.0, it is possible to use generic routes:
 
 ```js
 exports.routes = function (map) {
@@ -392,19 +392,19 @@ To run REPL console use command
 compound console
 ```
 
-or it's shortcut
+or its shortcut
 
 ```sh
 compound c
 ```
 
-It just simple node-js console with some Compound bindings, e.g. models. Just one note
-about working with console. Node.js is asynchronous by its nature, and it's great
-but it made console debugging much more complicated, because you should use callback
-to fetch result from database, for example. I have added one useful method to
-simplify async debugging using compound console. It's name `c`, you can pass it
-as parameter to any function requires callback, and it will store parameters passed
-to callback to variables `_0, _1, ..., _N` where N is index in `arguments`.
+It's just simple node-js console with some Compound bindings, e.g. models. Just one note
+about working with console: Node.js is asynchronous by its nature, and it's great
+but it made console debugging much more complicated, because you should use callbacks
+to fetch results from the database, for example. I have added one useful method to
+simplify async debugging using compound console. It's named `c`. You can pass it
+as a parameter to any function requiring callbacks, and it will store parameters passed
+to the callback as variables `_0, _1, ..., _N` where N is index in `arguments`.
 
 Example:
 
@@ -427,7 +427,7 @@ compound> _1
 Localization
 ------------
 
-To add another language to app just create yml file in `config/locales`,
+To add another language to app just create a .yml file in `config/locales`,
 for example `config/locales/jp.yml`, copy contents of `config/locales/en.yml` to new
 file and rename root node (`en` to `jp` in that case), also in `lang` section rename
 `name` to Japanese (for example).
@@ -465,8 +465,8 @@ Compound has some configuration options allows to customize app behavior
 eval cache
 ----------
 
-Enable controllers caching, should be turned on in prd. In development mode
-disabling cache allows to avoid server restarting after each model/controller change
+Enable controller caching, should be turned on in prod. In development mode,
+disabling the cache allows the avoidance of server restarts after each model/controller change.
 
 ```js
 app.disable('eval cache'); // in config/environments/development.js
@@ -476,7 +476,7 @@ app.enable('eval cache'); // in config/environments/production.js
 model cache
 -----------
 
-Same option for models. When disabled model files evaluated per each request.
+Same option for models. When disabled, model files evaluated per each request.
 
 ```js
 app.disable('model cache'); // in config/environments/development.js
