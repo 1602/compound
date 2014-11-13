@@ -1,3 +1,6 @@
+### v1.1.9-3
+- update kontroller dependency to use forked version with custom protectFromForgery() that protects any 'GET's that are X-AJX or X-PJAX requests
+
 ### v1.1.9-2
 - not allowing user object in cleanParams() is too strict. Remove that check, but keep remaining explicit checks for things like 'apiKey'.
 
