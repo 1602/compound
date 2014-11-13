@@ -1,3 +1,6 @@
+### v1.1.9-2
+- not allowing user object in cleanParams() is too strict. Remove that check, but keep remaining explicit checks for things like 'apiKey'.
+
 ### v1.1.9-1
 - fix issue where recursion in Controller.render() cleanParams() was not working properly
 
