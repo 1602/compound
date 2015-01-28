@@ -40,9 +40,7 @@
     "jade-ext": ">= 0.0.5",
     "railway-routes": ">= 0.0.6",
     "kontroller": "https://github.com/calvinalvin/kontroller/archive/master.tar.gz",
-    "inflection": "~1.2.5",
-    "fibrous": "0.3.3",
-    "checksum": "0.1.1"
+    "inflection": "~1.2.5"
   },
   "repository": {
     "type": "git",
