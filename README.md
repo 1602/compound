@@ -1,4 +1,4 @@
-About [<img src="https://secure.travis-ci.org/1602/compound.png" />](http://travis-ci.org/#!/1602/compound)
+About [<img src="https://secure.travis-ci.org/1602/compound.png" />](http://travis-ci.org/#!/1602/compound) [![Code Climate](https://codeclimate.com/repos/550d7c5c69568077bd01488f/badges/e7b56f30b1a89120a1f5/gpa.svg)](https://codeclimate.com/repos/550d7c5c69568077bd01488f/feed)
 =====
 
 <img src="https://raw.github.com/1602/compound/master/templates/public/images/compound.png" />
