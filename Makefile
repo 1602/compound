@@ -3,6 +3,7 @@
 TESTER = ./node_modules/.bin/mocha
 OPTS = --require ./test/init.js
 TESTS = test/*.test.js
+JSHINT = ./node_modules/.bin/jshint
 
 test:
 	$(TESTER) $(OPTS) $(TESTS)
@@ -10,6 +11,18 @@ test-verbose:
 	$(TESTER) $(OPTS) --reporter spec $(TESTS)
 testing:
 	$(TESTER) $(OPTS) --watch $(TESTS)
+
+JS_FILES = $(shell find . -type f -name "*.js" \
+					 -not -path "./node_modules/*" -and \
+					 -not -path "./coverage/*" -and \
+					 -not -path "./test/*" -and \
+					 -not -path "./docs/*" -and \
+					 -not -path "./vendor/*" -and \
+					 -not -path "./templates/*" -and \
+					 -not -path "./db/schema.js")
+
+check:
+	@$(JSHINT) $(JS_FILES)
 
 # MAN DOCS
 

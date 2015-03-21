@@ -52,7 +52,8 @@
     "marked": ">= 0.2.6",
     "express": "3.x",
     "should": "1.2.2",
-    "mocha": "1.8.1"
+    "mocha": "1.8.1",
+    "jshint": "^2.6.3"
   },
   "scripts": {
     "test": "make test",

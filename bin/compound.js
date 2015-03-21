@@ -24,7 +24,7 @@ if (typeof instantiateApp === 'function') {
 }
 if (!compound) {
     var Compound = require('../').Compound;
-    compound = new Compound;
+    compound = new Compound();
 }
 
 compound.init();
