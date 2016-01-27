@@ -11,3 +11,4 @@ analyse-ab.r
 log
 tags.sh
 man
+lib/npm-debug.log
