@@ -3,13 +3,15 @@ compound-changelog(3) -- Changes in CompoundJS
 
 ## HISTORY
 
-### Upcoming release
+### 1.1.19
 
 - Fixed HTTPS support
 - Introduce `req.locals` API to early access controller action context (`this`).
 - compound.loadConfigs(dir) for loading configs from entire directory into
   compound.app.settings
 - Added `vhost` route option.
+- Added presenters
+- Controllers now support promises
 
 ### 1.1.6
 
