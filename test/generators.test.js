@@ -1,7 +1,7 @@
 
 var fs = require('fs');
 var path = require('path');
-var sys = require('sys');
+var sys = require('util');
 
 var memfs = {}, writeFileSync, readFileSync, writeSync, closeSync, existsSync,
     mkdirSync, chmodSync, exit;
