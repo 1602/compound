@@ -633,7 +633,7 @@ function requireUser () {
 <p><code>products_controller.js</code></p>
 
 <pre class="prettyprint">load('application'); // note that _controller siffix omitted
-before(use('userRequired'), {only: 'products'});
+before(use('requireUser'), {only: 'products'});
 </pre>
 
 </div>
